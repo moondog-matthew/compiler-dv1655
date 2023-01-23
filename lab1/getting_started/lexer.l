@@ -1,5 +1,5 @@
 %top{
-#include "parser.tab.hh"
+#include "parser.tab.h"
 #define YY_DECL yy::parser::symbol_type yylex()
 #include "Node.h"
 int lexical_errors = 0;
