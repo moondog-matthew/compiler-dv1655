@@ -21,7 +21,7 @@
 %token <std::string> PLUSOP MINUSOP MULTOP DIVOP INT LP RP LHB RHB LCB RCB ASSIGN EQ AND OR GT LT
 %token <std::string> CLASS STATIC VOID MAIN PUBLIC COMMENT
 %token <std::string> PERIOD COMMA EXCLAMATION SEMICOLON INTTYPE BOOLTYPE STRING
-%token <std::string> IF ELSE WHILE NEW LENGTH PRINT IDENTIFIER
+%token <std::string> IF ELSE WHILE NEW LENGTH PRINT IDENTIFIER TRUE FALSE THIS
 %token END 0 "end of file"
 
 //defition of operator precedence. See https://www.gnu.org/software/bison/manual/bison.html#Precedence-Decl
@@ -33,7 +33,7 @@
 %left MULTOP DIVOP
 
 // definition of the production rules. All production rules are of type Node
-%type <Node *> root expression factor
+%type <Node *> root expression factor identifier
 
 %%
 root:       expression {root = $1;};
@@ -98,16 +98,45 @@ expression: expression PLUSOP expression {      /*
                           }
             
             | expression LHB expression RHB {
-                            printf("Bra");
+                            // Do something;
                           } 
             | expression PERIOD LENGTH {
                             // Do something
                           }
+            | expression PERIOD identifier LP expression COMMA expression RP {
+                              // Do something
+                          }
+            
+            | TRUE {
+                  // Do something
+                }
+            | FALSE {
+                  // Do something 
+                }
+            | identifier {
+                  // Do something
+                }
+            | THIS  {
+                  // Do something
+                }
+            | NEW INTTYPE LHB expression RHB {
+                      // Do something
+                  }
+            | NEW identifier LP RP {
+                      // DO something
+                  }
+            | EXCLAMATION expression {
+                      // Do something
+                  }
             | factor      {$$ = $1; /* printf("r4 ");*/}
             ;
 
+
 factor:     INT           {  $$ = new Node("Int", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
             | LP expression RP { $$ = $2; /* printf("r6 ");  simply return the expression */}
-            | LHB expression RHB { $$ = $2;}
-            | IDENTIFIER {  $$ = new Node("Identifier", $1, yylineno); }
     ;
+
+identifier: IDENTIFIER {
+                    $$ = new Node("Identifier", $1, yylineno); // Here we create a leaf node Int. The value of the leaf node is $1 
+                          }
+            ;

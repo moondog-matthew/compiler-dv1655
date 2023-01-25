@@ -46,9 +46,12 @@ int lexical_errors = 0;
 "else"                      { return yy::parser::make_ELSE(yytext); }
 "while"                     { return yy::parser::make_WHILE(yytext);}
 
-"new"                       { return yy::parser::make_NEW(yytext);   }
-"length"                    { return yy::parser::make_LENGTH(yytext);}
-"System.out.println"        { return yy::parser::make_PRINT(yytext); }
+"new"                       { return yy::parser::make_NEW(yytext);      }
+"true"                      { return yy::parser::make_TRUE(yytext);     }
+"false"                     { return yy::parser::make_FALSE(yytext);    }
+"this"                      { return yy::parser::make_THIS(yytext);     }
+"length"                    { return yy::parser::make_LENGTH(yytext);   }
+"System.out.println"        { return yy::parser::make_PRINT(yytext);    }
 
 [a-zA-Z]+[a-zA-Z0-9\-_]*    { return yy::parser::make_IDENTIFIER(yytext);}
 
