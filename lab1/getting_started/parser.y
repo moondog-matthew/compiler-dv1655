@@ -25,6 +25,10 @@
 %token END 0 "end of file"
 
 //defition of operator precedence. See https://www.gnu.org/software/bison/manual/bison.html#Precedence-Decl
+%left ASSIGN
+%left AND OR 
+%left EQ  
+%left LT GT
 %left PLUSOP MINUSOP
 %left MULTOP DIVOP
 
@@ -62,9 +66,48 @@ expression: expression PLUSOP expression {      /*
                             $$->children.push_back($3);
                             /* printf("r3 "); */
                           }
+            | expression ASSIGN expression {
+                            $$ = new Node("Assigning", "", yylineno);
+                            $$->children.push_back($1);
+                            $$->children.push_back($3);                            
+                          }
+            | expression GT expression {
+                            $$ = new Node("GreaterThan", "", yylineno);
+                            $$->children.push_back($1);
+                            $$->children.push_back($3);                            
+                          }
+            | expression LT expression {
+                            $$ = new Node("LessThan", "", yylineno);
+                            $$->children.push_back($1);
+                            $$->children.push_back($3);                            
+                          }
+            | expression EQ expression {
+                            $$ = new Node("Equals", "", yylineno);
+                            $$->children.push_back($1);
+                            $$->children.push_back($3);                            
+                          }
+            | expression OR expression {
+                            $$ = new Node("OR", "", yylineno);
+                            $$->children.push_back($1);
+                            $$->children.push_back($3);                            
+                          }
+            | expression AND expression {
+                            $$ = new Node("AND", "", yylineno);
+                            $$->children.push_back($1);
+                            $$->children.push_back($3);                            
+                          }
+            
+            | expression LHB expression RHB {
+                            printf("Bra");
+                          } 
+            | expression PERIOD LENGTH {
+                            // Do something
+                          }
             | factor      {$$ = $1; /* printf("r4 ");*/}
             ;
 
 factor:     INT           {  $$ = new Node("Int", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
             | LP expression RP { $$ = $2; /* printf("r6 ");  simply return the expression */}
+            | LHB expression RHB { $$ = $2;}
+            | IDENTIFIER {  $$ = new Node("Identifier", $1, yylineno); }
     ;
