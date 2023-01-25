@@ -54,6 +54,6 @@ int lexical_errors = 0;
 
 "//".*                  { } // ignore inline comments
 
-.                       { if(!lexical_errors) fprintf(stderr, "Lexical errors found! See the logs below: \n"); printf("Character %s is not recognized\n", yytext); lexical_errors = 1;}
-<<EOF>>                 return yy::parser::make_END();
+.                           { if(!lexical_errors) fprintf(stderr, "Lexical errors found! See the logs below: \n"); printf("Character %s is not recognized\n", yytext); lexical_errors = 1;}
+<<EOF>>                     return yy::parser::make_END();
 %%

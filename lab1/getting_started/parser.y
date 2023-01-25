@@ -18,12 +18,15 @@
   
 }
 // definition of set of tokens. All tokens are of type string
-%token <std::string> PLUSOP MINUSOP MULTOP INT LP RP 
+%token <std::string> PLUSOP MINUSOP MULTOP DIVOP INT LP RP LHB RHB LCB RCB ASSIGN EQ AND OR GT LT
+%token <std::string> CLASS STATIC VOID MAIN PUBLIC COMMENT
+%token <std::string> PERIOD COMMA EXCLAMATION SEMICOLON INTTYPE BOOLTYPE STRING
+%token <std::string> IF ELSE WHILE NEW LENGTH PRINT IDENTIFIER
 %token END 0 "end of file"
 
 //defition of operator precedence. See https://www.gnu.org/software/bison/manual/bison.html#Precedence-Decl
 %left PLUSOP MINUSOP
-%left MULTOP
+%left MULTOP DIVOP
 
 // definition of the production rules. All production rules are of type Node
 %type <Node *> root expression factor
@@ -49,6 +52,12 @@ expression: expression PLUSOP expression {      /*
                           }
             | expression MULTOP expression {
                             $$ = new Node("MultExpression", "", yylineno);
+                            $$->children.push_back($1);
+                            $$->children.push_back($3);
+                            /* printf("r3 "); */
+                          }
+            | expression DIVOP expression {
+                            $$ = new Node("DivExpression", "", yylineno);
                             $$->children.push_back($1);
                             $$->children.push_back($3);
                             /* printf("r3 "); */
