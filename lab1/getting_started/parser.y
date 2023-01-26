@@ -34,11 +34,11 @@
 %left MULTOP DIVOP
 
 // definition of the production rules. All production rules are of type Node
-%type <Node *> root expression factor identifier type vardeclaration mainclass statement
+%type <Node *> root expression factor identifier type vardeclaration mainclass statement statements
 
 %%
 // Change this later to be the class 
-root:       expression {root = $1;};
+root:       statements {root = $1;};
 
 mainclass: PUBLIC CLASS identifier LCB PUBLIC STATIC VOID MAIN LP STRING LHB RHB identifier LP LCB statement RCB RCB {
                     // TODO
@@ -68,10 +68,11 @@ type: INTTYPE LHB RHB {
 statement: 
             /* empty */
             | LCB statements RCB { 
-              // TODO
+              $$ = new Node("Statements", "", yylineno);
             }
             | IF LP expression RP {
-              //TODO
+              $$ = new Node("IF", "", yylineno);
+              $$->children.push_back($3);
             }
             | IF LP expression RP statement ELSE statement {
               // TODO

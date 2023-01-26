@@ -382,6 +382,8 @@ namespace yy {
     union union_type
     {
       // root
+      // statement
+      // statements
       // expression
       // factor
       // identifier
@@ -577,9 +579,11 @@ namespace yy {
         S_STATEMENT = 43,                        // STATEMENT
         S_YYACCEPT = 44,                         // $accept
         S_root = 45,                             // root
-        S_expression = 46,                       // expression
-        S_factor = 47,                           // factor
-        S_identifier = 48                        // identifier
+        S_statement = 46,                        // statement
+        S_statements = 47,                       // statements
+        S_expression = 48,                       // expression
+        S_factor = 49,                           // factor
+        S_identifier = 50                        // identifier
       };
     };
 
@@ -615,6 +619,8 @@ namespace yy {
         switch (this->kind ())
     {
       case symbol_kind::S_root: // root
+      case symbol_kind::S_statement: // statement
+      case symbol_kind::S_statements: // statements
       case symbol_kind::S_expression: // expression
       case symbol_kind::S_factor: // factor
       case symbol_kind::S_identifier: // identifier
@@ -735,6 +741,8 @@ namespace yy {
 switch (yykind)
     {
       case symbol_kind::S_root: // root
+      case symbol_kind::S_statement: // statement
+      case symbol_kind::S_statements: // statements
       case symbol_kind::S_expression: // expression
       case symbol_kind::S_factor: // factor
       case symbol_kind::S_identifier: // identifier
@@ -1921,9 +1929,9 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 204,     ///< Last index in yytable_.
-      yynnts_ = 5,  ///< Number of nonterminal symbols.
-      yyfinal_ = 17 ///< Termination state number.
+      yylast_ = 365,     ///< Last index in yytable_.
+      yynnts_ = 7,  ///< Number of nonterminal symbols.
+      yyfinal_ = 3 ///< Termination state number.
     };
 
 
@@ -1991,6 +1999,8 @@ switch (yykind)
     switch (this->kind ())
     {
       case symbol_kind::S_root: // root
+      case symbol_kind::S_statement: // statement
+      case symbol_kind::S_statements: // statements
       case symbol_kind::S_expression: // expression
       case symbol_kind::S_factor: // factor
       case symbol_kind::S_identifier: // identifier
@@ -2073,6 +2083,8 @@ switch (yykind)
     switch (this->kind ())
     {
       case symbol_kind::S_root: // root
+      case symbol_kind::S_statement: // statement
+      case symbol_kind::S_statements: // statements
       case symbol_kind::S_expression: // expression
       case symbol_kind::S_factor: // factor
       case symbol_kind::S_identifier: // identifier
@@ -2188,7 +2200,7 @@ switch (yykind)
 
 
 } // yy
-#line 2192 "parser.tab.h"
+#line 2204 "parser.tab.h"
 
 
 
