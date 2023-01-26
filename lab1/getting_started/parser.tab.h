@@ -427,6 +427,7 @@ namespace yy {
       // TRUE
       // FALSE
       // THIS
+      // STATEMENT
       char dummy2[sizeof (std::string)];
     };
 
@@ -510,7 +511,8 @@ namespace yy {
     IDENTIFIER = 294,              // IDENTIFIER
     TRUE = 295,                    // TRUE
     FALSE = 296,                   // FALSE
-    THIS = 297                     // THIS
+    THIS = 297,                    // THIS
+    STATEMENT = 298                // STATEMENT
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -527,7 +529,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 43, ///< Number of tokens.
+        YYNTOKENS = 44, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -572,11 +574,12 @@ namespace yy {
         S_TRUE = 40,                             // TRUE
         S_FALSE = 41,                            // FALSE
         S_THIS = 42,                             // THIS
-        S_YYACCEPT = 43,                         // $accept
-        S_root = 44,                             // root
-        S_expression = 45,                       // expression
-        S_factor = 46,                           // factor
-        S_identifier = 47                        // identifier
+        S_STATEMENT = 43,                        // STATEMENT
+        S_YYACCEPT = 44,                         // $accept
+        S_root = 45,                             // root
+        S_expression = 46,                       // expression
+        S_factor = 47,                           // factor
+        S_identifier = 48                        // identifier
       };
     };
 
@@ -658,6 +661,7 @@ namespace yy {
       case symbol_kind::S_TRUE: // TRUE
       case symbol_kind::S_FALSE: // FALSE
       case symbol_kind::S_THIS: // THIS
+      case symbol_kind::S_STATEMENT: // STATEMENT
         value.move< std::string > (std::move (that.value));
         break;
 
@@ -777,6 +781,7 @@ switch (yykind)
       case symbol_kind::S_TRUE: // TRUE
       case symbol_kind::S_FALSE: // FALSE
       case symbol_kind::S_THIS: // THIS
+      case symbol_kind::S_STATEMENT: // STATEMENT
         value.template destroy< std::string > ();
         break;
 
@@ -1573,6 +1578,21 @@ switch (yykind)
         return symbol_type (token::THIS, v);
       }
 #endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_STATEMENT (std::string v)
+      {
+        return symbol_type (token::STATEMENT, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_STATEMENT (const std::string& v)
+      {
+        return symbol_type (token::STATEMENT, v);
+      }
+#endif
 
 
     class context
@@ -1949,10 +1969,10 @@ switch (yykind)
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
       25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
-      35,    36,    37,    38,    39,    40,    41,    42
+      35,    36,    37,    38,    39,    40,    41,    42,    43
     };
     // Last valid token kind.
-    const int code_max = 297;
+    const int code_max = 298;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
@@ -2017,6 +2037,7 @@ switch (yykind)
       case symbol_kind::S_TRUE: // TRUE
       case symbol_kind::S_FALSE: // FALSE
       case symbol_kind::S_THIS: // THIS
+      case symbol_kind::S_STATEMENT: // STATEMENT
         value.copy< std::string > (YY_MOVE (that.value));
         break;
 
@@ -2098,6 +2119,7 @@ switch (yykind)
       case symbol_kind::S_TRUE: // TRUE
       case symbol_kind::S_FALSE: // FALSE
       case symbol_kind::S_THIS: // THIS
+      case symbol_kind::S_STATEMENT: // STATEMENT
         value.move< std::string > (YY_MOVE (s.value));
         break;
 
@@ -2166,7 +2188,7 @@ switch (yykind)
 
 
 } // yy
-#line 2170 "parser.tab.h"
+#line 2192 "parser.tab.h"
 
 
 

@@ -65,7 +65,38 @@ type: INTTYPE LHB RHB {
               }
         ;
 
-statement: {};
+statement: 
+            /* empty */
+            | LCB statements RCB { 
+              // TODO
+            }
+            | IF LP expression RP {
+              //TODO
+            }
+            | IF LP expression RP statement ELSE statement {
+              // TODO
+            }
+            | WHILE LP expression RP {
+              // TODO
+            }
+            | PRINT LP expression RP SEMICOLON {
+              // TODO
+            }
+            | identifier EQ expression SEMICOLON {
+              // TODO 
+            } 
+            | identifier LHB expression RHB EQ expression SEMICOLON {
+              // TODO
+            }
+            ;
+
+statements:
+            /* empty */
+            | statements statement { 
+              // TODO
+            }
+            ;
+
 
 expression: expression PLUSOP expression {      /*
                                                   Create a subtree that corresponds to the AddExpression
@@ -165,39 +196,6 @@ expression: expression PLUSOP expression {      /*
                   }
             | factor      {$$ = $1; /* printf("r4 ");*/}
             ;
-
-statement: 
-            /* empty */
-            | LCB statemens RCB { 
-              // TODO
-            }
-            | IF LP expression RP {
-              //TODO
-            }
-            | IF LP expression RP statement ELSE statement {
-              // TODO
-            }
-            | WHILE LP expression RP {
-              // TODO
-            }
-            | PRINT LP expression RP SEMICOLON {
-              // TODO
-            }
-            | identifier EQ expression SEMICOLON {
-              // TODO 
-            } 
-            | identifier HLB expression HRB EQ expression SEMICOLON {
-              // TODO
-            }
-            ;
-
-statements:
-            /* empty */
-            | statements statement { 
-              // TODO
-            }
-            ;
-
 
 // Factor like an integer
 factor:     INT           {  $$ = new Node("Int", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
