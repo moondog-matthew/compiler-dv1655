@@ -33,10 +33,25 @@
 %left MULTOP DIVOP
 
 // definition of the production rules. All production rules are of type Node
-%type <Node *> root expression factor identifier
+%type <Node *> root expression factor identifier type
 
 %%
+// Change this later to be the class 
 root:       expression {root = $1;};
+
+type: INTTYPE LHB RHB {
+            $$ new Node("ArrayType", "", yylineno);
+              }
+      | BOOLTYPE {
+            $$ new Node("BoolType", "", yylineno);
+              }
+      | INTTYPE {
+            $$ new Node("IntType", "", yylineno);
+              }
+      | identifier {
+            $$ new Node("IdentifierType", "", yylineno);
+              }
+        ;
 
 expression: expression PLUSOP expression {      /*
                                                   Create a subtree that corresponds to the AddExpression
@@ -136,8 +151,6 @@ expression: expression PLUSOP expression {      /*
                   }
             | factor      {$$ = $1; /* printf("r4 ");*/}
             ;
-
-statement: {};
 
 // Factor like an integer
 factor:     INT           {  $$ = new Node("Int", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
