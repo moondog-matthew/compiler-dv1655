@@ -913,7 +913,7 @@ namespace yy {
   case 18: // expression: identifier
 #line 119 "parser.y"
                          {
-                  // Do something
+                  yylhs.value.as < Node * > () = yystack_[0].value.as < Node * > ();
                 }
 #line 919 "parser.tab.c"
     break;

@@ -117,7 +117,7 @@ expression: expression PLUSOP expression {      /*
                   // Do something 
                 }
             | identifier {
-                  // Do something
+                  $$ = $1;
                 }
             | THIS  {
                   // Do something
