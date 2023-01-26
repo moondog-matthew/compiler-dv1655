@@ -98,10 +98,13 @@ expression: expression PLUSOP expression {      /*
                           }
             
             | expression LHB expression RHB {
-                            // Do something;
+                            $$ = new Node("Index", "", yylineno);
+                            $$->children.push_back($1);  // what to take index of
+                            $$->children.push_back($3);  // index value
                           } 
             | expression PERIOD LENGTH {
-                            // Do something
+                            $$ = new Node("LenghtOfExpression", "", yylineno);
+                            $$->children.push_back($1);
                           }
             | expression PERIOD identifier LP expression COMMA expression RP {
                               // Do something

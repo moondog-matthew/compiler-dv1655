@@ -870,111 +870,114 @@ namespace yy {
   case 13: // expression: expression LHB expression RHB
 #line 100 "parser.y"
                                             {
-                            // Do something;
+                            yylhs.value.as < Node * > () = new Node("Index", "", yylineno);
+                            yylhs.value.as < Node * > ()->children.push_back(yystack_[3].value.as < Node * > ());  // what to take index of
+                            yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());  // index value
                           }
-#line 876 "parser.tab.c"
+#line 878 "parser.tab.c"
     break;
 
   case 14: // expression: expression PERIOD LENGTH
-#line 103 "parser.y"
+#line 105 "parser.y"
                                        {
-                            // Do something
+                            yylhs.value.as < Node * > () = new Node("LenghtOfExpression", "", yylineno);
+                            yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
                           }
-#line 884 "parser.tab.c"
+#line 887 "parser.tab.c"
     break;
 
   case 15: // expression: expression PERIOD identifier LP expression COMMA expression RP
-#line 106 "parser.y"
+#line 109 "parser.y"
                                                                              {
                               // Do something
                           }
-#line 892 "parser.tab.c"
+#line 895 "parser.tab.c"
     break;
 
   case 16: // expression: TRUE
-#line 110 "parser.y"
+#line 113 "parser.y"
                    {
                   // Do something
                 }
-#line 900 "parser.tab.c"
+#line 903 "parser.tab.c"
     break;
 
   case 17: // expression: FALSE
-#line 113 "parser.y"
+#line 116 "parser.y"
                     {
                   // Do something 
                 }
-#line 908 "parser.tab.c"
+#line 911 "parser.tab.c"
     break;
 
   case 18: // expression: identifier
-#line 116 "parser.y"
+#line 119 "parser.y"
                          {
                   // Do something
                 }
-#line 916 "parser.tab.c"
+#line 919 "parser.tab.c"
     break;
 
   case 19: // expression: THIS
-#line 119 "parser.y"
+#line 122 "parser.y"
                     {
                   // Do something
                 }
-#line 924 "parser.tab.c"
+#line 927 "parser.tab.c"
     break;
 
   case 20: // expression: NEW INTTYPE LHB expression RHB
-#line 122 "parser.y"
+#line 125 "parser.y"
                                              {
                       // Do something
                   }
-#line 932 "parser.tab.c"
+#line 935 "parser.tab.c"
     break;
 
   case 21: // expression: NEW identifier LP RP
-#line 125 "parser.y"
+#line 128 "parser.y"
                                    {
                       // DO something
                   }
-#line 940 "parser.tab.c"
+#line 943 "parser.tab.c"
     break;
 
   case 22: // expression: EXCLAMATION expression
-#line 128 "parser.y"
+#line 131 "parser.y"
                                      {
                       // Do something
                   }
-#line 948 "parser.tab.c"
+#line 951 "parser.tab.c"
     break;
 
   case 23: // expression: factor
-#line 131 "parser.y"
+#line 134 "parser.y"
                           {yylhs.value.as < Node * > () = yystack_[0].value.as < Node * > (); /* printf("r4 ");*/}
-#line 954 "parser.tab.c"
+#line 957 "parser.tab.c"
     break;
 
   case 24: // factor: INT
-#line 135 "parser.y"
+#line 138 "parser.y"
                           {  yylhs.value.as < Node * > () = new Node("Int", yystack_[0].value.as < std::string > (), yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
-#line 960 "parser.tab.c"
+#line 963 "parser.tab.c"
     break;
 
   case 25: // factor: LP expression RP
-#line 136 "parser.y"
+#line 139 "parser.y"
                                { yylhs.value.as < Node * > () = yystack_[1].value.as < Node * > (); /* printf("r6 ");  simply return the expression */}
-#line 966 "parser.tab.c"
+#line 969 "parser.tab.c"
     break;
 
   case 26: // identifier: IDENTIFIER
-#line 139 "parser.y"
+#line 142 "parser.y"
                        {
                     yylhs.value.as < Node * > () = new Node("Identifier", yystack_[0].value.as < std::string > (), yylineno); // Here we create a leaf node Int. The value of the leaf node is $1 
                           }
-#line 974 "parser.tab.c"
+#line 977 "parser.tab.c"
     break;
 
 
-#line 978 "parser.tab.c"
+#line 981 "parser.tab.c"
 
             default:
               break;
@@ -1462,8 +1465,8 @@ namespace yy {
   parser::yyrline_[] =
   {
        0,    39,    39,    41,    51,    57,    63,    69,    74,    79,
-      84,    89,    94,   100,   103,   106,   110,   113,   116,   119,
-     122,   125,   128,   131,   135,   136,   139
+      84,    89,    94,   100,   105,   109,   113,   116,   119,   122,
+     125,   128,   131,   134,   138,   139,   142
   };
 
   void
@@ -1495,5 +1498,5 @@ namespace yy {
 
 
 } // yy
-#line 1499 "parser.tab.c"
+#line 1502 "parser.tab.c"
 
