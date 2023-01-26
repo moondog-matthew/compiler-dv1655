@@ -33,25 +33,38 @@
 %left MULTOP DIVOP
 
 // definition of the production rules. All production rules are of type Node
-%type <Node *> root expression factor identifier type
+%type <Node *> root expression factor identifier type vardeclaration mainclass statement
 
 %%
 // Change this later to be the class 
 root:       expression {root = $1;};
 
+mainclass: PUBLIC CLASS identifier LCB PUBLIC STATIC VOID MAIN LP STRING LHB RHB identifier LP LCB statement RCB RCB {
+                    // TODO
+              }
+
+vardeclaration: type identifier SEMICOLON {
+                      $$ = new Node("Variable", "", yylineno);
+                      $$->children.push_back($1); // type
+                      $$->children.push_back($2); // identifier
+              }
+
+
 type: INTTYPE LHB RHB {
-            $$ new Node("ArrayType", "", yylineno);
+            $$ = new Node("ArrayType", "", yylineno);
               }
       | BOOLTYPE {
-            $$ new Node("BoolType", "", yylineno);
+            $$ =  new Node("BoolType", "", yylineno);
               }
       | INTTYPE {
-            $$ new Node("IntType", "", yylineno);
+            $$ = new Node("IntType", "", yylineno);
               }
       | identifier {
-            $$ new Node("IdentifierType", "", yylineno);
+            $$ = new Node("IdentifierType", "", yylineno);
               }
         ;
+
+statement: {};
 
 expression: expression PLUSOP expression {      /*
                                                   Create a subtree that corresponds to the AddExpression
@@ -126,16 +139,16 @@ expression: expression PLUSOP expression {      /*
                           }
             
             | TRUE {
-                  $$ = $1;
+                  $$ = new Node("True", "", yylineno);
                 }
             | FALSE {
-                  $$ = $1;
+                  $$ = new Node("False", "", yylineno);
                 }
             | identifier {
                   $$ = $1;
                 }
             | THIS  {
-                  $$ = $1;
+                  $$ = new Node("This", "", yylineno);
                 }
             | NEW INTTYPE LHB expression RHB {
                       $$ = new Node("AllocateIntArray", "", yylineno);
