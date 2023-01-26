@@ -22,6 +22,7 @@
 %token <std::string> CLASS STATIC VOID MAIN PUBLIC COMMENT
 %token <std::string> PERIOD COMMA EXCLAMATION SEMICOLON INTTYPE BOOLTYPE STRING
 %token <std::string> IF ELSE WHILE NEW LENGTH PRINT IDENTIFIER TRUE FALSE THIS
+%token <std::string> STATEMENT
 %token END 0 "end of file"
 
 //defition of operator precedence. See https://www.gnu.org/software/bison/manual/bison.html#Precedence-Decl
@@ -33,7 +34,8 @@
 %left MULTOP DIVOP
 
 // definition of the production rules. All production rules are of type Node
-%type <Node *> root expression factor identifier
+%type <Node *> root expression factor identifier statement statements
+
 
 %%
 root:       expression {root = $1;};
@@ -107,7 +109,7 @@ expression: expression PLUSOP expression {      /*
                             $$->children.push_back($1);
                           }
             | expression PERIOD identifier LP expression COMMA expression RP {
-                              // Do something
+                              // TODO
                           }
             
             | TRUE {
@@ -137,7 +139,38 @@ expression: expression PLUSOP expression {      /*
             | factor      {$$ = $1; /* printf("r4 ");*/}
             ;
 
-statement: {};
+statement: 
+            /* empty */
+            | LCB statemens RCB { 
+              // TODO
+            }
+            | IF LP expression RP {
+              //TODO
+            }
+            | IF LP expression RP statement ELSE statement {
+              // TODO
+            }
+            | WHILE LP expression RP {
+              // TODO
+            }
+            | PRINT LP expression RP SEMICOLON {
+              // TODO
+            }
+            | identifier EQ expression SEMICOLON {
+              // TODO 
+            } 
+            | identifier HLB expression HRB EQ expression SEMICOLON {
+              // TODO
+            }
+            ;
+
+statements:
+            /* empty */
+            | statements statement { 
+              // TODO
+            }
+            ;
+
 
 // Factor like an integer
 factor:     INT           {  $$ = new Node("Int", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
