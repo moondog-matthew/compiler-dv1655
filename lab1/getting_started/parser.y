@@ -81,9 +81,10 @@ statement:
               $$->children.push_back($5)
               $$->children.push_back($7)
             }
-            | WHILE LP expression RP {
+            | WHILE LP expression RP statement {
               $$ = new Node("While", "", yylineno)
               $$->childre.push_back($3)
+              $$->childre.push_back($5)
             }
             | PRINT LP expression RP SEMICOLON {
               $$ = new Node("Print", "", yylineno)
