@@ -73,42 +73,42 @@ statement:
             | IF LP expression RP statement {
               $$ = new Node("IF", "", yylineno);
               $$->children.push_back($3);
-              $$->children.push_back($5)
+              $$->children.push_back($5);
             }
             | IF LP expression RP statement ELSE statement {
-              $$ = new Node("IfElse", "", yylineno)
-              $$->children.push_back($3)
-              $$->children.push_back($5)
-              $$->children.push_back($7)
+              $$ = new Node("IfElse", "", yylineno);
+              $$->children.push_back($3);
+              $$->children.push_back($5);
+              $$->children.push_back($7);
             }
             | WHILE LP expression RP statement {
-              $$ = new Node("While", "", yylineno)
-              $$->childre.push_back($3)
-              $$->childre.push_back($5)
+              $$ = new Node("While", "", yylineno);
+              $$->children.push_back($3);
+              $$->children.push_back($5);
             }
             | PRINT LP expression RP SEMICOLON {
-              $$ = new Node("Print", "", yylineno)
-              $$->childre.push_back($3)
+              $$ = new Node("Print", "", yylineno);
+              $$->children.push_back($3);
             }
             | identifier EQ expression SEMICOLON {
-              $$ = new Node("Assign", "", yylineno)
-              $$->childre.push_back($1)
-              $$->childre.push_back($3)
+              $$ = new Node("Assign", "", yylineno);
+              $$->children.push_back($1);
+              $$->children.push_back($3);
             } 
             | identifier LHB expression RHB EQ expression SEMICOLON {
-              $$ = new Node("indexAssign", "", yylineno)
-              $$->childre.push_back($1)
-              $$->childre.push_back($3)
-              $$->childre.push_back($6)
+              $$ = new Node("indexAssign", "", yylineno);
+              $$->children.push_back($1);
+              $$->children.push_back($3);
+              $$->children.push_back($6);
             }
             ;
 
 statements:
             /* empty */
             | statements statement { 
-              $$ = new Node("Statements", "", yylineno)
-              $$->childre.push_back($1)
-              $$->childre.push_back($2)
+              $$ = new Node("Statements", "", yylineno);
+              $$->children.push_back($1);
+              $$->children.push_back($2);
 
             }
             ;
