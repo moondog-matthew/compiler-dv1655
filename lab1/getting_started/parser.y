@@ -70,31 +70,41 @@ statement:
             | LCB statements RCB { 
               $$ = new Node("Statements", "", yylineno);
             }
-            | IF LP expression RP {
+            | IF LP expression RP statement {
               $$ = new Node("IF", "", yylineno);
               $$->children.push_back($3);
+              $$->children.push_back($5)
             }
             | IF LP expression RP statement ELSE statement {
-              // TODO
+              $$ = new Node("IfElse", "", yylineno)
+              $$->children.push_back($3)
+              $$->children.push_back($5)
+              $$->children.push_back($7)
             }
             | WHILE LP expression RP {
-              // TODO
+              $$ = new Node("While", "", yylineno)
+              $$->childre.push_back($3)
             }
             | PRINT LP expression RP SEMICOLON {
-              // TODO
+              $$ = new Node("Print", "", yylineno)
+              $$->childre.push_back($3)
             }
             | identifier EQ expression SEMICOLON {
-              // TODO 
+              $$ = new Node("Assign", "", yylineno)
+              $$->childre.push_back($1)
+              $$->childre.push_back($3)
             } 
             | identifier LHB expression RHB EQ expression SEMICOLON {
-              // TODO
+              $$ = new Node("indexAssign", "", yylineno)
+              $$->childre.push_back($1)
+              $$->childre.push_back($3)
+              $$->childre.push_back($6)
             }
             ;
 
 statements:
             /* empty */
             | statements statement { 
-              // TODO
             }
             ;
 
