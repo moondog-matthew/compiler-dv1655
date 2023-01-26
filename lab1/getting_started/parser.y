@@ -111,30 +111,35 @@ expression: expression PLUSOP expression {      /*
                           }
             
             | TRUE {
-                  // Do something
+                  $$ = $1;
                 }
             | FALSE {
-                  // Do something 
+                  $$ = $1;
                 }
             | identifier {
                   $$ = $1;
                 }
             | THIS  {
-                  // Do something
+                  $$ = $1;
                 }
             | NEW INTTYPE LHB expression RHB {
-                      // Do something
+                      $$ = new Node("AllocateIntArray", "", yylineno);
+                      $$->children.push_back($4);  // Size of int array
                   }
             | NEW identifier LP RP {
-                      // DO something
+                      $$ = new Node("AllocateIdentifier", "", yylineno);
+                      $$->children.push_back($2);  
                   }
             | EXCLAMATION expression {
-                      // Do something
+                      $$ = new Node("Negation", "", yylineno);
+                      $$->children.push_back($2); 
                   }
             | factor      {$$ = $1; /* printf("r4 ");*/}
             ;
 
+statement: {};
 
+// Factor like an integer
 factor:     INT           {  $$ = new Node("Int", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
             | LP expression RP { $$ = $2; /* printf("r6 ");  simply return the expression */}
     ;
