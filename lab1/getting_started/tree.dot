@@ -1,11 +1,21 @@
 digraph {
-n0 [label="Assigning:"];
-n1 [label="Identifier:redop"];
+n0 [label="IfElse:"];
+n1 [label="Equals:"];
+n2 [label="Int:5"];
+n1 -> n2
+n3 [label="Int:5"];
+n1 -> n3
 n0 -> n1
-n2 [label="AddExpression:"];
-n3 [label="Int:432"];
-n2 -> n3
-n4 [label="Int:3"];
-n2 -> n4
-n0 -> n2
+n4 [label="Assign:"];
+n5 [label="Identifier:redop"];
+n4 -> n5
+n6 [label="Int:5"];
+n4 -> n6
+n0 -> n4
+n7 [label="Assign:"];
+n8 [label="Identifier:redop"];
+n7 -> n8
+n9 [label="Int:6"];
+n7 -> n9
+n0 -> n7
 }

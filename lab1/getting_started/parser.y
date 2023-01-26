@@ -38,7 +38,7 @@
 
 %%
 // Change this later to be the class 
-root:       statements {root = $1;};
+root:       statement {root = $1;};
 
 mainclass: PUBLIC CLASS identifier LCB PUBLIC STATIC VOID MAIN LP STRING LHB RHB identifier LP LCB statement RCB RCB {
                     // TODO
@@ -90,12 +90,12 @@ statement:
               $$ = new Node("Print", "", yylineno);
               $$->children.push_back($3);
             }
-            | identifier EQ expression SEMICOLON {
+            | identifier ASSIGN expression SEMICOLON {
               $$ = new Node("Assign", "", yylineno);
               $$->children.push_back($1);
               $$->children.push_back($3);
             } 
-            | identifier LHB expression RHB EQ expression SEMICOLON {
+            | identifier LHB expression RHB ASSIGN expression SEMICOLON {
               $$ = new Node("indexAssign", "", yylineno);
               $$->children.push_back($1);
               $$->children.push_back($3);
