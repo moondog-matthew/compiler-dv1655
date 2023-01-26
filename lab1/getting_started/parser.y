@@ -105,6 +105,10 @@ statement:
 statements:
             /* empty */
             | statements statement { 
+              $$ = new Node("Statements", "", yylineno)
+              $$->childre.push_back($1)
+              $$->childre.push_back($2)
+
             }
             ;
 
