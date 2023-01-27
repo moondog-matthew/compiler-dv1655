@@ -45,7 +45,7 @@
 
 %%
 // Change this later to be the class 
-root:       statement {root = $1;};
+root:   expression {root = $1;};
 
 mainclass: PUBLIC CLASS identifier LCB PUBLIC STATIC VOID MAIN LP STRING LHB RHB identifier LP LCB statement RCB RCB {
                     // TODO
@@ -189,9 +189,11 @@ expression: expression PLUSOP expression {      /*
                             $$->children.push_back($1);
                           }
             | expression PERIOD identifier LP exprlist RP {  // recursive grammar, follows recursive rules
-                              $$ = new Node("CALL_ME_LATER", "", yylineno);
+                              $$ = new Node("Method call", "", yylineno);
                           }
-            
+            | expression PERIOD identifier LP RP {  // for the empty case
+                              $$ = new Node("Method call", "", yylineno);
+                          }
             | TRUE {
                   $$ = new Node("True", "", yylineno);
                 }
@@ -221,6 +223,10 @@ expression: expression PLUSOP expression {      /*
 
 exprlist: 
     /*empty*/
+    | expression {
+              $$ = new Node("ExpressionList", "", yylineno);
+              $$->children.push_back($1);
+                }
     | exprlist COMMA expression {
               $$ = new Node("ExpressionList", "", yylineno);
               $$->children.push_back($1);

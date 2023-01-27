@@ -382,8 +382,6 @@ namespace yy {
     union union_type
     {
       // root
-      // statement
-      // statements
       // expression
       // exprlist
       // factor
@@ -576,12 +574,10 @@ namespace yy {
         S_NO_ELSE = 42,                          // NO_ELSE
         S_YYACCEPT = 43,                         // $accept
         S_root = 44,                             // root
-        S_statement = 45,                        // statement
-        S_statements = 46,                       // statements
-        S_expression = 47,                       // expression
-        S_exprlist = 48,                         // exprlist
-        S_factor = 49,                           // factor
-        S_identifier = 50                        // identifier
+        S_expression = 45,                       // expression
+        S_exprlist = 46,                         // exprlist
+        S_factor = 47,                           // factor
+        S_identifier = 48                        // identifier
       };
     };
 
@@ -617,8 +613,6 @@ namespace yy {
         switch (this->kind ())
     {
       case symbol_kind::S_root: // root
-      case symbol_kind::S_statement: // statement
-      case symbol_kind::S_statements: // statements
       case symbol_kind::S_expression: // expression
       case symbol_kind::S_exprlist: // exprlist
       case symbol_kind::S_factor: // factor
@@ -738,8 +732,6 @@ namespace yy {
 switch (yykind)
     {
       case symbol_kind::S_root: // root
-      case symbol_kind::S_statement: // statement
-      case symbol_kind::S_statements: // statements
       case symbol_kind::S_expression: // expression
       case symbol_kind::S_exprlist: // exprlist
       case symbol_kind::S_factor: // factor
@@ -1910,9 +1902,9 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 299,     ///< Last index in yytable_.
-      yynnts_ = 8,  ///< Number of nonterminal symbols.
-      yyfinal_ = 13 ///< Termination state number.
+      yylast_ = 182,     ///< Last index in yytable_.
+      yynnts_ = 6,  ///< Number of nonterminal symbols.
+      yyfinal_ = 17 ///< Termination state number.
     };
 
 
@@ -1980,8 +1972,6 @@ switch (yykind)
     switch (this->kind ())
     {
       case symbol_kind::S_root: // root
-      case symbol_kind::S_statement: // statement
-      case symbol_kind::S_statements: // statements
       case symbol_kind::S_expression: // expression
       case symbol_kind::S_exprlist: // exprlist
       case symbol_kind::S_factor: // factor
@@ -2063,8 +2053,6 @@ switch (yykind)
     switch (this->kind ())
     {
       case symbol_kind::S_root: // root
-      case symbol_kind::S_statement: // statement
-      case symbol_kind::S_statements: // statements
       case symbol_kind::S_expression: // expression
       case symbol_kind::S_exprlist: // exprlist
       case symbol_kind::S_factor: // factor
@@ -2179,7 +2167,7 @@ switch (yykind)
 
 
 } // yy
-#line 2183 "parser.tab.h"
+#line 2171 "parser.tab.h"
 
 
 

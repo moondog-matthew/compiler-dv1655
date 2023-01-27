@@ -3,1629 +3,1171 @@ Nonterminals useless in grammar
     mainclass
     vardeclaration
     type
+    statement
+    statements
 
 
 Terminals unused in grammar
 
+    LCB
+    RCB
     CLASS
     STATIC
     VOID
     MAIN
     PUBLIC
-    COMMENT
+    SEMICOLON
     BOOLTYPE
     STRING
-    STATEMENT
+    IF
+    ELSE
+    WHILE
+    PRINT
 
 
 Rules useless in grammar
 
-   36 mainclass: PUBLIC CLASS identifier LCB PUBLIC STATIC VOID MAIN LP STRING LHB RHB identifier LP LCB statement RCB RCB
+   30 mainclass: PUBLIC CLASS identifier LCB PUBLIC STATIC VOID MAIN LP STRING LHB RHB identifier LP LCB statement RCB RCB
 
-   37 vardeclaration: type identifier SEMICOLON
+   31 vardeclaration: type identifier SEMICOLON
 
-   38 type: INTTYPE LHB RHB
-   39     | BOOLTYPE
-   40     | INTTYPE
-   41     | identifier
+   32 type: INTTYPE LHB RHB
+   33     | BOOLTYPE
+   34     | INTTYPE
+   35     | identifier
+
+   36 statement: ε
+   37          | LCB statements RCB
+   38          | IF LP expression RP statement
+   39          | IF LP expression RP statement ELSE statement
+   40          | WHILE LP expression RP statement
+   41          | PRINT LP expression RP SEMICOLON
+   42          | identifier ASSIGN expression SEMICOLON
+   43          | identifier LHB expression RHB ASSIGN expression SEMICOLON
+
+   44 statements: ε
+   45           | statements statement
 
 
-State 9 conflicts: 6 shift/reduce
-State 33 conflicts: 12 shift/reduce
-State 40 conflicts: 5 shift/reduce
-State 49 conflicts: 5 shift/reduce
-State 56 conflicts: 2 shift/reduce
-State 57 conflicts: 2 shift/reduce
-State 58 conflicts: 2 shift/reduce
-State 59 conflicts: 2 shift/reduce
-State 62 conflicts: 2 shift/reduce
-State 63 conflicts: 2 shift/reduce
-State 64 conflicts: 2 shift/reduce
-State 65 conflicts: 2 shift/reduce
-State 66 conflicts: 2 shift/reduce
-State 67 conflicts: 2 shift/reduce
-State 75 conflicts: 5 shift/reduce
+State 14 conflicts: 1 shift/reduce
+State 33 conflicts: 1 shift/reduce
+State 34 conflicts: 1 shift/reduce
+State 35 conflicts: 1 shift/reduce
+State 36 conflicts: 1 shift/reduce
+State 38 conflicts: 1 shift/reduce
+State 39 conflicts: 1 shift/reduce
+State 40 conflicts: 1 shift/reduce
+State 41 conflicts: 1 shift/reduce
+State 42 conflicts: 1 shift/reduce
+State 43 conflicts: 1 shift/reduce
+State 49 conflicts: 1 shift/reduce
 
 
 Grammar
 
     0 $accept: root "end of file"
 
-    1 root: statement
+    1 root: expression
 
-    2 statement: ε
-    3          | LCB statements RCB
-    4          | IF LP expression RP statement
-    5          | IF LP expression RP statement ELSE statement
-    6          | WHILE LP expression RP statement
-    7          | PRINT LP expression RP SEMICOLON
-    8          | identifier ASSIGN expression SEMICOLON
-    9          | identifier LHB expression RHB ASSIGN expression SEMICOLON
+    2 expression: expression PLUSOP expression
+    3           | expression MINUSOP expression
+    4           | expression MULTOP expression
+    5           | expression DIVOP expression
+    6           | expression ASSIGN expression
+    7           | expression GT expression
+    8           | expression LT expression
+    9           | expression EQ expression
+   10           | expression OR expression
+   11           | expression AND expression
+   12           | expression LHB expression RHB
+   13           | expression PERIOD LENGTH
+   14           | expression PERIOD identifier LP exprlist RP
+   15           | expression PERIOD identifier LP RP
+   16           | TRUE
+   17           | FALSE
+   18           | identifier
+   19           | THIS
+   20           | NEW INTTYPE LHB expression RHB
+   21           | NEW identifier LP RP
+   22           | EXCLAMATION expression
+   23           | factor
 
-   10 statements: ε
-   11           | statements statement
+   24 exprlist: ε
+   25         | expression
+   26         | exprlist COMMA expression
 
-   12 expression: expression PLUSOP expression
-   13           | expression MINUSOP expression
-   14           | expression MULTOP expression
-   15           | expression DIVOP expression
-   16           | expression ASSIGN expression
-   17           | expression GT expression
-   18           | expression LT expression
-   19           | expression EQ expression
-   20           | expression OR expression
-   21           | expression AND expression
-   22           | expression LHB expression RHB
-   23           | expression PERIOD LENGTH
-   24           | expression PERIOD identifier LP expression COMMA expression RP
-   25           | TRUE
-   26           | FALSE
-   27           | identifier
-   28           | THIS
-   29           | NEW INTTYPE LHB expression RHB
-   30           | NEW identifier LP RP
-   31           | EXCLAMATION expression
-   32           | factor
+   27 factor: INT
+   28       | LP expression RP
 
-   33 factor: INT
-   34       | LP expression RP
-
-   35 identifier: IDENTIFIER
+   29 identifier: IDENTIFIER
 
 
 Terminals, with rules where they appear
 
     "end of file" (0) 0
     error (256)
-    PLUSOP <std::string> (258) 12
-    MINUSOP <std::string> (259) 13
-    MULTOP <std::string> (260) 14
-    DIVOP <std::string> (261) 15
-    INT <std::string> (262) 33
-    LP <std::string> (263) 4 5 6 7 24 30 34
-    RP <std::string> (264) 4 5 6 7 24 30 34
-    LHB <std::string> (265) 9 22 29
-    RHB <std::string> (266) 9 22 29
-    LCB <std::string> (267) 3
-    RCB <std::string> (268) 3
-    ASSIGN <std::string> (269) 8 9 16
-    EQ <std::string> (270) 19
-    AND <std::string> (271) 21
-    OR <std::string> (272) 20
-    GT <std::string> (273) 17
-    LT <std::string> (274) 18
+    PLUSOP <std::string> (258) 2
+    MINUSOP <std::string> (259) 3
+    MULTOP <std::string> (260) 4
+    DIVOP <std::string> (261) 5
+    INT <std::string> (262) 27
+    LP <std::string> (263) 14 15 21 28
+    RP <std::string> (264) 14 15 21 28
+    LHB <std::string> (265) 12 20
+    RHB <std::string> (266) 12 20
+    LCB <std::string> (267)
+    RCB <std::string> (268)
+    ASSIGN <std::string> (269) 6
+    EQ <std::string> (270) 9
+    AND <std::string> (271) 11
+    OR <std::string> (272) 10
+    GT <std::string> (273) 7
+    LT <std::string> (274) 8
     CLASS <std::string> (275)
     STATIC <std::string> (276)
     VOID <std::string> (277)
     MAIN <std::string> (278)
     PUBLIC <std::string> (279)
-    COMMENT <std::string> (280)
-    PERIOD <std::string> (281) 23 24
-    COMMA <std::string> (282) 24
-    EXCLAMATION <std::string> (283) 31
-    SEMICOLON <std::string> (284) 7 8 9
-    INTTYPE <std::string> (285) 29
-    BOOLTYPE <std::string> (286)
-    STRING <std::string> (287)
-    IF <std::string> (288) 4 5
-    ELSE <std::string> (289) 5
-    WHILE <std::string> (290) 6
-    NEW <std::string> (291) 29 30
-    LENGTH <std::string> (292) 23
-    PRINT <std::string> (293) 7
-    IDENTIFIER <std::string> (294) 35
-    TRUE <std::string> (295) 25
-    FALSE <std::string> (296) 26
-    THIS <std::string> (297) 28
-    STATEMENT <std::string> (298)
-    IFTHEN (299)
+    PERIOD <std::string> (280) 13 14 15
+    COMMA <std::string> (281) 26
+    EXCLAMATION <std::string> (282) 22
+    SEMICOLON <std::string> (283)
+    INTTYPE <std::string> (284) 20
+    BOOLTYPE <std::string> (285)
+    STRING <std::string> (286)
+    IF <std::string> (287)
+    ELSE <std::string> (288)
+    WHILE <std::string> (289)
+    NEW <std::string> (290) 20 21
+    LENGTH <std::string> (291) 13
+    PRINT <std::string> (292)
+    IDENTIFIER <std::string> (293) 29
+    TRUE <std::string> (294) 16
+    FALSE <std::string> (295) 17
+    THIS <std::string> (296) 19
+    NO_ELSE (297)
 
 
 Nonterminals, with rules where they appear
 
-    $accept (45)
+    $accept (43)
         on left: 0
-    root <Node *> (46)
+    root <Node *> (44)
         on left: 1
         on right: 0
-    statement <Node *> (47)
-        on left: 2 3 4 5 6 7 8 9
-        on right: 1 4 5 6 11
-    statements <Node *> (48)
-        on left: 10 11
-        on right: 3 11
-    expression <Node *> (49)
-        on left: 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32
-        on right: 4 5 6 7 8 9 12 13 14 15 16 17 18 19 20 21 22 23 24 29 31 34
-    factor <Node *> (50)
-        on left: 33 34
-        on right: 32
-    identifier <Node *> (51)
-        on left: 35
-        on right: 8 9 24 27 30
+    expression <Node *> (45)
+        on left: 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+        on right: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 20 22 25 26 28
+    exprlist <Node *> (46)
+        on left: 24 25 26
+        on right: 14 26
+    factor <Node *> (47)
+        on left: 27 28
+        on right: 23
+    identifier <Node *> (48)
+        on left: 29
+        on right: 14 15 18 21
 
 
 State 0
 
     0 $accept: • root "end of file"
 
-    LCB         shift, and go to state 1
-    IF          shift, and go to state 2
-    WHILE       shift, and go to state 3
-    PRINT       shift, and go to state 4
-    IDENTIFIER  shift, and go to state 5
+    INT          shift, and go to state 1
+    LP           shift, and go to state 2
+    EXCLAMATION  shift, and go to state 3
+    NEW          shift, and go to state 4
+    IDENTIFIER   shift, and go to state 5
+    TRUE         shift, and go to state 6
+    FALSE        shift, and go to state 7
+    THIS         shift, and go to state 8
 
-    $default  reduce using rule 2 (statement)
-
-    root        go to state 6
-    statement   go to state 7
-    identifier  go to state 8
+    root        go to state 9
+    expression  go to state 10
+    factor      go to state 11
+    identifier  go to state 12
 
 
 State 1
 
-    3 statement: LCB • statements RCB
+   27 factor: INT •
 
-    $default  reduce using rule 10 (statements)
-
-    statements  go to state 9
+    $default  reduce using rule 27 (factor)
 
 
 State 2
 
-    4 statement: IF • LP expression RP statement
-    5          | IF • LP expression RP statement ELSE statement
+   28 factor: LP • expression RP
 
-    LP  shift, and go to state 10
+    INT          shift, and go to state 1
+    LP           shift, and go to state 2
+    EXCLAMATION  shift, and go to state 3
+    NEW          shift, and go to state 4
+    IDENTIFIER   shift, and go to state 5
+    TRUE         shift, and go to state 6
+    FALSE        shift, and go to state 7
+    THIS         shift, and go to state 8
+
+    expression  go to state 13
+    factor      go to state 11
+    identifier  go to state 12
 
 
 State 3
 
-    6 statement: WHILE • LP expression RP statement
+   22 expression: EXCLAMATION • expression
 
-    LP  shift, and go to state 11
+    INT          shift, and go to state 1
+    LP           shift, and go to state 2
+    EXCLAMATION  shift, and go to state 3
+    NEW          shift, and go to state 4
+    IDENTIFIER   shift, and go to state 5
+    TRUE         shift, and go to state 6
+    FALSE        shift, and go to state 7
+    THIS         shift, and go to state 8
+
+    expression  go to state 14
+    factor      go to state 11
+    identifier  go to state 12
 
 
 State 4
 
-    7 statement: PRINT • LP expression RP SEMICOLON
+   20 expression: NEW • INTTYPE LHB expression RHB
+   21           | NEW • identifier LP RP
 
-    LP  shift, and go to state 12
+    INTTYPE     shift, and go to state 15
+    IDENTIFIER  shift, and go to state 5
+
+    identifier  go to state 16
 
 
 State 5
 
-   35 identifier: IDENTIFIER •
+   29 identifier: IDENTIFIER •
 
-    $default  reduce using rule 35 (identifier)
+    $default  reduce using rule 29 (identifier)
 
 
 State 6
 
-    0 $accept: root • "end of file"
+   16 expression: TRUE •
 
-    "end of file"  shift, and go to state 13
+    $default  reduce using rule 16 (expression)
 
 
 State 7
 
-    1 root: statement •
+   17 expression: FALSE •
 
-    $default  reduce using rule 1 (root)
+    $default  reduce using rule 17 (expression)
 
 
 State 8
 
-    8 statement: identifier • ASSIGN expression SEMICOLON
-    9          | identifier • LHB expression RHB ASSIGN expression SEMICOLON
+   19 expression: THIS •
 
-    LHB     shift, and go to state 14
-    ASSIGN  shift, and go to state 15
+    $default  reduce using rule 19 (expression)
 
 
 State 9
 
-    3 statement: LCB statements • RCB
-   11 statements: statements • statement
+    0 $accept: root • "end of file"
 
-    LCB         shift, and go to state 1
-    RCB         shift, and go to state 16
-    IF          shift, and go to state 2
-    WHILE       shift, and go to state 3
-    PRINT       shift, and go to state 4
-    IDENTIFIER  shift, and go to state 5
-
-    LCB         [reduce using rule 2 (statement)]
-    RCB         [reduce using rule 2 (statement)]
-    IF          [reduce using rule 2 (statement)]
-    WHILE       [reduce using rule 2 (statement)]
-    PRINT       [reduce using rule 2 (statement)]
-    IDENTIFIER  [reduce using rule 2 (statement)]
-
-    statement   go to state 17
-    identifier  go to state 8
+    "end of file"  shift, and go to state 17
 
 
 State 10
 
-    4 statement: IF LP • expression RP statement
-    5          | IF LP • expression RP statement ELSE statement
+    1 root: expression •
+    2 expression: expression • PLUSOP expression
+    3           | expression • MINUSOP expression
+    4           | expression • MULTOP expression
+    5           | expression • DIVOP expression
+    6           | expression • ASSIGN expression
+    7           | expression • GT expression
+    8           | expression • LT expression
+    9           | expression • EQ expression
+   10           | expression • OR expression
+   11           | expression • AND expression
+   12           | expression • LHB expression RHB
+   13           | expression • PERIOD LENGTH
+   14           | expression • PERIOD identifier LP exprlist RP
+   15           | expression • PERIOD identifier LP RP
 
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
-    IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
+    PLUSOP   shift, and go to state 18
+    MINUSOP  shift, and go to state 19
+    MULTOP   shift, and go to state 20
+    DIVOP    shift, and go to state 21
+    LHB      shift, and go to state 22
+    ASSIGN   shift, and go to state 23
+    EQ       shift, and go to state 24
+    AND      shift, and go to state 25
+    OR       shift, and go to state 26
+    GT       shift, and go to state 27
+    LT       shift, and go to state 28
+    PERIOD   shift, and go to state 29
 
-    expression  go to state 25
-    factor      go to state 26
-    identifier  go to state 27
+    $default  reduce using rule 1 (root)
 
 
 State 11
 
-    6 statement: WHILE LP • expression RP statement
+   23 expression: factor •
 
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
-    IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
-
-    expression  go to state 28
-    factor      go to state 26
-    identifier  go to state 27
+    $default  reduce using rule 23 (expression)
 
 
 State 12
 
-    7 statement: PRINT LP • expression RP SEMICOLON
+   18 expression: identifier •
 
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
-    IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
-
-    expression  go to state 29
-    factor      go to state 26
-    identifier  go to state 27
+    $default  reduce using rule 18 (expression)
 
 
 State 13
+
+    2 expression: expression • PLUSOP expression
+    3           | expression • MINUSOP expression
+    4           | expression • MULTOP expression
+    5           | expression • DIVOP expression
+    6           | expression • ASSIGN expression
+    7           | expression • GT expression
+    8           | expression • LT expression
+    9           | expression • EQ expression
+   10           | expression • OR expression
+   11           | expression • AND expression
+   12           | expression • LHB expression RHB
+   13           | expression • PERIOD LENGTH
+   14           | expression • PERIOD identifier LP exprlist RP
+   15           | expression • PERIOD identifier LP RP
+   28 factor: LP expression • RP
+
+    PLUSOP   shift, and go to state 18
+    MINUSOP  shift, and go to state 19
+    MULTOP   shift, and go to state 20
+    DIVOP    shift, and go to state 21
+    RP       shift, and go to state 30
+    LHB      shift, and go to state 22
+    ASSIGN   shift, and go to state 23
+    EQ       shift, and go to state 24
+    AND      shift, and go to state 25
+    OR       shift, and go to state 26
+    GT       shift, and go to state 27
+    LT       shift, and go to state 28
+    PERIOD   shift, and go to state 29
+
+
+State 14
+
+    2 expression: expression • PLUSOP expression
+    3           | expression • MINUSOP expression
+    4           | expression • MULTOP expression
+    5           | expression • DIVOP expression
+    6           | expression • ASSIGN expression
+    7           | expression • GT expression
+    8           | expression • LT expression
+    9           | expression • EQ expression
+   10           | expression • OR expression
+   11           | expression • AND expression
+   12           | expression • LHB expression RHB
+   13           | expression • PERIOD LENGTH
+   14           | expression • PERIOD identifier LP exprlist RP
+   15           | expression • PERIOD identifier LP RP
+   22           | EXCLAMATION expression •
+
+    LHB     shift, and go to state 22
+    PERIOD  shift, and go to state 29
+
+    LHB       [reduce using rule 22 (expression)]
+    $default  reduce using rule 22 (expression)
+
+
+State 15
+
+   20 expression: NEW INTTYPE • LHB expression RHB
+
+    LHB  shift, and go to state 31
+
+
+State 16
+
+   21 expression: NEW identifier • LP RP
+
+    LP  shift, and go to state 32
+
+
+State 17
 
     0 $accept: root "end of file" •
 
     $default  accept
 
 
-State 14
-
-    9 statement: identifier LHB • expression RHB ASSIGN expression SEMICOLON
-
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
-    IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
-
-    expression  go to state 30
-    factor      go to state 26
-    identifier  go to state 27
-
-
-State 15
-
-    8 statement: identifier ASSIGN • expression SEMICOLON
-
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
-    IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
-
-    expression  go to state 31
-    factor      go to state 26
-    identifier  go to state 27
-
-
-State 16
-
-    3 statement: LCB statements RCB •
-
-    $default  reduce using rule 3 (statement)
-
-
-State 17
-
-   11 statements: statements statement •
-
-    $default  reduce using rule 11 (statements)
-
-
 State 18
 
-   33 factor: INT •
+    2 expression: expression PLUSOP • expression
 
-    $default  reduce using rule 33 (factor)
+    INT          shift, and go to state 1
+    LP           shift, and go to state 2
+    EXCLAMATION  shift, and go to state 3
+    NEW          shift, and go to state 4
+    IDENTIFIER   shift, and go to state 5
+    TRUE         shift, and go to state 6
+    FALSE        shift, and go to state 7
+    THIS         shift, and go to state 8
+
+    expression  go to state 33
+    factor      go to state 11
+    identifier  go to state 12
 
 
 State 19
 
-   34 factor: LP • expression RP
+    3 expression: expression MINUSOP • expression
 
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
+    INT          shift, and go to state 1
+    LP           shift, and go to state 2
+    EXCLAMATION  shift, and go to state 3
+    NEW          shift, and go to state 4
     IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
+    TRUE         shift, and go to state 6
+    FALSE        shift, and go to state 7
+    THIS         shift, and go to state 8
 
-    expression  go to state 32
-    factor      go to state 26
-    identifier  go to state 27
+    expression  go to state 34
+    factor      go to state 11
+    identifier  go to state 12
 
 
 State 20
 
-   31 expression: EXCLAMATION • expression
+    4 expression: expression MULTOP • expression
 
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
+    INT          shift, and go to state 1
+    LP           shift, and go to state 2
+    EXCLAMATION  shift, and go to state 3
+    NEW          shift, and go to state 4
     IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
+    TRUE         shift, and go to state 6
+    FALSE        shift, and go to state 7
+    THIS         shift, and go to state 8
 
-    expression  go to state 33
-    factor      go to state 26
-    identifier  go to state 27
+    expression  go to state 35
+    factor      go to state 11
+    identifier  go to state 12
 
 
 State 21
 
-   29 expression: NEW • INTTYPE LHB expression RHB
-   30           | NEW • identifier LP RP
+    5 expression: expression DIVOP • expression
 
-    INTTYPE     shift, and go to state 34
-    IDENTIFIER  shift, and go to state 5
+    INT          shift, and go to state 1
+    LP           shift, and go to state 2
+    EXCLAMATION  shift, and go to state 3
+    NEW          shift, and go to state 4
+    IDENTIFIER   shift, and go to state 5
+    TRUE         shift, and go to state 6
+    FALSE        shift, and go to state 7
+    THIS         shift, and go to state 8
 
-    identifier  go to state 35
+    expression  go to state 36
+    factor      go to state 11
+    identifier  go to state 12
 
 
 State 22
 
-   25 expression: TRUE •
+   12 expression: expression LHB • expression RHB
 
-    $default  reduce using rule 25 (expression)
+    INT          shift, and go to state 1
+    LP           shift, and go to state 2
+    EXCLAMATION  shift, and go to state 3
+    NEW          shift, and go to state 4
+    IDENTIFIER   shift, and go to state 5
+    TRUE         shift, and go to state 6
+    FALSE        shift, and go to state 7
+    THIS         shift, and go to state 8
+
+    expression  go to state 37
+    factor      go to state 11
+    identifier  go to state 12
 
 
 State 23
 
-   26 expression: FALSE •
+    6 expression: expression ASSIGN • expression
 
-    $default  reduce using rule 26 (expression)
+    INT          shift, and go to state 1
+    LP           shift, and go to state 2
+    EXCLAMATION  shift, and go to state 3
+    NEW          shift, and go to state 4
+    IDENTIFIER   shift, and go to state 5
+    TRUE         shift, and go to state 6
+    FALSE        shift, and go to state 7
+    THIS         shift, and go to state 8
+
+    expression  go to state 38
+    factor      go to state 11
+    identifier  go to state 12
 
 
 State 24
 
-   28 expression: THIS •
+    9 expression: expression EQ • expression
 
-    $default  reduce using rule 28 (expression)
+    INT          shift, and go to state 1
+    LP           shift, and go to state 2
+    EXCLAMATION  shift, and go to state 3
+    NEW          shift, and go to state 4
+    IDENTIFIER   shift, and go to state 5
+    TRUE         shift, and go to state 6
+    FALSE        shift, and go to state 7
+    THIS         shift, and go to state 8
+
+    expression  go to state 39
+    factor      go to state 11
+    identifier  go to state 12
 
 
 State 25
 
-    4 statement: IF LP expression • RP statement
-    5          | IF LP expression • RP statement ELSE statement
-   12 expression: expression • PLUSOP expression
-   13           | expression • MINUSOP expression
-   14           | expression • MULTOP expression
-   15           | expression • DIVOP expression
-   16           | expression • ASSIGN expression
-   17           | expression • GT expression
-   18           | expression • LT expression
-   19           | expression • EQ expression
-   20           | expression • OR expression
-   21           | expression • AND expression
-   22           | expression • LHB expression RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
+   11 expression: expression AND • expression
 
-    PLUSOP   shift, and go to state 36
-    MINUSOP  shift, and go to state 37
-    MULTOP   shift, and go to state 38
-    DIVOP    shift, and go to state 39
-    RP       shift, and go to state 40
-    LHB      shift, and go to state 41
-    ASSIGN   shift, and go to state 42
-    EQ       shift, and go to state 43
-    AND      shift, and go to state 44
-    OR       shift, and go to state 45
-    GT       shift, and go to state 46
-    LT       shift, and go to state 47
-    PERIOD   shift, and go to state 48
+    INT          shift, and go to state 1
+    LP           shift, and go to state 2
+    EXCLAMATION  shift, and go to state 3
+    NEW          shift, and go to state 4
+    IDENTIFIER   shift, and go to state 5
+    TRUE         shift, and go to state 6
+    FALSE        shift, and go to state 7
+    THIS         shift, and go to state 8
+
+    expression  go to state 40
+    factor      go to state 11
+    identifier  go to state 12
 
 
 State 26
 
-   32 expression: factor •
+   10 expression: expression OR • expression
 
-    $default  reduce using rule 32 (expression)
+    INT          shift, and go to state 1
+    LP           shift, and go to state 2
+    EXCLAMATION  shift, and go to state 3
+    NEW          shift, and go to state 4
+    IDENTIFIER   shift, and go to state 5
+    TRUE         shift, and go to state 6
+    FALSE        shift, and go to state 7
+    THIS         shift, and go to state 8
+
+    expression  go to state 41
+    factor      go to state 11
+    identifier  go to state 12
 
 
 State 27
 
-   27 expression: identifier •
+    7 expression: expression GT • expression
 
-    $default  reduce using rule 27 (expression)
+    INT          shift, and go to state 1
+    LP           shift, and go to state 2
+    EXCLAMATION  shift, and go to state 3
+    NEW          shift, and go to state 4
+    IDENTIFIER   shift, and go to state 5
+    TRUE         shift, and go to state 6
+    FALSE        shift, and go to state 7
+    THIS         shift, and go to state 8
+
+    expression  go to state 42
+    factor      go to state 11
+    identifier  go to state 12
 
 
 State 28
 
-    6 statement: WHILE LP expression • RP statement
-   12 expression: expression • PLUSOP expression
-   13           | expression • MINUSOP expression
-   14           | expression • MULTOP expression
-   15           | expression • DIVOP expression
-   16           | expression • ASSIGN expression
-   17           | expression • GT expression
-   18           | expression • LT expression
-   19           | expression • EQ expression
-   20           | expression • OR expression
-   21           | expression • AND expression
-   22           | expression • LHB expression RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
+    8 expression: expression LT • expression
 
-    PLUSOP   shift, and go to state 36
-    MINUSOP  shift, and go to state 37
-    MULTOP   shift, and go to state 38
-    DIVOP    shift, and go to state 39
-    RP       shift, and go to state 49
-    LHB      shift, and go to state 41
-    ASSIGN   shift, and go to state 42
-    EQ       shift, and go to state 43
-    AND      shift, and go to state 44
-    OR       shift, and go to state 45
-    GT       shift, and go to state 46
-    LT       shift, and go to state 47
-    PERIOD   shift, and go to state 48
+    INT          shift, and go to state 1
+    LP           shift, and go to state 2
+    EXCLAMATION  shift, and go to state 3
+    NEW          shift, and go to state 4
+    IDENTIFIER   shift, and go to state 5
+    TRUE         shift, and go to state 6
+    FALSE        shift, and go to state 7
+    THIS         shift, and go to state 8
+
+    expression  go to state 43
+    factor      go to state 11
+    identifier  go to state 12
 
 
 State 29
 
-    7 statement: PRINT LP expression • RP SEMICOLON
-   12 expression: expression • PLUSOP expression
-   13           | expression • MINUSOP expression
-   14           | expression • MULTOP expression
-   15           | expression • DIVOP expression
-   16           | expression • ASSIGN expression
-   17           | expression • GT expression
-   18           | expression • LT expression
-   19           | expression • EQ expression
-   20           | expression • OR expression
-   21           | expression • AND expression
-   22           | expression • LHB expression RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
+   13 expression: expression PERIOD • LENGTH
+   14           | expression PERIOD • identifier LP exprlist RP
+   15           | expression PERIOD • identifier LP RP
 
-    PLUSOP   shift, and go to state 36
-    MINUSOP  shift, and go to state 37
-    MULTOP   shift, and go to state 38
-    DIVOP    shift, and go to state 39
-    RP       shift, and go to state 50
-    LHB      shift, and go to state 41
-    ASSIGN   shift, and go to state 42
-    EQ       shift, and go to state 43
-    AND      shift, and go to state 44
-    OR       shift, and go to state 45
-    GT       shift, and go to state 46
-    LT       shift, and go to state 47
-    PERIOD   shift, and go to state 48
+    LENGTH      shift, and go to state 44
+    IDENTIFIER  shift, and go to state 5
+
+    identifier  go to state 45
 
 
 State 30
 
-    9 statement: identifier LHB expression • RHB ASSIGN expression SEMICOLON
-   12 expression: expression • PLUSOP expression
-   13           | expression • MINUSOP expression
-   14           | expression • MULTOP expression
-   15           | expression • DIVOP expression
-   16           | expression • ASSIGN expression
-   17           | expression • GT expression
-   18           | expression • LT expression
-   19           | expression • EQ expression
-   20           | expression • OR expression
-   21           | expression • AND expression
-   22           | expression • LHB expression RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
+   28 factor: LP expression RP •
 
-    PLUSOP   shift, and go to state 36
-    MINUSOP  shift, and go to state 37
-    MULTOP   shift, and go to state 38
-    DIVOP    shift, and go to state 39
-    LHB      shift, and go to state 41
-    RHB      shift, and go to state 51
-    ASSIGN   shift, and go to state 42
-    EQ       shift, and go to state 43
-    AND      shift, and go to state 44
-    OR       shift, and go to state 45
-    GT       shift, and go to state 46
-    LT       shift, and go to state 47
-    PERIOD   shift, and go to state 48
+    $default  reduce using rule 28 (factor)
 
 
 State 31
 
-    8 statement: identifier ASSIGN expression • SEMICOLON
-   12 expression: expression • PLUSOP expression
-   13           | expression • MINUSOP expression
-   14           | expression • MULTOP expression
-   15           | expression • DIVOP expression
-   16           | expression • ASSIGN expression
-   17           | expression • GT expression
-   18           | expression • LT expression
-   19           | expression • EQ expression
-   20           | expression • OR expression
-   21           | expression • AND expression
-   22           | expression • LHB expression RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
+   20 expression: NEW INTTYPE LHB • expression RHB
 
-    PLUSOP     shift, and go to state 36
-    MINUSOP    shift, and go to state 37
-    MULTOP     shift, and go to state 38
-    DIVOP      shift, and go to state 39
-    LHB        shift, and go to state 41
-    ASSIGN     shift, and go to state 42
-    EQ         shift, and go to state 43
-    AND        shift, and go to state 44
-    OR         shift, and go to state 45
-    GT         shift, and go to state 46
-    LT         shift, and go to state 47
-    PERIOD     shift, and go to state 48
-    SEMICOLON  shift, and go to state 52
+    INT          shift, and go to state 1
+    LP           shift, and go to state 2
+    EXCLAMATION  shift, and go to state 3
+    NEW          shift, and go to state 4
+    IDENTIFIER   shift, and go to state 5
+    TRUE         shift, and go to state 6
+    FALSE        shift, and go to state 7
+    THIS         shift, and go to state 8
+
+    expression  go to state 46
+    factor      go to state 11
+    identifier  go to state 12
 
 
 State 32
 
-   12 expression: expression • PLUSOP expression
-   13           | expression • MINUSOP expression
-   14           | expression • MULTOP expression
-   15           | expression • DIVOP expression
-   16           | expression • ASSIGN expression
-   17           | expression • GT expression
-   18           | expression • LT expression
-   19           | expression • EQ expression
-   20           | expression • OR expression
-   21           | expression • AND expression
-   22           | expression • LHB expression RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
-   34 factor: LP expression • RP
+   21 expression: NEW identifier LP • RP
 
-    PLUSOP   shift, and go to state 36
-    MINUSOP  shift, and go to state 37
-    MULTOP   shift, and go to state 38
-    DIVOP    shift, and go to state 39
-    RP       shift, and go to state 53
-    LHB      shift, and go to state 41
-    ASSIGN   shift, and go to state 42
-    EQ       shift, and go to state 43
-    AND      shift, and go to state 44
-    OR       shift, and go to state 45
-    GT       shift, and go to state 46
-    LT       shift, and go to state 47
-    PERIOD   shift, and go to state 48
+    RP  shift, and go to state 47
 
 
 State 33
 
-   12 expression: expression • PLUSOP expression
-   13           | expression • MINUSOP expression
-   14           | expression • MULTOP expression
-   15           | expression • DIVOP expression
-   16           | expression • ASSIGN expression
-   17           | expression • GT expression
-   18           | expression • LT expression
-   19           | expression • EQ expression
-   20           | expression • OR expression
-   21           | expression • AND expression
-   22           | expression • LHB expression RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
-   31           | EXCLAMATION expression •
+    2 expression: expression • PLUSOP expression
+    2           | expression PLUSOP expression •
+    3           | expression • MINUSOP expression
+    4           | expression • MULTOP expression
+    5           | expression • DIVOP expression
+    6           | expression • ASSIGN expression
+    7           | expression • GT expression
+    8           | expression • LT expression
+    9           | expression • EQ expression
+   10           | expression • OR expression
+   11           | expression • AND expression
+   12           | expression • LHB expression RHB
+   13           | expression • PERIOD LENGTH
+   14           | expression • PERIOD identifier LP exprlist RP
+   15           | expression • PERIOD identifier LP RP
 
-    PLUSOP   shift, and go to state 36
-    MINUSOP  shift, and go to state 37
-    MULTOP   shift, and go to state 38
-    DIVOP    shift, and go to state 39
-    LHB      shift, and go to state 41
-    ASSIGN   shift, and go to state 42
-    EQ       shift, and go to state 43
-    AND      shift, and go to state 44
-    OR       shift, and go to state 45
-    GT       shift, and go to state 46
-    LT       shift, and go to state 47
-    PERIOD   shift, and go to state 48
+    MULTOP  shift, and go to state 20
+    DIVOP   shift, and go to state 21
+    LHB     shift, and go to state 22
+    PERIOD  shift, and go to state 29
 
-    PLUSOP    [reduce using rule 31 (expression)]
-    MINUSOP   [reduce using rule 31 (expression)]
-    MULTOP    [reduce using rule 31 (expression)]
-    DIVOP     [reduce using rule 31 (expression)]
-    LHB       [reduce using rule 31 (expression)]
-    ASSIGN    [reduce using rule 31 (expression)]
-    EQ        [reduce using rule 31 (expression)]
-    AND       [reduce using rule 31 (expression)]
-    OR        [reduce using rule 31 (expression)]
-    GT        [reduce using rule 31 (expression)]
-    LT        [reduce using rule 31 (expression)]
-    PERIOD    [reduce using rule 31 (expression)]
-    $default  reduce using rule 31 (expression)
+    LHB       [reduce using rule 2 (expression)]
+    $default  reduce using rule 2 (expression)
 
 
 State 34
 
-   29 expression: NEW INTTYPE • LHB expression RHB
+    2 expression: expression • PLUSOP expression
+    3           | expression • MINUSOP expression
+    3           | expression MINUSOP expression •
+    4           | expression • MULTOP expression
+    5           | expression • DIVOP expression
+    6           | expression • ASSIGN expression
+    7           | expression • GT expression
+    8           | expression • LT expression
+    9           | expression • EQ expression
+   10           | expression • OR expression
+   11           | expression • AND expression
+   12           | expression • LHB expression RHB
+   13           | expression • PERIOD LENGTH
+   14           | expression • PERIOD identifier LP exprlist RP
+   15           | expression • PERIOD identifier LP RP
 
-    LHB  shift, and go to state 54
+    MULTOP  shift, and go to state 20
+    DIVOP   shift, and go to state 21
+    LHB     shift, and go to state 22
+    PERIOD  shift, and go to state 29
+
+    LHB       [reduce using rule 3 (expression)]
+    $default  reduce using rule 3 (expression)
 
 
 State 35
 
-   30 expression: NEW identifier • LP RP
+    2 expression: expression • PLUSOP expression
+    3           | expression • MINUSOP expression
+    4           | expression • MULTOP expression
+    4           | expression MULTOP expression •
+    5           | expression • DIVOP expression
+    6           | expression • ASSIGN expression
+    7           | expression • GT expression
+    8           | expression • LT expression
+    9           | expression • EQ expression
+   10           | expression • OR expression
+   11           | expression • AND expression
+   12           | expression • LHB expression RHB
+   13           | expression • PERIOD LENGTH
+   14           | expression • PERIOD identifier LP exprlist RP
+   15           | expression • PERIOD identifier LP RP
 
-    LP  shift, and go to state 55
+    LHB     shift, and go to state 22
+    PERIOD  shift, and go to state 29
+
+    LHB       [reduce using rule 4 (expression)]
+    $default  reduce using rule 4 (expression)
 
 
 State 36
 
-   12 expression: expression PLUSOP • expression
+    2 expression: expression • PLUSOP expression
+    3           | expression • MINUSOP expression
+    4           | expression • MULTOP expression
+    5           | expression • DIVOP expression
+    5           | expression DIVOP expression •
+    6           | expression • ASSIGN expression
+    7           | expression • GT expression
+    8           | expression • LT expression
+    9           | expression • EQ expression
+   10           | expression • OR expression
+   11           | expression • AND expression
+   12           | expression • LHB expression RHB
+   13           | expression • PERIOD LENGTH
+   14           | expression • PERIOD identifier LP exprlist RP
+   15           | expression • PERIOD identifier LP RP
 
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
-    IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
+    LHB     shift, and go to state 22
+    PERIOD  shift, and go to state 29
 
-    expression  go to state 56
-    factor      go to state 26
-    identifier  go to state 27
+    LHB       [reduce using rule 5 (expression)]
+    $default  reduce using rule 5 (expression)
 
 
 State 37
 
-   13 expression: expression MINUSOP • expression
+    2 expression: expression • PLUSOP expression
+    3           | expression • MINUSOP expression
+    4           | expression • MULTOP expression
+    5           | expression • DIVOP expression
+    6           | expression • ASSIGN expression
+    7           | expression • GT expression
+    8           | expression • LT expression
+    9           | expression • EQ expression
+   10           | expression • OR expression
+   11           | expression • AND expression
+   12           | expression • LHB expression RHB
+   12           | expression LHB expression • RHB
+   13           | expression • PERIOD LENGTH
+   14           | expression • PERIOD identifier LP exprlist RP
+   15           | expression • PERIOD identifier LP RP
 
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
-    IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
-
-    expression  go to state 57
-    factor      go to state 26
-    identifier  go to state 27
+    PLUSOP   shift, and go to state 18
+    MINUSOP  shift, and go to state 19
+    MULTOP   shift, and go to state 20
+    DIVOP    shift, and go to state 21
+    LHB      shift, and go to state 22
+    RHB      shift, and go to state 48
+    ASSIGN   shift, and go to state 23
+    EQ       shift, and go to state 24
+    AND      shift, and go to state 25
+    OR       shift, and go to state 26
+    GT       shift, and go to state 27
+    LT       shift, and go to state 28
+    PERIOD   shift, and go to state 29
 
 
 State 38
 
-   14 expression: expression MULTOP • expression
+    2 expression: expression • PLUSOP expression
+    3           | expression • MINUSOP expression
+    4           | expression • MULTOP expression
+    5           | expression • DIVOP expression
+    6           | expression • ASSIGN expression
+    6           | expression ASSIGN expression •
+    7           | expression • GT expression
+    8           | expression • LT expression
+    9           | expression • EQ expression
+   10           | expression • OR expression
+   11           | expression • AND expression
+   12           | expression • LHB expression RHB
+   13           | expression • PERIOD LENGTH
+   14           | expression • PERIOD identifier LP exprlist RP
+   15           | expression • PERIOD identifier LP RP
 
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
-    IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
+    PLUSOP   shift, and go to state 18
+    MINUSOP  shift, and go to state 19
+    MULTOP   shift, and go to state 20
+    DIVOP    shift, and go to state 21
+    LHB      shift, and go to state 22
+    ASSIGN   shift, and go to state 23
+    EQ       shift, and go to state 24
+    AND      shift, and go to state 25
+    OR       shift, and go to state 26
+    GT       shift, and go to state 27
+    LT       shift, and go to state 28
+    PERIOD   shift, and go to state 29
 
-    expression  go to state 58
-    factor      go to state 26
-    identifier  go to state 27
+    LHB       [reduce using rule 6 (expression)]
+    $default  reduce using rule 6 (expression)
 
 
 State 39
 
-   15 expression: expression DIVOP • expression
+    2 expression: expression • PLUSOP expression
+    3           | expression • MINUSOP expression
+    4           | expression • MULTOP expression
+    5           | expression • DIVOP expression
+    6           | expression • ASSIGN expression
+    7           | expression • GT expression
+    8           | expression • LT expression
+    9           | expression • EQ expression
+    9           | expression EQ expression •
+   10           | expression • OR expression
+   11           | expression • AND expression
+   12           | expression • LHB expression RHB
+   13           | expression • PERIOD LENGTH
+   14           | expression • PERIOD identifier LP exprlist RP
+   15           | expression • PERIOD identifier LP RP
 
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
-    IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
+    PLUSOP   shift, and go to state 18
+    MINUSOP  shift, and go to state 19
+    MULTOP   shift, and go to state 20
+    DIVOP    shift, and go to state 21
+    LHB      shift, and go to state 22
+    GT       shift, and go to state 27
+    LT       shift, and go to state 28
+    PERIOD   shift, and go to state 29
 
-    expression  go to state 59
-    factor      go to state 26
-    identifier  go to state 27
+    LHB       [reduce using rule 9 (expression)]
+    $default  reduce using rule 9 (expression)
 
 
 State 40
 
-    4 statement: IF LP expression RP • statement
-    5          | IF LP expression RP • statement ELSE statement
+    2 expression: expression • PLUSOP expression
+    3           | expression • MINUSOP expression
+    4           | expression • MULTOP expression
+    5           | expression • DIVOP expression
+    6           | expression • ASSIGN expression
+    7           | expression • GT expression
+    8           | expression • LT expression
+    9           | expression • EQ expression
+   10           | expression • OR expression
+   11           | expression • AND expression
+   11           | expression AND expression •
+   12           | expression • LHB expression RHB
+   13           | expression • PERIOD LENGTH
+   14           | expression • PERIOD identifier LP exprlist RP
+   15           | expression • PERIOD identifier LP RP
 
-    LCB         shift, and go to state 1
-    IF          shift, and go to state 2
-    WHILE       shift, and go to state 3
-    PRINT       shift, and go to state 4
-    IDENTIFIER  shift, and go to state 5
+    PLUSOP   shift, and go to state 18
+    MINUSOP  shift, and go to state 19
+    MULTOP   shift, and go to state 20
+    DIVOP    shift, and go to state 21
+    LHB      shift, and go to state 22
+    EQ       shift, and go to state 24
+    GT       shift, and go to state 27
+    LT       shift, and go to state 28
+    PERIOD   shift, and go to state 29
 
-    LCB         [reduce using rule 2 (statement)]
-    IF          [reduce using rule 2 (statement)]
-    WHILE       [reduce using rule 2 (statement)]
-    PRINT       [reduce using rule 2 (statement)]
-    IDENTIFIER  [reduce using rule 2 (statement)]
-    $default    reduce using rule 2 (statement)
-
-    statement   go to state 60
-    identifier  go to state 8
+    LHB       [reduce using rule 11 (expression)]
+    $default  reduce using rule 11 (expression)
 
 
 State 41
 
-   22 expression: expression LHB • expression RHB
+    2 expression: expression • PLUSOP expression
+    3           | expression • MINUSOP expression
+    4           | expression • MULTOP expression
+    5           | expression • DIVOP expression
+    6           | expression • ASSIGN expression
+    7           | expression • GT expression
+    8           | expression • LT expression
+    9           | expression • EQ expression
+   10           | expression • OR expression
+   10           | expression OR expression •
+   11           | expression • AND expression
+   12           | expression • LHB expression RHB
+   13           | expression • PERIOD LENGTH
+   14           | expression • PERIOD identifier LP exprlist RP
+   15           | expression • PERIOD identifier LP RP
 
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
-    IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
+    PLUSOP   shift, and go to state 18
+    MINUSOP  shift, and go to state 19
+    MULTOP   shift, and go to state 20
+    DIVOP    shift, and go to state 21
+    LHB      shift, and go to state 22
+    EQ       shift, and go to state 24
+    GT       shift, and go to state 27
+    LT       shift, and go to state 28
+    PERIOD   shift, and go to state 29
 
-    expression  go to state 61
-    factor      go to state 26
-    identifier  go to state 27
+    LHB       [reduce using rule 10 (expression)]
+    $default  reduce using rule 10 (expression)
 
 
 State 42
 
-   16 expression: expression ASSIGN • expression
+    2 expression: expression • PLUSOP expression
+    3           | expression • MINUSOP expression
+    4           | expression • MULTOP expression
+    5           | expression • DIVOP expression
+    6           | expression • ASSIGN expression
+    7           | expression • GT expression
+    7           | expression GT expression •
+    8           | expression • LT expression
+    9           | expression • EQ expression
+   10           | expression • OR expression
+   11           | expression • AND expression
+   12           | expression • LHB expression RHB
+   13           | expression • PERIOD LENGTH
+   14           | expression • PERIOD identifier LP exprlist RP
+   15           | expression • PERIOD identifier LP RP
 
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
-    IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
+    PLUSOP   shift, and go to state 18
+    MINUSOP  shift, and go to state 19
+    MULTOP   shift, and go to state 20
+    DIVOP    shift, and go to state 21
+    LHB      shift, and go to state 22
+    PERIOD   shift, and go to state 29
 
-    expression  go to state 62
-    factor      go to state 26
-    identifier  go to state 27
+    LHB       [reduce using rule 7 (expression)]
+    $default  reduce using rule 7 (expression)
 
 
 State 43
 
-   19 expression: expression EQ • expression
+    2 expression: expression • PLUSOP expression
+    3           | expression • MINUSOP expression
+    4           | expression • MULTOP expression
+    5           | expression • DIVOP expression
+    6           | expression • ASSIGN expression
+    7           | expression • GT expression
+    8           | expression • LT expression
+    8           | expression LT expression •
+    9           | expression • EQ expression
+   10           | expression • OR expression
+   11           | expression • AND expression
+   12           | expression • LHB expression RHB
+   13           | expression • PERIOD LENGTH
+   14           | expression • PERIOD identifier LP exprlist RP
+   15           | expression • PERIOD identifier LP RP
 
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
-    IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
+    PLUSOP   shift, and go to state 18
+    MINUSOP  shift, and go to state 19
+    MULTOP   shift, and go to state 20
+    DIVOP    shift, and go to state 21
+    LHB      shift, and go to state 22
+    PERIOD   shift, and go to state 29
 
-    expression  go to state 63
-    factor      go to state 26
-    identifier  go to state 27
+    LHB       [reduce using rule 8 (expression)]
+    $default  reduce using rule 8 (expression)
 
 
 State 44
 
-   21 expression: expression AND • expression
+   13 expression: expression PERIOD LENGTH •
 
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
-    IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
-
-    expression  go to state 64
-    factor      go to state 26
-    identifier  go to state 27
+    $default  reduce using rule 13 (expression)
 
 
 State 45
 
-   20 expression: expression OR • expression
+   14 expression: expression PERIOD identifier • LP exprlist RP
+   15           | expression PERIOD identifier • LP RP
 
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
-    IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
-
-    expression  go to state 65
-    factor      go to state 26
-    identifier  go to state 27
+    LP  shift, and go to state 49
 
 
 State 46
 
-   17 expression: expression GT • expression
+    2 expression: expression • PLUSOP expression
+    3           | expression • MINUSOP expression
+    4           | expression • MULTOP expression
+    5           | expression • DIVOP expression
+    6           | expression • ASSIGN expression
+    7           | expression • GT expression
+    8           | expression • LT expression
+    9           | expression • EQ expression
+   10           | expression • OR expression
+   11           | expression • AND expression
+   12           | expression • LHB expression RHB
+   13           | expression • PERIOD LENGTH
+   14           | expression • PERIOD identifier LP exprlist RP
+   15           | expression • PERIOD identifier LP RP
+   20           | NEW INTTYPE LHB expression • RHB
 
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
-    IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
-
-    expression  go to state 66
-    factor      go to state 26
-    identifier  go to state 27
+    PLUSOP   shift, and go to state 18
+    MINUSOP  shift, and go to state 19
+    MULTOP   shift, and go to state 20
+    DIVOP    shift, and go to state 21
+    LHB      shift, and go to state 22
+    RHB      shift, and go to state 50
+    ASSIGN   shift, and go to state 23
+    EQ       shift, and go to state 24
+    AND      shift, and go to state 25
+    OR       shift, and go to state 26
+    GT       shift, and go to state 27
+    LT       shift, and go to state 28
+    PERIOD   shift, and go to state 29
 
 
 State 47
 
-   18 expression: expression LT • expression
+   21 expression: NEW identifier LP RP •
 
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
-    IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
-
-    expression  go to state 67
-    factor      go to state 26
-    identifier  go to state 27
+    $default  reduce using rule 21 (expression)
 
 
 State 48
 
-   23 expression: expression PERIOD • LENGTH
-   24           | expression PERIOD • identifier LP expression COMMA expression RP
+   12 expression: expression LHB expression RHB •
 
-    LENGTH      shift, and go to state 68
-    IDENTIFIER  shift, and go to state 5
-
-    identifier  go to state 69
+    $default  reduce using rule 12 (expression)
 
 
 State 49
 
-    6 statement: WHILE LP expression RP • statement
+   14 expression: expression PERIOD identifier LP • exprlist RP
+   15           | expression PERIOD identifier LP • RP
 
-    LCB         shift, and go to state 1
-    IF          shift, and go to state 2
-    WHILE       shift, and go to state 3
-    PRINT       shift, and go to state 4
-    IDENTIFIER  shift, and go to state 5
+    INT          shift, and go to state 1
+    LP           shift, and go to state 2
+    RP           shift, and go to state 51
+    EXCLAMATION  shift, and go to state 3
+    NEW          shift, and go to state 4
+    IDENTIFIER   shift, and go to state 5
+    TRUE         shift, and go to state 6
+    FALSE        shift, and go to state 7
+    THIS         shift, and go to state 8
 
-    LCB         [reduce using rule 2 (statement)]
-    IF          [reduce using rule 2 (statement)]
-    WHILE       [reduce using rule 2 (statement)]
-    PRINT       [reduce using rule 2 (statement)]
-    IDENTIFIER  [reduce using rule 2 (statement)]
-    $default    reduce using rule 2 (statement)
+    RP        [reduce using rule 24 (exprlist)]
+    $default  reduce using rule 24 (exprlist)
 
-    statement   go to state 70
-    identifier  go to state 8
+    expression  go to state 52
+    exprlist    go to state 53
+    factor      go to state 11
+    identifier  go to state 12
 
 
 State 50
 
-    7 statement: PRINT LP expression RP • SEMICOLON
+   20 expression: NEW INTTYPE LHB expression RHB •
 
-    SEMICOLON  shift, and go to state 71
+    $default  reduce using rule 20 (expression)
 
 
 State 51
 
-    9 statement: identifier LHB expression RHB • ASSIGN expression SEMICOLON
+   15 expression: expression PERIOD identifier LP RP •
 
-    ASSIGN  shift, and go to state 72
+    $default  reduce using rule 15 (expression)
 
 
 State 52
 
-    8 statement: identifier ASSIGN expression SEMICOLON •
+    2 expression: expression • PLUSOP expression
+    3           | expression • MINUSOP expression
+    4           | expression • MULTOP expression
+    5           | expression • DIVOP expression
+    6           | expression • ASSIGN expression
+    7           | expression • GT expression
+    8           | expression • LT expression
+    9           | expression • EQ expression
+   10           | expression • OR expression
+   11           | expression • AND expression
+   12           | expression • LHB expression RHB
+   13           | expression • PERIOD LENGTH
+   14           | expression • PERIOD identifier LP exprlist RP
+   15           | expression • PERIOD identifier LP RP
+   25 exprlist: expression •
 
-    $default  reduce using rule 8 (statement)
+    PLUSOP   shift, and go to state 18
+    MINUSOP  shift, and go to state 19
+    MULTOP   shift, and go to state 20
+    DIVOP    shift, and go to state 21
+    LHB      shift, and go to state 22
+    ASSIGN   shift, and go to state 23
+    EQ       shift, and go to state 24
+    AND      shift, and go to state 25
+    OR       shift, and go to state 26
+    GT       shift, and go to state 27
+    LT       shift, and go to state 28
+    PERIOD   shift, and go to state 29
+
+    $default  reduce using rule 25 (exprlist)
 
 
 State 53
 
-   34 factor: LP expression RP •
+   14 expression: expression PERIOD identifier LP exprlist • RP
+   26 exprlist: exprlist • COMMA expression
 
-    $default  reduce using rule 34 (factor)
+    RP     shift, and go to state 54
+    COMMA  shift, and go to state 55
 
 
 State 54
 
-   29 expression: NEW INTTYPE LHB • expression RHB
+   14 expression: expression PERIOD identifier LP exprlist RP •
 
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
-    IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
-
-    expression  go to state 73
-    factor      go to state 26
-    identifier  go to state 27
+    $default  reduce using rule 14 (expression)
 
 
 State 55
 
-   30 expression: NEW identifier LP • RP
+   26 exprlist: exprlist COMMA • expression
 
-    RP  shift, and go to state 74
+    INT          shift, and go to state 1
+    LP           shift, and go to state 2
+    EXCLAMATION  shift, and go to state 3
+    NEW          shift, and go to state 4
+    IDENTIFIER   shift, and go to state 5
+    TRUE         shift, and go to state 6
+    FALSE        shift, and go to state 7
+    THIS         shift, and go to state 8
+
+    expression  go to state 56
+    factor      go to state 11
+    identifier  go to state 12
 
 
 State 56
 
-   12 expression: expression • PLUSOP expression
-   12           | expression PLUSOP expression •
-   13           | expression • MINUSOP expression
-   14           | expression • MULTOP expression
-   15           | expression • DIVOP expression
-   16           | expression • ASSIGN expression
-   17           | expression • GT expression
-   18           | expression • LT expression
-   19           | expression • EQ expression
-   20           | expression • OR expression
-   21           | expression • AND expression
-   22           | expression • LHB expression RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
-
-    MULTOP  shift, and go to state 38
-    DIVOP   shift, and go to state 39
-    LHB     shift, and go to state 41
-    PERIOD  shift, and go to state 48
-
-    LHB       [reduce using rule 12 (expression)]
-    PERIOD    [reduce using rule 12 (expression)]
-    $default  reduce using rule 12 (expression)
-
-
-State 57
-
-   12 expression: expression • PLUSOP expression
-   13           | expression • MINUSOP expression
-   13           | expression MINUSOP expression •
-   14           | expression • MULTOP expression
-   15           | expression • DIVOP expression
-   16           | expression • ASSIGN expression
-   17           | expression • GT expression
-   18           | expression • LT expression
-   19           | expression • EQ expression
-   20           | expression • OR expression
-   21           | expression • AND expression
-   22           | expression • LHB expression RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
-
-    MULTOP  shift, and go to state 38
-    DIVOP   shift, and go to state 39
-    LHB     shift, and go to state 41
-    PERIOD  shift, and go to state 48
-
-    LHB       [reduce using rule 13 (expression)]
-    PERIOD    [reduce using rule 13 (expression)]
-    $default  reduce using rule 13 (expression)
-
-
-State 58
-
-   12 expression: expression • PLUSOP expression
-   13           | expression • MINUSOP expression
-   14           | expression • MULTOP expression
-   14           | expression MULTOP expression •
-   15           | expression • DIVOP expression
-   16           | expression • ASSIGN expression
-   17           | expression • GT expression
-   18           | expression • LT expression
-   19           | expression • EQ expression
-   20           | expression • OR expression
-   21           | expression • AND expression
-   22           | expression • LHB expression RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
-
-    LHB     shift, and go to state 41
-    PERIOD  shift, and go to state 48
-
-    LHB       [reduce using rule 14 (expression)]
-    PERIOD    [reduce using rule 14 (expression)]
-    $default  reduce using rule 14 (expression)
-
-
-State 59
-
-   12 expression: expression • PLUSOP expression
-   13           | expression • MINUSOP expression
-   14           | expression • MULTOP expression
-   15           | expression • DIVOP expression
-   15           | expression DIVOP expression •
-   16           | expression • ASSIGN expression
-   17           | expression • GT expression
-   18           | expression • LT expression
-   19           | expression • EQ expression
-   20           | expression • OR expression
-   21           | expression • AND expression
-   22           | expression • LHB expression RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
-
-    LHB     shift, and go to state 41
-    PERIOD  shift, and go to state 48
-
-    LHB       [reduce using rule 15 (expression)]
-    PERIOD    [reduce using rule 15 (expression)]
-    $default  reduce using rule 15 (expression)
-
-
-State 60
-
-    4 statement: IF LP expression RP statement •
-    5          | IF LP expression RP statement • ELSE statement
-
-    ELSE  shift, and go to state 75
-
-    $default  reduce using rule 4 (statement)
-
-
-State 61
-
-   12 expression: expression • PLUSOP expression
-   13           | expression • MINUSOP expression
-   14           | expression • MULTOP expression
-   15           | expression • DIVOP expression
-   16           | expression • ASSIGN expression
-   17           | expression • GT expression
-   18           | expression • LT expression
-   19           | expression • EQ expression
-   20           | expression • OR expression
-   21           | expression • AND expression
-   22           | expression • LHB expression RHB
-   22           | expression LHB expression • RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
-
-    PLUSOP   shift, and go to state 36
-    MINUSOP  shift, and go to state 37
-    MULTOP   shift, and go to state 38
-    DIVOP    shift, and go to state 39
-    LHB      shift, and go to state 41
-    RHB      shift, and go to state 76
-    ASSIGN   shift, and go to state 42
-    EQ       shift, and go to state 43
-    AND      shift, and go to state 44
-    OR       shift, and go to state 45
-    GT       shift, and go to state 46
-    LT       shift, and go to state 47
-    PERIOD   shift, and go to state 48
-
-
-State 62
-
-   12 expression: expression • PLUSOP expression
-   13           | expression • MINUSOP expression
-   14           | expression • MULTOP expression
-   15           | expression • DIVOP expression
-   16           | expression • ASSIGN expression
-   16           | expression ASSIGN expression •
-   17           | expression • GT expression
-   18           | expression • LT expression
-   19           | expression • EQ expression
-   20           | expression • OR expression
-   21           | expression • AND expression
-   22           | expression • LHB expression RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
-
-    PLUSOP   shift, and go to state 36
-    MINUSOP  shift, and go to state 37
-    MULTOP   shift, and go to state 38
-    DIVOP    shift, and go to state 39
-    LHB      shift, and go to state 41
-    ASSIGN   shift, and go to state 42
-    EQ       shift, and go to state 43
-    AND      shift, and go to state 44
-    OR       shift, and go to state 45
-    GT       shift, and go to state 46
-    LT       shift, and go to state 47
-    PERIOD   shift, and go to state 48
-
-    LHB       [reduce using rule 16 (expression)]
-    PERIOD    [reduce using rule 16 (expression)]
-    $default  reduce using rule 16 (expression)
-
-
-State 63
-
-   12 expression: expression • PLUSOP expression
-   13           | expression • MINUSOP expression
-   14           | expression • MULTOP expression
-   15           | expression • DIVOP expression
-   16           | expression • ASSIGN expression
-   17           | expression • GT expression
-   18           | expression • LT expression
-   19           | expression • EQ expression
-   19           | expression EQ expression •
-   20           | expression • OR expression
-   21           | expression • AND expression
-   22           | expression • LHB expression RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
-
-    PLUSOP   shift, and go to state 36
-    MINUSOP  shift, and go to state 37
-    MULTOP   shift, and go to state 38
-    DIVOP    shift, and go to state 39
-    LHB      shift, and go to state 41
-    GT       shift, and go to state 46
-    LT       shift, and go to state 47
-    PERIOD   shift, and go to state 48
-
-    LHB       [reduce using rule 19 (expression)]
-    PERIOD    [reduce using rule 19 (expression)]
-    $default  reduce using rule 19 (expression)
-
-
-State 64
-
-   12 expression: expression • PLUSOP expression
-   13           | expression • MINUSOP expression
-   14           | expression • MULTOP expression
-   15           | expression • DIVOP expression
-   16           | expression • ASSIGN expression
-   17           | expression • GT expression
-   18           | expression • LT expression
-   19           | expression • EQ expression
-   20           | expression • OR expression
-   21           | expression • AND expression
-   21           | expression AND expression •
-   22           | expression • LHB expression RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
-
-    PLUSOP   shift, and go to state 36
-    MINUSOP  shift, and go to state 37
-    MULTOP   shift, and go to state 38
-    DIVOP    shift, and go to state 39
-    LHB      shift, and go to state 41
-    EQ       shift, and go to state 43
-    GT       shift, and go to state 46
-    LT       shift, and go to state 47
-    PERIOD   shift, and go to state 48
-
-    LHB       [reduce using rule 21 (expression)]
-    PERIOD    [reduce using rule 21 (expression)]
-    $default  reduce using rule 21 (expression)
-
-
-State 65
-
-   12 expression: expression • PLUSOP expression
-   13           | expression • MINUSOP expression
-   14           | expression • MULTOP expression
-   15           | expression • DIVOP expression
-   16           | expression • ASSIGN expression
-   17           | expression • GT expression
-   18           | expression • LT expression
-   19           | expression • EQ expression
-   20           | expression • OR expression
-   20           | expression OR expression •
-   21           | expression • AND expression
-   22           | expression • LHB expression RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
-
-    PLUSOP   shift, and go to state 36
-    MINUSOP  shift, and go to state 37
-    MULTOP   shift, and go to state 38
-    DIVOP    shift, and go to state 39
-    LHB      shift, and go to state 41
-    EQ       shift, and go to state 43
-    GT       shift, and go to state 46
-    LT       shift, and go to state 47
-    PERIOD   shift, and go to state 48
-
-    LHB       [reduce using rule 20 (expression)]
-    PERIOD    [reduce using rule 20 (expression)]
-    $default  reduce using rule 20 (expression)
-
-
-State 66
-
-   12 expression: expression • PLUSOP expression
-   13           | expression • MINUSOP expression
-   14           | expression • MULTOP expression
-   15           | expression • DIVOP expression
-   16           | expression • ASSIGN expression
-   17           | expression • GT expression
-   17           | expression GT expression •
-   18           | expression • LT expression
-   19           | expression • EQ expression
-   20           | expression • OR expression
-   21           | expression • AND expression
-   22           | expression • LHB expression RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
-
-    PLUSOP   shift, and go to state 36
-    MINUSOP  shift, and go to state 37
-    MULTOP   shift, and go to state 38
-    DIVOP    shift, and go to state 39
-    LHB      shift, and go to state 41
-    PERIOD   shift, and go to state 48
-
-    LHB       [reduce using rule 17 (expression)]
-    PERIOD    [reduce using rule 17 (expression)]
-    $default  reduce using rule 17 (expression)
-
-
-State 67
-
-   12 expression: expression • PLUSOP expression
-   13           | expression • MINUSOP expression
-   14           | expression • MULTOP expression
-   15           | expression • DIVOP expression
-   16           | expression • ASSIGN expression
-   17           | expression • GT expression
-   18           | expression • LT expression
-   18           | expression LT expression •
-   19           | expression • EQ expression
-   20           | expression • OR expression
-   21           | expression • AND expression
-   22           | expression • LHB expression RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
-
-    PLUSOP   shift, and go to state 36
-    MINUSOP  shift, and go to state 37
-    MULTOP   shift, and go to state 38
-    DIVOP    shift, and go to state 39
-    LHB      shift, and go to state 41
-    PERIOD   shift, and go to state 48
-
-    LHB       [reduce using rule 18 (expression)]
-    PERIOD    [reduce using rule 18 (expression)]
-    $default  reduce using rule 18 (expression)
-
-
-State 68
-
-   23 expression: expression PERIOD LENGTH •
-
-    $default  reduce using rule 23 (expression)
-
-
-State 69
-
-   24 expression: expression PERIOD identifier • LP expression COMMA expression RP
-
-    LP  shift, and go to state 77
-
-
-State 70
-
-    6 statement: WHILE LP expression RP statement •
-
-    $default  reduce using rule 6 (statement)
-
-
-State 71
-
-    7 statement: PRINT LP expression RP SEMICOLON •
-
-    $default  reduce using rule 7 (statement)
-
-
-State 72
-
-    9 statement: identifier LHB expression RHB ASSIGN • expression SEMICOLON
-
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
-    IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
-
-    expression  go to state 78
-    factor      go to state 26
-    identifier  go to state 27
-
-
-State 73
-
-   12 expression: expression • PLUSOP expression
-   13           | expression • MINUSOP expression
-   14           | expression • MULTOP expression
-   15           | expression • DIVOP expression
-   16           | expression • ASSIGN expression
-   17           | expression • GT expression
-   18           | expression • LT expression
-   19           | expression • EQ expression
-   20           | expression • OR expression
-   21           | expression • AND expression
-   22           | expression • LHB expression RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
-   29           | NEW INTTYPE LHB expression • RHB
-
-    PLUSOP   shift, and go to state 36
-    MINUSOP  shift, and go to state 37
-    MULTOP   shift, and go to state 38
-    DIVOP    shift, and go to state 39
-    LHB      shift, and go to state 41
-    RHB      shift, and go to state 79
-    ASSIGN   shift, and go to state 42
-    EQ       shift, and go to state 43
-    AND      shift, and go to state 44
-    OR       shift, and go to state 45
-    GT       shift, and go to state 46
-    LT       shift, and go to state 47
-    PERIOD   shift, and go to state 48
-
-
-State 74
-
-   30 expression: NEW identifier LP RP •
-
-    $default  reduce using rule 30 (expression)
-
-
-State 75
-
-    5 statement: IF LP expression RP statement ELSE • statement
-
-    LCB         shift, and go to state 1
-    IF          shift, and go to state 2
-    WHILE       shift, and go to state 3
-    PRINT       shift, and go to state 4
-    IDENTIFIER  shift, and go to state 5
-
-    LCB         [reduce using rule 2 (statement)]
-    IF          [reduce using rule 2 (statement)]
-    WHILE       [reduce using rule 2 (statement)]
-    PRINT       [reduce using rule 2 (statement)]
-    IDENTIFIER  [reduce using rule 2 (statement)]
-    $default    reduce using rule 2 (statement)
-
-    statement   go to state 80
-    identifier  go to state 8
-
-
-State 76
-
-   22 expression: expression LHB expression RHB •
-
-    $default  reduce using rule 22 (expression)
-
-
-State 77
-
-   24 expression: expression PERIOD identifier LP • expression COMMA expression RP
-
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
-    IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
-
-    expression  go to state 81
-    factor      go to state 26
-    identifier  go to state 27
-
-
-State 78
-
-    9 statement: identifier LHB expression RHB ASSIGN expression • SEMICOLON
-   12 expression: expression • PLUSOP expression
-   13           | expression • MINUSOP expression
-   14           | expression • MULTOP expression
-   15           | expression • DIVOP expression
-   16           | expression • ASSIGN expression
-   17           | expression • GT expression
-   18           | expression • LT expression
-   19           | expression • EQ expression
-   20           | expression • OR expression
-   21           | expression • AND expression
-   22           | expression • LHB expression RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
-
-    PLUSOP     shift, and go to state 36
-    MINUSOP    shift, and go to state 37
-    MULTOP     shift, and go to state 38
-    DIVOP      shift, and go to state 39
-    LHB        shift, and go to state 41
-    ASSIGN     shift, and go to state 42
-    EQ         shift, and go to state 43
-    AND        shift, and go to state 44
-    OR         shift, and go to state 45
-    GT         shift, and go to state 46
-    LT         shift, and go to state 47
-    PERIOD     shift, and go to state 48
-    SEMICOLON  shift, and go to state 82
-
-
-State 79
-
-   29 expression: NEW INTTYPE LHB expression RHB •
-
-    $default  reduce using rule 29 (expression)
-
-
-State 80
-
-    5 statement: IF LP expression RP statement ELSE statement •
-
-    $default  reduce using rule 5 (statement)
-
-
-State 81
-
-   12 expression: expression • PLUSOP expression
-   13           | expression • MINUSOP expression
-   14           | expression • MULTOP expression
-   15           | expression • DIVOP expression
-   16           | expression • ASSIGN expression
-   17           | expression • GT expression
-   18           | expression • LT expression
-   19           | expression • EQ expression
-   20           | expression • OR expression
-   21           | expression • AND expression
-   22           | expression • LHB expression RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
-   24           | expression PERIOD identifier LP expression • COMMA expression RP
-
-    PLUSOP   shift, and go to state 36
-    MINUSOP  shift, and go to state 37
-    MULTOP   shift, and go to state 38
-    DIVOP    shift, and go to state 39
-    LHB      shift, and go to state 41
-    ASSIGN   shift, and go to state 42
-    EQ       shift, and go to state 43
-    AND      shift, and go to state 44
-    OR       shift, and go to state 45
-    GT       shift, and go to state 46
-    LT       shift, and go to state 47
-    PERIOD   shift, and go to state 48
-    COMMA    shift, and go to state 83
-
-
-State 82
-
-    9 statement: identifier LHB expression RHB ASSIGN expression SEMICOLON •
-
-    $default  reduce using rule 9 (statement)
-
-
-State 83
-
-   24 expression: expression PERIOD identifier LP expression COMMA • expression RP
-
-    INT          shift, and go to state 18
-    LP           shift, and go to state 19
-    EXCLAMATION  shift, and go to state 20
-    NEW          shift, and go to state 21
-    IDENTIFIER   shift, and go to state 5
-    TRUE         shift, and go to state 22
-    FALSE        shift, and go to state 23
-    THIS         shift, and go to state 24
-
-    expression  go to state 84
-    factor      go to state 26
-    identifier  go to state 27
-
-
-State 84
-
-   12 expression: expression • PLUSOP expression
-   13           | expression • MINUSOP expression
-   14           | expression • MULTOP expression
-   15           | expression • DIVOP expression
-   16           | expression • ASSIGN expression
-   17           | expression • GT expression
-   18           | expression • LT expression
-   19           | expression • EQ expression
-   20           | expression • OR expression
-   21           | expression • AND expression
-   22           | expression • LHB expression RHB
-   23           | expression • PERIOD LENGTH
-   24           | expression • PERIOD identifier LP expression COMMA expression RP
-   24           | expression PERIOD identifier LP expression COMMA expression • RP
-
-    PLUSOP   shift, and go to state 36
-    MINUSOP  shift, and go to state 37
-    MULTOP   shift, and go to state 38
-    DIVOP    shift, and go to state 39
-    RP       shift, and go to state 85
-    LHB      shift, and go to state 41
-    ASSIGN   shift, and go to state 42
-    EQ       shift, and go to state 43
-    AND      shift, and go to state 44
-    OR       shift, and go to state 45
-    GT       shift, and go to state 46
-    LT       shift, and go to state 47
-    PERIOD   shift, and go to state 48
-
-
-State 85
-
-   24 expression: expression PERIOD identifier LP expression COMMA expression RP •
-
-    $default  reduce using rule 24 (expression)
+    2 expression: expression • PLUSOP expression
+    3           | expression • MINUSOP expression
+    4           | expression • MULTOP expression
+    5           | expression • DIVOP expression
+    6           | expression • ASSIGN expression
+    7           | expression • GT expression
+    8           | expression • LT expression
+    9           | expression • EQ expression
+   10           | expression • OR expression
+   11           | expression • AND expression
+   12           | expression • LHB expression RHB
+   13           | expression • PERIOD LENGTH
+   14           | expression • PERIOD identifier LP exprlist RP
+   15           | expression • PERIOD identifier LP RP
+   26 exprlist: exprlist COMMA expression •
+
+    PLUSOP   shift, and go to state 18
+    MINUSOP  shift, and go to state 19
+    MULTOP   shift, and go to state 20
+    DIVOP    shift, and go to state 21
+    LHB      shift, and go to state 22
+    ASSIGN   shift, and go to state 23
+    EQ       shift, and go to state 24
+    AND      shift, and go to state 25
+    OR       shift, and go to state 26
+    GT       shift, and go to state 27
+    LT       shift, and go to state 28
+    PERIOD   shift, and go to state 29
+
+    $default  reduce using rule 26 (exprlist)
