@@ -514,7 +514,8 @@ namespace yy {
     TRUE = 295,                    // TRUE
     FALSE = 296,                   // FALSE
     THIS = 297,                    // THIS
-    STATEMENT = 298                // STATEMENT
+    STATEMENT = 298,               // STATEMENT
+    IFTHEN = 299                   // IFTHEN
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -531,7 +532,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 44, ///< Number of tokens.
+        YYNTOKENS = 45, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -577,13 +578,14 @@ namespace yy {
         S_FALSE = 41,                            // FALSE
         S_THIS = 42,                             // THIS
         S_STATEMENT = 43,                        // STATEMENT
-        S_YYACCEPT = 44,                         // $accept
-        S_root = 45,                             // root
-        S_statement = 46,                        // statement
-        S_statements = 47,                       // statements
-        S_expression = 48,                       // expression
-        S_factor = 49,                           // factor
-        S_identifier = 50                        // identifier
+        S_IFTHEN = 44,                           // IFTHEN
+        S_YYACCEPT = 45,                         // $accept
+        S_root = 46,                             // root
+        S_statement = 47,                        // statement
+        S_statements = 48,                       // statements
+        S_expression = 49,                       // expression
+        S_factor = 50,                           // factor
+        S_identifier = 51                        // identifier
       };
     };
 
@@ -1601,6 +1603,21 @@ switch (yykind)
         return symbol_type (token::STATEMENT, v);
       }
 #endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_IFTHEN ()
+      {
+        return symbol_type (token::IFTHEN);
+      }
+#else
+      static
+      symbol_type
+      make_IFTHEN ()
+      {
+        return symbol_type (token::IFTHEN);
+      }
+#endif
 
 
     class context
@@ -1929,7 +1946,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 356,     ///< Last index in yytable_.
+      yylast_ = 339,     ///< Last index in yytable_.
       yynnts_ = 7,  ///< Number of nonterminal symbols.
       yyfinal_ = 13 ///< Termination state number.
     };
@@ -1977,10 +1994,10 @@ switch (yykind)
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
       25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
-      35,    36,    37,    38,    39,    40,    41,    42,    43
+      35,    36,    37,    38,    39,    40,    41,    42,    43,    44
     };
     // Last valid token kind.
-    const int code_max = 298;
+    const int code_max = 299;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
@@ -2200,7 +2217,7 @@ switch (yykind)
 
 
 } // yy
-#line 2204 "parser.tab.h"
+#line 2221 "parser.tab.h"
 
 
 

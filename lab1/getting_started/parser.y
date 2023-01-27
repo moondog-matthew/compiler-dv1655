@@ -26,12 +26,16 @@
 %token END 0 "end of file"
 
 //defition of operator precedence. See https://www.gnu.org/software/bison/manual/bison.html#Precedence-Decl
-%left ASSIGN
+%right ASSIGN
+
 %left AND OR 
 %left EQ  
 %left LT GT
 %left PLUSOP MINUSOP
-%left MULTOP DIVOP
+%left MULTOP DIVOP 
+
+%nonassoc IFTHEN
+%nonassoc ELSE
 
 // definition of the production rules. All production rules are of type Node
 %type <Node *> root expression factor identifier type vardeclaration mainclass statement statements
@@ -70,7 +74,7 @@ statement:
             | LCB statements RCB { 
               $$ = new Node("Statements", "", yylineno);
             }
-            | IF LP expression RP statement {
+            | IF LP expression RP statement %prec IFTHEN { // Solved shift reduce by assigning %prec
               $$ = new Node("IF", "", yylineno);
               $$->children.push_back($3);
               $$->children.push_back($5);
@@ -109,8 +113,7 @@ statements:
               $$ = new Node("Statements", "", yylineno);
               $$->children.push_back($1);
               $$->children.push_back($2);
-
-            }
+                }
             ;
 
 
