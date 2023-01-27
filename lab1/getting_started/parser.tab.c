@@ -1,8 +1,8 @@
-// A Bison parser, made by GNU Bison 3.8.2.
+// A Bison parser, made by GNU Bison 3.5.1.
 
 // Skeleton implementation for Bison LALR(1) parsers in C++
 
-// Copyright (C) 2002-2015, 2018-2021 Free Software Foundation, Inc.
+// Copyright (C) 2002-2015, 2018-2020 Free Software Foundation, Inc.
 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // As a special exception, you may create a larger work that contains
 // part or all of the Bison parser skeleton and distribute that work
@@ -30,9 +30,8 @@
 // This special exception was added by the Free Software Foundation in
 // version 2.2 of Bison.
 
-// DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
-// especially those whose name start with YY_ or yy_.  They are
-// private implementation details that can be changed or removed.
+// Undocumented macros, especially those whose name start with YY_,
+// are private implementation details.  Do not rely on them.
 
 
 
@@ -52,7 +51,7 @@
   extern int yylineno;
   
 
-#line 56 "parser.tab.c"
+#line 55 "parser.tab.c"
 
 
 #ifndef YY_
@@ -66,7 +65,6 @@
 #  define YY_(msgid) msgid
 # endif
 #endif
-
 
 // Whether we are compiled with exception support.
 #ifndef YY_EXCEPTIONS
@@ -104,13 +102,13 @@
 # define YY_STACK_PRINT()               \
   do {                                  \
     if (yydebug_)                       \
-      yy_stack_print_ ();                \
+      yystack_print_ ();                \
   } while (false)
 
 #else // !YYDEBUG
 
 # define YYCDEBUG if (false) std::cerr
-# define YY_SYMBOL_PRINT(Title, Symbol)  YY_USE (Symbol)
+# define YY_SYMBOL_PRINT(Title, Symbol)  YYUSE (Symbol)
 # define YY_REDUCE_PRINT(Rule)           static_cast<void> (0)
 # define YY_STACK_PRINT()                static_cast<void> (0)
 
@@ -125,7 +123,49 @@
 #define YYRECOVERING()  (!!yyerrstatus_)
 
 namespace yy {
-#line 129 "parser.tab.c"
+#line 127 "parser.tab.c"
+
+
+  /* Return YYSTR after stripping away unnecessary quotes and
+     backslashes, so that it's suitable for yyerror.  The heuristic is
+     that double-quoting is unnecessary unless the string contains an
+     apostrophe, a comma, or backslash (other than backslash-backslash).
+     YYSTR is taken from yytname.  */
+  std::string
+  parser::yytnamerr_ (const char *yystr)
+  {
+    if (*yystr == '"')
+      {
+        std::string yyr;
+        char const *yyp = yystr;
+
+        for (;;)
+          switch (*++yyp)
+            {
+            case '\'':
+            case ',':
+              goto do_not_strip_quotes;
+
+            case '\\':
+              if (*++yyp != '\\')
+                goto do_not_strip_quotes;
+              else
+                goto append;
+
+            append:
+            default:
+              yyr += *yyp;
+              break;
+
+            case '"':
+              return yyr;
+            }
+      do_not_strip_quotes: ;
+      }
+
+    return yystr;
+  }
+
 
   /// Build a parser object.
   parser::parser ()
@@ -143,9 +183,9 @@ namespace yy {
   parser::syntax_error::~syntax_error () YY_NOEXCEPT YY_NOTHROW
   {}
 
-  /*---------.
-  | symbol.  |
-  `---------*/
+  /*---------------.
+  | Symbol types.  |
+  `---------------*/
 
 
 
@@ -175,13 +215,13 @@ namespace yy {
     : state (s)
   {}
 
-  parser::symbol_kind_type
-  parser::by_state::kind () const YY_NOEXCEPT
+  parser::symbol_number_type
+  parser::by_state::type_get () const YY_NOEXCEPT
   {
     if (state == empty_state)
-      return symbol_kind::S_YYEMPTY;
+      return empty_symbol;
     else
-      return YY_CAST (symbol_kind_type, yystos_[+state]);
+      return yystos_[+state];
   }
 
   parser::stack_symbol_type::stack_symbol_type ()
@@ -190,55 +230,60 @@ namespace yy {
   parser::stack_symbol_type::stack_symbol_type (YY_RVREF (stack_symbol_type) that)
     : super_type (YY_MOVE (that.state))
   {
-    switch (that.kind ())
+    switch (that.type_get ())
     {
-      case symbol_kind::S_root: // root
-      case symbol_kind::S_expression: // expression
-      case symbol_kind::S_factor: // factor
-      case symbol_kind::S_identifier: // identifier
+      case 46: // root
+      case 47: // mainclass
+      case 48: // statement
+      case 49: // statements
+      case 50: // expression
+      case 51: // factor
+      case 52: // identifier
         value.YY_MOVE_OR_COPY< Node * > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_PLUSOP: // PLUSOP
-      case symbol_kind::S_MINUSOP: // MINUSOP
-      case symbol_kind::S_MULTOP: // MULTOP
-      case symbol_kind::S_DIVOP: // DIVOP
-      case symbol_kind::S_INT: // INT
-      case symbol_kind::S_LP: // LP
-      case symbol_kind::S_RP: // RP
-      case symbol_kind::S_LHB: // LHB
-      case symbol_kind::S_RHB: // RHB
-      case symbol_kind::S_LCB: // LCB
-      case symbol_kind::S_RCB: // RCB
-      case symbol_kind::S_ASSIGN: // ASSIGN
-      case symbol_kind::S_EQ: // EQ
-      case symbol_kind::S_AND: // AND
-      case symbol_kind::S_OR: // OR
-      case symbol_kind::S_GT: // GT
-      case symbol_kind::S_LT: // LT
-      case symbol_kind::S_CLASS: // CLASS
-      case symbol_kind::S_STATIC: // STATIC
-      case symbol_kind::S_VOID: // VOID
-      case symbol_kind::S_MAIN: // MAIN
-      case symbol_kind::S_PUBLIC: // PUBLIC
-      case symbol_kind::S_COMMENT: // COMMENT
-      case symbol_kind::S_PERIOD: // PERIOD
-      case symbol_kind::S_COMMA: // COMMA
-      case symbol_kind::S_EXCLAMATION: // EXCLAMATION
-      case symbol_kind::S_SEMICOLON: // SEMICOLON
-      case symbol_kind::S_INTTYPE: // INTTYPE
-      case symbol_kind::S_BOOLTYPE: // BOOLTYPE
-      case symbol_kind::S_STRING: // STRING
-      case symbol_kind::S_IF: // IF
-      case symbol_kind::S_ELSE: // ELSE
-      case symbol_kind::S_WHILE: // WHILE
-      case symbol_kind::S_NEW: // NEW
-      case symbol_kind::S_LENGTH: // LENGTH
-      case symbol_kind::S_PRINT: // PRINT
-      case symbol_kind::S_IDENTIFIER: // IDENTIFIER
-      case symbol_kind::S_TRUE: // TRUE
-      case symbol_kind::S_FALSE: // FALSE
-      case symbol_kind::S_THIS: // THIS
+      case 3: // PLUSOP
+      case 4: // MINUSOP
+      case 5: // MULTOP
+      case 6: // DIVOP
+      case 7: // INT
+      case 8: // LP
+      case 9: // RP
+      case 10: // LHB
+      case 11: // RHB
+      case 12: // LCB
+      case 13: // RCB
+      case 14: // ASSIGN
+      case 15: // EQ
+      case 16: // AND
+      case 17: // OR
+      case 18: // GT
+      case 19: // LT
+      case 20: // CLASS
+      case 21: // STATIC
+      case 22: // VOID
+      case 23: // MAIN
+      case 24: // PUBLIC
+      case 25: // COMMENT
+      case 26: // RETURN
+      case 27: // PERIOD
+      case 28: // COMMA
+      case 29: // EXCLAMATION
+      case 30: // SEMICOLON
+      case 31: // INTTYPE
+      case 32: // BOOLTYPE
+      case 33: // STRING
+      case 34: // IF
+      case 35: // ELSE
+      case 36: // WHILE
+      case 37: // NEW
+      case 38: // LENGTH
+      case 39: // PRINT
+      case 40: // IDENTIFIER
+      case 41: // TRUE
+      case 42: // FALSE
+      case 43: // THIS
+      case 44: // STATEMENT
         value.YY_MOVE_OR_COPY< std::string > (YY_MOVE (that.value));
         break;
 
@@ -255,55 +300,60 @@ namespace yy {
   parser::stack_symbol_type::stack_symbol_type (state_type s, YY_MOVE_REF (symbol_type) that)
     : super_type (s)
   {
-    switch (that.kind ())
+    switch (that.type_get ())
     {
-      case symbol_kind::S_root: // root
-      case symbol_kind::S_expression: // expression
-      case symbol_kind::S_factor: // factor
-      case symbol_kind::S_identifier: // identifier
+      case 46: // root
+      case 47: // mainclass
+      case 48: // statement
+      case 49: // statements
+      case 50: // expression
+      case 51: // factor
+      case 52: // identifier
         value.move< Node * > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_PLUSOP: // PLUSOP
-      case symbol_kind::S_MINUSOP: // MINUSOP
-      case symbol_kind::S_MULTOP: // MULTOP
-      case symbol_kind::S_DIVOP: // DIVOP
-      case symbol_kind::S_INT: // INT
-      case symbol_kind::S_LP: // LP
-      case symbol_kind::S_RP: // RP
-      case symbol_kind::S_LHB: // LHB
-      case symbol_kind::S_RHB: // RHB
-      case symbol_kind::S_LCB: // LCB
-      case symbol_kind::S_RCB: // RCB
-      case symbol_kind::S_ASSIGN: // ASSIGN
-      case symbol_kind::S_EQ: // EQ
-      case symbol_kind::S_AND: // AND
-      case symbol_kind::S_OR: // OR
-      case symbol_kind::S_GT: // GT
-      case symbol_kind::S_LT: // LT
-      case symbol_kind::S_CLASS: // CLASS
-      case symbol_kind::S_STATIC: // STATIC
-      case symbol_kind::S_VOID: // VOID
-      case symbol_kind::S_MAIN: // MAIN
-      case symbol_kind::S_PUBLIC: // PUBLIC
-      case symbol_kind::S_COMMENT: // COMMENT
-      case symbol_kind::S_PERIOD: // PERIOD
-      case symbol_kind::S_COMMA: // COMMA
-      case symbol_kind::S_EXCLAMATION: // EXCLAMATION
-      case symbol_kind::S_SEMICOLON: // SEMICOLON
-      case symbol_kind::S_INTTYPE: // INTTYPE
-      case symbol_kind::S_BOOLTYPE: // BOOLTYPE
-      case symbol_kind::S_STRING: // STRING
-      case symbol_kind::S_IF: // IF
-      case symbol_kind::S_ELSE: // ELSE
-      case symbol_kind::S_WHILE: // WHILE
-      case symbol_kind::S_NEW: // NEW
-      case symbol_kind::S_LENGTH: // LENGTH
-      case symbol_kind::S_PRINT: // PRINT
-      case symbol_kind::S_IDENTIFIER: // IDENTIFIER
-      case symbol_kind::S_TRUE: // TRUE
-      case symbol_kind::S_FALSE: // FALSE
-      case symbol_kind::S_THIS: // THIS
+      case 3: // PLUSOP
+      case 4: // MINUSOP
+      case 5: // MULTOP
+      case 6: // DIVOP
+      case 7: // INT
+      case 8: // LP
+      case 9: // RP
+      case 10: // LHB
+      case 11: // RHB
+      case 12: // LCB
+      case 13: // RCB
+      case 14: // ASSIGN
+      case 15: // EQ
+      case 16: // AND
+      case 17: // OR
+      case 18: // GT
+      case 19: // LT
+      case 20: // CLASS
+      case 21: // STATIC
+      case 22: // VOID
+      case 23: // MAIN
+      case 24: // PUBLIC
+      case 25: // COMMENT
+      case 26: // RETURN
+      case 27: // PERIOD
+      case 28: // COMMA
+      case 29: // EXCLAMATION
+      case 30: // SEMICOLON
+      case 31: // INTTYPE
+      case 32: // BOOLTYPE
+      case 33: // STRING
+      case 34: // IF
+      case 35: // ELSE
+      case 36: // WHILE
+      case 37: // NEW
+      case 38: // LENGTH
+      case 39: // PRINT
+      case 40: // IDENTIFIER
+      case 41: // TRUE
+      case 42: // FALSE
+      case 43: // THIS
+      case 44: // STATEMENT
         value.move< std::string > (YY_MOVE (that.value));
         break;
 
@@ -312,7 +362,7 @@ namespace yy {
     }
 
     // that is emptied.
-    that.kind_ = symbol_kind::S_YYEMPTY;
+    that.type = empty_symbol;
   }
 
 #if YY_CPLUSPLUS < 201103L
@@ -320,55 +370,60 @@ namespace yy {
   parser::stack_symbol_type::operator= (const stack_symbol_type& that)
   {
     state = that.state;
-    switch (that.kind ())
+    switch (that.type_get ())
     {
-      case symbol_kind::S_root: // root
-      case symbol_kind::S_expression: // expression
-      case symbol_kind::S_factor: // factor
-      case symbol_kind::S_identifier: // identifier
+      case 46: // root
+      case 47: // mainclass
+      case 48: // statement
+      case 49: // statements
+      case 50: // expression
+      case 51: // factor
+      case 52: // identifier
         value.copy< Node * > (that.value);
         break;
 
-      case symbol_kind::S_PLUSOP: // PLUSOP
-      case symbol_kind::S_MINUSOP: // MINUSOP
-      case symbol_kind::S_MULTOP: // MULTOP
-      case symbol_kind::S_DIVOP: // DIVOP
-      case symbol_kind::S_INT: // INT
-      case symbol_kind::S_LP: // LP
-      case symbol_kind::S_RP: // RP
-      case symbol_kind::S_LHB: // LHB
-      case symbol_kind::S_RHB: // RHB
-      case symbol_kind::S_LCB: // LCB
-      case symbol_kind::S_RCB: // RCB
-      case symbol_kind::S_ASSIGN: // ASSIGN
-      case symbol_kind::S_EQ: // EQ
-      case symbol_kind::S_AND: // AND
-      case symbol_kind::S_OR: // OR
-      case symbol_kind::S_GT: // GT
-      case symbol_kind::S_LT: // LT
-      case symbol_kind::S_CLASS: // CLASS
-      case symbol_kind::S_STATIC: // STATIC
-      case symbol_kind::S_VOID: // VOID
-      case symbol_kind::S_MAIN: // MAIN
-      case symbol_kind::S_PUBLIC: // PUBLIC
-      case symbol_kind::S_COMMENT: // COMMENT
-      case symbol_kind::S_PERIOD: // PERIOD
-      case symbol_kind::S_COMMA: // COMMA
-      case symbol_kind::S_EXCLAMATION: // EXCLAMATION
-      case symbol_kind::S_SEMICOLON: // SEMICOLON
-      case symbol_kind::S_INTTYPE: // INTTYPE
-      case symbol_kind::S_BOOLTYPE: // BOOLTYPE
-      case symbol_kind::S_STRING: // STRING
-      case symbol_kind::S_IF: // IF
-      case symbol_kind::S_ELSE: // ELSE
-      case symbol_kind::S_WHILE: // WHILE
-      case symbol_kind::S_NEW: // NEW
-      case symbol_kind::S_LENGTH: // LENGTH
-      case symbol_kind::S_PRINT: // PRINT
-      case symbol_kind::S_IDENTIFIER: // IDENTIFIER
-      case symbol_kind::S_TRUE: // TRUE
-      case symbol_kind::S_FALSE: // FALSE
-      case symbol_kind::S_THIS: // THIS
+      case 3: // PLUSOP
+      case 4: // MINUSOP
+      case 5: // MULTOP
+      case 6: // DIVOP
+      case 7: // INT
+      case 8: // LP
+      case 9: // RP
+      case 10: // LHB
+      case 11: // RHB
+      case 12: // LCB
+      case 13: // RCB
+      case 14: // ASSIGN
+      case 15: // EQ
+      case 16: // AND
+      case 17: // OR
+      case 18: // GT
+      case 19: // LT
+      case 20: // CLASS
+      case 21: // STATIC
+      case 22: // VOID
+      case 23: // MAIN
+      case 24: // PUBLIC
+      case 25: // COMMENT
+      case 26: // RETURN
+      case 27: // PERIOD
+      case 28: // COMMA
+      case 29: // EXCLAMATION
+      case 30: // SEMICOLON
+      case 31: // INTTYPE
+      case 32: // BOOLTYPE
+      case 33: // STRING
+      case 34: // IF
+      case 35: // ELSE
+      case 36: // WHILE
+      case 37: // NEW
+      case 38: // LENGTH
+      case 39: // PRINT
+      case 40: // IDENTIFIER
+      case 41: // TRUE
+      case 42: // FALSE
+      case 43: // THIS
+      case 44: // STATEMENT
         value.copy< std::string > (that.value);
         break;
 
@@ -383,55 +438,60 @@ namespace yy {
   parser::stack_symbol_type::operator= (stack_symbol_type& that)
   {
     state = that.state;
-    switch (that.kind ())
+    switch (that.type_get ())
     {
-      case symbol_kind::S_root: // root
-      case symbol_kind::S_expression: // expression
-      case symbol_kind::S_factor: // factor
-      case symbol_kind::S_identifier: // identifier
+      case 46: // root
+      case 47: // mainclass
+      case 48: // statement
+      case 49: // statements
+      case 50: // expression
+      case 51: // factor
+      case 52: // identifier
         value.move< Node * > (that.value);
         break;
 
-      case symbol_kind::S_PLUSOP: // PLUSOP
-      case symbol_kind::S_MINUSOP: // MINUSOP
-      case symbol_kind::S_MULTOP: // MULTOP
-      case symbol_kind::S_DIVOP: // DIVOP
-      case symbol_kind::S_INT: // INT
-      case symbol_kind::S_LP: // LP
-      case symbol_kind::S_RP: // RP
-      case symbol_kind::S_LHB: // LHB
-      case symbol_kind::S_RHB: // RHB
-      case symbol_kind::S_LCB: // LCB
-      case symbol_kind::S_RCB: // RCB
-      case symbol_kind::S_ASSIGN: // ASSIGN
-      case symbol_kind::S_EQ: // EQ
-      case symbol_kind::S_AND: // AND
-      case symbol_kind::S_OR: // OR
-      case symbol_kind::S_GT: // GT
-      case symbol_kind::S_LT: // LT
-      case symbol_kind::S_CLASS: // CLASS
-      case symbol_kind::S_STATIC: // STATIC
-      case symbol_kind::S_VOID: // VOID
-      case symbol_kind::S_MAIN: // MAIN
-      case symbol_kind::S_PUBLIC: // PUBLIC
-      case symbol_kind::S_COMMENT: // COMMENT
-      case symbol_kind::S_PERIOD: // PERIOD
-      case symbol_kind::S_COMMA: // COMMA
-      case symbol_kind::S_EXCLAMATION: // EXCLAMATION
-      case symbol_kind::S_SEMICOLON: // SEMICOLON
-      case symbol_kind::S_INTTYPE: // INTTYPE
-      case symbol_kind::S_BOOLTYPE: // BOOLTYPE
-      case symbol_kind::S_STRING: // STRING
-      case symbol_kind::S_IF: // IF
-      case symbol_kind::S_ELSE: // ELSE
-      case symbol_kind::S_WHILE: // WHILE
-      case symbol_kind::S_NEW: // NEW
-      case symbol_kind::S_LENGTH: // LENGTH
-      case symbol_kind::S_PRINT: // PRINT
-      case symbol_kind::S_IDENTIFIER: // IDENTIFIER
-      case symbol_kind::S_TRUE: // TRUE
-      case symbol_kind::S_FALSE: // FALSE
-      case symbol_kind::S_THIS: // THIS
+      case 3: // PLUSOP
+      case 4: // MINUSOP
+      case 5: // MULTOP
+      case 6: // DIVOP
+      case 7: // INT
+      case 8: // LP
+      case 9: // RP
+      case 10: // LHB
+      case 11: // RHB
+      case 12: // LCB
+      case 13: // RCB
+      case 14: // ASSIGN
+      case 15: // EQ
+      case 16: // AND
+      case 17: // OR
+      case 18: // GT
+      case 19: // LT
+      case 20: // CLASS
+      case 21: // STATIC
+      case 22: // VOID
+      case 23: // MAIN
+      case 24: // PUBLIC
+      case 25: // COMMENT
+      case 26: // RETURN
+      case 27: // PERIOD
+      case 28: // COMMA
+      case 29: // EXCLAMATION
+      case 30: // SEMICOLON
+      case 31: // INTTYPE
+      case 32: // BOOLTYPE
+      case 33: // STRING
+      case 34: // IF
+      case 35: // ELSE
+      case 36: // WHILE
+      case 37: // NEW
+      case 38: // LENGTH
+      case 39: // PRINT
+      case 40: // IDENTIFIER
+      case 41: // TRUE
+      case 42: // FALSE
+      case 43: // THIS
+      case 44: // STATEMENT
         value.move< std::string > (that.value);
         break;
 
@@ -456,20 +516,22 @@ namespace yy {
 #if YYDEBUG
   template <typename Base>
   void
-  parser::yy_print_ (std::ostream& yyo, const basic_symbol<Base>& yysym) const
+  parser::yy_print_ (std::ostream& yyo,
+                                     const basic_symbol<Base>& yysym) const
   {
     std::ostream& yyoutput = yyo;
-    YY_USE (yyoutput);
+    YYUSE (yyoutput);
+    symbol_number_type yytype = yysym.type_get ();
+#if defined __GNUC__ && ! defined __clang__ && ! defined __ICC && __GNUC__ * 100 + __GNUC_MINOR__ <= 408
+    // Avoid a (spurious) G++ 4.8 warning about "array subscript is
+    // below array bounds".
     if (yysym.empty ())
-      yyo << "empty symbol";
-    else
-      {
-        symbol_kind_type yykind = yysym.kind ();
-        yyo << (yykind < YYNTOKENS ? "token" : "nterm")
-            << ' ' << yysym.name () << " (";
-        YY_USE (yykind);
-        yyo << ')';
-      }
+      std::abort ();
+#endif
+    yyo << (yytype < yyntokens_ ? "token" : "nterm")
+        << ' ' << yytname_[yytype] << " (";
+    YYUSE (yytype);
+    yyo << ')';
   }
 #endif
 
@@ -493,7 +555,7 @@ namespace yy {
   }
 
   void
-  parser::yypop_ (int n) YY_NOEXCEPT
+  parser::yypop_ (int n)
   {
     yystack_.pop (n);
   }
@@ -528,21 +590,21 @@ namespace yy {
   parser::state_type
   parser::yy_lr_goto_state_ (state_type yystate, int yysym)
   {
-    int yyr = yypgoto_[yysym - YYNTOKENS] + yystate;
+    int yyr = yypgoto_[yysym - yyntokens_] + yystate;
     if (0 <= yyr && yyr <= yylast_ && yycheck_[yyr] == yystate)
       return yytable_[yyr];
     else
-      return yydefgoto_[yysym - YYNTOKENS];
+      return yydefgoto_[yysym - yyntokens_];
   }
 
   bool
-  parser::yy_pact_value_is_default_ (int yyvalue) YY_NOEXCEPT
+  parser::yy_pact_value_is_default_ (int yyvalue)
   {
     return yyvalue == yypact_ninf_;
   }
 
   bool
-  parser::yy_table_value_is_error_ (int yyvalue) YY_NOEXCEPT
+  parser::yy_table_value_is_error_ (int yyvalue)
   {
     return yyvalue == yytable_ninf_;
   }
@@ -589,7 +651,6 @@ namespace yy {
   `-----------------------------------------------*/
   yynewstate:
     YYCDEBUG << "Entering state " << int (yystack_[0].state) << '\n';
-    YY_STACK_PRINT ();
 
     // Accept?
     if (yystack_[0].state == yyfinal_)
@@ -610,7 +671,7 @@ namespace yy {
     // Read a lookahead token.
     if (yyla.empty ())
       {
-        YYCDEBUG << "Reading a token\n";
+        YYCDEBUG << "Reading a token: ";
 #if YY_EXCEPTIONS
         try
 #endif // YY_EXCEPTIONS
@@ -629,20 +690,10 @@ namespace yy {
       }
     YY_SYMBOL_PRINT ("Next token is", yyla);
 
-    if (yyla.kind () == symbol_kind::S_YYerror)
-    {
-      // The scanner already issued an error message, process directly
-      // to error recovery.  But do not keep the error token as
-      // lookahead, it is too special and may lead us to an endless
-      // loop in error recovery. */
-      yyla.kind_ = symbol_kind::S_YYUNDEF;
-      goto yyerrlab1;
-    }
-
     /* If the proper action on seeing token YYLA.TYPE is to reduce or
        to detect an error, take that action.  */
-    yyn += yyla.kind ();
-    if (yyn < 0 || yylast_ < yyn || yycheck_[yyn] != yyla.kind ())
+    yyn += yyla.type_get ();
+    if (yyn < 0 || yylast_ < yyn || yycheck_[yyn] != yyla.type_get ())
       {
         goto yydefault;
       }
@@ -689,53 +740,58 @@ namespace yy {
          when using variants.  */
       switch (yyr1_[yyn])
     {
-      case symbol_kind::S_root: // root
-      case symbol_kind::S_expression: // expression
-      case symbol_kind::S_factor: // factor
-      case symbol_kind::S_identifier: // identifier
+      case 46: // root
+      case 47: // mainclass
+      case 48: // statement
+      case 49: // statements
+      case 50: // expression
+      case 51: // factor
+      case 52: // identifier
         yylhs.value.emplace< Node * > ();
         break;
 
-      case symbol_kind::S_PLUSOP: // PLUSOP
-      case symbol_kind::S_MINUSOP: // MINUSOP
-      case symbol_kind::S_MULTOP: // MULTOP
-      case symbol_kind::S_DIVOP: // DIVOP
-      case symbol_kind::S_INT: // INT
-      case symbol_kind::S_LP: // LP
-      case symbol_kind::S_RP: // RP
-      case symbol_kind::S_LHB: // LHB
-      case symbol_kind::S_RHB: // RHB
-      case symbol_kind::S_LCB: // LCB
-      case symbol_kind::S_RCB: // RCB
-      case symbol_kind::S_ASSIGN: // ASSIGN
-      case symbol_kind::S_EQ: // EQ
-      case symbol_kind::S_AND: // AND
-      case symbol_kind::S_OR: // OR
-      case symbol_kind::S_GT: // GT
-      case symbol_kind::S_LT: // LT
-      case symbol_kind::S_CLASS: // CLASS
-      case symbol_kind::S_STATIC: // STATIC
-      case symbol_kind::S_VOID: // VOID
-      case symbol_kind::S_MAIN: // MAIN
-      case symbol_kind::S_PUBLIC: // PUBLIC
-      case symbol_kind::S_COMMENT: // COMMENT
-      case symbol_kind::S_PERIOD: // PERIOD
-      case symbol_kind::S_COMMA: // COMMA
-      case symbol_kind::S_EXCLAMATION: // EXCLAMATION
-      case symbol_kind::S_SEMICOLON: // SEMICOLON
-      case symbol_kind::S_INTTYPE: // INTTYPE
-      case symbol_kind::S_BOOLTYPE: // BOOLTYPE
-      case symbol_kind::S_STRING: // STRING
-      case symbol_kind::S_IF: // IF
-      case symbol_kind::S_ELSE: // ELSE
-      case symbol_kind::S_WHILE: // WHILE
-      case symbol_kind::S_NEW: // NEW
-      case symbol_kind::S_LENGTH: // LENGTH
-      case symbol_kind::S_PRINT: // PRINT
-      case symbol_kind::S_IDENTIFIER: // IDENTIFIER
-      case symbol_kind::S_TRUE: // TRUE
-      case symbol_kind::S_FALSE: // FALSE
-      case symbol_kind::S_THIS: // THIS
+      case 3: // PLUSOP
+      case 4: // MINUSOP
+      case 5: // MULTOP
+      case 6: // DIVOP
+      case 7: // INT
+      case 8: // LP
+      case 9: // RP
+      case 10: // LHB
+      case 11: // RHB
+      case 12: // LCB
+      case 13: // RCB
+      case 14: // ASSIGN
+      case 15: // EQ
+      case 16: // AND
+      case 17: // OR
+      case 18: // GT
+      case 19: // LT
+      case 20: // CLASS
+      case 21: // STATIC
+      case 22: // VOID
+      case 23: // MAIN
+      case 24: // PUBLIC
+      case 25: // COMMENT
+      case 26: // RETURN
+      case 27: // PERIOD
+      case 28: // COMMA
+      case 29: // EXCLAMATION
+      case 30: // SEMICOLON
+      case 31: // INTTYPE
+      case 32: // BOOLTYPE
+      case 33: // STRING
+      case 34: // IF
+      case 35: // ELSE
+      case 36: // WHILE
+      case 37: // NEW
+      case 38: // LENGTH
+      case 39: // PRINT
+      case 40: // IDENTIFIER
+      case 41: // TRUE
+      case 42: // FALSE
+      case 43: // THIS
+      case 44: // STATEMENT
         yylhs.value.emplace< std::string > ();
         break;
 
@@ -753,14 +809,105 @@ namespace yy {
         {
           switch (yyn)
             {
-  case 2: // root: expression
-#line 39 "parser.y"
-                       {root = yystack_[0].value.as < Node * > ();}
-#line 760 "parser.tab.c"
+  case 2:
+#line 42 "parser.y"
+                      {root = yystack_[0].value.as < Node * > ();}
+#line 816 "parser.tab.c"
     break;
 
-  case 3: // expression: expression PLUSOP expression
-#line 41 "parser.y"
+  case 3:
+#line 44 "parser.y"
+                                                                                                                     {
+                      yylhs.value.as < Node * > () = new Node("MainClass", "", yylineno);
+                      yylhs.value.as < Node * > ()->children.push_back(yystack_[15].value.as < Node * > ());
+                      yylhs.value.as < Node * > ()->children.push_back(yystack_[5].value.as < Node * > ());
+                      yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
+              }
+#line 827 "parser.tab.c"
+    break;
+
+  case 5:
+#line 146 "parser.y"
+                                 { 
+              yylhs.value.as < Node * > () = new Node("Statements", "", yylineno);
+            }
+#line 835 "parser.tab.c"
+    break;
+
+  case 6:
+#line 149 "parser.y"
+                                            {
+              yylhs.value.as < Node * > () = new Node("IF", "", yylineno);
+              yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
+              yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());
+            }
+#line 845 "parser.tab.c"
+    break;
+
+  case 7:
+#line 154 "parser.y"
+                                                           {
+              yylhs.value.as < Node * > () = new Node("IfElse", "", yylineno);
+              yylhs.value.as < Node * > ()->children.push_back(yystack_[4].value.as < Node * > ());
+              yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
+              yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());
+            }
+#line 856 "parser.tab.c"
+    break;
+
+  case 8:
+#line 160 "parser.y"
+                                               {
+              yylhs.value.as < Node * > () = new Node("While", "", yylineno);
+              yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
+              yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());
+            }
+#line 866 "parser.tab.c"
+    break;
+
+  case 9:
+#line 165 "parser.y"
+                                               {
+              yylhs.value.as < Node * > () = new Node("Print", "", yylineno);
+              yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
+            }
+#line 875 "parser.tab.c"
+    break;
+
+  case 10:
+#line 169 "parser.y"
+                                                     {
+              yylhs.value.as < Node * > () = new Node("Assign", "", yylineno);
+              yylhs.value.as < Node * > ()->children.push_back(yystack_[3].value.as < Node * > ());
+              yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());
+            }
+#line 885 "parser.tab.c"
+    break;
+
+  case 11:
+#line 174 "parser.y"
+                                                                        {
+              yylhs.value.as < Node * > () = new Node("indexAssign", "", yylineno);
+              yylhs.value.as < Node * > ()->children.push_back(yystack_[6].value.as < Node * > ());
+              yylhs.value.as < Node * > ()->children.push_back(yystack_[4].value.as < Node * > ());
+              yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());
+            }
+#line 896 "parser.tab.c"
+    break;
+
+  case 13:
+#line 184 "parser.y"
+                                   { 
+              yylhs.value.as < Node * > () = new Node("Statements", "", yylineno);
+              yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());
+              yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());
+
+            }
+#line 907 "parser.tab.c"
+    break;
+
+  case 14:
+#line 193 "parser.y"
                                          {      /*
                                                   Create a subtree that corresponds to the AddExpression
                                                   The root of the subtree is AddExpression
@@ -771,213 +918,216 @@ namespace yy {
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());
                             /* printf("r1 "); */
                           }
-#line 775 "parser.tab.c"
+#line 922 "parser.tab.c"
     break;
 
-  case 4: // expression: expression MINUSOP expression
-#line 51 "parser.y"
+  case 15:
+#line 203 "parser.y"
                                             {
                             yylhs.value.as < Node * > () = new Node("SubExpression", "", yylineno);
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());
                             /* printf("r2 "); */
                           }
-#line 786 "parser.tab.c"
+#line 933 "parser.tab.c"
     break;
 
-  case 5: // expression: expression MULTOP expression
-#line 57 "parser.y"
+  case 16:
+#line 209 "parser.y"
                                            {
                             yylhs.value.as < Node * > () = new Node("MultExpression", "", yylineno);
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());
                             /* printf("r3 "); */
                           }
-#line 797 "parser.tab.c"
+#line 944 "parser.tab.c"
     break;
 
-  case 6: // expression: expression DIVOP expression
-#line 63 "parser.y"
+  case 17:
+#line 215 "parser.y"
                                           {
                             yylhs.value.as < Node * > () = new Node("DivExpression", "", yylineno);
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());
                             /* printf("r3 "); */
                           }
-#line 808 "parser.tab.c"
+#line 955 "parser.tab.c"
     break;
 
-  case 7: // expression: expression ASSIGN expression
-#line 69 "parser.y"
+  case 18:
+#line 221 "parser.y"
                                            {
                             yylhs.value.as < Node * > () = new Node("Assigning", "", yylineno);
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());                            
                           }
-#line 818 "parser.tab.c"
+#line 965 "parser.tab.c"
     break;
 
-  case 8: // expression: expression GT expression
-#line 74 "parser.y"
+  case 19:
+#line 226 "parser.y"
                                        {
                             yylhs.value.as < Node * > () = new Node("GreaterThan", "", yylineno);
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());                            
                           }
-#line 828 "parser.tab.c"
+#line 975 "parser.tab.c"
     break;
 
-  case 9: // expression: expression LT expression
-#line 79 "parser.y"
+  case 20:
+#line 231 "parser.y"
                                        {
                             yylhs.value.as < Node * > () = new Node("LessThan", "", yylineno);
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());                            
                           }
-#line 838 "parser.tab.c"
+#line 985 "parser.tab.c"
     break;
 
-  case 10: // expression: expression EQ expression
-#line 84 "parser.y"
+  case 21:
+#line 236 "parser.y"
                                        {
                             yylhs.value.as < Node * > () = new Node("Equals", "", yylineno);
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());                            
                           }
-#line 848 "parser.tab.c"
+#line 995 "parser.tab.c"
     break;
 
-  case 11: // expression: expression OR expression
-#line 89 "parser.y"
+  case 22:
+#line 241 "parser.y"
                                        {
                             yylhs.value.as < Node * > () = new Node("OR", "", yylineno);
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());                            
                           }
-#line 858 "parser.tab.c"
+#line 1005 "parser.tab.c"
     break;
 
-  case 12: // expression: expression AND expression
-#line 94 "parser.y"
+  case 23:
+#line 246 "parser.y"
                                         {
                             yylhs.value.as < Node * > () = new Node("AND", "", yylineno);
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());                            
                           }
-#line 868 "parser.tab.c"
+#line 1015 "parser.tab.c"
     break;
 
-  case 13: // expression: expression LHB expression RHB
-#line 100 "parser.y"
+  case 24:
+#line 252 "parser.y"
                                             {
                             yylhs.value.as < Node * > () = new Node("Index", "", yylineno);
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[3].value.as < Node * > ());  // what to take index of
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());  // index value
                           }
-#line 878 "parser.tab.c"
+#line 1025 "parser.tab.c"
     break;
 
-  case 14: // expression: expression PERIOD LENGTH
-#line 105 "parser.y"
+  case 25:
+#line 257 "parser.y"
                                        {
                             yylhs.value.as < Node * > () = new Node("LenghtOfExpression", "", yylineno);
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
                           }
-#line 887 "parser.tab.c"
+#line 1034 "parser.tab.c"
     break;
 
-  case 15: // expression: expression PERIOD identifier LP expression COMMA expression RP
-#line 109 "parser.y"
+  case 26:
+#line 261 "parser.y"
                                                                              {
-                              // Do something
+                              // TODO
                           }
-#line 895 "parser.tab.c"
+#line 1042 "parser.tab.c"
     break;
 
-  case 16: // expression: TRUE
-#line 113 "parser.y"
+  case 27:
+#line 265 "parser.y"
                    {
-                  // Do something
+                  yylhs.value.as < Node * > () = new Node("True", "", yylineno);
                 }
-#line 903 "parser.tab.c"
+#line 1050 "parser.tab.c"
     break;
 
-  case 17: // expression: FALSE
-#line 116 "parser.y"
+  case 28:
+#line 268 "parser.y"
                     {
-                  // Do something 
+                  yylhs.value.as < Node * > () = new Node("False", "", yylineno);
                 }
-#line 911 "parser.tab.c"
+#line 1058 "parser.tab.c"
     break;
 
-  case 18: // expression: identifier
-#line 119 "parser.y"
+  case 29:
+#line 271 "parser.y"
                          {
                   yylhs.value.as < Node * > () = yystack_[0].value.as < Node * > ();
                 }
-#line 919 "parser.tab.c"
+#line 1066 "parser.tab.c"
     break;
 
-  case 19: // expression: THIS
-#line 122 "parser.y"
+  case 30:
+#line 274 "parser.y"
                     {
-                  // Do something
+                  yylhs.value.as < Node * > () = new Node("This", "", yylineno);
                 }
-#line 927 "parser.tab.c"
+#line 1074 "parser.tab.c"
     break;
 
-  case 20: // expression: NEW INTTYPE LHB expression RHB
-#line 125 "parser.y"
+  case 31:
+#line 277 "parser.y"
                                              {
-                      // Do something
+                      yylhs.value.as < Node * > () = new Node("AllocateIntArray", "", yylineno);
+                      yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());  // Size of int array
                   }
-#line 935 "parser.tab.c"
+#line 1083 "parser.tab.c"
     break;
 
-  case 21: // expression: NEW identifier LP RP
-#line 128 "parser.y"
+  case 32:
+#line 281 "parser.y"
                                    {
-                      // DO something
+                      yylhs.value.as < Node * > () = new Node("AllocateIdentifier", "", yylineno);
+                      yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());  
                   }
-#line 943 "parser.tab.c"
+#line 1092 "parser.tab.c"
     break;
 
-  case 22: // expression: EXCLAMATION expression
-#line 131 "parser.y"
+  case 33:
+#line 285 "parser.y"
                                      {
-                      // Do something
+                      yylhs.value.as < Node * > () = new Node("Negation", "", yylineno);
+                      yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ()); 
                   }
-#line 951 "parser.tab.c"
+#line 1101 "parser.tab.c"
     break;
 
-  case 23: // expression: factor
-#line 134 "parser.y"
+  case 34:
+#line 289 "parser.y"
                           {yylhs.value.as < Node * > () = yystack_[0].value.as < Node * > (); /* printf("r4 ");*/}
-#line 957 "parser.tab.c"
+#line 1107 "parser.tab.c"
     break;
 
-  case 24: // factor: INT
-#line 138 "parser.y"
+  case 35:
+#line 293 "parser.y"
                           {  yylhs.value.as < Node * > () = new Node("Int", yystack_[0].value.as < std::string > (), yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
-#line 963 "parser.tab.c"
+#line 1113 "parser.tab.c"
     break;
 
-  case 25: // factor: LP expression RP
-#line 139 "parser.y"
+  case 36:
+#line 294 "parser.y"
                                { yylhs.value.as < Node * > () = yystack_[1].value.as < Node * > (); /* printf("r6 ");  simply return the expression */}
-#line 969 "parser.tab.c"
+#line 1119 "parser.tab.c"
     break;
 
-  case 26: // identifier: IDENTIFIER
-#line 142 "parser.y"
+  case 37:
+#line 297 "parser.y"
                        {
                     yylhs.value.as < Node * > () = new Node("Identifier", yystack_[0].value.as < std::string > (), yylineno); // Here we create a leaf node Int. The value of the leaf node is $1 
                           }
-#line 977 "parser.tab.c"
+#line 1127 "parser.tab.c"
     break;
 
 
-#line 981 "parser.tab.c"
+#line 1131 "parser.tab.c"
 
             default:
               break;
@@ -994,6 +1144,7 @@ namespace yy {
       YY_SYMBOL_PRINT ("-> $$ =", yylhs);
       yypop_ (yylen);
       yylen = 0;
+      YY_STACK_PRINT ();
 
       // Shift the result of the reduction.
       yypush_ (YY_NULLPTR, YY_MOVE (yylhs));
@@ -1009,9 +1160,7 @@ namespace yy {
     if (!yyerrstatus_)
       {
         ++yynerrs_;
-        context yyctx (*this, yyla);
-        std::string msg = yysyntax_error_ (yyctx);
-        error (YY_MOVE (msg));
+        error (yysyntax_error_ (yystack_[0].state, yyla));
       }
 
 
@@ -1021,7 +1170,7 @@ namespace yy {
            error, discard it.  */
 
         // Return failure if at end of input.
-        if (yyla.kind () == symbol_kind::S_YYEOF)
+        if (yyla.type_get () == yyeof_)
           YYABORT;
         else if (!yyla.empty ())
           {
@@ -1047,7 +1196,6 @@ namespace yy {
        this YYERROR.  */
     yypop_ (yylen);
     yylen = 0;
-    YY_STACK_PRINT ();
     goto yyerrlab1;
 
 
@@ -1056,32 +1204,30 @@ namespace yy {
   `-------------------------------------------------------------*/
   yyerrlab1:
     yyerrstatus_ = 3;   // Each real token shifted decrements this.
-    // Pop stack until we find a state that shifts the error token.
-    for (;;)
-      {
-        yyn = yypact_[+yystack_[0].state];
-        if (!yy_pact_value_is_default_ (yyn))
-          {
-            yyn += symbol_kind::S_YYerror;
-            if (0 <= yyn && yyn <= yylast_
-                && yycheck_[yyn] == symbol_kind::S_YYerror)
-              {
-                yyn = yytable_[yyn];
-                if (0 < yyn)
-                  break;
-              }
-          }
-
-        // Pop the current state because it cannot handle the error token.
-        if (yystack_.size () == 1)
-          YYABORT;
-
-        yy_destroy_ ("Error: popping", yystack_[0]);
-        yypop_ ();
-        YY_STACK_PRINT ();
-      }
     {
       stack_symbol_type error_token;
+      for (;;)
+        {
+          yyn = yypact_[+yystack_[0].state];
+          if (!yy_pact_value_is_default_ (yyn))
+            {
+              yyn += yy_error_token_;
+              if (0 <= yyn && yyn <= yylast_ && yycheck_[yyn] == yy_error_token_)
+                {
+                  yyn = yytable_[yyn];
+                  if (0 < yyn)
+                    break;
+                }
+            }
+
+          // Pop the current state because it cannot handle the error token.
+          if (yystack_.size () == 1)
+            YYABORT;
+
+          yy_destroy_ ("Error: popping", yystack_[0]);
+          yypop_ ();
+          YY_STACK_PRINT ();
+        }
 
 
       // Shift the error token.
@@ -1117,7 +1263,6 @@ namespace yy {
     /* Do not reclaim the symbols of the rule whose action triggered
        this YYABORT or YYACCEPT.  */
     yypop_ (yylen);
-    YY_STACK_PRINT ();
     while (1 < yystack_.size ())
       {
         yy_destroy_ ("Cleanup: popping", yystack_[0]);
@@ -1151,103 +1296,18 @@ namespace yy {
     error (yyexc.what ());
   }
 
-  /* Return YYSTR after stripping away unnecessary quotes and
-     backslashes, so that it's suitable for yyerror.  The heuristic is
-     that double-quoting is unnecessary unless the string contains an
-     apostrophe, a comma, or backslash (other than backslash-backslash).
-     YYSTR is taken from yytname.  */
+  // Generate an error message.
   std::string
-  parser::yytnamerr_ (const char *yystr)
+  parser::yysyntax_error_ (state_type yystate, const symbol_type& yyla) const
   {
-    if (*yystr == '"')
-      {
-        std::string yyr;
-        char const *yyp = yystr;
+    // Number of reported tokens (one for the "unexpected", one per
+    // "expected").
+    std::ptrdiff_t yycount = 0;
+    // Its maximum.
+    enum { YYERROR_VERBOSE_ARGS_MAXIMUM = 5 };
+    // Arguments of yyformat.
+    char const *yyarg[YYERROR_VERBOSE_ARGS_MAXIMUM];
 
-        for (;;)
-          switch (*++yyp)
-            {
-            case '\'':
-            case ',':
-              goto do_not_strip_quotes;
-
-            case '\\':
-              if (*++yyp != '\\')
-                goto do_not_strip_quotes;
-              else
-                goto append;
-
-            append:
-            default:
-              yyr += *yyp;
-              break;
-
-            case '"':
-              return yyr;
-            }
-      do_not_strip_quotes: ;
-      }
-
-    return yystr;
-  }
-
-  std::string
-  parser::symbol_name (symbol_kind_type yysymbol)
-  {
-    return yytnamerr_ (yytname_[yysymbol]);
-  }
-
-
-
-  // parser::context.
-  parser::context::context (const parser& yyparser, const symbol_type& yyla)
-    : yyparser_ (yyparser)
-    , yyla_ (yyla)
-  {}
-
-  int
-  parser::context::expected_tokens (symbol_kind_type yyarg[], int yyargn) const
-  {
-    // Actual number of expected tokens
-    int yycount = 0;
-
-    const int yyn = yypact_[+yyparser_.yystack_[0].state];
-    if (!yy_pact_value_is_default_ (yyn))
-      {
-        /* Start YYX at -YYN if negative to avoid negative indexes in
-           YYCHECK.  In other words, skip the first -YYN actions for
-           this state because they are default actions.  */
-        const int yyxbegin = yyn < 0 ? -yyn : 0;
-        // Stay within bounds of both yycheck and yytname.
-        const int yychecklim = yylast_ - yyn + 1;
-        const int yyxend = yychecklim < YYNTOKENS ? yychecklim : YYNTOKENS;
-        for (int yyx = yyxbegin; yyx < yyxend; ++yyx)
-          if (yycheck_[yyx + yyn] == yyx && yyx != symbol_kind::S_YYerror
-              && !yy_table_value_is_error_ (yytable_[yyx + yyn]))
-            {
-              if (!yyarg)
-                ++yycount;
-              else if (yycount == yyargn)
-                return 0;
-              else
-                yyarg[yycount++] = YY_CAST (symbol_kind_type, yyx);
-            }
-      }
-
-    if (yyarg && yycount == 0 && 0 < yyargn)
-      yyarg[0] = symbol_kind::S_YYEMPTY;
-    return yycount;
-  }
-
-
-
-
-
-
-  int
-  parser::yy_syntax_error_arguments_ (const context& yyctx,
-                                                 symbol_kind_type yyarg[], int yyargn) const
-  {
     /* There are many possibilities here to consider:
        - If this state is a consistent state with a default action, then
          the only way this function was invoked is if the default action
@@ -1272,26 +1332,35 @@ namespace yy {
          one exception: it will still contain any token that will not be
          accepted due to an error action in a later state.
     */
-
-    if (!yyctx.lookahead ().empty ())
+    if (!yyla.empty ())
       {
-        if (yyarg)
-          yyarg[0] = yyctx.token ();
-        int yyn = yyctx.expected_tokens (yyarg ? yyarg + 1 : yyarg, yyargn - 1);
-        return yyn + 1;
-      }
-    return 0;
-  }
+        symbol_number_type yytoken = yyla.type_get ();
+        yyarg[yycount++] = yytname_[yytoken];
 
-  // Generate an error message.
-  std::string
-  parser::yysyntax_error_ (const context& yyctx) const
-  {
-    // Its maximum.
-    enum { YYARGS_MAX = 5 };
-    // Arguments of yyformat.
-    symbol_kind_type yyarg[YYARGS_MAX];
-    int yycount = yy_syntax_error_arguments_ (yyctx, yyarg, YYARGS_MAX);
+        int yyn = yypact_[+yystate];
+        if (!yy_pact_value_is_default_ (yyn))
+          {
+            /* Start YYX at -YYN if negative to avoid negative indexes in
+               YYCHECK.  In other words, skip the first -YYN actions for
+               this state because they are default actions.  */
+            int yyxbegin = yyn < 0 ? -yyn : 0;
+            // Stay within bounds of both yycheck and yytname.
+            int yychecklim = yylast_ - yyn + 1;
+            int yyxend = yychecklim < yyntokens_ ? yychecklim : yyntokens_;
+            for (int yyx = yyxbegin; yyx < yyxend; ++yyx)
+              if (yycheck_[yyx + yyn] == yyx && yyx != yy_error_token_
+                  && !yy_table_value_is_error_ (yytable_[yyx + yyn]))
+                {
+                  if (yycount == YYERROR_VERBOSE_ARGS_MAXIMUM)
+                    {
+                      yycount = 1;
+                      break;
+                    }
+                  else
+                    yyarg[yycount++] = yytname_[yyx];
+                }
+          }
+      }
 
     char const* yyformat = YY_NULLPTR;
     switch (yycount)
@@ -1316,7 +1385,7 @@ namespace yy {
     for (char const* yyp = yyformat; *yyp; ++yyp)
       if (yyp[0] == '%' && yyp[1] == 's' && yyi < yycount)
         {
-          yyres += symbol_name (yyarg[yyi++]);
+          yyres += yytnamerr_ (yyarg[yyi++]);
           ++yyp;
         }
       else
@@ -1325,152 +1394,208 @@ namespace yy {
   }
 
 
-  const signed char parser::yypact_ninf_ = -27;
+  const signed char parser::yypact_ninf_ = -33;
 
   const signed char parser::yytable_ninf_ = -1;
 
   const short
   parser::yypact_[] =
   {
-      -1,   -27,    -1,    -1,   -26,   -27,   -27,   -27,   -27,     3,
-     127,   -27,   -27,    58,   127,    -8,     6,   -27,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -5,
-     -27,    -1,    24,   129,   129,     2,     2,    75,   144,   178,
-     161,   161,     5,     5,   -27,    28,    92,   -27,   -27,    -1,
-     -27,    39,    -1,   110,   -27
+     -17,    -3,    20,   -33,   -24,   -33,   -33,     9,     2,     7,
+      11,     6,    24,     3,    27,    29,   -24,    36,    37,    56,
+     -33,    40,    42,    43,    47,    -5,    -9,    16,    16,    16,
+      48,    16,    16,   -33,   -33,   -33,    16,    16,   -30,   -33,
+     -33,   -33,   154,   -33,   -33,   173,   192,   -33,   210,    98,
+     229,   302,    45,    68,    16,    16,    16,    16,    56,    16,
+      16,    16,    16,    16,    16,    16,   -32,    56,    49,    63,
+     -33,   -33,    16,    71,     8,     8,    -8,    -8,    46,   247,
+     320,   356,   338,   338,   366,   366,   -33,    75,   -33,   -33,
+      16,   265,   -33,    56,   -33,    16,   116,   -33,   -33,   134,
+     -33,    16,   284,   -33
   };
 
   const signed char
   parser::yydefact_[] =
   {
-       0,    24,     0,     0,     0,    26,    16,    17,    19,     0,
-       2,    23,    18,     0,    22,     0,     0,     1,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-      25,     0,     0,     3,     4,     5,     6,     0,     7,    10,
-      12,    11,     8,     9,    14,     0,     0,    21,    13,     0,
-      20,     0,     0,     0,    15
+       0,     0,     0,     2,     0,     1,    37,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     4,
+      12,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     5,    13,    35,     0,     0,     0,    27,
+      28,    30,     0,    34,    29,     0,     0,     3,     0,     0,
+       0,    33,     0,     0,     0,     0,     0,     0,     4,     0,
+       0,     0,     0,     0,     0,     0,     0,     4,     0,     0,
+      10,    36,     0,     0,    14,    15,    16,    17,     6,     0,
+      18,    21,    23,    22,    19,    20,    25,     0,     8,     9,
+       0,     0,    32,     4,    24,     0,     0,    31,     7,     0,
+      11,     0,     0,    26
   };
 
   const signed char
   parser::yypgoto_[] =
   {
-     -27,   -27,    -2,   -27,     1
+     -33,   -33,   -33,   -15,   -33,    10,   -33,    -4
   };
 
   const signed char
   parser::yydefgoto_[] =
   {
-       0,     9,    10,    11,    12
+      -1,     2,     3,    24,    26,    42,    43,    44
   };
 
   const signed char
   parser::yytable_[] =
   {
-      13,    14,    31,    17,    15,    16,     1,     2,    18,    19,
-      20,    21,    22,     5,    32,    22,    33,    34,    35,    36,
-      37,    38,    39,    40,    41,    42,    43,     3,    29,    46,
-      45,    29,    44,    47,     5,     4,    49,     0,     5,     6,
-       7,     8,    18,    19,    20,    21,     0,    51,     0,    22,
-      53,     0,     0,    23,    24,    25,    26,    27,    28,     0,
-       0,    18,    19,    20,    21,    29,    52,    30,    22,     0,
-       0,     0,    23,    24,    25,    26,    27,    28,    18,    19,
-      20,    21,     0,     0,    29,    22,    48,     0,     0,    23,
-      24,    25,    26,    27,    28,    18,    19,    20,    21,     0,
-       0,    29,    22,    50,     0,     0,    23,    24,    25,    26,
-      27,    28,     0,    18,    19,    20,    21,     0,    29,    54,
-      22,     0,     0,     0,    23,    24,    25,    26,    27,    28,
-      18,    19,    20,    21,    20,    21,    29,    22,     0,    22,
-       0,    23,    24,    25,    26,    27,    28,    18,    19,    20,
-      21,     0,     0,    29,    22,    29,     0,     0,     0,    24,
-      25,    26,    27,    28,    18,    19,    20,    21,     0,     0,
-      29,    22,     0,     0,     0,     0,    24,     0,     0,    27,
-      28,    18,    19,    20,    21,     0,     0,    29,    22,     0,
-       0,     0,     0,     0,     0,     0,    27,    28,     0,     0,
-       0,     0,     0,     0,    29
+       7,    52,    59,    20,    33,    31,    86,     1,     6,    32,
+       6,    34,    17,    56,    57,    25,     6,     4,    59,    66,
+       5,     8,    25,    35,    36,    21,     9,    22,    10,    12,
+      23,     6,    13,    11,    53,    66,    14,    15,    45,    46,
+      16,    48,    49,    78,    18,    37,    50,    51,    27,    19,
+      28,    29,    88,    38,    25,    72,     6,    39,    40,    41,
+      30,    47,    87,    25,    74,    75,    76,    77,    20,    79,
+      80,    81,    82,    83,    84,    85,    73,    90,    98,    89,
+      92,    93,    91,    95,     0,     0,     0,     0,     0,    25,
+      21,     0,    22,     0,     0,    23,     6,     0,     0,     0,
+      96,    54,    55,    56,    57,    99,     0,     0,    59,     0,
+       0,   102,    60,    61,    62,    63,    64,    65,     0,    54,
+      55,    56,    57,     0,     0,    66,    59,     0,    70,     0,
+      60,    61,    62,    63,    64,    65,     0,    54,    55,    56,
+      57,     0,     0,    66,    59,     0,   100,     0,    60,    61,
+      62,    63,    64,    65,     0,     0,     0,    54,    55,    56,
+      57,    66,   101,    58,    59,     0,     0,     0,    60,    61,
+      62,    63,    64,    65,     0,     0,    54,    55,    56,    57,
+       0,    66,    67,    59,     0,     0,     0,    60,    61,    62,
+      63,    64,    65,     0,     0,    54,    55,    56,    57,     0,
+      66,    68,    59,     0,     0,     0,    60,    61,    62,    63,
+      64,    65,     0,    54,    55,    56,    57,     0,     0,    66,
+      59,    69,     0,     0,    60,    61,    62,    63,    64,    65,
+       0,     0,    54,    55,    56,    57,     0,    66,    71,    59,
+       0,     0,     0,    60,    61,    62,    63,    64,    65,     0,
+      54,    55,    56,    57,     0,     0,    66,    59,    94,     0,
+       0,    60,    61,    62,    63,    64,    65,     0,    54,    55,
+      56,    57,     0,     0,    66,    59,    97,     0,     0,    60,
+      61,    62,    63,    64,    65,     0,     0,    54,    55,    56,
+      57,     0,    66,   103,    59,     0,     0,     0,    60,    61,
+      62,    63,    64,    65,     0,    54,    55,    56,    57,     0,
+       0,    66,    59,     0,     0,     0,    60,    61,    62,    63,
+      64,    65,     0,    54,    55,    56,    57,     0,     0,    66,
+      59,     0,     0,     0,     0,    61,    62,    63,    64,    65,
+       0,    54,    55,    56,    57,     0,     0,    66,    59,     0,
+       0,     0,     0,    61,     0,     0,    64,    65,     0,    54,
+      55,    56,    57,     0,     0,    66,    59,     0,     0,    54,
+      55,    56,    57,     0,    64,    65,    59,     0,     0,     0,
+       0,     0,     0,    66,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,    66
   };
 
   const signed char
   parser::yycheck_[] =
   {
-       2,     3,    10,     0,    30,     4,     7,     8,     3,     4,
-       5,     6,    10,    39,     8,    10,    18,    19,    20,    21,
-      22,    23,    24,    25,    26,    27,    28,    28,    26,    31,
-      29,    26,    37,     9,    39,    36,     8,    -1,    39,    40,
-      41,    42,     3,     4,     5,     6,    -1,    49,    -1,    10,
-      52,    -1,    -1,    14,    15,    16,    17,    18,    19,    -1,
-      -1,     3,     4,     5,     6,    26,    27,     9,    10,    -1,
-      -1,    -1,    14,    15,    16,    17,    18,    19,     3,     4,
-       5,     6,    -1,    -1,    26,    10,    11,    -1,    -1,    14,
-      15,    16,    17,    18,    19,     3,     4,     5,     6,    -1,
-      -1,    26,    10,    11,    -1,    -1,    14,    15,    16,    17,
-      18,    19,    -1,     3,     4,     5,     6,    -1,    26,     9,
-      10,    -1,    -1,    -1,    14,    15,    16,    17,    18,    19,
-       3,     4,     5,     6,     5,     6,    26,    10,    -1,    10,
-      -1,    14,    15,    16,    17,    18,    19,     3,     4,     5,
-       6,    -1,    -1,    26,    10,    26,    -1,    -1,    -1,    15,
-      16,    17,    18,    19,     3,     4,     5,     6,    -1,    -1,
-      26,    10,    -1,    -1,    -1,    -1,    15,    -1,    -1,    18,
-      19,     3,     4,     5,     6,    -1,    -1,    26,    10,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    18,    19,    -1,    -1,
-      -1,    -1,    -1,    -1,    26
+       4,    31,    10,    12,    13,    10,    38,    24,    40,    14,
+      40,    26,    16,     5,     6,    19,    40,    20,    10,    27,
+       0,    12,    26,     7,     8,    34,    24,    36,    21,    23,
+      39,    40,     8,    22,    38,    27,    33,    10,    28,    29,
+      11,    31,    32,    58,     8,    29,    36,    37,     8,    12,
+       8,     8,    67,    37,    58,    10,    40,    41,    42,    43,
+      13,    13,    66,    67,    54,    55,    56,    57,    12,    59,
+      60,    61,    62,    63,    64,    65,     8,    14,    93,    30,
+       9,    35,    72,     8,    -1,    -1,    -1,    -1,    -1,    93,
+      34,    -1,    36,    -1,    -1,    39,    40,    -1,    -1,    -1,
+      90,     3,     4,     5,     6,    95,    -1,    -1,    10,    -1,
+      -1,   101,    14,    15,    16,    17,    18,    19,    -1,     3,
+       4,     5,     6,    -1,    -1,    27,    10,    -1,    30,    -1,
+      14,    15,    16,    17,    18,    19,    -1,     3,     4,     5,
+       6,    -1,    -1,    27,    10,    -1,    30,    -1,    14,    15,
+      16,    17,    18,    19,    -1,    -1,    -1,     3,     4,     5,
+       6,    27,    28,     9,    10,    -1,    -1,    -1,    14,    15,
+      16,    17,    18,    19,    -1,    -1,     3,     4,     5,     6,
+      -1,    27,     9,    10,    -1,    -1,    -1,    14,    15,    16,
+      17,    18,    19,    -1,    -1,     3,     4,     5,     6,    -1,
+      27,     9,    10,    -1,    -1,    -1,    14,    15,    16,    17,
+      18,    19,    -1,     3,     4,     5,     6,    -1,    -1,    27,
+      10,    11,    -1,    -1,    14,    15,    16,    17,    18,    19,
+      -1,    -1,     3,     4,     5,     6,    -1,    27,     9,    10,
+      -1,    -1,    -1,    14,    15,    16,    17,    18,    19,    -1,
+       3,     4,     5,     6,    -1,    -1,    27,    10,    11,    -1,
+      -1,    14,    15,    16,    17,    18,    19,    -1,     3,     4,
+       5,     6,    -1,    -1,    27,    10,    11,    -1,    -1,    14,
+      15,    16,    17,    18,    19,    -1,    -1,     3,     4,     5,
+       6,    -1,    27,     9,    10,    -1,    -1,    -1,    14,    15,
+      16,    17,    18,    19,    -1,     3,     4,     5,     6,    -1,
+      -1,    27,    10,    -1,    -1,    -1,    14,    15,    16,    17,
+      18,    19,    -1,     3,     4,     5,     6,    -1,    -1,    27,
+      10,    -1,    -1,    -1,    -1,    15,    16,    17,    18,    19,
+      -1,     3,     4,     5,     6,    -1,    -1,    27,    10,    -1,
+      -1,    -1,    -1,    15,    -1,    -1,    18,    19,    -1,     3,
+       4,     5,     6,    -1,    -1,    27,    10,    -1,    -1,     3,
+       4,     5,     6,    -1,    18,    19,    10,    -1,    -1,    -1,
+      -1,    -1,    -1,    27,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    27
   };
 
   const signed char
   parser::yystos_[] =
   {
-       0,     7,     8,    28,    36,    39,    40,    41,    42,    44,
-      45,    46,    47,    45,    45,    30,    47,     0,     3,     4,
-       5,     6,    10,    14,    15,    16,    17,    18,    19,    26,
-       9,    10,     8,    45,    45,    45,    45,    45,    45,    45,
-      45,    45,    45,    45,    37,    47,    45,     9,    11,     8,
-      11,    45,    27,    45,     9
+       0,    24,    46,    47,    20,     0,    40,    52,    12,    24,
+      21,    22,    23,     8,    33,    10,    11,    52,     8,    12,
+      12,    34,    36,    39,    48,    52,    49,     8,     8,     8,
+      13,    10,    14,    13,    48,     7,     8,    29,    37,    41,
+      42,    43,    50,    51,    52,    50,    50,    13,    50,    50,
+      50,    50,    31,    52,     3,     4,     5,     6,     9,    10,
+      14,    15,    16,    17,    18,    19,    27,     9,     9,    11,
+      30,     9,    10,     8,    50,    50,    50,    50,    48,    50,
+      50,    50,    50,    50,    50,    50,    38,    52,    48,    30,
+      14,    50,     9,    35,    11,     8,    50,    11,    48,    50,
+      30,    28,    50,     9
   };
 
   const signed char
   parser::yyr1_[] =
   {
-       0,    43,    44,    45,    45,    45,    45,    45,    45,    45,
-      45,    45,    45,    45,    45,    45,    45,    45,    45,    45,
-      45,    45,    45,    45,    46,    46,    47
+       0,    45,    46,    47,    48,    48,    48,    48,    48,    48,
+      48,    48,    49,    49,    50,    50,    50,    50,    50,    50,
+      50,    50,    50,    50,    50,    50,    50,    50,    50,    50,
+      50,    50,    50,    50,    50,    51,    51,    52
   };
 
   const signed char
   parser::yyr2_[] =
   {
-       0,     2,     1,     3,     3,     3,     3,     3,     3,     3,
-       3,     3,     3,     4,     3,     8,     1,     1,     1,     1,
-       5,     4,     2,     1,     1,     3,     1
+       0,     2,     1,    18,     0,     3,     5,     7,     5,     5,
+       4,     7,     0,     2,     3,     3,     3,     3,     3,     3,
+       3,     3,     3,     3,     4,     3,     8,     1,     1,     1,
+       1,     5,     4,     2,     1,     1,     3,     1
   };
 
 
-#if YYDEBUG || 1
+
   // YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
-  // First, the terminals, then, starting at \a YYNTOKENS, nonterminals.
+  // First, the terminals, then, starting at \a yyntokens_, nonterminals.
   const char*
   const parser::yytname_[] =
   {
-  "\"end of file\"", "error", "\"invalid token\"", "PLUSOP", "MINUSOP",
-  "MULTOP", "DIVOP", "INT", "LP", "RP", "LHB", "RHB", "LCB", "RCB",
-  "ASSIGN", "EQ", "AND", "OR", "GT", "LT", "CLASS", "STATIC", "VOID",
-  "MAIN", "PUBLIC", "COMMENT", "PERIOD", "COMMA", "EXCLAMATION",
-  "SEMICOLON", "INTTYPE", "BOOLTYPE", "STRING", "IF", "ELSE", "WHILE",
-  "NEW", "LENGTH", "PRINT", "IDENTIFIER", "TRUE", "FALSE", "THIS",
-  "$accept", "root", "expression", "factor", "identifier", YY_NULLPTR
+  "\"end of file\"", "error", "$undefined", "PLUSOP", "MINUSOP", "MULTOP",
+  "DIVOP", "INT", "LP", "RP", "LHB", "RHB", "LCB", "RCB", "ASSIGN", "EQ",
+  "AND", "OR", "GT", "LT", "CLASS", "STATIC", "VOID", "MAIN", "PUBLIC",
+  "COMMENT", "RETURN", "PERIOD", "COMMA", "EXCLAMATION", "SEMICOLON",
+  "INTTYPE", "BOOLTYPE", "STRING", "IF", "ELSE", "WHILE", "NEW", "LENGTH",
+  "PRINT", "IDENTIFIER", "TRUE", "FALSE", "THIS", "STATEMENT", "$accept",
+  "root", "mainclass", "statement", "statements", "expression", "factor",
+  "identifier", YY_NULLPTR
   };
-#endif
-
 
 #if YYDEBUG
-  const unsigned char
+  const short
   parser::yyrline_[] =
   {
-       0,    39,    39,    41,    51,    57,    63,    69,    74,    79,
-      84,    89,    94,   100,   105,   109,   113,   116,   119,   122,
-     125,   128,   131,   134,   138,   139,   142
+       0,    42,    42,    44,   144,   146,   149,   154,   160,   165,
+     169,   174,   182,   184,   193,   203,   209,   215,   221,   226,
+     231,   236,   241,   246,   252,   257,   261,   265,   268,   271,
+     274,   277,   281,   285,   289,   293,   294,   297
   };
 
+  // Print the state stack on the debug stream.
   void
-  parser::yy_stack_print_ () const
+  parser::yystack_print_ ()
   {
     *yycdebug_ << "Stack now";
     for (stack_type::const_iterator
@@ -1481,8 +1606,9 @@ namespace yy {
     *yycdebug_ << '\n';
   }
 
+  // Report on the debug stream that the rule \a yyrule is going to be reduced.
   void
-  parser::yy_reduce_print_ (int yyrule) const
+  parser::yy_reduce_print_ (int yyrule)
   {
     int yylno = yyrline_[yyrule];
     int yynrhs = yyr2_[yyrule];
@@ -1498,5 +1624,5 @@ namespace yy {
 
 
 } // yy
-#line 1502 "parser.tab.c"
+#line 1628 "parser.tab.c"
 

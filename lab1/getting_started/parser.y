@@ -35,19 +35,68 @@
 
 // definition of the production rules. All production rules are of type Node
 %type <Node *> root expression factor identifier type varDeclaration varDeclarations mainclass statement statements
-%type <Node *> methodDeclaration parameters classDeclaration
+%type <Node *> methodDeclaration methodDeclarations methodBody parameters classDeclaration classDeclarations
 
 %%
 // TODO Change this later to be the class 
-root:       statement {root = $1;};
+root:       mainclass {root = $1;};
 
 mainclass: PUBLIC CLASS identifier LCB PUBLIC STATIC VOID MAIN LP STRING LHB RHB identifier LP LCB statement RCB RCB {
-                    // TODO
+                      $$ = new Node("MainClass", "", yylineno);
+                      $$->children.push_back($3);
+                      $$->children.push_back($13);
+                      $$->children.push_back($16);
               }
               ;
 
-classDeclaration: CLASS identifier LCB varDeclarations /* TODO methodDeclarations */ 
+classDeclaration: CLASS identifier LCB varDeclarations methodDeclarations RCB {
+                      $$ = new Node("classDeclaration", "", yylineno)
+                      $$->children.push_back($2);
+                      $$->children.push_back($4);
+                      $$->children.push_back($5);
+              }
+              ;
 
+classDeclarations: /* Empty */
+              | classDeclaration classDeclarations {
+                      $$ = new Node("ClassDeclarations");
+                      $$->children.push_back($1);
+                      $$->children.push_back($2);
+              }
+              ;
+
+methodDeclaration: PUBLIC type identifier LP parameters RP LCB methodBody RETURN expression SEMICOLON RCB {
+                      $$ = new Node("Method", "", yylineno);
+                      $$->children.push_back($2); // type
+                      $$->children.push_back($3); // identifier
+                      $$->children.push_back($5); // param
+                      $$->children.push_back($8); // method body
+                      $$->children.push_back($9); // return expression
+              }
+              ;
+
+methodDeclarations:
+            /* Empty */
+            | methodDeclarations methodDeclaration {
+                      $$ = new Node("MethodDeclarations")
+                      $$->children.push_back($1);
+                      $$->children.push_back($2);
+            }
+            ;
+
+methodBody: /* Empty */
+            | methodBody varDeclaration {
+                      $$ = new Node("MethodVariable");
+                      $$->children.push_back($1);
+                      $$->children.push_back($2);
+            }
+            | methodBody statement {
+                      $$ = new Node("MethodStatement");
+                      $$->children.push_back($1);
+                      $$->children.push_back($2);
+            }
+            ;
+            
 varDeclaration: type identifier SEMICOLON {
                       $$ = new Node("Variable", "", yylineno);
                       $$->children.push_back($1); // type
@@ -58,40 +107,25 @@ varDeclaration: type identifier SEMICOLON {
 varDeclarations: 
               /* Empty */
               | varDeclarations varDeclaration {
-                $$ = new Node("Variables")
+                      $$ = new Node("Variables");
+                      $$->children.push_back($1);
+                      $$->children.push_back($2);
               }
-// TODO. cant resolve ``( VarDeclaration | Statement ) *``
-// methodDeclaration: PUBLIC type identifier LP parameters RP LCB varDeclarations statements RETURN expression SEMICOLON RCB {
-//                       $$ = new Node("Method", "", yylineno);
-//                       $$->children.push_back($2); // type
-//                       $$->children.push_back($3); // identifier
-//                       $$->children.push_back($5); // param
-//                       $$->children.push_back($8); // variables
-//                       $$->children.push_back($9); // statements
-//               }
+              ;
 
-// methodBody: /* Empty */
-//             | methodBody varDeclaration {
-//                       $$ = new Node("MethodBody")
-//             }
-//             | methodBody statement {
-//                       $$ = new Node("MethodBody")
-//             }
-//             ;
-
-// parameters: /* Empty */
-//             | type identifier {
-//                       $$ = new Node("Parameter", "", yylineno);
-//                       $$->children.push_back($1); // type
-//                       $$->children.push_back($2); // identifier
-//             }
-//             | type identifier COMMA parameters {
-//                       $$ = new Node("Parameters", "", yylineno);
-//                       $$->children.push_back($1); // type
-//                       $$->children.push_back($2); // identifier
-//                       $$->children.push_back($4); // undef nr of prams
-//             }
-//             ;
+parameters: /* Empty */
+            | type identifier {
+                      $$ = new Node("Parameter", "", yylineno);
+                      $$->children.push_back($1); // type
+                      $$->children.push_back($2); // identifier
+            }
+            | type identifier COMMA parameters {
+                      $$ = new Node("Parameters", "", yylineno);
+                      $$->children.push_back($1); // type
+                      $$->children.push_back($2); // identifier
+                      $$->children.push_back($4); // undef nr of prams
+            }
+            ;
 
 type: INTTYPE LHB RHB {
                       $$ = new Node("ArrayType", "", yylineno);

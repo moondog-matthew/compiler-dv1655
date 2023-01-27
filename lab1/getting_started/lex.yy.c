@@ -3,7 +3,7 @@
 #include "Node.h"
 int lexical_errors = 0;
 
-#line 6 "lex.yy.c"
+#line 7 "lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -591,7 +591,7 @@ char *yytext;
 #line 1 "lexer.l"
 
 #define YY_NO_INPUT 1
-#line 594 "lex.yy.c"
+#line 595 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -819,7 +819,7 @@ YY_DECL
 #line 8 "lexer.l"
 
 
-#line 822 "lex.yy.c"
+#line 823 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -1102,7 +1102,7 @@ YY_RULE_SETUP
 #line 62 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 1105 "lex.yy.c"
+#line 1106 "lex.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
