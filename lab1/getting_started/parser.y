@@ -19,10 +19,9 @@
 }
 // definition of set of tokens. All tokens are of type string
 %token <std::string> PLUSOP MINUSOP MULTOP DIVOP INT LP RP LHB RHB LCB RCB ASSIGN EQ AND OR GT LT
-%token <std::string> CLASS STATIC VOID MAIN PUBLIC COMMENT
+%token <std::string> CLASS STATIC VOID MAIN PUBLIC 
 %token <std::string> PERIOD COMMA EXCLAMATION SEMICOLON INTTYPE BOOLTYPE STRING
 %token <std::string> IF ELSE WHILE NEW LENGTH PRINT IDENTIFIER TRUE FALSE THIS
-%token <std::string> STATEMENT
 %token END 0 "end of file"
 
 //defition of operator precedence. See https://www.gnu.org/software/bison/manual/bison.html#Precedence-Decl
@@ -33,12 +32,16 @@
 %left LT GT
 %left PLUSOP MINUSOP
 %left MULTOP DIVOP 
+%left EXCLAMATION
+%left PERIOD
 
-%nonassoc IFTHEN
+
+%nonassoc NO_ELSE
 %nonassoc ELSE
 
 // definition of the production rules. All production rules are of type Node
 %type <Node *> root expression factor identifier type vardeclaration mainclass statement statements
+%type <Node *> exprlist
 
 %%
 // Change this later to be the class 
@@ -71,10 +74,10 @@ type: INTTYPE LHB RHB {
 
 statement: 
             /* empty */
-            | LCB statements RCB { 
+            | LCB statements RCB  { 
               $$ = new Node("Statements", "", yylineno);
             }
-            | IF LP expression RP statement %prec IFTHEN { // Solved shift reduce by assigning %prec
+            | IF LP expression RP statement %prec NO_ELSE { // To solve dangling else ambiguity
               $$ = new Node("IF", "", yylineno);
               $$->children.push_back($3);
               $$->children.push_back($5);
@@ -108,9 +111,9 @@ statement:
             ;
 
 statements:
-            /* empty */
-            | statements statement { 
-              $$ = new Node("Statements", "", yylineno);
+            /* empty */  
+            | statements statement  { 
+              $$ = new Node("StatementsList", "", yylineno);
               $$->children.push_back($1);
               $$->children.push_back($2);
                 }
@@ -185,8 +188,8 @@ expression: expression PLUSOP expression {      /*
                             $$ = new Node("LenghtOfExpression", "", yylineno);
                             $$->children.push_back($1);
                           }
-            | expression PERIOD identifier LP expression COMMA expression RP {
-                              // TODO
+            | expression PERIOD identifier LP exprlist RP {  // recursive grammar, follows recursive rules
+                              $$ = new Node("CALL_ME_LATER", "", yylineno);
                           }
             
             | TRUE {
@@ -215,6 +218,15 @@ expression: expression PLUSOP expression {      /*
                   }
             | factor      {$$ = $1; /* printf("r4 ");*/}
             ;
+
+exprlist: 
+    /*empty*/
+    | exprlist COMMA expression {
+              $$ = new Node("ExpressionList", "", yylineno);
+              $$->children.push_back($1);
+              $$->children.push_back($3);
+                }
+          ;
 
 // Factor like an integer
 factor:     INT           {  $$ = new Node("Int", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
