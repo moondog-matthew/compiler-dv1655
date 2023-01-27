@@ -32,6 +32,7 @@
 %left LT GT
 %left PLUSOP MINUSOP
 %left MULTOP DIVOP 
+%left LHB
 %left EXCLAMATION
 %left PERIOD
 
@@ -73,154 +74,154 @@ type: INTTYPE LHB RHB {
         ;
 
 statement: 
-      /* empty */
-      | LCB statements RCB  { 
-        $$ = new Node("Statements", "", yylineno);
-      }
-      | stmt_if
-      | WHILE LP expression RP statement {
-        $$ = new Node("While", "", yylineno);
-        $$->children.push_back($3);
-        $$->children.push_back($5);
-      }
-      | PRINT LP expression RP SEMICOLON {
-        $$ = new Node("Print", "", yylineno);
-        $$->children.push_back($3);
-      }
-      | identifier ASSIGN expression SEMICOLON {
-        $$ = new Node("Assign", "", yylineno);
-        $$->children.push_back($1);
-        $$->children.push_back($3);
-      } 
-      | identifier LHB expression RHB ASSIGN expression SEMICOLON {
-        $$ = new Node("indexAssign", "", yylineno);
-        $$->children.push_back($1);
-        $$->children.push_back($3);
-        $$->children.push_back($6);
-      }
-      ;
+            /* empty */
+            | LCB statements RCB  { 
+              $$ = new Node("Statements", "", yylineno);
+            }
+            | stmt_if
+            | WHILE LP expression RP statement {
+              $$ = new Node("While", "", yylineno);
+              $$->children.push_back($3);
+              $$->children.push_back($5);
+            }
+            | PRINT LP expression RP SEMICOLON {
+              $$ = new Node("Print", "", yylineno);
+              $$->children.push_back($3);
+            }
+            | identifier ASSIGN expression SEMICOLON {
+              $$ = new Node("Assign", "", yylineno);
+              $$->children.push_back($1);
+              $$->children.push_back($3);
+            } 
+            | identifier LHB expression RHB ASSIGN expression SEMICOLON {
+              $$ = new Node("indexAssign", "", yylineno);
+              $$->children.push_back($1);
+              $$->children.push_back($3);
+              $$->children.push_back($6);
+            }
+            ;
 
 statements:
-      /* empty */  
-      | statements statement  { 
-        $$ = new Node("StatementsList", "", yylineno);
-        $$->children.push_back($1);
-        $$->children.push_back($2);
-          }
-      ;
+            /* empty */  
+            | statements statement { 
+              $$ = new Node("StatementsList", "", yylineno);
+              $$->children.push_back($1);
+              $$->children.push_back($2);
+                }
+            ;
 
 stmt_if: IF LP expression RP statement %prec NO_ELSE { // To solve dangling else ambiguity
-        $$ = new Node("IF", "", yylineno);
-        $$->children.push_back($3);
-        $$->children.push_back($5);
-      }
-      | IF LP expression RP statement ELSE statement {
-        $$ = new Node("IfElse", "", yylineno);
-        $$->children.push_back($3);
-        $$->children.push_back($5);
-        $$->children.push_back($7);
-      };
+              $$ = new Node("IF", "", yylineno);
+              $$->children.push_back($3);
+              $$->children.push_back($5);
+            }
+            | IF LP expression RP statement ELSE statement {
+              $$ = new Node("IfElse", "", yylineno);
+              $$->children.push_back($3);
+              $$->children.push_back($5);
+              $$->children.push_back($7);
+            };
 
 
 expression: expression PLUSOP expression {      
-                      $$ = new Node("AddExpression", "", yylineno);
-                      $$->children.push_back($1);
-                      $$->children.push_back($3);
-                      /* printf("r1 "); */
-                    }
-      | expression MINUSOP expression {
-                      $$ = new Node("SubExpression", "", yylineno);
-                      $$->children.push_back($1);
-                      $$->children.push_back($3);
-                      /* printf("r2 "); */
-                    }
-      | expression MULTOP expression {
-                      $$ = new Node("MultExpression", "", yylineno);
-                      $$->children.push_back($1);
-                      $$->children.push_back($3);
-                      /* printf("r3 "); */
-                    }
-      | expression DIVOP expression {
-                      $$ = new Node("DivExpression", "", yylineno);
-                      $$->children.push_back($1);
-                      $$->children.push_back($3);
-                      /* printf("r3 "); */
-                    }
-      | expression ASSIGN expression {
-                      $$ = new Node("Assigning", "", yylineno);
-                      $$->children.push_back($1);
-                      $$->children.push_back($3);                            
-                    }
-      | expression GT expression {
-                      $$ = new Node("GreaterThan", "", yylineno);
-                      $$->children.push_back($1);
-                      $$->children.push_back($3);                            
-                    }
-      | expression LT expression {
-                      $$ = new Node("LessThan", "", yylineno);
-                      $$->children.push_back($1);
-                      $$->children.push_back($3);                            
-                    }
-      | expression EQ expression {
-                      $$ = new Node("Equals", "", yylineno);
-                      $$->children.push_back($1);
-                      $$->children.push_back($3);                            
-                    }
-      | expression OR expression {
-                      $$ = new Node("OR", "", yylineno);
-                      $$->children.push_back($1);
-                      $$->children.push_back($3);                            
-                    }
-      | expression AND expression {
-                      $$ = new Node("AND", "", yylineno);
-                      $$->children.push_back($1);
-                      $$->children.push_back($3);                            
-                    }
-      
-      | experiment
-          
-      | expression PERIOD LENGTH {
-                      $$ = new Node("LenghtOfExpression", "", yylineno);
-                      $$->children.push_back($1);
-                    }
-      | expression PERIOD identifier LP exprlist RP {  // recursive grammar, follows recursive rules
-                        $$ = new Node("Method call", "", yylineno);
-                    }
-      | expression PERIOD identifier LP RP {  // for the empty case
-                        $$ = new Node("Method call", "", yylineno);
-                    }
-      | TRUE {
-            $$ = new Node("True", "", yylineno);
-          }
-      | FALSE {
-            $$ = new Node("False", "", yylineno);
-          }
-      | identifier {
-            $$ = $1;
-          }
-      | THIS  {
-            $$ = new Node("This", "", yylineno);
-          }
-      | NEW INTTYPE LHB expression RHB {
-                $$ = new Node("AllocateIntArray", "", yylineno);
-                $$->children.push_back($4);  // Size of int array
-            }
-      | NEW identifier LP RP {
-                $$ = new Node("AllocateIdentifier", "", yylineno);
-                $$->children.push_back($2);  
-            }
-      | EXCLAMATION expression {
-                $$ = new Node("Negation", "", yylineno);
-                $$->children.push_back($2); 
-            }
-      | factor      {$$ = $1; /* printf("r4 ");*/}
-      ;
+                            $$ = new Node("AddExpression", "", yylineno);
+                            $$->children.push_back($1);
+                            $$->children.push_back($3);
+                            /* printf("r1 "); */
+                          }
+            | expression MINUSOP expression {
+                            $$ = new Node("SubExpression", "", yylineno);
+                            $$->children.push_back($1);
+                            $$->children.push_back($3);
+                            /* printf("r2 "); */
+                          }
+            | expression MULTOP expression {
+                            $$ = new Node("MultExpression", "", yylineno);
+                            $$->children.push_back($1);
+                            $$->children.push_back($3);
+                            /* printf("r3 "); */
+                          }
+            | expression DIVOP expression {
+                            $$ = new Node("DivExpression", "", yylineno);
+                            $$->children.push_back($1);
+                            $$->children.push_back($3);
+                            /* printf("r3 "); */
+                          }
+            | expression ASSIGN expression {
+                            $$ = new Node("Assigning", "", yylineno);
+                            $$->children.push_back($1);
+                            $$->children.push_back($3);                            
+                          }
+            | expression GT expression {
+                            $$ = new Node("GreaterThan", "", yylineno);
+                            $$->children.push_back($1);
+                            $$->children.push_back($3);                            
+                          }
+            | expression LT expression {
+                            $$ = new Node("LessThan", "", yylineno);
+                            $$->children.push_back($1);
+                            $$->children.push_back($3);                            
+                          }
+            | expression EQ expression {
+                            $$ = new Node("Equals", "", yylineno);
+                            $$->children.push_back($1);
+                            $$->children.push_back($3);                            
+                          }
+            | expression OR expression {
+                            $$ = new Node("OR", "", yylineno);
+                            $$->children.push_back($1);
+                            $$->children.push_back($3);                            
+                          }
+            | expression AND expression {
+                            $$ = new Node("AND", "", yylineno);
+                            $$->children.push_back($1);
+                            $$->children.push_back($3);                            
+                          }
+            
+            | experiment
+                
+            | expression PERIOD LENGTH {
+                            $$ = new Node("LenghtOfExpression", "", yylineno);
+                            $$->children.push_back($1);
+                          }
+            | expression PERIOD identifier LP exprlist RP {  // recursive grammar, follows recursive rules
+                              $$ = new Node("Method call", "", yylineno);
+                          }
+            | expression PERIOD identifier LP RP {  // for the empty case
+                              $$ = new Node("Method call", "", yylineno);
+                          }
+            | TRUE {
+                  $$ = new Node("True", "", yylineno);
+                }
+            | FALSE {
+                  $$ = new Node("False", "", yylineno);
+                }
+            | identifier {
+                  $$ = $1;
+                }
+            | THIS  {
+                  $$ = new Node("This", "", yylineno);
+                }
+            | NEW INTTYPE LHB expression RHB {
+                      $$ = new Node("AllocateIntArray", "", yylineno);
+                      $$->children.push_back($4);  // Size of int array
+                  }
+            | NEW identifier LP RP {
+                      $$ = new Node("AllocateIdentifier", "", yylineno);
+                      $$->children.push_back($2);  
+                  }
+            | EXCLAMATION expression {
+                      $$ = new Node("Negation", "", yylineno);
+                      $$->children.push_back($2); 
+                  }
+            | factor      {$$ = $1; /* printf("r4 ");*/}
+            ;
 
 experiment: expression LHB expression RHB {
-              $$ = new Node("Index", "", yylineno);
-              $$->children.push_back($1);  // what to take index of
-              $$->children.push_back($3);  // index value
-            }
+        $$ = new Node("Index", "", yylineno);
+        $$->children.push_back($1);  // what to take index of
+        $$->children.push_back($3);  // index value
+      }
 
 exprlist: 
     /*empty*/

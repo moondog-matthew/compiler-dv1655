@@ -29,19 +29,8 @@ Rules useless in grammar
 
 
 State 10 conflicts: 6 shift/reduce
-State 35 conflicts: 1 shift/reduce
 State 42 conflicts: 5 shift/reduce
 State 51 conflicts: 5 shift/reduce
-State 58 conflicts: 1 shift/reduce
-State 59 conflicts: 1 shift/reduce
-State 60 conflicts: 1 shift/reduce
-State 61 conflicts: 1 shift/reduce
-State 64 conflicts: 1 shift/reduce
-State 65 conflicts: 1 shift/reduce
-State 66 conflicts: 1 shift/reduce
-State 67 conflicts: 1 shift/reduce
-State 68 conflicts: 1 shift/reduce
-State 69 conflicts: 1 shift/reduce
 State 77 conflicts: 5 shift/reduce
 State 79 conflicts: 1 shift/reduce
 
@@ -722,10 +711,8 @@ State 35
    33           | EXCLAMATION expression •
    35 experiment: expression • LHB expression RHB
 
-    LHB     shift, and go to state 43
     PERIOD  shift, and go to state 50
 
-    LHB       [reduce using rule 33 (expression)]
     $default  reduce using rule 33 (expression)
 
 
@@ -1086,7 +1073,6 @@ State 58
     LHB     shift, and go to state 43
     PERIOD  shift, and go to state 50
 
-    LHB       [reduce using rule 13 (expression)]
     $default  reduce using rule 13 (expression)
 
 
@@ -1113,7 +1099,6 @@ State 59
     LHB     shift, and go to state 43
     PERIOD  shift, and go to state 50
 
-    LHB       [reduce using rule 14 (expression)]
     $default  reduce using rule 14 (expression)
 
 
@@ -1138,7 +1123,6 @@ State 60
     LHB     shift, and go to state 43
     PERIOD  shift, and go to state 50
 
-    LHB       [reduce using rule 15 (expression)]
     $default  reduce using rule 15 (expression)
 
 
@@ -1163,7 +1147,6 @@ State 61
     LHB     shift, and go to state 43
     PERIOD  shift, and go to state 50
 
-    LHB       [reduce using rule 16 (expression)]
     $default  reduce using rule 16 (expression)
 
 
@@ -1241,7 +1224,6 @@ State 64
     LT       shift, and go to state 49
     PERIOD   shift, and go to state 50
 
-    LHB       [reduce using rule 17 (expression)]
     $default  reduce using rule 17 (expression)
 
 
@@ -1272,7 +1254,6 @@ State 65
     LT       shift, and go to state 49
     PERIOD   shift, and go to state 50
 
-    LHB       [reduce using rule 20 (expression)]
     $default  reduce using rule 20 (expression)
 
 
@@ -1304,7 +1285,6 @@ State 66
     LT       shift, and go to state 49
     PERIOD   shift, and go to state 50
 
-    LHB       [reduce using rule 22 (expression)]
     $default  reduce using rule 22 (expression)
 
 
@@ -1336,7 +1316,6 @@ State 67
     LT       shift, and go to state 49
     PERIOD   shift, and go to state 50
 
-    LHB       [reduce using rule 21 (expression)]
     $default  reduce using rule 21 (expression)
 
 
@@ -1365,7 +1344,6 @@ State 68
     LHB      shift, and go to state 43
     PERIOD   shift, and go to state 50
 
-    LHB       [reduce using rule 18 (expression)]
     $default  reduce using rule 18 (expression)
 
 
@@ -1394,7 +1372,6 @@ State 69
     LHB      shift, and go to state 43
     PERIOD   shift, and go to state 50
 
-    LHB       [reduce using rule 19 (expression)]
     $default  reduce using rule 19 (expression)
 
 
