@@ -223,9 +223,7 @@ experiment: expression LHB expression RHB {
         $$->children.push_back($3);  // index value
       }
 
-exprlist: 
-    /*empty*/
-    | expression {
+exprlist: expression {
               $$ = new Node("ExpressionList", "", yylineno);
               $$->children.push_back($1);
                 }

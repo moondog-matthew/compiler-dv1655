@@ -18,21 +18,20 @@ Terminals unused in grammar
 
 Rules useless in grammar
 
-   42 mainclass: PUBLIC CLASS identifier LCB PUBLIC STATIC VOID MAIN LP STRING LHB RHB identifier LP LCB statement RCB RCB
+   41 mainclass: PUBLIC CLASS identifier LCB PUBLIC STATIC VOID MAIN LP STRING LHB RHB identifier LP LCB statement RCB RCB
 
-   43 vardeclaration: type identifier SEMICOLON
+   42 vardeclaration: type identifier SEMICOLON
 
-   44 type: INTTYPE LHB RHB
-   45     | BOOLTYPE
-   46     | INTTYPE
-   47     | identifier
+   43 type: INTTYPE LHB RHB
+   44     | BOOLTYPE
+   45     | INTTYPE
+   46     | identifier
 
 
 State 10 conflicts: 6 shift/reduce
 State 42 conflicts: 5 shift/reduce
 State 51 conflicts: 5 shift/reduce
 State 77 conflicts: 5 shift/reduce
-State 79 conflicts: 1 shift/reduce
 
 
 Grammar
@@ -80,14 +79,13 @@ Grammar
 
    35 experiment: expression LHB expression RHB
 
-   36 exprlist: ε
-   37         | expression
-   38         | exprlist COMMA expression
+   36 exprlist: expression
+   37         | exprlist COMMA expression
 
-   39 factor: INT
-   40       | LP expression RP
+   38 factor: INT
+   39       | LP expression RP
 
-   41 identifier: IDENTIFIER
+   40 identifier: IDENTIFIER
 
 
 Terminals, with rules where they appear
@@ -98,9 +96,9 @@ Terminals, with rules where they appear
     MINUSOP <std::string> (259) 14
     MULTOP <std::string> (260) 15
     DIVOP <std::string> (261) 16
-    INT <std::string> (262) 39
-    LP <std::string> (263) 5 6 11 12 25 26 32 40
-    RP <std::string> (264) 5 6 11 12 25 26 32 40
+    INT <std::string> (262) 38
+    LP <std::string> (263) 5 6 11 12 25 26 32 39
+    RP <std::string> (264) 5 6 11 12 25 26 32 39
     LHB <std::string> (265) 8 31 35
     RHB <std::string> (266) 8 31 35
     LCB <std::string> (267) 3
@@ -117,7 +115,7 @@ Terminals, with rules where they appear
     MAIN <std::string> (278)
     PUBLIC <std::string> (279)
     PERIOD <std::string> (280) 24 25 26
-    COMMA <std::string> (281) 38
+    COMMA <std::string> (281) 37
     EXCLAMATION <std::string> (282) 33
     SEMICOLON <std::string> (283) 6 7 8
     INTTYPE <std::string> (284) 31
@@ -129,7 +127,7 @@ Terminals, with rules where they appear
     NEW <std::string> (290) 31 32
     LENGTH <std::string> (291) 24
     PRINT <std::string> (292) 6
-    IDENTIFIER <std::string> (293) 41
+    IDENTIFIER <std::string> (293) 40
     TRUE <std::string> (294) 27
     FALSE <std::string> (295) 28
     THIS <std::string> (296) 30
@@ -154,18 +152,18 @@ Nonterminals, with rules where they appear
         on right: 4
     expression <Node *> (48)
         on left: 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34
-        on right: 5 6 7 8 11 12 13 14 15 16 17 18 19 20 21 22 24 25 26 31 33 35 37 38 40
+        on right: 5 6 7 8 11 12 13 14 15 16 17 18 19 20 21 22 24 25 26 31 33 35 36 37 39
     experiment <Node *> (49)
         on left: 35
         on right: 23
     exprlist <Node *> (50)
-        on left: 36 37 38
-        on right: 25 38
+        on left: 36 37
+        on right: 25 37
     factor <Node *> (51)
-        on left: 39 40
+        on left: 38 39
         on right: 34
     identifier <Node *> (52)
-        on left: 41
+        on left: 40
         on right: 7 8 25 26 29 32
 
 
@@ -220,9 +218,9 @@ State 4
 
 State 5
 
-   41 identifier: IDENTIFIER •
+   40 identifier: IDENTIFIER •
 
-    $default  reduce using rule 41 (identifier)
+    $default  reduce using rule 40 (identifier)
 
 
 State 6
@@ -398,14 +396,14 @@ State 18
 
 State 19
 
-   39 factor: INT •
+   38 factor: INT •
 
-    $default  reduce using rule 39 (factor)
+    $default  reduce using rule 38 (factor)
 
 
 State 20
 
-   40 factor: LP • expression RP
+   39 factor: LP • expression RP
 
     INT          shift, and go to state 19
     LP           shift, and go to state 20
@@ -676,7 +674,7 @@ State 34
    25           | expression • PERIOD identifier LP exprlist RP
    26           | expression • PERIOD identifier LP RP
    35 experiment: expression • LHB expression RHB
-   40 factor: LP expression • RP
+   39 factor: LP expression • RP
 
     PLUSOP   shift, and go to state 38
     MINUSOP  shift, and go to state 39
@@ -1019,9 +1017,9 @@ State 54
 
 State 55
 
-   40 factor: LP expression RP •
+   39 factor: LP expression RP •
 
-    $default  reduce using rule 40 (factor)
+    $default  reduce using rule 39 (factor)
 
 
 State 56
@@ -1507,9 +1505,6 @@ State 79
     FALSE        shift, and go to state 24
     THIS         shift, and go to state 25
 
-    RP        [reduce using rule 36 (exprlist)]
-    $default  reduce using rule 36 (exprlist)
-
     expression  go to state 84
     experiment  go to state 27
     exprlist    go to state 85
@@ -1587,7 +1582,7 @@ State 84
    25           | expression • PERIOD identifier LP exprlist RP
    26           | expression • PERIOD identifier LP RP
    35 experiment: expression • LHB expression RHB
-   37 exprlist: expression •
+   36 exprlist: expression •
 
     PLUSOP   shift, and go to state 38
     MINUSOP  shift, and go to state 39
@@ -1602,13 +1597,13 @@ State 84
     LT       shift, and go to state 49
     PERIOD   shift, and go to state 50
 
-    $default  reduce using rule 37 (exprlist)
+    $default  reduce using rule 36 (exprlist)
 
 
 State 85
 
    25 expression: expression PERIOD identifier LP exprlist • RP
-   38 exprlist: exprlist • COMMA expression
+   37 exprlist: exprlist • COMMA expression
 
     RP     shift, and go to state 87
     COMMA  shift, and go to state 88
@@ -1630,7 +1625,7 @@ State 87
 
 State 88
 
-   38 exprlist: exprlist COMMA • expression
+   37 exprlist: exprlist COMMA • expression
 
     INT          shift, and go to state 19
     LP           shift, and go to state 20
@@ -1663,7 +1658,7 @@ State 89
    25           | expression • PERIOD identifier LP exprlist RP
    26           | expression • PERIOD identifier LP RP
    35 experiment: expression • LHB expression RHB
-   38 exprlist: exprlist COMMA expression •
+   37 exprlist: exprlist COMMA expression •
 
     PLUSOP   shift, and go to state 38
     MINUSOP  shift, and go to state 39
@@ -1678,4 +1673,4 @@ State 89
     LT       shift, and go to state 49
     PERIOD   shift, and go to state 50
 
-    $default  reduce using rule 38 (exprlist)
+    $default  reduce using rule 37 (exprlist)

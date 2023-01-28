@@ -1074,17 +1074,17 @@ namespace yy {
 #line 1075 "parser.tab.c"
     break;
 
-  case 38: // exprlist: expression
-#line 228 "parser.y"
-                 {
+  case 37: // exprlist: expression
+#line 226 "parser.y"
+                     {
               yylhs.value.as < Node * > () = new Node("ExpressionList", "", yylineno);
               yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());
                 }
 #line 1084 "parser.tab.c"
     break;
 
-  case 39: // exprlist: exprlist COMMA expression
-#line 232 "parser.y"
+  case 38: // exprlist: exprlist COMMA expression
+#line 230 "parser.y"
                                 {
               yylhs.value.as < Node * > () = new Node("ExpressionList", "", yylineno);
               yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
@@ -1093,20 +1093,20 @@ namespace yy {
 #line 1094 "parser.tab.c"
     break;
 
-  case 40: // factor: INT
-#line 240 "parser.y"
+  case 39: // factor: INT
+#line 238 "parser.y"
                           {  yylhs.value.as < Node * > () = new Node("Int", yystack_[0].value.as < std::string > (), yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
 #line 1100 "parser.tab.c"
     break;
 
-  case 41: // factor: LP expression RP
-#line 241 "parser.y"
+  case 40: // factor: LP expression RP
+#line 239 "parser.y"
                                { yylhs.value.as < Node * > () = yystack_[1].value.as < Node * > (); /* printf("r6 ");  simply return the expression */}
 #line 1106 "parser.tab.c"
     break;
 
-  case 42: // identifier: IDENTIFIER
-#line 244 "parser.y"
+  case 41: // identifier: IDENTIFIER
+#line 242 "parser.y"
                        {
                     yylhs.value.as < Node * > () = new Node("Identifier", yystack_[0].value.as < std::string > (), yylineno); // Here we create a leaf node Int. The value of the leaf node is $1 
                           }
@@ -1483,15 +1483,15 @@ namespace yy {
   const signed char
   parser::yydefact_[] =
   {
-       3,    10,     0,     0,     0,    42,     0,     2,     5,     0,
-       0,     0,     0,     0,     1,     0,     0,     4,    11,    40,
+       3,    10,     0,     0,     0,    41,     0,     2,     5,     0,
+       0,     0,     0,     0,     1,     0,     0,     4,    11,    39,
        0,     0,     0,    28,    29,    31,     0,    24,    35,    30,
        0,     0,     0,     0,     0,    34,     0,     0,     0,     0,
        0,     0,     3,     0,     0,     0,     0,     0,     0,     0,
-       0,     3,     0,     0,     8,    41,     0,     0,    14,    15,
+       0,     3,     0,     0,     8,    40,     0,     0,    14,    15,
       16,    17,    12,     0,    18,    21,    23,    22,    19,    20,
-      25,     0,     6,     7,     0,     0,    33,     3,    36,    37,
-       0,    32,    13,    27,    38,     0,     9,    26,     0,    39
+      25,     0,     6,     7,     0,     0,    33,     3,    36,     0,
+       0,    32,    13,    27,    37,     0,     9,    26,     0,    38
   };
 
   const signed char
@@ -1598,8 +1598,8 @@ namespace yy {
        0,    43,    44,    45,    45,    45,    45,    45,    45,    45,
       46,    46,    47,    47,    48,    48,    48,    48,    48,    48,
       48,    48,    48,    48,    48,    48,    48,    48,    48,    48,
-      48,    48,    48,    48,    48,    48,    49,    50,    50,    50,
-      51,    51,    52
+      48,    48,    48,    48,    48,    48,    49,    50,    50,    51,
+      51,    52
   };
 
   const signed char
@@ -1608,8 +1608,8 @@ namespace yy {
        0,     2,     1,     0,     3,     1,     5,     5,     4,     7,
        0,     2,     5,     7,     3,     3,     3,     3,     3,     3,
        3,     3,     3,     3,     1,     3,     6,     5,     1,     1,
-       1,     1,     5,     4,     2,     1,     4,     0,     1,     3,
-       1,     3,     1
+       1,     1,     5,     4,     2,     1,     4,     1,     3,     1,
+       3,     1
   };
 
 
@@ -1638,8 +1638,8 @@ namespace yy {
        0,    49,    49,    76,    78,    81,    82,    87,    91,    96,
      104,   106,   113,   118,   126,   132,   138,   144,   150,   155,
      160,   165,   170,   175,   181,   183,   187,   190,   193,   196,
-     199,   202,   205,   209,   213,   217,   220,   226,   228,   232,
-     240,   241,   244
+     199,   202,   205,   209,   213,   217,   220,   226,   230,   238,
+     239,   242
   };
 
   void
