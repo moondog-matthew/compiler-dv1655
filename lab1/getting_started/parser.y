@@ -74,8 +74,7 @@ type: INTTYPE LHB RHB {
         ;
 
 statement: 
-            /* empty */
-            | LCB statements RCB  { 
+            LCB statements RCB  { 
               $$ = new Node("Statements", "", yylineno);
             }
             | stmt_if
