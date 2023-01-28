@@ -12,6 +12,7 @@ int lexical_errors = 0;
 "void"                      { return yy::parser::make_VOID(yytext);   }
 "main"                      { return yy::parser::make_MAIN(yytext);   }
 "public"                    { return yy::parser::make_PUBLIC(yytext); }
+"return"                    { return yy::parser::make_PUBLIC(yytext); }
 
 "+"                         { return yy::parser::make_PLUSOP(yytext); }
 "-"                         { return yy::parser::make_MINUSOP(yytext);}

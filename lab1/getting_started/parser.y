@@ -19,7 +19,7 @@
 }
 // definition of set of tokens. All tokens are of type string
 %token <std::string> PLUSOP MINUSOP MULTOP DIVOP INT LP RP LHB RHB LCB RCB ASSIGN EQ AND OR GT LT
-%token <std::string> CLASS STATIC VOID MAIN PUBLIC 
+%token <std::string> CLASS STATIC VOID MAIN PUBLIC RETURN
 %token <std::string> PERIOD COMMA EXCLAMATION SEMICOLON INTTYPE BOOLTYPE STRING
 %token <std::string> IF ELSE WHILE NEW LENGTH PRINT IDENTIFIER TRUE FALSE THIS
 %token END 0 "end of file"
@@ -41,16 +41,69 @@
 %nonassoc ELSE
 
 // definition of the production rules. All production rules are of type Node
-%type <Node *> root expression factor identifier type vardeclaration mainclass statement statements
-%type <Node *> exprlist experiment stmt_if
+%type <Node *> root expression factor identifier type statement statements
+%type <Node *> exprlist experiment stmt_if vardeclaration vardeclarations mainclass
+%type <Node *> methoddeclaration methoddeclarations methodbody parameters classdeclaration classdeclarations
 
 %%
 // Change this later to be the class 
-root: statement {root = $1;};
+root: mainclass {root = $1;};
 
 mainclass: PUBLIC CLASS identifier LCB PUBLIC STATIC VOID MAIN LP STRING LHB RHB identifier LP LCB statement RCB RCB {
-                    // TODO
+                      $$ = new Node("MainClass", "", yylineno);
+                      $$->children.push_back($3);
+                      $$->children.push_back($13);
+                      $$->children.push_back($16);
               }
+              ;
+
+classdeclaration: CLASS identifier LCB vardeclarations methoddeclarations RCB {
+                      $$ = new Node("classDeclaration", "", yylineno)
+                      $$->children.push_back($2);
+                      $$->children.push_back($4);
+                      $$->children.push_back($5);
+              }
+              ;
+
+classdeclarations: /* Empty */
+              | classdeclaration classdeclarations {
+                      $$ = new Node("ClassDeclarations");
+                      $$->children.push_back($1);
+                      $$->children.push_back($2);
+              }
+              ;
+
+methoddeclaration: PUBLIC type identifier LP parameters RP LCB methodbody RETURN expression SEMICOLON RCB {
+                      $$ = new Node("Method", "", yylineno);
+                      $$->children.push_back($2); // type
+                      $$->children.push_back($3); // identifier
+                      $$->children.push_back($5); // param
+                      $$->children.push_back($8); // method body
+                      $$->children.push_back($9); // return expression
+              }
+              ;
+
+methoddeclarations:
+            /* Empty */
+            | methoddeclarations methoddeclaration {
+                      $$ = new Node("MethodDeclarations")
+                      $$->children.push_back($1);
+                      $$->children.push_back($2);
+            }
+            ;
+
+methodbody: /* Empty */
+            | methodbody vardeclaration {
+                      $$ = new Node("MethodVariable");
+                      $$->children.push_back($1);
+                      $$->children.push_back($2);
+            }
+            | methodbody statement {
+                      $$ = new Node("MethodStatement");
+                      $$->children.push_back($1);
+                      $$->children.push_back($2);
+            }
+            ;
 
 vardeclaration: type identifier SEMICOLON {
                       $$ = new Node("Variable", "", yylineno);
@@ -58,6 +111,28 @@ vardeclaration: type identifier SEMICOLON {
                       $$->children.push_back($2); // identifier
               }
 
+vardeclarations: 
+              /* Empty */
+              | vardeclarations vardeclaration {
+                      $$ = new Node("Variables");
+                      $$->children.push_back($1);
+                      $$->children.push_back($2);
+              }
+              ;
+
+parameters: /* Empty */
+            | type identifier {
+                      $$ = new Node("Parameter", "", yylineno);
+                      $$->children.push_back($1); // type
+                      $$->children.push_back($2); // identifier
+            }
+            | type identifier COMMA parameters {
+                      $$ = new Node("Parameters", "", yylineno);
+                      $$->children.push_back($1); // type
+                      $$->children.push_back($2); // identifier
+                      $$->children.push_back($4); // undef nr of prams
+            }
+            ;
 
 type: INTTYPE LHB RHB {
             $$ = new Node("ArrayType", "", yylineno);
@@ -75,7 +150,7 @@ type: INTTYPE LHB RHB {
 
 statement: 
             LCB statements RCB  { 
-              $$ = new Node("Statements", "", yylineno);
+              $$ = $2;
             }
             | stmt_if
             | WHILE LP expression RP statement {
@@ -103,7 +178,7 @@ statement:
 statements:
             /* empty */  
             | statements statement { 
-              $$ = new Node("StatementsList", "", yylineno);
+              $$ = new Node("Statements", "", yylineno);
               $$->children.push_back($1);
               $$->children.push_back($2);
                 }
@@ -239,6 +314,6 @@ factor:     INT           {  $$ = new Node("Int", $1, yylineno); /* printf("r5 "
     ;
 
 identifier: IDENTIFIER {
-                    $$ = new Node("Identifier", $1, yylineno); // Here we create a leaf node Int. The value of the leaf node is $1 
+                    $$ = new Node("Identifier", $1, yylineno); 
                           }
             ;

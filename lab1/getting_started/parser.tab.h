@@ -382,6 +382,7 @@ namespace yy {
     union union_type
     {
       // root
+      // mainclass
       // statement
       // statements
       // stmt_if
@@ -414,6 +415,7 @@ namespace yy {
       // VOID
       // MAIN
       // PUBLIC
+      // RETURN
       // PERIOD
       // COMMA
       // EXCLAMATION
@@ -497,24 +499,25 @@ namespace yy {
     VOID = 277,                    // VOID
     MAIN = 278,                    // MAIN
     PUBLIC = 279,                  // PUBLIC
-    PERIOD = 280,                  // PERIOD
-    COMMA = 281,                   // COMMA
-    EXCLAMATION = 282,             // EXCLAMATION
-    SEMICOLON = 283,               // SEMICOLON
-    INTTYPE = 284,                 // INTTYPE
-    BOOLTYPE = 285,                // BOOLTYPE
-    STRING = 286,                  // STRING
-    IF = 287,                      // IF
-    ELSE = 288,                    // ELSE
-    WHILE = 289,                   // WHILE
-    NEW = 290,                     // NEW
-    LENGTH = 291,                  // LENGTH
-    PRINT = 292,                   // PRINT
-    IDENTIFIER = 293,              // IDENTIFIER
-    TRUE = 294,                    // TRUE
-    FALSE = 295,                   // FALSE
-    THIS = 296,                    // THIS
-    NO_ELSE = 297                  // NO_ELSE
+    RETURN = 280,                  // RETURN
+    PERIOD = 281,                  // PERIOD
+    COMMA = 282,                   // COMMA
+    EXCLAMATION = 283,             // EXCLAMATION
+    SEMICOLON = 284,               // SEMICOLON
+    INTTYPE = 285,                 // INTTYPE
+    BOOLTYPE = 286,                // BOOLTYPE
+    STRING = 287,                  // STRING
+    IF = 288,                      // IF
+    ELSE = 289,                    // ELSE
+    WHILE = 290,                   // WHILE
+    NEW = 291,                     // NEW
+    LENGTH = 292,                  // LENGTH
+    PRINT = 293,                   // PRINT
+    IDENTIFIER = 294,              // IDENTIFIER
+    TRUE = 295,                    // TRUE
+    FALSE = 296,                   // FALSE
+    THIS = 297,                    // THIS
+    NO_ELSE = 298                  // NO_ELSE
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -531,7 +534,7 @@ namespace yy {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 43, ///< Number of tokens.
+        YYNTOKENS = 44, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -558,34 +561,36 @@ namespace yy {
         S_VOID = 22,                             // VOID
         S_MAIN = 23,                             // MAIN
         S_PUBLIC = 24,                           // PUBLIC
-        S_PERIOD = 25,                           // PERIOD
-        S_COMMA = 26,                            // COMMA
-        S_EXCLAMATION = 27,                      // EXCLAMATION
-        S_SEMICOLON = 28,                        // SEMICOLON
-        S_INTTYPE = 29,                          // INTTYPE
-        S_BOOLTYPE = 30,                         // BOOLTYPE
-        S_STRING = 31,                           // STRING
-        S_IF = 32,                               // IF
-        S_ELSE = 33,                             // ELSE
-        S_WHILE = 34,                            // WHILE
-        S_NEW = 35,                              // NEW
-        S_LENGTH = 36,                           // LENGTH
-        S_PRINT = 37,                            // PRINT
-        S_IDENTIFIER = 38,                       // IDENTIFIER
-        S_TRUE = 39,                             // TRUE
-        S_FALSE = 40,                            // FALSE
-        S_THIS = 41,                             // THIS
-        S_NO_ELSE = 42,                          // NO_ELSE
-        S_YYACCEPT = 43,                         // $accept
-        S_root = 44,                             // root
-        S_statement = 45,                        // statement
-        S_statements = 46,                       // statements
-        S_stmt_if = 47,                          // stmt_if
-        S_expression = 48,                       // expression
-        S_experiment = 49,                       // experiment
-        S_exprlist = 50,                         // exprlist
-        S_factor = 51,                           // factor
-        S_identifier = 52                        // identifier
+        S_RETURN = 25,                           // RETURN
+        S_PERIOD = 26,                           // PERIOD
+        S_COMMA = 27,                            // COMMA
+        S_EXCLAMATION = 28,                      // EXCLAMATION
+        S_SEMICOLON = 29,                        // SEMICOLON
+        S_INTTYPE = 30,                          // INTTYPE
+        S_BOOLTYPE = 31,                         // BOOLTYPE
+        S_STRING = 32,                           // STRING
+        S_IF = 33,                               // IF
+        S_ELSE = 34,                             // ELSE
+        S_WHILE = 35,                            // WHILE
+        S_NEW = 36,                              // NEW
+        S_LENGTH = 37,                           // LENGTH
+        S_PRINT = 38,                            // PRINT
+        S_IDENTIFIER = 39,                       // IDENTIFIER
+        S_TRUE = 40,                             // TRUE
+        S_FALSE = 41,                            // FALSE
+        S_THIS = 42,                             // THIS
+        S_NO_ELSE = 43,                          // NO_ELSE
+        S_YYACCEPT = 44,                         // $accept
+        S_root = 45,                             // root
+        S_mainclass = 46,                        // mainclass
+        S_statement = 47,                        // statement
+        S_statements = 48,                       // statements
+        S_stmt_if = 49,                          // stmt_if
+        S_expression = 50,                       // expression
+        S_experiment = 51,                       // experiment
+        S_exprlist = 52,                         // exprlist
+        S_factor = 53,                           // factor
+        S_identifier = 54                        // identifier
       };
     };
 
@@ -621,6 +626,7 @@ namespace yy {
         switch (this->kind ())
     {
       case symbol_kind::S_root: // root
+      case symbol_kind::S_mainclass: // mainclass
       case symbol_kind::S_statement: // statement
       case symbol_kind::S_statements: // statements
       case symbol_kind::S_stmt_if: // stmt_if
@@ -654,6 +660,7 @@ namespace yy {
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_MAIN: // MAIN
       case symbol_kind::S_PUBLIC: // PUBLIC
+      case symbol_kind::S_RETURN: // RETURN
       case symbol_kind::S_PERIOD: // PERIOD
       case symbol_kind::S_COMMA: // COMMA
       case symbol_kind::S_EXCLAMATION: // EXCLAMATION
@@ -744,6 +751,7 @@ namespace yy {
 switch (yykind)
     {
       case symbol_kind::S_root: // root
+      case symbol_kind::S_mainclass: // mainclass
       case symbol_kind::S_statement: // statement
       case symbol_kind::S_statements: // statements
       case symbol_kind::S_stmt_if: // stmt_if
@@ -777,6 +785,7 @@ switch (yykind)
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_MAIN: // MAIN
       case symbol_kind::S_PUBLIC: // PUBLIC
+      case symbol_kind::S_RETURN: // RETURN
       case symbol_kind::S_PERIOD: // PERIOD
       case symbol_kind::S_COMMA: // COMMA
       case symbol_kind::S_EXCLAMATION: // EXCLAMATION
@@ -1323,6 +1332,21 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
+      make_RETURN (std::string v)
+      {
+        return symbol_type (token::RETURN, std::move (v));
+      }
+#else
+      static
+      symbol_type
+      make_RETURN (const std::string& v)
+      {
+        return symbol_type (token::RETURN, v);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
       make_PERIOD (std::string v)
       {
         return symbol_type (token::PERIOD, std::move (v));
@@ -1691,7 +1715,7 @@ switch (yykind)
 
 #if YYDEBUG
     // YYRLINE[YYN] -- Source line where rule number YYN was defined.
-    static const unsigned char yyrline_[];
+    static const short yyrline_[];
     /// Report on the debug stream that the rule \a r is going to be reduced.
     virtual void yy_reduce_print_ (int r) const;
     /// Print the state stack on the debug stream.
@@ -1918,9 +1942,9 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 307,     ///< Last index in yytable_.
-      yynnts_ = 10,  ///< Number of nonterminal symbols.
-      yyfinal_ = 14 ///< Termination state number.
+      yylast_ = 327,     ///< Last index in yytable_.
+      yynnts_ = 11,  ///< Number of nonterminal symbols.
+      yyfinal_ = 5 ///< Termination state number.
     };
 
 
@@ -1966,10 +1990,10 @@ switch (yykind)
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
       25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
-      35,    36,    37,    38,    39,    40,    41,    42
+      35,    36,    37,    38,    39,    40,    41,    42,    43
     };
     // Last valid token kind.
-    const int code_max = 297;
+    const int code_max = 298;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
@@ -1988,6 +2012,7 @@ switch (yykind)
     switch (this->kind ())
     {
       case symbol_kind::S_root: // root
+      case symbol_kind::S_mainclass: // mainclass
       case symbol_kind::S_statement: // statement
       case symbol_kind::S_statements: // statements
       case symbol_kind::S_stmt_if: // stmt_if
@@ -2021,6 +2046,7 @@ switch (yykind)
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_MAIN: // MAIN
       case symbol_kind::S_PUBLIC: // PUBLIC
+      case symbol_kind::S_RETURN: // RETURN
       case symbol_kind::S_PERIOD: // PERIOD
       case symbol_kind::S_COMMA: // COMMA
       case symbol_kind::S_EXCLAMATION: // EXCLAMATION
@@ -2073,6 +2099,7 @@ switch (yykind)
     switch (this->kind ())
     {
       case symbol_kind::S_root: // root
+      case symbol_kind::S_mainclass: // mainclass
       case symbol_kind::S_statement: // statement
       case symbol_kind::S_statements: // statements
       case symbol_kind::S_stmt_if: // stmt_if
@@ -2106,6 +2133,7 @@ switch (yykind)
       case symbol_kind::S_VOID: // VOID
       case symbol_kind::S_MAIN: // MAIN
       case symbol_kind::S_PUBLIC: // PUBLIC
+      case symbol_kind::S_RETURN: // RETURN
       case symbol_kind::S_PERIOD: // PERIOD
       case symbol_kind::S_COMMA: // COMMA
       case symbol_kind::S_EXCLAMATION: // EXCLAMATION
@@ -2191,7 +2219,7 @@ switch (yykind)
 
 
 } // yy
-#line 2195 "parser.tab.h"
+#line 2223 "parser.tab.h"
 
 
 
