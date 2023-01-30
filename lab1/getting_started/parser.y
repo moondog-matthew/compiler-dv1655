@@ -220,6 +220,74 @@ stmt_if: IF LP expression RP statement %prec NO_ELSE { // To solve dangling else
             };
 
 
+type: INTTYPE LHB RHB {
+            $$ = new Node("ArrayType", "", yylineno);
+              }
+      | BOOLTYPE {
+            $$ =  new Node("BoolType", "", yylineno);
+              }
+      | INTTYPE {
+            $$ = new Node("IntType", "", yylineno);
+              }
+      | identifier {
+            $$ = new Node("IdentifierType", "", yylineno);
+              }
+        ; 
+*/
+
+statement:  LCB RCB  { 
+              $$ = new Node("NonStatements", "", yylineno);
+            }
+            | LCB statements RCB  { 
+              $$ = $2;
+            }
+            | stmt_if
+            | WHILE LP expression RP statement {
+              $$ = new Node("While", "", yylineno);
+              $$->children.push_back($3);
+              $$->children.push_back($5);
+            }
+            | PRINT LP expression RP SEMICOLON {
+              $$ = new Node("Print", "", yylineno);
+              $$->children.push_back($3);
+            }
+            | identifier ASSIGN expression SEMICOLON {
+              $$ = new Node("Assign", "", yylineno);
+              $$->children.push_back($1);
+              $$->children.push_back($3);
+            } 
+            | identifier LHB expression RHB ASSIGN expression SEMICOLON {
+              $$ = new Node("indexAssign", "", yylineno);
+              $$->children.push_back($1);
+              $$->children.push_back($3);
+              $$->children.push_back($6);
+            }
+            ;
+
+statements:
+            statement {
+                  $$ = $1;
+                }
+            | statements statement { 
+              $$ = new Node("Statements", "", yylineno);
+              $$->children.push_back($1);
+              $$->children.push_back($2);
+                }
+            ;
+
+stmt_if: IF LP expression RP statement %prec NO_ELSE { // To solve dangling else ambiguity
+              $$ = new Node("IF", "", yylineno);
+              $$->children.push_back($3);
+              $$->children.push_back($5);
+            }
+            | IF LP expression RP statement ELSE statement {
+              $$ = new Node("IfElse", "", yylineno);
+              $$->children.push_back($3);
+              $$->children.push_back($5);
+              $$->children.push_back($7);
+            };
+
+
 expression: expression PLUSOP expression {      
                             $$ = new Node("AddExpression", "", yylineno);
                             $$->children.push_back($1);
@@ -277,6 +345,8 @@ expression: expression PLUSOP expression {
             
             | experiment
                 
+            | experiment
+                
             | expression PERIOD LENGTH {
                             $$ = new Node("LenghtOfExpression", "", yylineno);
                             $$->children.push_back($1);
@@ -286,9 +356,11 @@ expression: expression PLUSOP expression {
                               $$ = new Node("Method call", "", yylineno);
                               printf("expression.ID(exprls): %d\n", yylineno);
                           }
+            | expression PERIOD identifier LP exprlist RP {  // recursive grammar, follows recursive rules
+                              $$ = new Node("Method call", "", yylineno);
+                          }
             | expression PERIOD identifier LP RP {  // for the empty case
                               $$ = new Node("Method call", "", yylineno);
-                              printf("expression.ID(): %d\n", yylineno);
                           }
             | TRUE {
                   $$ = new Node("True", "", yylineno);
@@ -318,23 +390,22 @@ expression: expression PLUSOP expression {
             | factor      {$$ = $1; /* printf("r4 ");*/}
             ;
 
-experiment: expression LHB expression RHB { //??
-                      $$ = new Node("Index", "", yylineno);
-                      $$->children.push_back($1);  // what to take index of
-                      $$->children.push_back($3);  // index value
-                  }
-                  ;
+experiment: expression LHB expression RHB {
+        $$ = new Node("Index", "", yylineno);
+        $$->children.push_back($1);  // what to take index of
+        $$->children.push_back($3);  // index value
+      }
 
 exprlist: expression {
-                      $$ = new Node("Expression", "", yylineno);
-                      $$->children.push_back($1);
-                  }
-            | exprlist COMMA expression {
-                      $$ = new Node("ExpressionList", "", yylineno);
-                      $$->children.push_back($1);
-                      $$->children.push_back($3);
-                  }
-                  ;
+              $$ = new Node("ExpressionList", "", yylineno);
+              $$->children.push_back($1);
+                }
+    | exprlist COMMA expression {
+              $$ = new Node("ExpressionList", "", yylineno);
+              $$->children.push_back($1);
+              $$->children.push_back($3);
+                }
+          ;
 
 // Factor like an integer
 factor: INT {
@@ -346,5 +417,5 @@ factor: INT {
 
 identifier: IDENTIFIER {
                     $$ = new Node("Identifier", $1, yylineno); 
-            }
+                          }
             ;

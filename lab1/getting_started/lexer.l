@@ -25,6 +25,7 @@ int lexical_errors = 0;
 "return"                    { return yy::parser::make_PUBLIC(yytext); 
                             //   printf("RETURN\n");
                             }
+"return"                    { return yy::parser::make_PUBLIC(yytext); }
 
 "+"                         { return yy::parser::make_PLUSOP(yytext);  
                             //   printf("PLUSOP\n");
