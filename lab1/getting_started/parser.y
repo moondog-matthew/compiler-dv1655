@@ -78,13 +78,15 @@ classdeclaration: CLASS identifier LCB vardeclarations methoddeclarations RCB {
               }
               ;
 
-classdeclarations: /* Empty */
-              | classdeclaration classdeclarations {
+classdeclarations: /* Empty */ {
+                      $$ = nullptr;
+            }
+            | classdeclaration classdeclarations {
                       $$ = new Node("ClassDeclarations", "", yylineno);
                       $$->children.push_back($1);
                       $$->children.push_back($2);
-              }
-              ;
+            }
+            ;
 
 methoddeclaration: PUBLIC type identifier LP parameters RP LCB methodbody RETURN expression SEMICOLON RCB {
                       $$ = new Node("Method", "", yylineno);
@@ -97,7 +99,9 @@ methoddeclaration: PUBLIC type identifier LP parameters RP LCB methodbody RETURN
               ;
 
 methoddeclarations:
-            /* Empty */
+            /* Empty */ { 
+                      $$ = nullptr; 
+            }
             | methoddeclarations methoddeclaration {
                       $$ = new Node("MethodDeclarations", "", yylineno);
                       $$->children.push_back($1);
@@ -105,7 +109,9 @@ methoddeclarations:
             }
             ;
 
-methodbody: /* Empty */
+methodbody: /* Empty */ {
+                      $$ = nullptr;
+            }
             | methodbody vardeclaration {
                       $$ = new Node("MethodVariable", "", yylineno);
                       $$->children.push_back($1);
@@ -124,16 +130,19 @@ vardeclaration: type identifier SEMICOLON {
                       $$->children.push_back($2); // identifier
               }
 
-vardeclarations: 
-              /* Empty */
-              | vardeclarations vardeclaration {
+vardeclarations: /* Empty */ {
+                      $$ = nullptr;
+            }
+            | vardeclarations vardeclaration {
                       $$ = new Node("Variables", "", yylineno);
                       $$->children.push_back($1);
                       $$->children.push_back($2);
-              }
-              ;
+            }
+            ;
 
-parameters: /* Empty */
+parameters: /* Empty */ {
+                      $$ = nullptr;
+            }
             | type identifier {
                       $$ = new Node("Parameter", "", yylineno);
                       $$->children.push_back($1); // type
@@ -188,8 +197,9 @@ statement:
             }
             ;
 
-statements:
-            /* empty */  
+statements: /* Empty */ {
+              $$ = nullptr;
+            }
             | statements statement { 
               $$ = new Node("Statements", "", yylineno);
               $$->children.push_back($1);
