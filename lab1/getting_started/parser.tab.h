@@ -382,7 +382,6 @@ namespace yy {
     union union_type
     {
       // root
-      // mainclass
       // statement
       // statements
       // stmt_if
@@ -582,15 +581,14 @@ namespace yy {
         S_NO_ELSE = 43,                          // NO_ELSE
         S_YYACCEPT = 44,                         // $accept
         S_root = 45,                             // root
-        S_mainclass = 46,                        // mainclass
-        S_statement = 47,                        // statement
-        S_statements = 48,                       // statements
-        S_stmt_if = 49,                          // stmt_if
-        S_expression = 50,                       // expression
-        S_experiment = 51,                       // experiment
-        S_exprlist = 52,                         // exprlist
-        S_factor = 53,                           // factor
-        S_identifier = 54                        // identifier
+        S_statement = 46,                        // statement
+        S_statements = 47,                       // statements
+        S_stmt_if = 48,                          // stmt_if
+        S_expression = 49,                       // expression
+        S_experiment = 50,                       // experiment
+        S_exprlist = 51,                         // exprlist
+        S_factor = 52,                           // factor
+        S_identifier = 53                        // identifier
       };
     };
 
@@ -626,7 +624,6 @@ namespace yy {
         switch (this->kind ())
     {
       case symbol_kind::S_root: // root
-      case symbol_kind::S_mainclass: // mainclass
       case symbol_kind::S_statement: // statement
       case symbol_kind::S_statements: // statements
       case symbol_kind::S_stmt_if: // stmt_if
@@ -751,7 +748,6 @@ namespace yy {
 switch (yykind)
     {
       case symbol_kind::S_root: // root
-      case symbol_kind::S_mainclass: // mainclass
       case symbol_kind::S_statement: // statement
       case symbol_kind::S_statements: // statements
       case symbol_kind::S_stmt_if: // stmt_if
@@ -1942,9 +1938,9 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 327,     ///< Last index in yytable_.
-      yynnts_ = 11,  ///< Number of nonterminal symbols.
-      yyfinal_ = 5 ///< Termination state number.
+      yylast_ = 324,     ///< Last index in yytable_.
+      yynnts_ = 10,  ///< Number of nonterminal symbols.
+      yyfinal_ = 16 ///< Termination state number.
     };
 
 
@@ -2012,7 +2008,6 @@ switch (yykind)
     switch (this->kind ())
     {
       case symbol_kind::S_root: // root
-      case symbol_kind::S_mainclass: // mainclass
       case symbol_kind::S_statement: // statement
       case symbol_kind::S_statements: // statements
       case symbol_kind::S_stmt_if: // stmt_if
@@ -2099,7 +2094,6 @@ switch (yykind)
     switch (this->kind ())
     {
       case symbol_kind::S_root: // root
-      case symbol_kind::S_mainclass: // mainclass
       case symbol_kind::S_statement: // statement
       case symbol_kind::S_statements: // statements
       case symbol_kind::S_stmt_if: // stmt_if
@@ -2219,7 +2213,7 @@ switch (yykind)
 
 
 } // yy
-#line 2223 "parser.tab.h"
+#line 2217 "parser.tab.h"
 
 
 

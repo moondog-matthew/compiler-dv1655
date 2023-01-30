@@ -41,15 +41,17 @@
 %nonassoc ELSE
 
 // definition of the production rules. All production rules are of type Node
-%type <Node *> root expression factor identifier type statement statements
-%type <Node *> exprlist experiment stmt_if vardeclaration vardeclarations mainclass
-%type <Node *> methoddeclaration methoddeclarations methodbody parameters classdeclaration classdeclarations
+%type <Node *> root expression factor identifier statement statements
+%type <Node *> exprlist experiment stmt_if 
+/* %type <Node *> vardeclaration vardeclarations mainclass type
+%type <Node *> methoddeclaration methoddeclarations methodbody parameters classdeclaration classdeclarations */
 
 %%
 // Change this later to be the class 
-root: mainclass {root = $1;};
+// root: mainclass {root = $1;};
+root: statement {root = $1;};
 
-mainclass: PUBLIC CLASS identifier LCB PUBLIC STATIC VOID MAIN LP STRING LHB RHB identifier LP LCB statement RCB RCB {
+/* mainclass: PUBLIC CLASS identifier LCB PUBLIC STATIC VOID MAIN LP STRING LHB RHB identifier LP LCB statement RCB RCB {
                       $$ = new Node("MainClass", "", yylineno);
                       $$->children.push_back($3);
                       $$->children.push_back($13);
@@ -66,6 +68,7 @@ classdeclaration: CLASS identifier LCB vardeclarations methoddeclarations RCB {
               ;
 
 classdeclarations: /* Empty */
+/*
               | classdeclaration classdeclarations {
                       $$ = new Node("ClassDeclarations");
                       $$->children.push_back($1);
@@ -85,6 +88,7 @@ methoddeclaration: PUBLIC type identifier LP parameters RP LCB methodbody RETURN
 
 methoddeclarations:
             /* Empty */
+/*
             | methoddeclarations methoddeclaration {
                       $$ = new Node("MethodDeclarations")
                       $$->children.push_back($1);
@@ -92,7 +96,8 @@ methoddeclarations:
             }
             ;
 
-methodbody: /* Empty */
+methodbody: /* Empty */ 
+/*
             | methodbody vardeclaration {
                       $$ = new Node("MethodVariable");
                       $$->children.push_back($1);
@@ -113,6 +118,7 @@ vardeclaration: type identifier SEMICOLON {
 
 vardeclarations: 
               /* Empty */
+/*
               | vardeclarations vardeclaration {
                       $$ = new Node("Variables");
                       $$->children.push_back($1);
@@ -121,6 +127,7 @@ vardeclarations:
               ;
 
 parameters: /* Empty */
+/*
             | type identifier {
                       $$ = new Node("Parameter", "", yylineno);
                       $$->children.push_back($1); // type
@@ -146,10 +153,13 @@ type: INTTYPE LHB RHB {
       | identifier {
             $$ = new Node("IdentifierType", "", yylineno);
               }
-        ;
+        ; 
+*/
 
-statement: 
-            LCB statements RCB  { 
+statement:  LCB RCB  { 
+              $$ = new Node("NonStatements", "", yylineno);
+            }
+            | LCB statements RCB  { 
               $$ = $2;
             }
             | stmt_if
@@ -176,7 +186,9 @@ statement:
             ;
 
 statements:
-            /* empty */  
+            statement {
+                  $$ = $1;
+                }
             | statements statement { 
               $$ = new Node("Statements", "", yylineno);
               $$->children.push_back($1);
