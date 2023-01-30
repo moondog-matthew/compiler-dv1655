@@ -19,95 +19,115 @@
 }
 // definition of set of tokens. All tokens are of type string
 %token <std::string> PLUSOP MINUSOP MULTOP DIVOP INT LP RP LHB RHB LCB RCB ASSIGN EQ AND OR GT LT
-%token <std::string> CLASS STATIC VOID MAIN PUBLIC COMMENT RETURN
+%token <std::string> CLASS STATIC VOID MAIN PUBLIC RETURN
 %token <std::string> PERIOD COMMA EXCLAMATION SEMICOLON INTTYPE BOOLTYPE STRING
 %token <std::string> IF ELSE WHILE NEW LENGTH PRINT IDENTIFIER TRUE FALSE THIS
-%token <std::string> STATEMENT
 %token END 0 "end of file"
 
 //defition of operator precedence. See https://www.gnu.org/software/bison/manual/bison.html#Precedence-Decl
-%left ASSIGN
+%right ASSIGN
+
 %left AND OR 
 %left EQ  
 %left LT GT
 %left PLUSOP MINUSOP
-%left MULTOP DIVOP
+%left MULTOP DIVOP 
+%left LHB
+%left EXCLAMATION
+%left PERIOD
+
+
+%nonassoc NO_ELSE
+%nonassoc ELSE
 
 // definition of the production rules. All production rules are of type Node
-%type <Node *> root expression factor identifier type varDeclaration varDeclarations mainclass statement statements
-%type <Node *> methodDeclaration methodDeclarations methodBody parameters classDeclaration classDeclarations
+%type <Node *> root expression factor identifier type statement statements
+%type <Node *> exprlist experiment stmt_if vardeclaration vardeclarations mainclass goal
+%type <Node *> methoddeclaration methoddeclarations methodbody parameters classdeclaration classdeclarations
 
 %%
-// TODO Change this later to be the class 
-root:       mainclass {root = $1;};
+// Change this later to be the class 
+root:         goal {
+                      root = $1;
+              }
+              ;
 
-mainclass: PUBLIC CLASS identifier LCB PUBLIC STATIC VOID MAIN LP STRING LHB RHB identifier LP LCB statement RCB RCB {
+goal:
+              mainclass LP classdeclarations RP END {
+                      $$ = new Node("Goal", "", yylineno);
+                      $$->children.push_back($1);
+                      $$->children.push_back($3);
+                      printf("goaln: %d\n", yylineno);
+              }
+              ;
+
+mainclass: PUBLIC CLASS identifier LCB PUBLIC STATIC VOID MAIN LP STRING LHB RHB identifier RP LCB statement RCB {
                       $$ = new Node("MainClass", "", yylineno);
                       $$->children.push_back($3);
                       $$->children.push_back($13);
                       $$->children.push_back($16);
+                      printf("main, %d\n", yylineno);
               }
               ;
 
-classDeclaration: CLASS identifier LCB varDeclarations methodDeclarations RCB {
-                      $$ = new Node("classDeclaration", "", yylineno)
+classdeclaration: CLASS identifier LCB vardeclarations methoddeclarations RCB {
+                      $$ = new Node("classDeclaration", "", yylineno);
                       $$->children.push_back($2);
                       $$->children.push_back($4);
                       $$->children.push_back($5);
               }
               ;
 
-classDeclarations: /* Empty */
-              | classDeclaration classDeclarations {
-                      $$ = new Node("ClassDeclarations");
+classdeclarations: /* Empty */
+              | classdeclaration classdeclarations {
+                      $$ = new Node("ClassDeclarations", "", yylineno);
                       $$->children.push_back($1);
                       $$->children.push_back($2);
               }
               ;
 
-methodDeclaration: PUBLIC type identifier LP parameters RP LCB methodBody RETURN expression SEMICOLON RCB {
+methoddeclaration: PUBLIC type identifier LP parameters RP LCB methodbody RETURN expression SEMICOLON RCB {
                       $$ = new Node("Method", "", yylineno);
                       $$->children.push_back($2); // type
                       $$->children.push_back($3); // identifier
                       $$->children.push_back($5); // param
                       $$->children.push_back($8); // method body
-                      $$->children.push_back($9); // return expression
+                      $$->children.push_back($10); // return expression
               }
               ;
 
-methodDeclarations:
+methoddeclarations:
             /* Empty */
-            | methodDeclarations methodDeclaration {
-                      $$ = new Node("MethodDeclarations")
+            | methoddeclarations methoddeclaration {
+                      $$ = new Node("MethodDeclarations", "", yylineno);
                       $$->children.push_back($1);
                       $$->children.push_back($2);
             }
             ;
 
-methodBody: /* Empty */
-            | methodBody varDeclaration {
-                      $$ = new Node("MethodVariable");
+methodbody: /* Empty */
+            | methodbody vardeclaration {
+                      $$ = new Node("MethodVariable", "", yylineno);
                       $$->children.push_back($1);
                       $$->children.push_back($2);
             }
-            | methodBody statement {
-                      $$ = new Node("MethodStatement");
+            | methodbody statement {
+                      $$ = new Node("MethodStatement", "", yylineno);
                       $$->children.push_back($1);
                       $$->children.push_back($2);
             }
             ;
-            
-varDeclaration: type identifier SEMICOLON {
+
+vardeclaration: type identifier SEMICOLON {
                       $$ = new Node("Variable", "", yylineno);
                       $$->children.push_back($1); // type
                       $$->children.push_back($2); // identifier
               }
-              ;
 
-varDeclarations: 
+vardeclarations: 
               /* Empty */
-              | varDeclarations varDeclaration {
-                      $$ = new Node("Variables");
+              | vardeclarations vardeclaration {
+                      $$ = new Node("Variables", "", yylineno);
                       $$->children.push_back($1);
                       $$->children.push_back($2);
               }
@@ -128,35 +148,24 @@ parameters: /* Empty */
             ;
 
 type: INTTYPE LHB RHB {
-                      $$ = new Node("ArrayType", "", yylineno);
-            }
-            | BOOLTYPE {
-                      $$ =  new Node("BoolType", "", yylineno);
-            }
-            | INTTYPE {
-                      $$ = new Node("IntType", "", yylineno);
-            }
-            | identifier {
-                      $$ = new Node("IdentifierType", "", yylineno);
-            }
-            ;
+            $$ = new Node("ArrayType", "", yylineno);
+              }
+      | BOOLTYPE {
+            $$ =  new Node("BoolType", "", yylineno);
+              }
+      | INTTYPE {
+            $$ = new Node("IntType", "", yylineno);
+              }
+      | identifier {
+            $$ = new Node("IdentifierType", "", yylineno);
+              }
+        ;
 
 statement: 
-            /* empty */
-            | LCB statements RCB { 
-              $$ = new Node("Statements", "", yylineno);
+            LCB statements RCB  { 
+              $$ = $2;
             }
-            | IF LP expression RP statement {
-              $$ = new Node("IF", "", yylineno);
-              $$->children.push_back($3);
-              $$->children.push_back($5);
-            }
-            | IF LP expression RP statement ELSE statement {
-              $$ = new Node("IfElse", "", yylineno);
-              $$->children.push_back($3);
-              $$->children.push_back($5);
-              $$->children.push_back($7);
-            }
+            | stmt_if
             | WHILE LP expression RP statement {
               $$ = new Node("While", "", yylineno);
               $$->children.push_back($3);
@@ -180,21 +189,28 @@ statement:
             ;
 
 statements:
-            /* empty */
+            /* empty */  
             | statements statement { 
               $$ = new Node("Statements", "", yylineno);
               $$->children.push_back($1);
               $$->children.push_back($2);
-
-            }
+                }
             ;
 
+stmt_if: IF LP expression RP statement %prec NO_ELSE { // To solve dangling else ambiguity
+              $$ = new Node("IF", "", yylineno);
+              $$->children.push_back($3);
+              $$->children.push_back($5);
+            }
+            | IF LP expression RP statement ELSE statement {
+              $$ = new Node("IfElse", "", yylineno);
+              $$->children.push_back($3);
+              $$->children.push_back($5);
+              $$->children.push_back($7);
+            };
 
-expression: expression PLUSOP expression {      /*
-                                                  Create a subtree that corresponds to the AddExpression
-                                                  The root of the subtree is AddExpression
-                                                  The childs of the AddExpression subtree are the left hand side (expression accessed through $1) and right hand side of the expression (expression accessed through $3)
-                                                */
+
+expression: expression PLUSOP expression {      
                             $$ = new Node("AddExpression", "", yylineno);
                             $$->children.push_back($1);
                             $$->children.push_back($3);
@@ -249,19 +265,21 @@ expression: expression PLUSOP expression {      /*
                             $$->children.push_back($3);                            
                           }
             
-            | expression LHB expression RHB {
-                            $$ = new Node("Index", "", yylineno);
-                            $$->children.push_back($1);  // what to take index of
-                            $$->children.push_back($3);  // index value
-                          } 
+            | experiment
+                
             | expression PERIOD LENGTH {
                             $$ = new Node("LenghtOfExpression", "", yylineno);
                             $$->children.push_back($1);
+                            printf("LEN: %d\n", yylineno);
                           }
-            | expression PERIOD identifier LP expression COMMA expression RP {
-                              // TODO
+            | expression PERIOD identifier LP exprlist RP {  // recursive grammar, follows recursive rules
+                              $$ = new Node("Method call", "", yylineno);
+                              printf("expression.ID(exprls): %d\n", yylineno);
                           }
-            
+            | expression PERIOD identifier LP RP {  // for the empty case
+                              $$ = new Node("Method call", "", yylineno);
+                              printf("expression.ID(): %d\n", yylineno);
+                          }
             | TRUE {
                   $$ = new Node("True", "", yylineno);
                 }
@@ -281,6 +299,7 @@ expression: expression PLUSOP expression {      /*
             | NEW identifier LP RP {
                       $$ = new Node("AllocateIdentifier", "", yylineno);
                       $$->children.push_back($2);  
+                      printf("NEW ident: %d\n", yylineno);
                   }
             | EXCLAMATION expression {
                       $$ = new Node("Negation", "", yylineno);
@@ -289,12 +308,33 @@ expression: expression PLUSOP expression {      /*
             | factor      {$$ = $1; /* printf("r4 ");*/}
             ;
 
+experiment: expression LHB expression RHB { //??
+                      $$ = new Node("Index", "", yylineno);
+                      $$->children.push_back($1);  // what to take index of
+                      $$->children.push_back($3);  // index value
+                  }
+                  ;
+
+exprlist: expression {
+                      $$ = new Node("Expression", "", yylineno);
+                      $$->children.push_back($1);
+                  }
+            | exprlist COMMA expression {
+                      $$ = new Node("ExpressionList", "", yylineno);
+                      $$->children.push_back($1);
+                      $$->children.push_back($3);
+                  }
+                  ;
+
 // Factor like an integer
-factor:     INT           {  $$ = new Node("Int", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
-            | LP expression RP { $$ = $2; /* printf("r6 ");  simply return the expression */}
-    ;
+factor: INT {
+                      $$ = new Node("Int", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
+            | LP expression RP { 
+                      $$ = $2; /* printf("r6 ");  simply return the expression */
+                  }
+                  ;
 
 identifier: IDENTIFIER {
-                    $$ = new Node("Identifier", $1, yylineno); // Here we create a leaf node Int. The value of the leaf node is $1 
-                          }
+                    $$ = new Node("Identifier", $1, yylineno); 
+            }
             ;

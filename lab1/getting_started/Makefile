@@ -3,7 +3,7 @@ compiler: lex.yy.c parser.tab.o main.cpp
 parser.tab.o: parser.tab.c
 		g++ -g -w -c parser.tab.c -std=c++14
 parser.tab.c: parser.y
-		bison parser.y
+		bison parser.y -v # -Wcounterexamples
 lex.yy.c: lexer.l parser.tab.c
 		flex lexer.l
 tree: 

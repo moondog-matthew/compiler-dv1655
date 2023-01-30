@@ -366,10 +366,23 @@ namespace yy {
     union union_type
     {
       // root
+      // goal
       // mainclass
+      // classdeclaration
+      // classdeclarations
+      // methoddeclaration
+      // methoddeclarations
+      // methodbody
+      // vardeclaration
+      // vardeclarations
+      // parameters
+      // type
       // statement
       // statements
+      // stmt_if
       // expression
+      // experiment
+      // exprlist
       // factor
       // identifier
       char dummy1[sizeof (Node *)];
@@ -396,7 +409,6 @@ namespace yy {
       // VOID
       // MAIN
       // PUBLIC
-      // COMMENT
       // RETURN
       // PERIOD
       // COMMA
@@ -415,7 +427,6 @@ namespace yy {
       // TRUE
       // FALSE
       // THIS
-      // STATEMENT
       char dummy2[sizeof (std::string)];
     };
 
@@ -478,26 +489,25 @@ namespace yy {
         VOID = 277,
         MAIN = 278,
         PUBLIC = 279,
-        COMMENT = 280,
-        RETURN = 281,
-        PERIOD = 282,
-        COMMA = 283,
-        EXCLAMATION = 284,
-        SEMICOLON = 285,
-        INTTYPE = 286,
-        BOOLTYPE = 287,
-        STRING = 288,
-        IF = 289,
-        ELSE = 290,
-        WHILE = 291,
-        NEW = 292,
-        LENGTH = 293,
-        PRINT = 294,
-        IDENTIFIER = 295,
-        TRUE = 296,
-        FALSE = 297,
-        THIS = 298,
-        STATEMENT = 299
+        RETURN = 280,
+        PERIOD = 281,
+        COMMA = 282,
+        EXCLAMATION = 283,
+        SEMICOLON = 284,
+        INTTYPE = 285,
+        BOOLTYPE = 286,
+        STRING = 287,
+        IF = 288,
+        ELSE = 289,
+        WHILE = 290,
+        NEW = 291,
+        LENGTH = 292,
+        PRINT = 293,
+        IDENTIFIER = 294,
+        TRUE = 295,
+        FALSE = 296,
+        THIS = 297,
+        NO_ELSE = 298
       };
     };
 
@@ -593,13 +603,26 @@ namespace yy {
         // Type destructor.
 switch (yytype)
     {
-      case 46: // root
+      case 45: // root
+      case 46: // goal
       case 47: // mainclass
-      case 48: // statement
-      case 49: // statements
-      case 50: // expression
-      case 51: // factor
-      case 52: // identifier
+      case 48: // classdeclaration
+      case 49: // classdeclarations
+      case 50: // methoddeclaration
+      case 51: // methoddeclarations
+      case 52: // methodbody
+      case 53: // vardeclaration
+      case 54: // vardeclarations
+      case 55: // parameters
+      case 56: // type
+      case 57: // statement
+      case 58: // statements
+      case 59: // stmt_if
+      case 60: // expression
+      case 61: // experiment
+      case 62: // exprlist
+      case 63: // factor
+      case 64: // identifier
         value.template destroy< Node * > ();
         break;
 
@@ -625,26 +648,24 @@ switch (yytype)
       case 22: // VOID
       case 23: // MAIN
       case 24: // PUBLIC
-      case 25: // COMMENT
-      case 26: // RETURN
-      case 27: // PERIOD
-      case 28: // COMMA
-      case 29: // EXCLAMATION
-      case 30: // SEMICOLON
-      case 31: // INTTYPE
-      case 32: // BOOLTYPE
-      case 33: // STRING
-      case 34: // IF
-      case 35: // ELSE
-      case 36: // WHILE
-      case 37: // NEW
-      case 38: // LENGTH
-      case 39: // PRINT
-      case 40: // IDENTIFIER
-      case 41: // TRUE
-      case 42: // FALSE
-      case 43: // THIS
-      case 44: // STATEMENT
+      case 25: // RETURN
+      case 26: // PERIOD
+      case 27: // COMMA
+      case 28: // EXCLAMATION
+      case 29: // SEMICOLON
+      case 30: // INTTYPE
+      case 31: // BOOLTYPE
+      case 32: // STRING
+      case 33: // IF
+      case 34: // ELSE
+      case 35: // WHILE
+      case 36: // NEW
+      case 37: // LENGTH
+      case 38: // PRINT
+      case 39: // IDENTIFIER
+      case 40: // TRUE
+      case 41: // FALSE
+      case 42: // THIS
         value.template destroy< std::string > ();
         break;
 
@@ -721,26 +742,26 @@ switch (yytype)
       symbol_type (int tok)
         : super_type(token_type (tok))
       {
-        YY_ASSERT (tok == token::END);
+        YY_ASSERT (tok == token::END || tok == token::NO_ELSE);
       }
 #else
       symbol_type (int tok)
         : super_type(token_type (tok))
       {
-        YY_ASSERT (tok == token::END);
+        YY_ASSERT (tok == token::END || tok == token::NO_ELSE);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       symbol_type (int tok, std::string v)
         : super_type(token_type (tok), std::move (v))
       {
-        YY_ASSERT (tok == token::PLUSOP || tok == token::MINUSOP || tok == token::MULTOP || tok == token::DIVOP || tok == token::INT || tok == token::LP || tok == token::RP || tok == token::LHB || tok == token::RHB || tok == token::LCB || tok == token::RCB || tok == token::ASSIGN || tok == token::EQ || tok == token::AND || tok == token::OR || tok == token::GT || tok == token::LT || tok == token::CLASS || tok == token::STATIC || tok == token::VOID || tok == token::MAIN || tok == token::PUBLIC || tok == token::COMMENT || tok == token::RETURN || tok == token::PERIOD || tok == token::COMMA || tok == token::EXCLAMATION || tok == token::SEMICOLON || tok == token::INTTYPE || tok == token::BOOLTYPE || tok == token::STRING || tok == token::IF || tok == token::ELSE || tok == token::WHILE || tok == token::NEW || tok == token::LENGTH || tok == token::PRINT || tok == token::IDENTIFIER || tok == token::TRUE || tok == token::FALSE || tok == token::THIS || tok == token::STATEMENT);
+        YY_ASSERT (tok == token::PLUSOP || tok == token::MINUSOP || tok == token::MULTOP || tok == token::DIVOP || tok == token::INT || tok == token::LP || tok == token::RP || tok == token::LHB || tok == token::RHB || tok == token::LCB || tok == token::RCB || tok == token::ASSIGN || tok == token::EQ || tok == token::AND || tok == token::OR || tok == token::GT || tok == token::LT || tok == token::CLASS || tok == token::STATIC || tok == token::VOID || tok == token::MAIN || tok == token::PUBLIC || tok == token::RETURN || tok == token::PERIOD || tok == token::COMMA || tok == token::EXCLAMATION || tok == token::SEMICOLON || tok == token::INTTYPE || tok == token::BOOLTYPE || tok == token::STRING || tok == token::IF || tok == token::ELSE || tok == token::WHILE || tok == token::NEW || tok == token::LENGTH || tok == token::PRINT || tok == token::IDENTIFIER || tok == token::TRUE || tok == token::FALSE || tok == token::THIS);
       }
 #else
       symbol_type (int tok, const std::string& v)
         : super_type(token_type (tok), v)
       {
-        YY_ASSERT (tok == token::PLUSOP || tok == token::MINUSOP || tok == token::MULTOP || tok == token::DIVOP || tok == token::INT || tok == token::LP || tok == token::RP || tok == token::LHB || tok == token::RHB || tok == token::LCB || tok == token::RCB || tok == token::ASSIGN || tok == token::EQ || tok == token::AND || tok == token::OR || tok == token::GT || tok == token::LT || tok == token::CLASS || tok == token::STATIC || tok == token::VOID || tok == token::MAIN || tok == token::PUBLIC || tok == token::COMMENT || tok == token::RETURN || tok == token::PERIOD || tok == token::COMMA || tok == token::EXCLAMATION || tok == token::SEMICOLON || tok == token::INTTYPE || tok == token::BOOLTYPE || tok == token::STRING || tok == token::IF || tok == token::ELSE || tok == token::WHILE || tok == token::NEW || tok == token::LENGTH || tok == token::PRINT || tok == token::IDENTIFIER || tok == token::TRUE || tok == token::FALSE || tok == token::THIS || tok == token::STATEMENT);
+        YY_ASSERT (tok == token::PLUSOP || tok == token::MINUSOP || tok == token::MULTOP || tok == token::DIVOP || tok == token::INT || tok == token::LP || tok == token::RP || tok == token::LHB || tok == token::RHB || tok == token::LCB || tok == token::RCB || tok == token::ASSIGN || tok == token::EQ || tok == token::AND || tok == token::OR || tok == token::GT || tok == token::LT || tok == token::CLASS || tok == token::STATIC || tok == token::VOID || tok == token::MAIN || tok == token::PUBLIC || tok == token::RETURN || tok == token::PERIOD || tok == token::COMMA || tok == token::EXCLAMATION || tok == token::SEMICOLON || tok == token::INTTYPE || tok == token::BOOLTYPE || tok == token::STRING || tok == token::IF || tok == token::ELSE || tok == token::WHILE || tok == token::NEW || tok == token::LENGTH || tok == token::PRINT || tok == token::IDENTIFIER || tok == token::TRUE || tok == token::FALSE || tok == token::THIS);
       }
 #endif
     };
@@ -1127,21 +1148,6 @@ switch (yytype)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_COMMENT (std::string v)
-      {
-        return symbol_type (token::COMMENT, std::move (v));
-      }
-#else
-      static
-      symbol_type
-      make_COMMENT (const std::string& v)
-      {
-        return symbol_type (token::COMMENT, v);
-      }
-#endif
-#if 201103L <= YY_CPLUSPLUS
-      static
-      symbol_type
       make_RETURN (std::string v)
       {
         return symbol_type (token::RETURN, std::move (v));
@@ -1412,16 +1418,16 @@ switch (yytype)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_STATEMENT (std::string v)
+      make_NO_ELSE ()
       {
-        return symbol_type (token::STATEMENT, std::move (v));
+        return symbol_type (token::NO_ELSE);
       }
 #else
       static
       symbol_type
-      make_STATEMENT (const std::string& v)
+      make_NO_ELSE ()
       {
-        return symbol_type (token::STATEMENT, v);
+        return symbol_type (token::NO_ELSE);
       }
 #endif
 
@@ -1432,7 +1438,7 @@ switch (yytype)
     parser& operator= (const parser&);
 
     /// Stored state numbers (used for stacks).
-    typedef signed char state_type;
+    typedef unsigned char state_type;
 
     /// Generate an error message.
     /// \param yystate   the state where the error occurred.
@@ -1472,17 +1478,17 @@ switch (yytype)
     static const signed char yydefact_[];
 
     // YYPGOTO[NTERM-NUM].
-    static const signed char yypgoto_[];
+    static const short yypgoto_[];
 
     // YYDEFGOTO[NTERM-NUM].
-    static const signed char yydefgoto_[];
+    static const short yydefgoto_[];
 
     // YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
     // positive, shift that token.  If negative, reduce the rule whose
     // number is the opposite.  If YYTABLE_NINF, syntax error.
-    static const signed char yytable_[];
+    static const unsigned char yytable_[];
 
-    static const signed char yycheck_[];
+    static const short yycheck_[];
 
     // YYSTOS[STATE-NUM] -- The (internal number of the) accessing
     // symbol of state STATE-NUM.
@@ -1730,10 +1736,10 @@ switch (yytype)
     enum
     {
       yyeof_ = 0,
-      yylast_ = 393,     ///< Last index in yytable_.
-      yynnts_ = 8,  ///< Number of nonterminal symbols.
-      yyfinal_ = 5, ///< Termination state number.
-      yyntokens_ = 45  ///< Number of tokens.
+      yylast_ = 376,     ///< Last index in yytable_.
+      yynnts_ = 21,  ///< Number of nonterminal symbols.
+      yyfinal_ = 6, ///< Termination state number.
+      yyntokens_ = 44  ///< Number of tokens.
     };
 
 
@@ -1778,9 +1784,9 @@ switch (yytype)
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
       25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
-      35,    36,    37,    38,    39,    40,    41,    42,    43,    44
+      35,    36,    37,    38,    39,    40,    41,    42,    43
     };
-    const int user_token_number_max_ = 299;
+    const int user_token_number_max_ = 298;
 
     if (t <= 0)
       return yyeof_;
@@ -1799,13 +1805,26 @@ switch (yytype)
   {
     switch (this->type_get ())
     {
-      case 46: // root
+      case 45: // root
+      case 46: // goal
       case 47: // mainclass
-      case 48: // statement
-      case 49: // statements
-      case 50: // expression
-      case 51: // factor
-      case 52: // identifier
+      case 48: // classdeclaration
+      case 49: // classdeclarations
+      case 50: // methoddeclaration
+      case 51: // methoddeclarations
+      case 52: // methodbody
+      case 53: // vardeclaration
+      case 54: // vardeclarations
+      case 55: // parameters
+      case 56: // type
+      case 57: // statement
+      case 58: // statements
+      case 59: // stmt_if
+      case 60: // expression
+      case 61: // experiment
+      case 62: // exprlist
+      case 63: // factor
+      case 64: // identifier
         value.move< Node * > (std::move (that.value));
         break;
 
@@ -1831,26 +1850,24 @@ switch (yytype)
       case 22: // VOID
       case 23: // MAIN
       case 24: // PUBLIC
-      case 25: // COMMENT
-      case 26: // RETURN
-      case 27: // PERIOD
-      case 28: // COMMA
-      case 29: // EXCLAMATION
-      case 30: // SEMICOLON
-      case 31: // INTTYPE
-      case 32: // BOOLTYPE
-      case 33: // STRING
-      case 34: // IF
-      case 35: // ELSE
-      case 36: // WHILE
-      case 37: // NEW
-      case 38: // LENGTH
-      case 39: // PRINT
-      case 40: // IDENTIFIER
-      case 41: // TRUE
-      case 42: // FALSE
-      case 43: // THIS
-      case 44: // STATEMENT
+      case 25: // RETURN
+      case 26: // PERIOD
+      case 27: // COMMA
+      case 28: // EXCLAMATION
+      case 29: // SEMICOLON
+      case 30: // INTTYPE
+      case 31: // BOOLTYPE
+      case 32: // STRING
+      case 33: // IF
+      case 34: // ELSE
+      case 35: // WHILE
+      case 36: // NEW
+      case 37: // LENGTH
+      case 38: // PRINT
+      case 39: // IDENTIFIER
+      case 40: // TRUE
+      case 41: // FALSE
+      case 42: // THIS
         value.move< std::string > (std::move (that.value));
         break;
 
@@ -1868,13 +1885,26 @@ switch (yytype)
   {
     switch (this->type_get ())
     {
-      case 46: // root
+      case 45: // root
+      case 46: // goal
       case 47: // mainclass
-      case 48: // statement
-      case 49: // statements
-      case 50: // expression
-      case 51: // factor
-      case 52: // identifier
+      case 48: // classdeclaration
+      case 49: // classdeclarations
+      case 50: // methoddeclaration
+      case 51: // methoddeclarations
+      case 52: // methodbody
+      case 53: // vardeclaration
+      case 54: // vardeclarations
+      case 55: // parameters
+      case 56: // type
+      case 57: // statement
+      case 58: // statements
+      case 59: // stmt_if
+      case 60: // expression
+      case 61: // experiment
+      case 62: // exprlist
+      case 63: // factor
+      case 64: // identifier
         value.copy< Node * > (YY_MOVE (that.value));
         break;
 
@@ -1900,26 +1930,24 @@ switch (yytype)
       case 22: // VOID
       case 23: // MAIN
       case 24: // PUBLIC
-      case 25: // COMMENT
-      case 26: // RETURN
-      case 27: // PERIOD
-      case 28: // COMMA
-      case 29: // EXCLAMATION
-      case 30: // SEMICOLON
-      case 31: // INTTYPE
-      case 32: // BOOLTYPE
-      case 33: // STRING
-      case 34: // IF
-      case 35: // ELSE
-      case 36: // WHILE
-      case 37: // NEW
-      case 38: // LENGTH
-      case 39: // PRINT
-      case 40: // IDENTIFIER
-      case 41: // TRUE
-      case 42: // FALSE
-      case 43: // THIS
-      case 44: // STATEMENT
+      case 25: // RETURN
+      case 26: // PERIOD
+      case 27: // COMMA
+      case 28: // EXCLAMATION
+      case 29: // SEMICOLON
+      case 30: // INTTYPE
+      case 31: // BOOLTYPE
+      case 32: // STRING
+      case 33: // IF
+      case 34: // ELSE
+      case 35: // WHILE
+      case 36: // NEW
+      case 37: // LENGTH
+      case 38: // PRINT
+      case 39: // IDENTIFIER
+      case 40: // TRUE
+      case 41: // FALSE
+      case 42: // THIS
         value.copy< std::string > (YY_MOVE (that.value));
         break;
 
@@ -1945,13 +1973,26 @@ switch (yytype)
     super_type::move (s);
     switch (this->type_get ())
     {
-      case 46: // root
+      case 45: // root
+      case 46: // goal
       case 47: // mainclass
-      case 48: // statement
-      case 49: // statements
-      case 50: // expression
-      case 51: // factor
-      case 52: // identifier
+      case 48: // classdeclaration
+      case 49: // classdeclarations
+      case 50: // methoddeclaration
+      case 51: // methoddeclarations
+      case 52: // methodbody
+      case 53: // vardeclaration
+      case 54: // vardeclarations
+      case 55: // parameters
+      case 56: // type
+      case 57: // statement
+      case 58: // statements
+      case 59: // stmt_if
+      case 60: // expression
+      case 61: // experiment
+      case 62: // exprlist
+      case 63: // factor
+      case 64: // identifier
         value.move< Node * > (YY_MOVE (s.value));
         break;
 
@@ -1977,26 +2018,24 @@ switch (yytype)
       case 22: // VOID
       case 23: // MAIN
       case 24: // PUBLIC
-      case 25: // COMMENT
-      case 26: // RETURN
-      case 27: // PERIOD
-      case 28: // COMMA
-      case 29: // EXCLAMATION
-      case 30: // SEMICOLON
-      case 31: // INTTYPE
-      case 32: // BOOLTYPE
-      case 33: // STRING
-      case 34: // IF
-      case 35: // ELSE
-      case 36: // WHILE
-      case 37: // NEW
-      case 38: // LENGTH
-      case 39: // PRINT
-      case 40: // IDENTIFIER
-      case 41: // TRUE
-      case 42: // FALSE
-      case 43: // THIS
-      case 44: // STATEMENT
+      case 25: // RETURN
+      case 26: // PERIOD
+      case 27: // COMMA
+      case 28: // EXCLAMATION
+      case 29: // SEMICOLON
+      case 30: // INTTYPE
+      case 31: // BOOLTYPE
+      case 32: // STRING
+      case 33: // IF
+      case 34: // ELSE
+      case 35: // WHILE
+      case 36: // NEW
+      case 37: // LENGTH
+      case 38: // PRINT
+      case 39: // IDENTIFIER
+      case 40: // TRUE
+      case 41: // FALSE
+      case 42: // THIS
         value.move< std::string > (YY_MOVE (s.value));
         break;
 
@@ -2054,7 +2093,7 @@ switch (yytype)
   }
 
 } // yy
-#line 2058 "parser.tab.h"
+#line 2097 "parser.tab.h"
 
 
 
