@@ -22,10 +22,9 @@ int lexical_errors = 0;
 "public"                    { return yy::parser::make_PUBLIC(yytext); 
                             //   printf("PUBLIC\n");
                             }
-"return"                    { return yy::parser::make_PUBLIC(yytext); 
+"return"                    { return yy::parser::make_RETURN(yytext); 
                             //   printf("RETURN\n");
                             }
-"return"                    { return yy::parser::make_PUBLIC(yytext); }
 
 "+"                         { return yy::parser::make_PLUSOP(yytext);  
                             //   printf("PLUSOP\n");

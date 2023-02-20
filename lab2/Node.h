@@ -22,8 +22,6 @@ public:
 		type = "uninitialised";
 		value = "uninitialised"; 
 	}   // Bison needs this.
-  
-	
 	virtual ~Node() = default;
 
 	virtual void print_tree(int depth=0) {
@@ -58,7 +56,8 @@ public:
 		  *outStream << "n" << id << " -> n" << (*i)->id << endl;
 	  }
   	}
-
+	
+	// virtual void semanticCheck() = 0; // Pure virtual, needs to be overwritten
 };
 
 /*
