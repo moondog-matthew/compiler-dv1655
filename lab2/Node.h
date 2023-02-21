@@ -69,6 +69,7 @@ public:
 		}
 	
 	};
+	
 };
 
 /*
@@ -419,9 +420,6 @@ public:
     vector<Scope*> children;
 	vector<Record*> inScopeRecords;
 
-
-
-
 	Record* lookup(string name)	{
 		/*
 			From a given name, see if it exists in the scope.
@@ -487,7 +485,9 @@ public:
 		current = root;
     }
 
-    ~SymbolTable() = default; // write this later, deallocate all the nodes
+    ~SymbolTable() {
+
+	}; // write this later, deallocate all the nodes
 
     /*
         Suggested operations from PPT
@@ -502,9 +502,15 @@ public:
 		current = current->parentScope;
 	}; 
 
-    void add_symbol(Record* record) {}; // push record to the current scope
-    bool find_symbol(Record* record) {}; // search scope for record. return nullptr if not found and record if found
-    bool check_scope(Record* record) {}; // returns true if record is defined in current scope
+    void add_symbol(Record* record) {
+		/* push record to the current scope */
+	}; 
+    bool find_symbol(Record* record) {
+		/*search scope for record. return nullptr if not found and record if found*/
+	}; 
+    bool check_scope(Record* record) {
+		/*returns true if record is defined in current scope*/
+	}; 
     void reset_ST() {
 		/* 
 			Reset the symbol table.
@@ -522,6 +528,7 @@ public:
 		if (node != nullptr) {
 			for(auto i = node->children.begin(); i != node->children.end(); i++) {
 				// cout << node->type << " " << node->value << endl;
+				// node->execute(node)
 				populate_ST(*i);
 				
 			}
