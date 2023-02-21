@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+
 using namespace std;
 
 
@@ -25,11 +26,13 @@ public:
 	virtual ~Node() = default;
 
 	virtual void print_tree(int depth=0) {
-		for(int i=0; i<depth; i++)
-		cout << "  ";
+		for(int i=0; i<depth; i++){
+			cout << "  ";
+		}
 		cout << type << ":" << value << endl; //<< " @line: "<< lineno << endl;
-		for(auto i=children.begin(); i!=children.end(); i++)
-		(*i)->print_tree(depth+1);
+		for(auto i=children.begin(); i!=children.end(); i++) {
+			(*i)->print_tree(depth+1);
+		}
 	}
   
 	virtual void generate_tree() {
@@ -58,6 +61,14 @@ public:
   	}
 	
 	// virtual void semanticCheck() = 0; // Pure virtual, needs to be overwritten
+	
+	virtual void ST_fill() { // fill the symbolTable, will only be called by root node?
+
+		for(auto i = children.begin(); i != children.end(); ++i) {
+			(*i)->ST_fill();
+		}
+	
+	};
 };
 
 /*
@@ -381,5 +392,124 @@ public:
 	GoalNode(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~GoalNode() = default;
 };
+
+
+
+/*
+	Records
+*/
+
+class Record {
+public:
+    string name; // class/method/variable/etc name
+	string type; // what type it is 
+	void printRecord() {
+		cout << name << " " << type << endl;
+	}
+};
+
+/*
+	Scope
+*/
+
+class Scope {
+private:
+	Scope* parentScope;
+    list<Scope*> children;
+	vector<Record*> inScopeRecords;
+
+public:
+
+
+	Record* lookup(string name)	{
+		/*
+			From a given name, see if it exists in the scope.
+		*/
+		int inScope;
+		int sz = inScopeRecords.size();
+		for (int i = 0; i < sz; ++i) {
+			if (inScopeRecords[i]->name == name) {
+				inScope = i; // index of the record containing the name
+			}
+		}
+		if(inScope) {
+			return inScopeRecords[inScope];
+		}
+		else {
+			if (parentScope == nullptr) {
+				return nullptr;
+			}
+			else {
+				return parentScope->lookup(name);
+			}
+		}
+	}
+
+	void addRecord(Record* record) {
+		inScopeRecords.push_back(record);
+	}
+
+	void nextScope() {
+		Scope* newScope = new Scope();
+		newScope->parentScope = this;  // make the node have the current scope as a parrent
+		children.push_back(newScope);
+	}
+};
+
+
+/*
+	Symbol Table
+*/
+
+class SymbolTable {
+private:
+
+	Scope* root;
+	Scope* current;
+
+public:
+
+    // should the ST get populated in the constructor? If call populate_ST from here
+    SymbolTable() = default; 
+    SymbolTable(Node* node) {
+        root = new Scope();
+		current = root;
+		populate_ST(node);
+    }
+    ~SymbolTable() = default;
+
+    /*
+        Suggested operations from PPT
+    */
+    void enter_scope() {}; // start/push a new nested scope
+    void exit_scope() {}; // exist/pop the curent scope
+    void add_symbol() {}; // push X to the stack
+    bool find_symbol() {}; // search stack for x. return false (0) if not found and true (1) if found
+    bool check_scope() {}; // returns true if x is defined in current scope
+    void remove_symbol() {}; // pop the stack
+
+    /*
+        Mandatory for the assignment
+    */
+    void populate_ST(Node* node) {
+		/*
+			Populate the ST by performing a single left-to-right traversal of the AST
+		*/
+		if (node != nullptr) {
+			for(auto i = node->children.begin(); i != node->children.end(); i++) {
+				// cout << node->type << " " << node->value << endl;
+				populate_ST(*i);
+				
+			}
+		}
+	}; 
+    
+	void print_ST(Node node) { 
+        /*Print symbol table*/
+    }; 
+
+};
+
+
 
 #endif

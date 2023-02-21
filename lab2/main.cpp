@@ -26,12 +26,14 @@ int main(int argc, char **argv)
 
   if(!parser.parse() && !lexical_errors) {
 
-    printf("\nThe compiler successfuly generated a syntax tree for the given input! \n");
-
-    printf("\nPrint Tree:  \n");
-    root->print_tree();
-    root->generate_tree();
+    // printf("\nThe compiler successfuly generated a syntax tree for the given input! \n");
+    // printf("\nPrint Tree:  \n");
+    // root->print_tree();
+    // root->generate_tree();
+    SymbolTable ST(root);
   }
   
+  
+
   return 0;
 }
