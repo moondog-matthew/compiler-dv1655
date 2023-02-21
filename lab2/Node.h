@@ -70,6 +70,7 @@ public:
 	
 	};
 	
+	virtual void execute(Node* node) {}; // make pure virtual later 
 };
 
 /*
