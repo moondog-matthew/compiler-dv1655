@@ -413,12 +413,13 @@ public:
 */
 
 class Scope {
-private:
+public:
+	int next = 0;
 	Scope* parentScope;
-    list<Scope*> children;
+    vector<Scope*> children;
 	vector<Record*> inScopeRecords;
 
-public:
+
 
 
 	Record* lookup(string name)	{
@@ -449,10 +450,20 @@ public:
 		inScopeRecords.push_back(record);
 	}
 
-	void nextScope() {
-		Scope* newScope = new Scope();
-		newScope->parentScope = this;  // make the node have the current scope as a parrent
-		children.push_back(newScope);
+	Scope* nextScope() {
+		Scope* nextScope;
+		int sz = children.size();
+		if (next == sz) {
+			nextScope = new Scope();
+			nextScope->parentScope = this;  // make the node have the current scope as a parent
+			children.push_back(nextScope);
+		}
+		else {
+			nextScope = children[next];
+		}
+	
+		this->next++;
+		return nextScope;
 	}
 };
 
@@ -474,19 +485,32 @@ public:
     SymbolTable(Node* node) {
         root = new Scope();
 		current = root;
-		populate_ST(node);
     }
-    ~SymbolTable() = default;
+
+    ~SymbolTable() = default; // write this later, deallocate all the nodes
 
     /*
         Suggested operations from PPT
     */
-    void enter_scope() {}; // start/push a new nested scope
-    void exit_scope() {}; // exist/pop the curent scope
-    void add_symbol() {}; // push X to the stack
-    bool find_symbol() {}; // search stack for x. return false (0) if not found and true (1) if found
-    bool check_scope() {}; // returns true if x is defined in current scope
-    void remove_symbol() {}; // pop the stack
+    void enter_scope() {
+		/* start/push a new nested scope */
+		current = current->nextScope();
+	}; 
+
+    void exit_scope() {
+		/* exist/pop the curent scope */
+		current = current->parentScope;
+	}; 
+
+    void add_symbol(Record* record) {}; // push record to the current scope
+    bool find_symbol(Record* record) {}; // search scope for record. return nullptr if not found and record if found
+    bool check_scope(Record* record) {}; // returns true if record is defined in current scope
+    void reset_ST() {
+		/* 
+			Reset the symbol table.
+			- Preparation for new traversal.
+		*/
+	}; 
 
     /*
         Mandatory for the assignment
@@ -505,7 +529,7 @@ public:
 	}; 
     
 	void print_ST(Node node) { 
-        /*Print symbol table*/
+        
     }; 
 
 };
