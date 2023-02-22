@@ -46,7 +46,7 @@ public:
 		outStream << "}" << std::endl;
 		outStream.close();
 
-		printf("\nBuilt a parse-tree at %s. Use 'make tree' to generate the pdf version.", filename);
+		printf("\nBuilt a parse-tree at %s. Use 'make tree' to generate the pdf version.\n", filename);
   	}
 
   	virtual void generate_tree_content(int &count, ofstream *outStream) {
@@ -61,14 +61,6 @@ public:
   	}
 	
 	// virtual void semanticCheck() = 0; // Pure virtual, needs to be overwritten
-	
-	virtual void ST_fill() { // fill the symbolTable, will only be called by root node?
-
-		for(auto i = children.begin(); i != children.end(); ++i) {
-			(*i)->ST_fill();
-		}
-	
-	};
 	
 	virtual void execute(Node* node) {}; // make pure virtual later 
 };

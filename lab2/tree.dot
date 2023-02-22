@@ -1,0 +1,63 @@
+digraph {
+n0 [label="Goal:"];
+n1 [label="MainClass:"];
+n2 [label="Identifier:Factorial"];
+n1 -> n2
+n3 [label="Identifier:a"];
+n1 -> n3
+n4 [label="Print:"];
+n5 [label="Method call:"];
+n4 -> n5
+n1 -> n4
+n0 -> n1
+n6 [label="classDeclaration:"];
+n7 [label="Identifier:Fac"];
+n6 -> n7
+n8 [label="Method:"];
+n9 [label="IntType:"];
+n8 -> n9
+n10 [label="Identifier:ComputeFac"];
+n8 -> n10
+n11 [label="Parameter:"];
+n12 [label="IntType:"];
+n11 -> n12
+n13 [label="Identifier:num"];
+n11 -> n13
+n8 -> n11
+n14 [label="MethodStatement:"];
+n15 [label="Variable:"];
+n16 [label="IntType:"];
+n15 -> n16
+n17 [label="Identifier:num_aux"];
+n15 -> n17
+n14 -> n15
+n18 [label="IfElse:"];
+n19 [label="LessThan:"];
+n20 [label="Identifier:num"];
+n19 -> n20
+n21 [label="Int:1"];
+n19 -> n21
+n18 -> n19
+n22 [label="Assign:"];
+n23 [label="Identifier:num_aux"];
+n22 -> n23
+n24 [label="Int:1"];
+n22 -> n24
+n18 -> n22
+n25 [label="Assign:"];
+n26 [label="Identifier:num_aux"];
+n25 -> n26
+n27 [label="MultExpression:"];
+n28 [label="Identifier:num"];
+n27 -> n28
+n29 [label="Method call:"];
+n27 -> n29
+n25 -> n27
+n18 -> n25
+n14 -> n18
+n8 -> n14
+n30 [label="Identifier:num_aux"];
+n8 -> n30
+n6 -> n8
+n0 -> n6
+}

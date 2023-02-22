@@ -30,8 +30,11 @@ int main(int argc, char **argv)
     // printf("\nThe compiler successfuly generated a syntax tree for the given input! \n");
     // printf("\nPrint Tree:  \n");
     // root->print_tree();
-    // root->generate_tree();
-    SymbolTable ST(root);
+    root->generate_tree();
+
+    // using the constructor that fills the symbol table
+    SymbolTable ST;
+    ST.populate_ST(root);
   }
 
   return 0;

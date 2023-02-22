@@ -1,4 +1,11 @@
 #include "symbolTable.cpp"
+#include <typeinfo>
+
+struct Base {}; // non-polymorphic
+struct Derived : Base {};
+ 
+struct Base2 { virtual void foo() {} }; // polymorphic
+struct Derived2 : Base2 {};
 
 int main() {
     variableRecord* var1 = new variableRecord("var1", "int");
@@ -83,7 +90,6 @@ int main() {
     //     cout << recLookup->printRecord() << endl;
     // }
     // ST.reset_ST();
-    ST.print_ST();
-
+    // ST.print_ST();
 
 }

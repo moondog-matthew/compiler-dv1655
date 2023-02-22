@@ -222,6 +222,12 @@ public:
 		current = root;
     }
 
+	SymbolTable(Node* node) {
+		root = new Scope(nullptr);
+		current = root;
+		populate_ST(node);
+	}
+
     ~SymbolTable() {
 		reset_ST();
 	}; // write this later, deallocate all the nodes
@@ -262,12 +268,28 @@ public:
 			Populate the ST by performing a single left-to-right traversal of the AST
 		*/
 		if (node != nullptr) {
-			for(auto i = node->children.begin(); i != node->children.end(); i++) {
+			for(auto const& child : node->children) {
 				// cout << node->type << " " << node->value << endl;
-				// node->execute(node)
-				populate_ST(*i);
+				if(dynamic_cast<MainClassDeclaration*>(child) != nullptr) {
+					cout << child->type << endl;
+				}
+				else if(dynamic_cast<MainClassDeclaration*>(child) != nullptr) {
+					cout << child->type << endl;
+				}
+				else if(dynamic_cast<ClassDeclaration*>(child) != nullptr) {
+					cout << child->type << endl;
+				}
+				else if(dynamic_cast<Method*>(child) != nullptr) {
+					cout << child->type << endl;
+				}
+				else if(dynamic_cast<Variable*>(child) != nullptr) {
+					cout << child->type << endl;
+
+				}
+				populate_ST(child);
 				
 			}
+			
 		}
 	};  
 
