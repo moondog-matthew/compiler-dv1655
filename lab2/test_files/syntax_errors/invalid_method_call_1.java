@@ -4,10 +4,15 @@ public class Factorial{
     }
 }
 
-class Element = hocusPocus {
+class Element {
     public boolean Init(){
-        Age = v_Age ;
-        return true;
+        int test;
+
+        test = this.Bar(a,);
+        return false;
     }
 
+    public int Bar(int a, boolean b){
+        return 1;
+    }
 }
