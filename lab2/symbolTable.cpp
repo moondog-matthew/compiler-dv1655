@@ -108,14 +108,14 @@ public:
 		/*
 			From a given name, see if it exists in the scope.
 		*/
-		int inScope;
+		int inScope = -1;
 		int sz = inScopeRecords.size();
 		for (int i = 0; i < sz; ++i) {
 			if (inScopeRecords[i]->name == name) {
 				inScope = i; // index of the record containing the name
 			}
 		}
-		if(inScope) {
+		if(inScope != -1) {
 			return inScopeRecords[inScope];
 		}
 		else {

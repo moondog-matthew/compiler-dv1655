@@ -12,13 +12,12 @@ int main() {
 
     classRecord* Class1 = new classRecord("Class1", "string");
     // cout << Class1->printRecord() << endl;
-    Class1->addMethod("method1", meth1);
-    Class1->addVariable("variable1", var1);
-
+    // Class1->addMethod("meth1", meth1);
+    // Class1->addVariable("var1", var1);
 
     // cout << meth1->printRecord() << endl;
-    variableRecord* varLookup = Class1->lookupVariable("variable1");
-    methodRecord* methLookup = Class1->lookupMethod("method1");
+    // variableRecord* varLookup = Class1->lookupVariable("variable1");
+    // methodRecord* methLookup = Class1->lookupMethod("method1");
     // varLookup = meth1->lookupVariable("kalas");
 
     // if (methLookup != nullptr) {
@@ -29,6 +28,7 @@ int main() {
 
     scope1->addRecord(Class1);
     scope1->addRecord(meth1);
+    
     Scope* scope2 = scope1->nextScope();
     scope2->addRecord(var1);
     Scope* scope3 = scope1->nextScope();
@@ -40,7 +40,7 @@ int main() {
 
     // scope1->printScope();
 
-    Record* recLookup = scope2->lookup("var1");
+    Record* recLookup = scope1->lookup("meth1");
 
     if (recLookup != nullptr) {
         cout << recLookup->printRecord() << endl;
