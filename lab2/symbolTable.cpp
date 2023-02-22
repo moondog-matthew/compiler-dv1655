@@ -148,16 +148,19 @@ public:
 	}
 
 	void reset() {
-		resetScope(this);
+		int sz = children.size();
+		for (auto const& child : children) {
+			child->reset();
+			delete child;
+		}
+		children.clear();
+		for (auto const& record : inScopeRecords) {
+			delete record;
+		}
+		inScopeRecords.clear();
 	}
 
-	void resetScope(Scope* node) {
-		int sz = children.size();
-		for (int i = 0; i < sz; ++i) {
-			resetScope(children[i]);
-		}
-		delete node;
-	}
+
 
 	void printScope(int depth=0) {
 
