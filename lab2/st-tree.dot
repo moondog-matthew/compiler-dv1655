@@ -1,0 +1,15 @@
+digraph {
+n0 [label="Symbol Table:placeholder
+name: Class1; record: Class; type: string;
+name: meth1; record: Method; type: int;"];
+n1 [label="Symbol Table:placeholder
+name: var1; record: Variable; type: int;"];
+n2 [label="Symbol Table:placeholder
+name: var4; record: Variable; type: int;"];
+n1 -> n2
+n0 -> n1
+n3 [label="Symbol Table:placeholder
+name: var2; record: Variable; type: int;
+name: var3; record: Variable; type: int;"];
+n0 -> n3
+}

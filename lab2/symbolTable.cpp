@@ -12,7 +12,7 @@ public:
 	string recordType;
 
 	virtual string printRecord() {
-		return "name: " + name + " record: " + recordType + " type: " + type;
+		return "name: " + name + "; record: " + recordType + "; type: " + type + ";";
 	}
 
 	Record(string name, string type, string record) : name(name), type(type), recordType(record) {}
@@ -93,6 +93,7 @@ public:
 class Scope {
 public:
 	int next = 0;
+	int id; // for generate tree
 	// string scopeName;
 	Scope* parentScope;
     vector<Scope*> children; // Scope children
@@ -160,8 +161,6 @@ public:
 		inScopeRecords.clear();
 	}
 
-
-
 	void printScope(int depth=0) {
 
 		// cout << "Scope: " << depth << endl;
@@ -179,22 +178,31 @@ public:
 		}
 	}
 
-	void generate_scope() {
+	void generate_tree() {
 		std:ofstream outStream;
-		char* filename = "tree.dot"; // Outfile name
+		char* filename = "st-tree.dot"; // Outfile name
 		outStream.open(filename);
 		int count = 0;
 		outStream << "digraph {" << std::endl;
-		generate_scope_content(count, &outStream);
+		generate_tree_content(count, &outStream);
 		outStream << "}" << std::endl;
 		outStream.close();
-		printf("\nBuilt a parse-tree at %s. Use 'make st-tree' to generate the pdf version.", filename);
+		printf("\nBuilt a parse-tree at %s. Use 'make st-tree' to generate the pdf version.\n", filename);
 	}
 
-	virtual void generate_scope_content(int &count, ofstream *outStream) {
-		int id = count++;
-	  	*outStream << "n" << id << " [label=\"" << "Symbol Table" << ":" << "placeholder" << "\"];" << endl;
-
+	virtual void generate_tree_content(int &count, ofstream *outStream) {
+		id = count++;
+	  	*outStream << "n" << id << " [label=\"" << "Symbol Table" << ":" << "placeholder";
+		for(auto const& record : inScopeRecords) {
+			*outStream << "\n" << record->printRecord();
+		}
+		*outStream << "\"];" << endl;
+		for (auto i = children.begin(); i != children.end(); i++)
+	  	{
+		  (*i)->generate_tree_content(count, outStream);
+		  *outStream << "n" << id << " -> n" << (*i)->id << endl;
+	  	}
+		
 	}
 };
 

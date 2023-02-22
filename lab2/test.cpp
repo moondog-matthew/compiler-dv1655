@@ -40,8 +40,10 @@ int main() {
 
     // scope1->printScope();
 
-    scope2->reset();
+    // scope2->reset();
     scope1->printScope();
+
+    scope1->generate_tree();
     // Record* recLookup = scope1->lookup("meth1");
     // if (recLookup != nullptr) {
     //     cout << recLookup->printRecord() << endl;
