@@ -85,7 +85,6 @@ public:
 	}
 };
 
-
 /*
 	Scope
 */
@@ -217,21 +216,16 @@ private:
 	Scope* current;
 
 public:
-
     // should the ST get populated in the constructor? If call populate_ST from here
-    SymbolTable() = default; 
-    SymbolTable(Node* node) {
+    SymbolTable() {
         root = new Scope(nullptr);
 		current = root;
     }
 
     ~SymbolTable() {
-
+		reset_ST();
 	}; // write this later, deallocate all the nodes
 
-    /*
-        Suggested operations from PPT
-    */
     void enter_scope() {
 		/* start/push a new nested scope */
 		current = current->nextScope();
@@ -257,11 +251,13 @@ public:
 		*/
 		root->reset();
 	}; 
+    
+	void print_ST() { 
+        root->printScope();
+		root->generate_tree();
+    };
 
-    /*
-        Mandatory for the assignment
-    */
-    void populate_ST(Node* node) {
+	void populate_ST(Node* node) {
 		/*
 			Populate the ST by performing a single left-to-right traversal of the AST
 		*/
@@ -273,10 +269,6 @@ public:
 				
 			}
 		}
-	}; 
-    
-	void print_ST() { 
-        root->printScope();
-    }; 
+	};  
 
 };

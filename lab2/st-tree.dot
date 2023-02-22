@@ -1,15 +1,25 @@
 digraph {
 n0 [label="Symbol Table:placeholder
-name: Class1; record: Class; type: string;
-name: meth1; record: Method; type: int;"];
+name: var1; record: Variable; type: int;
+name: var2; record: Variable; type: int;
+name: var11; record: Variable; type: int;
+name: var21; record: Variable; type: int;"];
 n1 [label="Symbol Table:placeholder
-name: var1; record: Variable; type: int;"];
+name: var3; record: Variable; type: int;"];
 n2 [label="Symbol Table:placeholder
 name: var4; record: Variable; type: int;"];
 n1 -> n2
-n0 -> n1
 n3 [label="Symbol Table:placeholder
-name: var2; record: Variable; type: int;
-name: var3; record: Variable; type: int;"];
-n0 -> n3
+name: meth1; record: Method; type: int;"];
+n1 -> n3
+n4 [label="Symbol Table:placeholder
+name: Class1; record: Class; type: string;"];
+n1 -> n4
+n0 -> n1
+n5 [label="Symbol Table:placeholder"];
+n6 [label="Symbol Table:placeholder
+name: var31; record: Variable; type: int;
+name: var41; record: Variable; type: int;"];
+n5 -> n6
+n0 -> n5
 }
