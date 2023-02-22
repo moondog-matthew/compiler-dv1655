@@ -1,5 +1,5 @@
 #include "Node.h"
-# include <map>
+#include <map>
 
 /*
 	Records
@@ -11,8 +11,8 @@ public:
 	string type; // what type it is 
 	string recordType;
 
-	void printRecord() {
-		cout << name << " " << type << endl;
+	string printRecord() {
+		return "name: " + name + "record: " + recordType + "type: " + type;
 	}
 
 	Record(string name, string type, string record) : name(name), type(type), recordType(record) {}
@@ -21,33 +21,58 @@ public:
 
 class variableRecord : Record {
 public:
-	variableRecord() : Record(name,type, "Variable") {}
+	variableRecord(string name, string type) : Record(name,type, "Variable") {}
 };
 
 class methodRecord : Record {
 protected:
-	vector<variableRecord> parameters;
-	map<string,variableRecord> variables;
+	vector<variableRecord*> parameters;
+	map<string,variableRecord*> variables;
 public:
 
-	methodRecord() : Record(name,type, "Method") {}
+	methodRecord(string name, string type) : Record(name,type, "Method") {}
 
-	void addVariable(string varName, variableRecord record) {
+	void addVariable(string varName, variableRecord* record) {
 		variables[varName] = record;
 	}
 
-	void addParameter(variableRecord record) {
+	void addParameter(variableRecord* record) {
 		parameters.push_back(record);
+	}
+
+	variableRecord* lookupVariable() {
+		return nullptr;
 	}
 
 };
 
 class classRecord : Record {
 protected:
-	classRecord() : Record(name,type, "Class") {}
+	map<string, variableRecord*> variables;
+	map<string,methodRecord*> methods;
 public:
-	map<string, variableRecord> variables;
-	map<string,methodRecord> methods;
+	classRecord(string name, string type) : Record(name,type, "Class") {}
+
+	void addVariable(string varName, variableRecord* record) {}
+	void addMethod(string methName, methodRecord* method) {}
+	
+	variableRecord* lookupVariable(string varname) {
+		for (auto const& x : variables) {
+			if (x.first == varname) {
+				return x.second;
+			}
+		}
+		return nullptr;
+	}
+	
+	methodRecord* lookupMethod(string methname) {
+		for (auto const& x : methods) {
+			if (x.first == methname) {
+				return x.second;
+			}
+		}
+		return nullptr;
+	}
 };
 
 
