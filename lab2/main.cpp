@@ -1,5 +1,6 @@
 #include<iostream>
 #include "parser.tab.h"
+#include "symbolTable.cpp"
 
 extern Node* root;
 extern FILE* yyin;
@@ -32,8 +33,6 @@ int main(int argc, char **argv)
     // root->generate_tree();
     SymbolTable ST(root);
   }
-  
-  
 
   return 0;
 }
