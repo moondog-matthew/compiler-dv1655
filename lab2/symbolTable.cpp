@@ -1,5 +1,5 @@
 #include "Node.h"
-
+# include <map>
 
 /*
 	Records
@@ -9,10 +9,47 @@ class Record {
 public:
     string name; // class/method/variable/etc name
 	string type; // what type it is 
+	string recordType;
+
 	void printRecord() {
 		cout << name << " " << type << endl;
 	}
+
+	Record(string name, string type, string record) : name(name), type(type), recordType(record) {}
+
 };
+
+class variableRecord : Record {
+public:
+	variableRecord() : Record(name,type, "Variable") {}
+};
+
+class methodRecord : Record {
+protected:
+	vector<variableRecord> parameters;
+	map<string,variableRecord> variables;
+public:
+
+	methodRecord() : Record(name,type, "Method") {}
+
+	void addVariable(string varName, variableRecord record) {
+		variables[varName] = record;
+	}
+
+	void addParameter(variableRecord record) {
+		parameters.push_back(record);
+	}
+
+};
+
+class classRecord : Record {
+protected:
+	classRecord() : Record(name,type, "Class") {}
+public:
+	map<string, variableRecord> variables;
+	map<string,methodRecord> methods;
+};
+
 
 /*
 	Scope
