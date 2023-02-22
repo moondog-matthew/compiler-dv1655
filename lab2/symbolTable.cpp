@@ -11,20 +11,20 @@ public:
 	string type; // what type it is 
 	string recordType;
 
-	string printRecord() {
-		return "name: " + name + "record: " + recordType + "type: " + type;
+	virtual string printRecord() {
+		return "name: " + name + " record: " + recordType + " type: " + type;
 	}
 
 	Record(string name, string type, string record) : name(name), type(type), recordType(record) {}
 
 };
 
-class variableRecord : Record {
+class variableRecord : public Record {
 public:
 	variableRecord(string name, string type) : Record(name,type, "Variable") {}
 };
 
-class methodRecord : Record {
+class methodRecord : public Record {
 protected:
 	vector<variableRecord*> parameters;
 	map<string,variableRecord*> variables;
@@ -40,21 +40,31 @@ public:
 		parameters.push_back(record);
 	}
 
-	variableRecord* lookupVariable() {
+	variableRecord* lookupVariable(string var) {
+		for (auto const &x : variables) {
+			if (x.first == var ) {
+				return x.second;
+			}
+		}
 		return nullptr;
 	}
 
 };
 
-class classRecord : Record {
+class classRecord : public Record {
 protected:
 	map<string, variableRecord*> variables;
 	map<string,methodRecord*> methods;
 public:
 	classRecord(string name, string type) : Record(name,type, "Class") {}
 
-	void addVariable(string varName, variableRecord* record) {}
-	void addMethod(string methName, methodRecord* method) {}
+	void addVariable(string varName, variableRecord* var) {
+		variables[varName] = var;
+	}
+	
+	void addMethod(string methName, methodRecord* method) {
+		methods[methName] = method;
+	}
 	
 	variableRecord* lookupVariable(string varname) {
 		for (auto const& x : variables) {
@@ -86,6 +96,10 @@ public:
 	Scope* parentScope;
     vector<Scope*> children;
 	vector<Record*> inScopeRecords;
+
+	~Scope() {
+		reset();
+	}
 
 	Record* lookup(string name)	{
 		/*
@@ -130,6 +144,23 @@ public:
 		this->next++;
 		return nextScope;
 	}
+
+	void reset() {
+		resetScope(this);
+	}
+
+	void resetScope(Scope* node) {
+		int sz = children.size();
+		for (int i = 0; i < sz; ++i) {
+			resetScope(children[i]);
+		}
+		delete node;
+
+	}
+
+	void printScope() {
+
+	}
 };
 
 
@@ -170,19 +201,19 @@ public:
 	}; 
 
     void add_symbol(Record* record) {
-		/* push record to the current scope */
+		current->addRecord(record);
 	}; 
-    bool find_symbol(Record* record) {
+    Record* lookup_symbol(string recordName) {
 		/*search scope for record. return nullptr if not found and record if found*/
+		return current->lookup(recordName);
 	}; 
-    bool check_scope(Record* record) {
-		/*returns true if record is defined in current scope*/
-	}; 
+
     void reset_ST() {
 		/* 
 			Reset the symbol table.
 			- Preparation for new traversal.
 		*/
+		root->reset();
 	}; 
 
     /*
