@@ -93,9 +93,12 @@ public:
 class Scope {
 public:
 	int next = 0;
+	// string scopeName;
 	Scope* parentScope;
-    vector<Scope*> children;
-	vector<Record*> inScopeRecords;
+    vector<Scope*> children; // Scope children
+	vector<Record*> inScopeRecords; // all of the records (of various types) the scope contains
+
+	Scope(Scope * parent) : parentScope(parent) {}
 
 	~Scope() {
 		reset();
@@ -133,8 +136,7 @@ public:
 		Scope* nextScope;
 		int sz = children.size();
 		if (next == sz) {
-			nextScope = new Scope();
-			nextScope->parentScope = this;  // make the node have the current scope as a parent
+			nextScope = new Scope(this);
 			children.push_back(nextScope);
 		}
 		else {
@@ -155,14 +157,43 @@ public:
 			resetScope(children[i]);
 		}
 		delete node;
-
 	}
 
-	void printScope() {
+	void printScope(int depth=0) {
+
+		// cout << "Scope: " << depth << endl;
+		string indent = "";
+		for(int i=0; i < depth; ++i) { indent += "	"; }
+
+		int rec_sz = inScopeRecords.size();
+		for (int i = 0; i < rec_sz; ++i) {
+			cout << indent << inScopeRecords[i]->printRecord() << endl;
+		}
+
+		int sz = children.size();
+		for (int i = 0; i < sz; ++i) {
+			children[i]->printScope(depth+1);
+		}
+	}
+
+	void generate_scope() {
+		std:ofstream outStream;
+		char* filename = "tree.dot"; // Outfile name
+		outStream.open(filename);
+		int count = 0;
+		outStream << "digraph {" << std::endl;
+		generate_scope_content(count, &outStream);
+		outStream << "}" << std::endl;
+		outStream.close();
+		printf("\nBuilt a parse-tree at %s. Use 'make st-tree' to generate the pdf version.", filename);
+	}
+
+	virtual void generate_scope_content(int &count, ofstream *outStream) {
+		int id = count++;
+	  	*outStream << "n" << id << " [label=\"" << "Symbol Table" << ":" << "placeholder" << "\"];" << endl;
 
 	}
 };
-
 
 /*
 	Symbol Table
@@ -179,7 +210,7 @@ public:
     // should the ST get populated in the constructor? If call populate_ST from here
     SymbolTable() = default; 
     SymbolTable(Node* node) {
-        root = new Scope();
+        root = new Scope(nullptr);
 		current = root;
     }
 
@@ -233,8 +264,8 @@ public:
 		}
 	}; 
     
-	void print_ST(Node node) { 
-        
+	void print_ST() { 
+        root->printScope();
     }; 
 
 };
