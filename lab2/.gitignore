@@ -8,3 +8,9 @@ test.txt
 test_lexical_errors.txt
 test_syntax_errors.txt
 counterexamples.txt
+lex.yy.c
+parser.output
+parser.tab.c
+parser.tab.h
+parser.tab.o
+stack.hh
