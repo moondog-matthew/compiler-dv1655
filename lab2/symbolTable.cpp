@@ -93,12 +93,12 @@ class Scope {
 public:
 	int next = 0;
 	int id; // for generate tree
-	// string scopeName;
+	string scopename;
 	Scope* parentScope;
     vector<Scope*> children; // Scope children
 	vector<Record*> inScopeRecords; // all of the records (of various types) the scope contains
 
-	Scope(Scope * parent) : parentScope(parent) {}
+	Scope(Scope * parent, string scopename) : parentScope(parent), scopename(scopename) {}
 
 	~Scope() {
 		reset();
@@ -132,11 +132,11 @@ public:
 		inScopeRecords.push_back(record);
 	}
 
-	Scope* nextScope() {
+	Scope* nextScope(string scopename) {
 		Scope* nextScope;
 		int sz = children.size();
 		if (next == sz) {
-			nextScope = new Scope(this);
+			nextScope = new Scope(this, scopename);
 			children.push_back(nextScope);
 		}
 		else {
@@ -191,7 +191,7 @@ public:
 
 	virtual void generate_tree_content(int &count, ofstream *outStream) {
 		id = count++;
-	  	*outStream << "n" << id << " [label=\"" << "Symbol Table" << ":" << "placeholder";
+	  	*outStream << "n" << id << " [label=\"" << "Symbol Table" << ":" << scopename;
 		for(auto const& record : inScopeRecords) {
 			*outStream << "\n" << record->printRecord();
 		}
@@ -218,12 +218,12 @@ private:
 public:
     // should the ST get populated in the constructor? If call populate_ST from here
     SymbolTable() {
-        root = new Scope(nullptr);
+        root = new Scope(nullptr, "Program");
 		current = root;
     }
 
 	SymbolTable(Node* node) {
-		root = new Scope(nullptr);
+		root = new Scope(nullptr, "Program");
 		current = root;
 		populate_ST(node);
 	}
@@ -232,9 +232,9 @@ public:
 		reset_ST();
 	}; // write this later, deallocate all the nodes
 
-    void enter_scope() {
+    void enter_scope(string scopename) {
 		/* start/push a new nested scope */
-		current = current->nextScope();
+		current = current->nextScope(scopename);
 	}; 
 
     void exit_scope() {

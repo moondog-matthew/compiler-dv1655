@@ -64,23 +64,23 @@ int main() {
 
     ST.add_symbol(var1);
     ST.add_symbol(var2);
-    ST.enter_scope();
+    ST.enter_scope("Scope1");
     ST.add_symbol(var3);
-    ST.enter_scope();
+    ST.enter_scope("Scope2");
     ST.add_symbol(var4);
     ST.exit_scope();
-    ST.enter_scope();
+    ST.enter_scope("Scope3");
     ST.add_symbol(meth1);
     ST.exit_scope();
-    ST.enter_scope();
+    ST.enter_scope("Scope4");
     ST.add_symbol(Class1);
     ST.exit_scope();
     ST.exit_scope();
     ST.add_symbol(var11);
     ST.add_symbol(var21);
     
-    ST.enter_scope();
-    ST.enter_scope();
+    ST.enter_scope("Scope5");
+    ST.enter_scope("Scope6");
     ST.add_symbol(var31);
     ST.add_symbol(var41);
 
@@ -90,6 +90,6 @@ int main() {
     //     cout << recLookup->printRecord() << endl;
     // }
     // ST.reset_ST();
-    // ST.print_ST();
+    ST.print_ST();
 
 }
