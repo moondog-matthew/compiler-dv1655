@@ -271,16 +271,20 @@ public:
 			for(auto const& child : node->children) {
 				// cout << node->type << " " << node->value << endl;
 				if(dynamic_cast<MainClassDeclaration*>(child) != nullptr) {
-					cout << child->children[1]->value << endl;
+					string name =  child->children[0]->value;
+					cout << name << endl;
 				}
 				else if(dynamic_cast<ClassDeclaration*>(child) != nullptr) {
-					cout << child->children[0]->value << endl;
+					string name =  child->children[0]->value;
+					cout << name << endl;
 				}
 				else if(dynamic_cast<Method*>(child) != nullptr) {
-					cout << child->children[1]->value << endl;
+					string name =  child->children[1]->value;
+					cout << name << endl;
 				}
 				else if(dynamic_cast<Variable*>(child) != nullptr) {
-					cout << child->children[1]->value << endl;
+					string name =  child->children[1]->value;
+					cout << name << endl;
 
 				}
 				populate_ST(child);
