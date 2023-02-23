@@ -1,25 +1,7 @@
 digraph {
 n0 [label="Symbol Table:Program
-name: var1; record: Variable; type: int;
-name: var2; record: Variable; type: int;
-name: var11; record: Variable; type: int;
-name: var21; record: Variable; type: int;"];
-n1 [label="Symbol Table:Scope1
-name: var3; record: Variable; type: int;"];
-n2 [label="Symbol Table:Scope2
-name: var4; record: Variable; type: int;"];
-n1 -> n2
-n3 [label="Symbol Table:Scope3
-name: meth1; record: Method; type: int;"];
-n1 -> n3
-n4 [label="Symbol Table:Scope4
-name: Class1; record: Class; type: string;"];
-n1 -> n4
-n0 -> n1
-n5 [label="Symbol Table:Scope5"];
-n6 [label="Symbol Table:Scope6
-name: var31; record: Variable; type: int;
-name: var41; record: Variable; type: int;"];
-n5 -> n6
-n0 -> n5
+name: Factorial; record: Class; type: Factorial;
+name: Fac; record: Class; type: Fac;
+name: ComputeFac; record: Method; type: int;
+name: num_aux; record: Variable; type: int;"];
 }

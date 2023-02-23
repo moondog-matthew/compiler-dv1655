@@ -267,26 +267,36 @@ public:
 		/*
 			Populate the ST by performing a single left-to-right traversal of the AST
 		*/
+		string name;
+		string type;
 		if (node != nullptr) {
 			for(auto const& child : node->children) {
 				// cout << node->type << " " << node->value << endl;
 				if(dynamic_cast<MainClassDeclaration*>(child) != nullptr) {
-					string name =  child->children[0]->value;
-					cout << name << endl;
+					name =  child->children[0]->value;
+					type = name;
+					add_symbol(new classRecord(name, type));
+					// enter_scope(name);
 				}
 				else if(dynamic_cast<ClassDeclaration*>(child) != nullptr) {
-					string name =  child->children[0]->value;
-					cout << name << endl;
+					name =  child->children[0]->value;
+					type = name; // exception, see ppt
+					add_symbol(new classRecord(name, type));
+					// enter_scope(name);
 				}
 				else if(dynamic_cast<Method*>(child) != nullptr) {
-					string name =  child->children[1]->value;
-					cout << name << endl;
+					name =  child->children[1]->value;
+					type = child->children[0]->type;
+					add_symbol(new methodRecord(name, type));
+					// enter_scope(name);
 				}
 				else if(dynamic_cast<Variable*>(child) != nullptr) {
-					string name =  child->children[1]->value;
-					cout << name << endl;
-
+					name =  child->children[1]->value;
+					type = child->children[0]->type;
+					add_symbol(new variableRecord(name, type));
+					// enter_scope(name);
 				}
+				
 				populate_ST(child);
 				
 			}

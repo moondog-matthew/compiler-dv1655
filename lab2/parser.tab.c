@@ -840,7 +840,7 @@ namespace yy {
     break;
 
   case 3: // goal: mainclass classdeclarations "end of file"
-#line 54 "parser.y"
+#line 53 "parser.y"
                                               {
                       yylhs.value.as < Node * > () = new GoalNode("Goal", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ()); // mainclass
@@ -850,7 +850,7 @@ namespace yy {
     break;
 
   case 4: // goal: mainclass "end of file"
-#line 59 "parser.y"
+#line 58 "parser.y"
                               {
                       yylhs.value.as < Node * > () = new GoalNode("Goal", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ()); // mainclass 
@@ -859,7 +859,7 @@ namespace yy {
     break;
 
   case 5: // mainclass: PUBLIC CLASS identifier LCB PUBLIC STATIC VOID MAIN LP STRING LHB RHB identifier RP LCB statement RCB RCB
-#line 65 "parser.y"
+#line 64 "parser.y"
                                                                                                                      {
                       yylhs.value.as < Node * > () = new MainClassDeclaration("MainClass", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[15].value.as < Node * > ()); // identifier
@@ -870,7 +870,7 @@ namespace yy {
     break;
 
   case 6: // classdeclaration: CLASS identifier LCB vardeclarations methoddeclarations RCB
-#line 73 "parser.y"
+#line 72 "parser.y"
                                                                               {
                       yylhs.value.as < Node * > () = new ClassDeclaration("classDeclaration", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[4].value.as < Node * > ()); // identifier
@@ -881,7 +881,7 @@ namespace yy {
     break;
 
   case 7: // classdeclaration: CLASS identifier LCB methoddeclarations RCB
-#line 79 "parser.y"
+#line 78 "parser.y"
                                                             {
                       yylhs.value.as < Node * > () = new ClassDeclaration("classDeclaration", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[3].value.as < Node * > ()); // identifier
@@ -891,7 +891,7 @@ namespace yy {
     break;
 
   case 8: // classdeclaration: CLASS identifier LCB vardeclarations RCB
-#line 84 "parser.y"
+#line 83 "parser.y"
                                                          {
                       yylhs.value.as < Node * > () = new ClassDeclaration("classDeclaration", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[3].value.as < Node * > ()); // identifier
@@ -901,7 +901,7 @@ namespace yy {
     break;
 
   case 9: // classdeclaration: CLASS identifier LCB RCB
-#line 89 "parser.y"
+#line 88 "parser.y"
                                          {
                       yylhs.value.as < Node * > () = new ClassDeclaration("classDeclaration", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ()); // identifier
@@ -910,13 +910,13 @@ namespace yy {
     break;
 
   case 10: // classdeclarations: classdeclaration
-#line 96 "parser.y"
+#line 95 "parser.y"
                              {yylhs.value.as < Node * > ()=yystack_[0].value.as < Node * > ();}
 #line 916 "parser.tab.c"
     break;
 
   case 11: // classdeclarations: classdeclarations classdeclaration
-#line 97 "parser.y"
+#line 96 "parser.y"
                                                  {
                       yylhs.value.as < Node * > () = new ClassDeclarationMult("ClassDeclarations", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());
@@ -926,7 +926,7 @@ namespace yy {
     break;
 
   case 12: // methoddeclaration: PUBLIC type identifier LP parameters RP LCB methodbody RETURN expression SEMICOLON RCB
-#line 104 "parser.y"
+#line 103 "parser.y"
                                                                                                           {
                       yylhs.value.as < Node * > () = new Method("Method", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[10].value.as < Node * > ()); // type
@@ -939,7 +939,7 @@ namespace yy {
     break;
 
   case 13: // methoddeclaration: PUBLIC type identifier LP RP LCB methodbody RETURN expression SEMICOLON RCB
-#line 112 "parser.y"
+#line 111 "parser.y"
                                                                                             {
                       yylhs.value.as < Node * > () = new Method("Method", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[9].value.as < Node * > ()); // type
@@ -951,7 +951,7 @@ namespace yy {
     break;
 
   case 14: // methoddeclaration: PUBLIC type identifier LP parameters RP LCB RETURN expression SEMICOLON RCB
-#line 119 "parser.y"
+#line 118 "parser.y"
                                                                                             {
                       yylhs.value.as < Node * > () = new Method("Method", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[9].value.as < Node * > ()); // type
@@ -963,7 +963,7 @@ namespace yy {
     break;
 
   case 15: // methoddeclaration: PUBLIC type identifier LP RP LCB RETURN expression SEMICOLON RCB
-#line 126 "parser.y"
+#line 125 "parser.y"
                                                                                  {
                       yylhs.value.as < Node * > () = new Method("Method", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[8].value.as < Node * > ()); // type
@@ -974,13 +974,13 @@ namespace yy {
     break;
 
   case 16: // methoddeclarations: methoddeclaration
-#line 134 "parser.y"
+#line 133 "parser.y"
                               {yylhs.value.as < Node * > () = yystack_[0].value.as < Node * > ();}
 #line 980 "parser.tab.c"
     break;
 
   case 17: // methoddeclarations: methoddeclarations methoddeclaration
-#line 135 "parser.y"
+#line 134 "parser.y"
                                                    {
                       yylhs.value.as < Node * > () = new MethodDeclarations("MethodDeclarations", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());
@@ -990,19 +990,19 @@ namespace yy {
     break;
 
   case 18: // methodbody: vardeclaration
-#line 143 "parser.y"
+#line 142 "parser.y"
                            {yylhs.value.as < Node * > () = yystack_[0].value.as < Node * > ();}
 #line 996 "parser.tab.c"
     break;
 
   case 19: // methodbody: statement
-#line 144 "parser.y"
+#line 143 "parser.y"
                         {yylhs.value.as < Node * > () = yystack_[0].value.as < Node * > ();}
 #line 1002 "parser.tab.c"
     break;
 
   case 20: // methodbody: methodbody vardeclaration
-#line 145 "parser.y"
+#line 144 "parser.y"
                                         {
                       yylhs.value.as < Node * > () = new MethodVariable("MethodVariable", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());
@@ -1012,7 +1012,7 @@ namespace yy {
     break;
 
   case 21: // methodbody: methodbody statement
-#line 150 "parser.y"
+#line 149 "parser.y"
                                    {
                       yylhs.value.as < Node * > () = new MethodStmt("MethodStatement", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());
@@ -1022,7 +1022,7 @@ namespace yy {
     break;
 
   case 22: // vardeclaration: type identifier SEMICOLON
-#line 157 "parser.y"
+#line 156 "parser.y"
                                           {
                       yylhs.value.as < Node * > () = new Variable("Variable", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ()); // type
@@ -1032,13 +1032,13 @@ namespace yy {
     break;
 
   case 23: // vardeclarations: vardeclaration
-#line 164 "parser.y"
+#line 163 "parser.y"
                            {yylhs.value.as < Node * > () = yystack_[0].value.as < Node * > ();}
 #line 1038 "parser.tab.c"
     break;
 
   case 24: // vardeclarations: vardeclarations vardeclaration
-#line 165 "parser.y"
+#line 164 "parser.y"
                                              {
                       yylhs.value.as < Node * > () = new VariableList("Variables", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());
@@ -1048,7 +1048,7 @@ namespace yy {
     break;
 
   case 25: // parameters: type identifier
-#line 173 "parser.y"
+#line 172 "parser.y"
                             {
                       yylhs.value.as < Node * > () = new Parameter("Parameter", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ()); // type
@@ -1058,7 +1058,7 @@ namespace yy {
     break;
 
   case 26: // parameters: type identifier COMMA parameters
-#line 178 "parser.y"
+#line 177 "parser.y"
                                                {
                       yylhs.value.as < Node * > () = new ParameterList("Parameters", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[3].value.as < Node * > ()); // type
@@ -1069,31 +1069,31 @@ namespace yy {
     break;
 
   case 27: // type: INTTYPE LHB RHB
-#line 186 "parser.y"
+#line 185 "parser.y"
                       {
-            yylhs.value.as < Node * > () = new ArrayType("ArrayType", "", yylineno);
+            yylhs.value.as < Node * > () = new ArrayType("int[]", "", yylineno);
               }
 #line 1077 "parser.tab.c"
     break;
 
   case 28: // type: BOOLTYPE
-#line 189 "parser.y"
+#line 188 "parser.y"
                  {
-            yylhs.value.as < Node * > () =  new BoolType("BoolType", "", yylineno);
+            yylhs.value.as < Node * > () =  new BoolType("bool", "", yylineno);
               }
 #line 1085 "parser.tab.c"
     break;
 
   case 29: // type: INTTYPE
-#line 192 "parser.y"
+#line 191 "parser.y"
                 {
-            yylhs.value.as < Node * > () = new IntType("IntType", "", yylineno);
+            yylhs.value.as < Node * > () = new IntType("int", "", yylineno);
               }
 #line 1093 "parser.tab.c"
     break;
 
   case 30: // type: identifier
-#line 195 "parser.y"
+#line 194 "parser.y"
                    {
             yylhs.value.as < Node * > () = new IdenType("IdentifierType", "", yylineno);
               }
@@ -1101,7 +1101,7 @@ namespace yy {
     break;
 
   case 31: // statement: LCB RCB
-#line 200 "parser.y"
+#line 199 "parser.y"
                      { 
               yylhs.value.as < Node * > () = new NonStmt("NonStatements", "", yylineno);
             }
@@ -1109,7 +1109,7 @@ namespace yy {
     break;
 
   case 32: // statement: LCB statements RCB
-#line 203 "parser.y"
+#line 202 "parser.y"
                                   { 
               yylhs.value.as < Node * > () = yystack_[1].value.as < Node * > ();
             }
@@ -1117,13 +1117,13 @@ namespace yy {
     break;
 
   case 33: // statement: stmt_if
-#line 206 "parser.y"
+#line 205 "parser.y"
               { yylhs.value.as < Node * > () = yystack_[0].value.as < Node * > (); }
 #line 1123 "parser.tab.c"
     break;
 
   case 34: // statement: WHILE LP expression RP statement
-#line 207 "parser.y"
+#line 206 "parser.y"
                                                {
               yylhs.value.as < Node * > () = new WhileStmt("While", "", yylineno);
               yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
@@ -1133,7 +1133,7 @@ namespace yy {
     break;
 
   case 35: // statement: PRINT LP expression RP SEMICOLON
-#line 212 "parser.y"
+#line 211 "parser.y"
                                                {
               yylhs.value.as < Node * > () = new PrintStmt("Print", "", yylineno);
               yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
@@ -1142,7 +1142,7 @@ namespace yy {
     break;
 
   case 36: // statement: identifier ASSIGN expression SEMICOLON
-#line 216 "parser.y"
+#line 215 "parser.y"
                                                      {
               yylhs.value.as < Node * > () = new AssignStmt("Assign", "", yylineno);
               yylhs.value.as < Node * > ()->children.push_back(yystack_[3].value.as < Node * > ());
@@ -1152,7 +1152,7 @@ namespace yy {
     break;
 
   case 37: // statement: identifier LHB expression RHB ASSIGN expression SEMICOLON
-#line 221 "parser.y"
+#line 220 "parser.y"
                                                                         {
               yylhs.value.as < Node * > () = new ArrayIndexAssign("indexAssign", "", yylineno);
               yylhs.value.as < Node * > ()->children.push_back(yystack_[6].value.as < Node * > ());
@@ -1163,7 +1163,7 @@ namespace yy {
     break;
 
   case 38: // statements: statement
-#line 230 "parser.y"
+#line 229 "parser.y"
                       {
                   yylhs.value.as < Node * > () = yystack_[0].value.as < Node * > ();
                 }
@@ -1171,7 +1171,7 @@ namespace yy {
     break;
 
   case 39: // statements: statements statement
-#line 233 "parser.y"
+#line 232 "parser.y"
                                    { 
               yylhs.value.as < Node * > () = new Statements("Statements", "", yylineno);
               yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());
@@ -1181,7 +1181,7 @@ namespace yy {
     break;
 
   case 40: // stmt_if: IF LP expression RP statement
-#line 240 "parser.y"
+#line 239 "parser.y"
                                                      { // To solve dangling else ambiguity
               yylhs.value.as < Node * > () = new IfStmt("IF", "", yylineno);
               yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
@@ -1191,7 +1191,7 @@ namespace yy {
     break;
 
   case 41: // stmt_if: IF LP expression RP statement ELSE statement
-#line 245 "parser.y"
+#line 244 "parser.y"
                                                            {
               yylhs.value.as < Node * > () = new IfElseStmt("IfElse", "", yylineno);
               yylhs.value.as < Node * > ()->children.push_back(yystack_[4].value.as < Node * > ());
@@ -1202,7 +1202,7 @@ namespace yy {
     break;
 
   case 42: // expression: expression PLUSOP expression
-#line 253 "parser.y"
+#line 252 "parser.y"
                                          {      
                             yylhs.value.as < Node * > () = new PlusOP("AddExpression", "", yylineno);
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
@@ -1213,7 +1213,7 @@ namespace yy {
     break;
 
   case 43: // expression: expression MINUSOP expression
-#line 259 "parser.y"
+#line 258 "parser.y"
                                             {
                             yylhs.value.as < Node * > () = new MinusOP("SubExpression", "", yylineno);
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
@@ -1224,7 +1224,7 @@ namespace yy {
     break;
 
   case 44: // expression: expression MULTOP expression
-#line 265 "parser.y"
+#line 264 "parser.y"
                                            {
                             yylhs.value.as < Node * > () = new MultOP("MultExpression", "", yylineno);
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
@@ -1235,7 +1235,7 @@ namespace yy {
     break;
 
   case 45: // expression: expression DIVOP expression
-#line 271 "parser.y"
+#line 270 "parser.y"
                                           {
                             yylhs.value.as < Node * > () = new DivOP("DivExpression", "", yylineno);
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
@@ -1246,7 +1246,7 @@ namespace yy {
     break;
 
   case 46: // expression: expression ASSIGN expression
-#line 277 "parser.y"
+#line 276 "parser.y"
                                            {
                             // VARFÖR behövs denna i språket? Vad gör den?
                             yylhs.value.as < Node * > () = new AssignExpr("Assigning", "", yylineno);
@@ -1257,7 +1257,7 @@ namespace yy {
     break;
 
   case 47: // expression: expression GT expression
-#line 283 "parser.y"
+#line 282 "parser.y"
                                        {
                             yylhs.value.as < Node * > () = new GreaterThan("GreaterThan", "", yylineno);
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
@@ -1267,7 +1267,7 @@ namespace yy {
     break;
 
   case 48: // expression: expression LT expression
-#line 288 "parser.y"
+#line 287 "parser.y"
                                        {
                             yylhs.value.as < Node * > () = new LessThan("LessThan", "", yylineno);
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
@@ -1277,7 +1277,7 @@ namespace yy {
     break;
 
   case 49: // expression: expression EQ expression
-#line 293 "parser.y"
+#line 292 "parser.y"
                                        {
                             yylhs.value.as < Node * > () = new Equals("Equals", "", yylineno);
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
@@ -1287,7 +1287,7 @@ namespace yy {
     break;
 
   case 50: // expression: expression OR expression
-#line 298 "parser.y"
+#line 297 "parser.y"
                                        {
                             yylhs.value.as < Node * > () = new Or("OR", "", yylineno);
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
@@ -1297,7 +1297,7 @@ namespace yy {
     break;
 
   case 51: // expression: expression AND expression
-#line 303 "parser.y"
+#line 302 "parser.y"
                                         {
                             yylhs.value.as < Node * > () = new And("AND", "", yylineno);
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
@@ -1307,13 +1307,13 @@ namespace yy {
     break;
 
   case 52: // expression: experiment
-#line 309 "parser.y"
+#line 308 "parser.y"
               { yylhs.value.as < Node * > () = yystack_[0].value.as < Node * > (); }
 #line 1313 "parser.tab.c"
     break;
 
   case 53: // expression: expression PERIOD LENGTH
-#line 311 "parser.y"
+#line 310 "parser.y"
                                        {
                             yylhs.value.as < Node * > () = new LengthOf("LenghtOfExpression", "", yylineno);
                             yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
@@ -1323,7 +1323,7 @@ namespace yy {
     break;
 
   case 54: // expression: expression PERIOD identifier LP exprlist RP
-#line 316 "parser.y"
+#line 315 "parser.y"
                                                           {  // recursive grammar, follows recursive rules
                               yylhs.value.as < Node * > () = new MethCall("Method call", "", yylineno);
                               // push back children
@@ -1332,7 +1332,7 @@ namespace yy {
     break;
 
   case 55: // expression: expression PERIOD identifier LP RP
-#line 320 "parser.y"
+#line 319 "parser.y"
                                                  {  // for the empty case
                               yylhs.value.as < Node * > () = new MethCall("Method call", "", yylineno);
                               // push back children
@@ -1341,7 +1341,7 @@ namespace yy {
     break;
 
   case 56: // expression: TRUE
-#line 324 "parser.y"
+#line 323 "parser.y"
                    {
                   yylhs.value.as < Node * > () = new TrueVal("True", "", yylineno);
                 }
@@ -1349,7 +1349,7 @@ namespace yy {
     break;
 
   case 57: // expression: FALSE
-#line 327 "parser.y"
+#line 326 "parser.y"
                     {
                   yylhs.value.as < Node * > () = new FalseVal("False", "", yylineno);
                 }
@@ -1357,7 +1357,7 @@ namespace yy {
     break;
 
   case 58: // expression: identifier
-#line 330 "parser.y"
+#line 329 "parser.y"
                          {
                   yylhs.value.as < Node * > () = yystack_[0].value.as < Node * > ();
                 }
@@ -1365,7 +1365,7 @@ namespace yy {
     break;
 
   case 59: // expression: THIS
-#line 333 "parser.y"
+#line 332 "parser.y"
                     {
                   yylhs.value.as < Node * > () = new ThisOP("This", "", yylineno);
                 }
@@ -1373,7 +1373,7 @@ namespace yy {
     break;
 
   case 60: // expression: NEW INTTYPE LHB expression RHB
-#line 336 "parser.y"
+#line 335 "parser.y"
                                              {
                       yylhs.value.as < Node * > () = new IntArray("AllocateIntArray", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());  // Size of int array
@@ -1382,7 +1382,7 @@ namespace yy {
     break;
 
   case 61: // expression: NEW identifier LP RP
-#line 340 "parser.y"
+#line 339 "parser.y"
                                    {
                       yylhs.value.as < Node * > () = new IdenAlloc("AllocateIdentifier", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());  
@@ -1392,7 +1392,7 @@ namespace yy {
     break;
 
   case 62: // expression: EXCLAMATION expression
-#line 345 "parser.y"
+#line 344 "parser.y"
                                      {
                       yylhs.value.as < Node * > () = new Negation("Negation", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ()); 
@@ -1401,13 +1401,13 @@ namespace yy {
     break;
 
   case 63: // expression: factor
-#line 349 "parser.y"
+#line 348 "parser.y"
                           {yylhs.value.as < Node * > () = yystack_[0].value.as < Node * > (); /* printf("r4 ");*/}
 #line 1407 "parser.tab.c"
     break;
 
   case 64: // experiment: expression LHB expression RHB
-#line 352 "parser.y"
+#line 351 "parser.y"
                                           { //??
                       yylhs.value.as < Node * > () = new Node("Index", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[3].value.as < Node * > ());  // what to take index of
@@ -1417,7 +1417,7 @@ namespace yy {
     break;
 
   case 65: // exprlist: expression
-#line 359 "parser.y"
+#line 358 "parser.y"
                      {
                       yylhs.value.as < Node * > () = new Expression("Expression", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());
@@ -1426,7 +1426,7 @@ namespace yy {
     break;
 
   case 66: // exprlist: exprlist COMMA expression
-#line 363 "parser.y"
+#line 362 "parser.y"
                                         {
                       yylhs.value.as < Node * > () = new ExpressionList("ExpressionList", "", yylineno);
                       yylhs.value.as < Node * > ()->children.push_back(yystack_[2].value.as < Node * > ());
@@ -1436,14 +1436,14 @@ namespace yy {
     break;
 
   case 67: // factor: INT
-#line 371 "parser.y"
+#line 370 "parser.y"
             {
                       yylhs.value.as < Node * > () = new IntVal("Int", yystack_[0].value.as < std::string > (), yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
 #line 1443 "parser.tab.c"
     break;
 
   case 68: // factor: LP expression RP
-#line 373 "parser.y"
+#line 372 "parser.y"
                                { 
                       yylhs.value.as < Node * > () = yystack_[1].value.as < Node * > (); /* printf("r6 ");  simply return the expression */
                   }
@@ -1451,7 +1451,7 @@ namespace yy {
     break;
 
   case 69: // identifier: IDENTIFIER
-#line 378 "parser.y"
+#line 377 "parser.y"
                        {
                     yylhs.value.as < Node * > () = new Identifier("Identifier", yystack_[0].value.as < std::string > (), yylineno); 
             }
@@ -2064,13 +2064,13 @@ namespace yy {
   const short
   parser::yyrline_[] =
   {
-       0,    50,    50,    54,    59,    65,    73,    79,    84,    89,
-      96,    97,   104,   112,   119,   126,   134,   135,   143,   144,
-     145,   150,   157,   164,   165,   173,   178,   186,   189,   192,
-     195,   200,   203,   206,   207,   212,   216,   221,   230,   233,
-     240,   245,   253,   259,   265,   271,   277,   283,   288,   293,
-     298,   303,   309,   311,   316,   320,   324,   327,   330,   333,
-     336,   340,   345,   349,   352,   359,   363,   371,   373,   378
+       0,    50,    50,    53,    58,    64,    72,    78,    83,    88,
+      95,    96,   103,   111,   118,   125,   133,   134,   142,   143,
+     144,   149,   156,   163,   164,   172,   177,   185,   188,   191,
+     194,   199,   202,   205,   206,   211,   215,   220,   229,   232,
+     239,   244,   252,   258,   264,   270,   276,   282,   287,   292,
+     297,   302,   308,   310,   315,   319,   323,   326,   329,   332,
+     335,   339,   344,   348,   351,   358,   362,   370,   372,   377
   };
 
   void

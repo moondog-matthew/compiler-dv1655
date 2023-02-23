@@ -48,7 +48,6 @@
 %%
 // Change this later to be the class 
 root:         goal {root = $1;};
-// root:         expression {root = $1;};
 
 goal:
               mainclass classdeclarations END {
@@ -184,13 +183,13 @@ parameters:
             ;
 
 type: INTTYPE LHB RHB {
-            $$ = new ArrayType("ArrayType", "", yylineno);
+            $$ = new ArrayType("int[]", "", yylineno);
               }
       | BOOLTYPE {
-            $$ =  new BoolType("BoolType", "", yylineno);
+            $$ =  new BoolType("bool", "", yylineno);
               }
       | INTTYPE {
-            $$ = new IntType("IntType", "", yylineno);
+            $$ = new IntType("int", "", yylineno);
               }
       | identifier {
             $$ = new IdenType("IdentifierType", "", yylineno);
