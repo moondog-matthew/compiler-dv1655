@@ -277,7 +277,11 @@ public:
 					type = name;
 					add_symbol(new classRecord(name, type));
 					enter_scope(name);
-					populate_ST(child);
+					add_symbol(new variableRecord("this", type)); // this
+					add_symbol(new methodRecord("main", "void")); // hardcoded  due to limited grammar
+					enter_scope("main");
+					add_symbol(new variableRecord(child->children[1]->value, "String[]")); // hardcoded due to limited grammar
+					exit_scope();
 					exit_scope();
 				}
 				else if(dynamic_cast<ClassDeclaration*>(child) != nullptr) {
@@ -285,6 +289,7 @@ public:
 					type = name; // exception, see ppt
 					add_symbol(new classRecord(name, type));
 					enter_scope(name);
+					add_symbol(new variableRecord("this", type)); // this hardcoded
 					populate_ST(child);
 					exit_scope();
 				}
@@ -296,11 +301,29 @@ public:
 					populate_ST(child);
 					exit_scope();
 				}
+				
+				else if (dynamic_cast<Parameter*>(child) != nullptr) {
+					// can contain variables
+					type = child->children[0]->type;
+					name =  child->children[1]->value;
+					add_symbol(new variableRecord(name, type));
+					populate_ST(child);
+				}
+				else if (dynamic_cast<ParameterList*>(child) != nullptr) {
+					// can contain variables
+					type = child->children[0]->type;
+					name =  child->children[1]->value;
+					add_symbol(new variableRecord(name, type));
+					populate_ST(child);
+
+				}
 				else if(dynamic_cast<Variable*>(child) != nullptr) {
 					name =  child->children[1]->value;
 					type = child->children[0]->type;
 					add_symbol(new variableRecord(name, type));
-					// populate_ST(child);
+				}
+				else if(dynamic_cast<ClassDeclarationMult*>(child) != nullptr) {
+					populate_ST(child);
 				}
 				else if(dynamic_cast<MethodDeclarations*>(child) != nullptr) {
 					// can contain methods

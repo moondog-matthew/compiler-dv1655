@@ -35,7 +35,7 @@ int main(int argc, char **argv)
     // using the constructor that fills the symbol table
     SymbolTable ST(root);
     // ST.populate_ST(root);
-    ST.reset_ST();
+    // ST.reset_ST();
     ST.print_ST();
 
   }
