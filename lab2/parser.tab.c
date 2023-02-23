@@ -1005,8 +1005,8 @@ namespace yy {
 #line 144 "parser.y"
                                         {
                       yylhs.value.as < Node * > () = new MethodVariable("MethodVariable", "", yylineno);
-                      yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());
-                      yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());
+                      yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ()); // methodbody
+                      yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ()); // variable
             }
 #line 1012 "parser.tab.c"
     break;
@@ -1015,8 +1015,8 @@ namespace yy {
 #line 149 "parser.y"
                                    {
                       yylhs.value.as < Node * > () = new MethodStmt("MethodStatement", "", yylineno);
-                      yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());
-                      yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());
+                      yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ()); // method body
+                      yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ()); // statement
             }
 #line 1022 "parser.tab.c"
     break;
@@ -1041,8 +1041,8 @@ namespace yy {
 #line 164 "parser.y"
                                              {
                       yylhs.value.as < Node * > () = new VariableList("Variables", "", yylineno);
-                      yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ());
-                      yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ());
+                      yylhs.value.as < Node * > ()->children.push_back(yystack_[1].value.as < Node * > ()); // recursion
+                      yylhs.value.as < Node * > ()->children.push_back(yystack_[0].value.as < Node * > ()); // variable
             }
 #line 1048 "parser.tab.c"
     break;

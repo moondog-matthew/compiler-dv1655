@@ -276,29 +276,52 @@ public:
 					name =  child->children[0]->value;
 					type = name;
 					add_symbol(new classRecord(name, type));
-					// enter_scope(name);
+					enter_scope(name);
+					populate_ST(child);
+					exit_scope();
 				}
 				else if(dynamic_cast<ClassDeclaration*>(child) != nullptr) {
 					name =  child->children[0]->value;
 					type = name; // exception, see ppt
 					add_symbol(new classRecord(name, type));
-					// enter_scope(name);
+					enter_scope(name);
+					populate_ST(child);
+					exit_scope();
 				}
 				else if(dynamic_cast<Method*>(child) != nullptr) {
 					name =  child->children[1]->value;
 					type = child->children[0]->type;
 					add_symbol(new methodRecord(name, type));
-					// enter_scope(name);
+					enter_scope(name);
+					populate_ST(child);
+					exit_scope();
 				}
 				else if(dynamic_cast<Variable*>(child) != nullptr) {
 					name =  child->children[1]->value;
 					type = child->children[0]->type;
 					add_symbol(new variableRecord(name, type));
-					// enter_scope(name);
+					// populate_ST(child);
 				}
-				
-				populate_ST(child);
-				
+				else if(dynamic_cast<MethodDeclarations*>(child) != nullptr) {
+					// can contain methods
+					populate_ST(child);
+				}
+				else if(dynamic_cast<MethodVariable*>(child) != nullptr) {
+					// can contain variables
+					populate_ST(child);
+				}
+				else if(dynamic_cast<MethodStmt*>(child) != nullptr) {
+					// can contain variables
+					populate_ST(child);
+				}
+				else if(dynamic_cast<MethodVariable*>(child) != nullptr) {
+					// can contain variables
+					populate_ST(child);
+				}
+				else if(dynamic_cast<VariableList*>(child) != nullptr) {
+					// can contain variables
+					populate_ST(child);
+				}
 			}
 			
 		}

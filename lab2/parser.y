@@ -143,13 +143,13 @@ methodbody:
             | statement {$$ = $1;}
             | methodbody vardeclaration {
                       $$ = new MethodVariable("MethodVariable", "", yylineno);
-                      $$->children.push_back($1);
-                      $$->children.push_back($2);
+                      $$->children.push_back($1); // methodbody
+                      $$->children.push_back($2); // variable
             }
             | methodbody statement {
                       $$ = new MethodStmt("MethodStatement", "", yylineno);
-                      $$->children.push_back($1);
-                      $$->children.push_back($2);
+                      $$->children.push_back($1); // method body
+                      $$->children.push_back($2); // statement
             }
             ;
 
@@ -163,8 +163,8 @@ vardeclarations:
             vardeclaration {$$ = $1;}
             | vardeclarations vardeclaration {
                       $$ = new VariableList("Variables", "", yylineno);
-                      $$->children.push_back($1);
-                      $$->children.push_back($2);
+                      $$->children.push_back($1); // recursion
+                      $$->children.push_back($2); // variable
             }
             ;
 
