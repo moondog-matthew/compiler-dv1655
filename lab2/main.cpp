@@ -33,9 +33,11 @@ int main(int argc, char **argv)
     root->generate_tree();
 
     // using the constructor that fills the symbol table
-    SymbolTable ST;
-    ST.populate_ST(root);
+    SymbolTable ST(root);
+    // ST.populate_ST(root);
+    ST.reset_ST();
     ST.print_ST();
+
   }
 
   return 0;
