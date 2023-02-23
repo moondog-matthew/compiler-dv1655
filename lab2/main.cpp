@@ -31,7 +31,6 @@ int main(int argc, char **argv)
     // printf("\nPrint Tree:  \n");
     // root->print_tree();
     root->generate_tree();
-
     // using the constructor that fills the symbol table
     SymbolTable ST(root);
     // ST.populate_ST(root);
