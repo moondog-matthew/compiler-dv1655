@@ -64,7 +64,7 @@ public:
 	
 	virtual void execute(Node* node) {}; // make pure virtual later
 	
-	string report_semantic_error()  {
+	virtual string report_semantic_error()  {
 		return type + " " + value;
 	}
 };
@@ -76,14 +76,18 @@ class IntVal : public Node {
 public:
 	IntVal(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~IntVal() = default;
-	// virtual string report_semantic_error() override {}
+	virtual string report_semantic_error() override {
+		return "IntVal  TEST";
+	}
 };
 
 class Identifier : public Node {
 public:
 	Identifier(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~Identifier() = default;
-	// virtual string report_semantic_error() override {}
+	virtual string report_semantic_error() override {
+		return "Identifier     TEST";
+	}
 };
 
 class PlusOP : public Node {
