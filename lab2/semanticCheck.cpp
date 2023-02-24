@@ -25,9 +25,9 @@ void SemanticAnalysis::semantic_check(Node* node) {
     // error = node->report_semantic_error(ST->get_current_scope());
     if(dynamic_cast<MainClassDeclaration*>(node) != nullptr) {
         ST->enter_scope();
-        variableLookup("tst");
-        if (true) {
-
+        Record* res = ST->lookup_symbol("tst");
+        if (res == nullptr) {
+            errors.push_back("@error at line" + to_string(node->lineno) + "Semantic Error: Undefined variable " + "VARNAME");
         }
     }
     else if(dynamic_cast<ClassDeclaration*>(node) != nullptr) {
@@ -47,5 +47,8 @@ void SemanticAnalysis::semantic_check(Node* node) {
 
 
 bool SemanticAnalysis::variableLookup(string name) {
-
+    if (ST->lookup_symbol(name)) {
+        return true;
+    }
+    return false;
 }

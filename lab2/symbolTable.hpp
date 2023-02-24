@@ -87,8 +87,7 @@ public:
     // void enter_scope(string scopename);
     void exit_scope();
     void add_symbol(Record* record);
-    bool lookup_symbol(string recordName);
-	Record* get_symbol(string recordName);
+    Record* lookup_symbol(string recordName);
     void reset_ST();
 	void print_ST();
 	void populate_ST(Node* node);
