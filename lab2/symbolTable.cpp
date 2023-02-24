@@ -240,6 +240,13 @@ public:
 		reset_ST();
 	}; // write this later, deallocate all the nodes
 
+	Scope* get_root_scope() const {
+		return this->root;
+	}
+	Scope* get_current_scope() const {
+		return this->current;
+	}
+
     void enter_scope(string scopename = "") {
 		/* start/push a new nested scope */
 		current = current->nextScope(scopename);
@@ -268,7 +275,7 @@ public:
 	}; 
     
 	void deallocate_ST() {
-		/* Deallocate the ST tree*/
+		/* Deallocate the ST tree. Used in the destructor*/
 		root->deallocate();
 	}
 
@@ -279,7 +286,7 @@ public:
 
 	void populate_ST(Node* node) {
 		/*
-			Populate the ST by performing a single left-to-right traversal of the AST
+			Populate the ST by performing a single left-to-right traversal of the AST. 
 		*/
 		string name;
 		string type;
@@ -362,12 +369,5 @@ public:
 			}
 			
 		}
-	};  
-
-	Scope* get_root_scope() {
-		return this->root;
-	}
-	Scope* get_current_scope() {
-		return this->current;
-	}
+	}  
 };

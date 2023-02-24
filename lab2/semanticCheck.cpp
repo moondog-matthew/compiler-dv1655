@@ -3,13 +3,17 @@
 
 class SemanticAnalysis {
 private:
-    Node* AST;
+    Node* AST_root;
     SymbolTable* ST; 
     vector<string> errors;
 public:
     SemanticAnalysis(Node* ast, SymbolTable* st) {
-        this->AST = ast;
+        this->AST_root = ast;
         this->ST = st;
+
+        this->ST->reset_ST();
+        // this->ST->print_ST();
+
     }
 
     void print_errors() {
@@ -19,7 +23,7 @@ public:
     }
 
     void semantic_check() {
-        int sz = AST->children.size();
+        int sz = AST_root->children.size();
         for (int i = 0; i < sz; ++i) {
 
         }
