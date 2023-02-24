@@ -8,7 +8,6 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-
 using namespace std;
 
 
@@ -65,7 +64,8 @@ public:
 	virtual void execute(Node* node) {}; // make pure virtual later
 	
 	virtual string report_semantic_error()  {
-		return type + " " + value + "\t\t IMPLEMENT";
+		
+		return type + " " + value + " "+ to_string(lineno) + " " + "" +"\t\t IMPLEMENT";
 	}
 };
 

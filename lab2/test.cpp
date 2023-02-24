@@ -1,4 +1,5 @@
-#include "symbolTable.cpp"
+#include "symbolTable.hpp"
+#include "semanticCheck.hpp"
 #include <typeinfo>
 
 struct Base {}; // non-polymorphic
