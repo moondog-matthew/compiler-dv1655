@@ -25,9 +25,10 @@ void SemanticAnalysis::semantic_check(Node* node) {
     // error = node->report_semantic_error(ST->get_current_scope());
     if(dynamic_cast<MainClassDeclaration*>(node) != nullptr) {
         ST->enter_scope();
-        Record* res = ST->lookup_symbol("tst");
+        string name = "tst";
+        Record* res = ST->lookup_symbol(name);
         if (res == nullptr) {
-            errors.push_back("@error at line" + to_string(node->lineno) + "Semantic Error: Undefined variable " + "VARNAME");
+            errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Undefined variable " + name);
         }
     }
     else if(dynamic_cast<ClassDeclaration*>(node) != nullptr) {
@@ -37,10 +38,10 @@ void SemanticAnalysis::semantic_check(Node* node) {
         ST->enter_scope();
     }
     
-    error = node->report_semantic_error();
+    // error = node->report_semantic_error();
     // cout << error << endl;
     if (error != "") {
-        this->errors.push_back(error);
+        // this->errors.push_back(error);
     }
     // type checking, and scope adding
 }

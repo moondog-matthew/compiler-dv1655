@@ -100,7 +100,7 @@ int main() {
 
     // ST.get_current_scope()->printScope();
     ST.print_ST();
-    if(ST.lookup_symbol("var3") != nullptr) {
+    if(ST.lookup_symbol("var31") != nullptr) {
         cout << "Works" << endl;
     }
 
