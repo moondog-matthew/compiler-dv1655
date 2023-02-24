@@ -65,7 +65,7 @@ public:
 	virtual void execute(Node* node) {}; // make pure virtual later
 	
 	virtual string report_semantic_error()  {
-		return type + " " + value;
+		return type + " " + value + "\t\t IMPLEMENT";
 	}
 };
 
@@ -86,7 +86,11 @@ public:
 	Identifier(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~Identifier() = default;
 	virtual string report_semantic_error() override {
-		return "Identifier     TEST";
+		if (1 == 1) {
+			return "Identifer  TEST";
+		}
+
+		return "";
 	}
 };
 

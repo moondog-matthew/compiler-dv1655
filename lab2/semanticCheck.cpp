@@ -31,7 +31,9 @@ public:
         }
         error = node->report_semantic_error();
         // cout << error << endl;
-        this->errors.push_back(error);
+        if (error != "") {
+            this->errors.push_back(error);
+        }
         // type checking, and scope adding
     }
 };
