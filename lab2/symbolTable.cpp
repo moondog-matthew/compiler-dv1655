@@ -101,7 +101,19 @@ public:
 	Scope(Scope * parent, string scopename) : parentScope(parent), scopename(scopename) {}
 
 	~Scope() {
-		reset();
+		deallocate();
+	}
+	void deallocate() {
+		int sz = children.size();
+		for (auto const& child : children) {
+			child->deallocate();
+			delete child;
+		}
+		children.clear();
+		for (auto const& record : inScopeRecords) {
+			delete record;
+		}
+		inScopeRecords.clear();
 	}
 
 	Record* lookup(string name)	{
@@ -132,7 +144,7 @@ public:
 		inScopeRecords.push_back(record);
 	}
 
-	Scope* nextScope(string scopename) {
+	Scope* nextScope(string scopename = "") {
 		Scope* nextScope;
 		int sz = children.size();
 		if (next == sz) {
@@ -145,19 +157,6 @@ public:
 	
 		this->next++;
 		return nextScope;
-	}
-
-	void reset() {
-		int sz = children.size();
-		for (auto const& child : children) {
-			child->reset();
-			delete child;
-		}
-		children.clear();
-		for (auto const& record : inScopeRecords) {
-			delete record;
-		}
-		inScopeRecords.clear();
 	}
 
 	void printScope(int depth=0) {
@@ -201,7 +200,16 @@ public:
 		  (*i)->generate_tree_content(count, outStream);
 		  *outStream << "n" << id << " -> n" << (*i)->id << endl;
 	  	}
-		
+	}
+
+	void reset() {
+		this->reset_next_counter();
+		for (auto const& child : children) {
+			child->reset();
+		}
+	}
+	void reset_next_counter() {
+		this->next = 0;
 	}
 };
 
@@ -232,7 +240,7 @@ public:
 		reset_ST();
 	}; // write this later, deallocate all the nodes
 
-    void enter_scope(string scopename) {
+    void enter_scope(string scopename = "") {
 		/* start/push a new nested scope */
 		current = current->nextScope(scopename);
 	}; 
@@ -252,12 +260,18 @@ public:
 
     void reset_ST() {
 		/* 
-			Reset the symbol table.
+			Reset the symbol table. Used to traverse to go to root again and reset the next counter.
 			- Preparation for new traversal.
 		*/
-		root->reset();
+		this->current = this->root;
+		this->root->reset();
 	}; 
     
+	void deallocate_ST() {
+		/* Deallocate the ST tree*/
+		root->deallocate();
+	}
+
 	void print_ST() { 
         root->printScope();
 		root->generate_tree();
@@ -350,4 +364,10 @@ public:
 		}
 	};  
 
+	Scope* get_root_scope() {
+		return this->root;
+	}
+	Scope* get_current_scope() {
+		return this->current;
+	}
 };

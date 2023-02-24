@@ -1,6 +1,6 @@
 #include<iostream>
 #include "parser.tab.h"
-#include "symbolTable.cpp"
+#include "semanticCheck.cpp"
 
 extern Node* root;
 extern FILE* yyin;
@@ -32,11 +32,13 @@ int main(int argc, char **argv)
     // root->print_tree();
     root->generate_tree();
     // using the constructor that fills the symbol table
-    SymbolTable ST(root);
+    SymbolTable* ST = new SymbolTable(root);
     // ST.populate_ST(root);
     // ST.reset_ST();
-    ST.print_ST();
+    ST->print_ST();
 
+    SemanticAnalysis(root, ST);
+    delete ST;
   }
 
   return 0;

@@ -89,7 +89,14 @@ int main() {
     // if (recLookup != nullptr) {
     //     cout << recLookup->printRecord() << endl;
     // }
-    // ST.reset_ST();
-    ST.print_ST();
+    ST.reset_ST();
+    ST.enter_scope();
+    ST.enter_scope();
+    ST.exit_scope();
+    ST.exit_scope();
+    ST.enter_scope();
+    ST.enter_scope();
+    ST.get_current_scope()->printScope();
+    // ST.print_ST();
 
 }

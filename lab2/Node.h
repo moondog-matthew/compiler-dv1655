@@ -62,7 +62,8 @@ public:
 	
 	// virtual void semanticCheck() = 0; // Pure virtual, needs to be overwritten
 	
-	virtual void execute(Node* node) {}; // make pure virtual later 
+	virtual void execute(Node* node) {}; // make pure virtual later
+	virtual string report_semantic_error()  {}
 };
 
 /*
@@ -71,15 +72,17 @@ public:
 class IntVal : public Node {
 public:
 	IntVal(string t, string v, int l) { type = t; value = v; lineno = l;}
-	
 	virtual ~IntVal() = default;
+	virtual string report_semantic_error() override {
+		
+	}
 };
 
 class Identifier : public Node {
 public:
 	Identifier(string t, string v, int l) { type = t; value = v; lineno = l;}
-	
 	virtual ~Identifier() = default;
+	virtual string report_semantic_error() override {}
 };
 
 class PlusOP : public Node {
