@@ -44,11 +44,3 @@ void SemanticAnalysis::semantic_check(Node* node) {
     }
     // type checking, and scope adding
 }
-
-
-bool SemanticAnalysis::variableLookup(string name) {
-    if (ST->lookup_symbol(name)) {
-        return true;
-    }
-    return false;
-}
