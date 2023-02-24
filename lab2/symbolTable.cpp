@@ -90,6 +90,19 @@ public:
 */
 
 class Scope {
+private:
+	void deallocate() {
+		int sz = children.size();
+		for (auto const& child : children) {
+			child->deallocate();
+			delete child;
+		}
+		children.clear();
+		for (auto const& record : inScopeRecords) {
+			delete record;
+		}
+		inScopeRecords.clear();
+	}
 public:
 	int next = 0;
 	int id; // for generate tree
@@ -102,18 +115,6 @@ public:
 
 	~Scope() {
 		deallocate();
-	}
-	void deallocate() {
-		int sz = children.size();
-		for (auto const& child : children) {
-			child->deallocate();
-			delete child;
-		}
-		children.clear();
-		for (auto const& record : inScopeRecords) {
-			delete record;
-		}
-		inScopeRecords.clear();
 	}
 
 	Record* lookup(string name)	{
@@ -222,6 +223,11 @@ private:
 
 	Scope* root;
 	Scope* current;
+	
+	void deallocate_ST() {
+		/* Deallocate the ST tree. Used in the destructor*/
+		delete root;
+	}
 
 public:
     // should the ST get populated in the constructor? If call populate_ST from here
@@ -237,7 +243,7 @@ public:
 	}
 
     ~SymbolTable() {
-		reset_ST();
+		// deallocate_ST();
 	}; // write this later, deallocate all the nodes
 
 	Scope* get_root_scope() const {
@@ -274,10 +280,6 @@ public:
 		this->root->reset();
 	}; 
     
-	void deallocate_ST() {
-		/* Deallocate the ST tree. Used in the destructor*/
-		root->deallocate();
-	}
 
 	void print_ST() { 
         root->printScope();
