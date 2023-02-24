@@ -219,9 +219,17 @@ void SymbolTable::add_symbol(Record* record) {
 	current->addRecord(record);
 }; 
 
-Record* SymbolTable::lookup_symbol(string recordName) {
+Record* SymbolTable::get_symbol(string recordName) {
 	/*search scope for record. return nullptr if not found and record if found*/
 	return current->lookup(recordName);
+}; 
+
+bool SymbolTable::lookup_symbol(string recordName) {
+	/*search scope for record. return nullptr if not found and record if found*/
+	if (current->lookup(recordName) != nullptr) {
+		return true;
+	}
+	return false;
 }; 
 
 void SymbolTable::reset_ST() {

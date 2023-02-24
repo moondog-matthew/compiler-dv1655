@@ -97,7 +97,11 @@ int main() {
     ST.exit_scope();
     ST.enter_scope();
     ST.enter_scope();
-    ST.get_current_scope()->printScope();
-    // ST.print_ST();
+
+    // ST.get_current_scope()->printScope();
+    ST.print_ST();
+    if(ST.lookup_symbol("var3")) {
+        cout << "Works" << endl;
+    }
 
 }

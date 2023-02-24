@@ -11,6 +11,9 @@ private:
     Node* AST_root;
     SymbolTable* ST; 
     vector<string> errors;
+
+    bool variableLookup(string name);
+
 public:
     SemanticAnalysis(Node* ast, SymbolTable* st);
     void print_errors();

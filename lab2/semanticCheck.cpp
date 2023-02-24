@@ -23,10 +23,29 @@ void SemanticAnalysis::semantic_check(Node* node) {
         semantic_check(child);
     }
     // error = node->report_semantic_error(ST->get_current_scope());
+    if(dynamic_cast<MainClassDeclaration*>(node) != nullptr) {
+        ST->enter_scope();
+        variableLookup("tst");
+        if (true) {
+
+        }
+    }
+    else if(dynamic_cast<ClassDeclaration*>(node) != nullptr) {
+        ST->enter_scope();
+    }
+    else if(dynamic_cast<Method*>(node) != nullptr) {
+        ST->enter_scope();
+    }
+    
     error = node->report_semantic_error();
     // cout << error << endl;
     if (error != "") {
         this->errors.push_back(error);
     }
     // type checking, and scope adding
+}
+
+
+bool SemanticAnalysis::variableLookup(string name) {
+
 }
