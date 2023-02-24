@@ -4,6 +4,7 @@
 
 #include "Node.h"
 #include "symbolTable.hpp"
+using namespace std;
 
 class SemanticAnalysis {
 private:

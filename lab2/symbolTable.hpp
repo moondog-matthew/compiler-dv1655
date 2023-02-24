@@ -3,6 +3,7 @@
 
 #include "Node.h"
 #include <map>
+using namespace std;
 
 class Record {
 public:
