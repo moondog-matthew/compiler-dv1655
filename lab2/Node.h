@@ -98,13 +98,6 @@ public:
 	PlusOP(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~PlusOP() = default;
 	virtual string report_semantic_error() const override {
-		// if (dynamic_cast<IntVal*>(children[0]) != nullptr) {
-		// 	return "@error at line: " + to_string(lineno) + ". Semantic Error: Invalid PlusOP, LHS is not of type integer." ;
-		// }
-		// else if (dynamic_cast<IntVal*>(children[1]) != nullptr) {
-		// 	return "@error at line: " + to_string(lineno) + ". Semantic Error: Invalid PlusOP, RHS is not of type integer." ;
-		// }
-		cout << "Enters" << endl;
 		return "";
 	}
 };

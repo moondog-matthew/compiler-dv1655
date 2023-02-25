@@ -56,12 +56,26 @@ void SemanticAnalysis::semantic_check(Node* node) {
             errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Undefined variable " + var);
         }
     }
-    
-    error =  node->report_semantic_error();
+
+    else if (dynamic_cast<PlusOP*>(node) != nullptr) {
+        if (node->children[0]->type == "Identifier") {
+			if (ST->lookup_symbol(node->children[0]->value)->type != "int") {
+                errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Invalid PlusOP, LHS is not of type integer.") ;
+            }
+		}
+        
+		if (node->children[1]->type == "Identifier") {
+			if (ST->lookup_symbol(node->children[1]->value)->type != "int") {
+                errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Invalid PlusOP, RHS is not of type integer.") ;
+            }
+		}
+    }
+
+    // error =  node->report_semantic_error();
     
     // cout << error << endl;
-    if (error != "") {
-        this->errors.push_back(error);
-    }
+    // if (error != "") {
+    //     this->errors.push_back(error);
+    // }
     // type checking, and scope adding
 }
