@@ -248,19 +248,21 @@ void SymbolTable::populate_ST(Node* node) {
 		for(auto const& child : node->children) {
 			// cout << node->type << " " << node->value << endl;
 			if(dynamic_cast<MainClassDeclaration*>(child) != nullptr) {
-				name =  child->children[0]->value;
+				MainClassDeclaration* cl = dynamic_cast<MainClassDeclaration*>(child);
+				name =  cl->getIdenName();
 				type = name;
 				add_symbol(new classRecord(name, type));
 				enter_scope(name);
 				add_symbol(new variableRecord("this", type)); // this
 				add_symbol(new methodRecord("main", "void")); // hardcoded  due to limited grammar
 				enter_scope("main");
-				add_symbol(new variableRecord(child->children[1]->value, "String[]")); // hardcoded due to limited grammar
+				add_symbol(new variableRecord(cl->getIdenPar(), "String[]")); // hardcoded due to limited grammar
 				exit_scope();
 				exit_scope();
 			}
 			else if(dynamic_cast<ClassDeclaration*>(child) != nullptr) {
-				name =  child->children[0]->value;
+				ClassDeclaration* cl = dynamic_cast<ClassDeclaration*>(child);
+				name =  cl->getIden();
 				type = name; // exception, see ppt
 				add_symbol(new classRecord(name, type));
 				enter_scope(name);

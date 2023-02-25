@@ -95,8 +95,8 @@ classdeclarations:
             classdeclaration {$$=$1;}
             | classdeclarations classdeclaration {
                       $$ = new ClassDeclarationMult("ClassDeclarations", "", yylineno);
-                      $$->children.push_back($1);
-                      $$->children.push_back($2);
+                      $$->children.push_back($1); // recursion
+                      $$->children.push_back($2); // class declaration
             }
             ;
 

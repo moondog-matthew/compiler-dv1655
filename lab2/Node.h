@@ -414,6 +414,10 @@ class ClassDeclaration : public Node {
 public:
 	ClassDeclaration(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~ClassDeclaration() = default;
+	string getIden() {
+		Identifier* identifier = dynamic_cast<Identifier*>(children[0]);
+		return identifier->getVal();
+	}
 };
 
 class ClassDeclarationMult : public Node {
@@ -430,6 +434,14 @@ class MainClassDeclaration : public Node {
 public:
 	MainClassDeclaration(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~MainClassDeclaration() = default;
+	string getIdenName() {
+		Identifier* identifier = dynamic_cast<Identifier*>(children[0]);
+		return identifier->getVal();
+	}
+	string getIdenPar() {
+		Identifier* identifier = dynamic_cast<Identifier*>(children[1]);
+		return identifier->getVal();
+	}
 };
 
 class GoalNode : public Node {
