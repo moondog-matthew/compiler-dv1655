@@ -17,6 +17,13 @@ void SemanticAnalysis::print_errors() {
     }
 }
 
+bool SemanticAnalysis::contains_error() const {
+    if (errors.size() > 0) {
+        return true;
+    }
+    return false;
+}
+
 void SemanticAnalysis::semantic_check(Node* node) {
     string error;
     for (auto const& child : node->children) {
@@ -50,11 +57,10 @@ void SemanticAnalysis::semantic_check(Node* node) {
         }
     }
 
-
-    // error = node->report_semantic_error();
+    error = node->report_semantic_error();
     // cout << error << endl;
-    // if (error != "") {
-    //     // this->errors.push_back(error);
-    // }
+    if (error != "") {
+        this->errors.push_back(error);
+    }
     // type checking, and scope adding
 }

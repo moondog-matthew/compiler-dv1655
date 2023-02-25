@@ -15,7 +15,9 @@ private:
 public:
     SemanticAnalysis(Node* ast, SymbolTable* st);
     void print_errors();
+    bool contains_error() const;
     void semantic_check(Node* node);
+    
 };
 
 #endif // SEMANTIC_H

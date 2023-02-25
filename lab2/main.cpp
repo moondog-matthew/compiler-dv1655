@@ -38,11 +38,15 @@ int main(int argc, char **argv)
     // ST.populate_ST(root);
     // ST->reset_ST();
     // root->print_tree();
-    SemanticAnalysis(root, ST);
+    SemanticAnalysis* SA = new SemanticAnalysis(root, ST);
+    if(SA->contains_error()) {
+      // cout << "Contains Error" << endl;
+    }
     
     // ST->print_ST();
     
     delete ST;
+    delete SA;
   }
 
   return 0;

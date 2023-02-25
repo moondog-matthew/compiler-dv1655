@@ -361,7 +361,6 @@ exprlist: expression {
                   }
                   ;
 
-// Factor like an integer
 factor: INT {
                       $$ = new IntVal("Int", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
             | LP expression RP { 
