@@ -269,8 +269,9 @@ void SymbolTable::populate_ST(Node* node) {
 				exit_scope();
 			}
 			else if(dynamic_cast<Method*>(child) != nullptr) {
-				name =  child->children[1]->value;
-				type = child->children[0]->type;
+				Method* method = dynamic_cast<Method*>(child);
+				name =  method->getIden();
+				type = method->getType();
 				add_symbol(new methodRecord(name, type));
 				enter_scope(name);
 				populate_ST(child);
@@ -279,22 +280,25 @@ void SymbolTable::populate_ST(Node* node) {
 			
 			else if (dynamic_cast<Parameter*>(child) != nullptr) {
 				// can contain variables
-				type = child->children[0]->type;
-				name =  child->children[1]->value;
+				Parameter* par = dynamic_cast<Parameter*>(child);
+				name =  par->getIden();
+				type = par->getType();
 				add_symbol(new variableRecord(name, type));
 				populate_ST(child);
 			}
 			else if (dynamic_cast<ParameterList*>(child) != nullptr) {
 				// can contain variables
-				type = child->children[0]->type;
-				name =  child->children[1]->value;
+				ParameterList* par = dynamic_cast<ParameterList*>(child);
+				name =  par->getIden();
+				type = par->getType();
 				add_symbol(new variableRecord(name, type));
 				populate_ST(child);
 
 			}
 			else if(dynamic_cast<Variable*>(child) != nullptr) {
-				name =  child->children[1]->value;
-				type = child->children[0]->type;
+				Variable* var = dynamic_cast<Variable*>(child);
+				name =  var->getIden();
+				type = var->getType();
 				add_symbol(new variableRecord(name, type));
 			}
 			else if(dynamic_cast<ClassDeclarationMult*>(child) != nullptr) {

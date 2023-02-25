@@ -79,6 +79,11 @@ public:
 	virtual string report_semantic_error() override {
 		return "IntVal  TEST";
 	}
+
+	string getVal() {
+		return value;
+	}
+
 };
 
 class Identifier : public Node {
@@ -89,8 +94,10 @@ public:
 		if (1 == 1) {
 			return "Identifer  TEST";
 		}
-
 		return "";
+	}
+	string getVal() {
+		return value;
 	}
 };
 
@@ -313,6 +320,14 @@ class Variable : public Node {
 public:
 	Variable(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~Variable() = default;
+
+	string getType() {
+		return children[0]->type;
+	}
+	string getIden() {
+		Identifier* identifier = dynamic_cast<Identifier*>(children[1]);
+		return identifier->getVal();
+	}
 };
 
 class VariableList : public Node {
@@ -344,6 +359,14 @@ class Method : public Node {
 public:
 	Method(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~Method() = default;
+	
+	string getType() {
+		return children[0]->type;
+	}
+	string getIden() {
+		Identifier* identifier = dynamic_cast<Identifier*>(children[1]);
+		return identifier->getVal();
+	}
 };
 
 class MethodDeclarations : public Node {
@@ -356,12 +379,28 @@ class Parameter : public Node {
 public:
 	Parameter(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~Parameter() = default;
+	
+	string getType() {
+		return children[0]->type;
+	}
+	string getIden() {
+		Identifier* identifier = dynamic_cast<Identifier*>(children[1]);
+		return identifier->getVal();
+	}
 };
 
 class ParameterList : public Node {
 public:
 	ParameterList(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~ParameterList() = default;
+	
+	string getType() {
+		return children[0]->type;
+	}
+	string getIden() {
+		Identifier* identifier = dynamic_cast<Identifier*>(children[1]);
+		return identifier->getVal();
+	}
 };
 
 

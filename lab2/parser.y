@@ -253,28 +253,23 @@ expression: expression PLUSOP expression {
                             $$ = new PlusOP("AddExpression", "", yylineno);
                             $$->children.push_back($1);
                             $$->children.push_back($3);
-                            /* printf("r1 "); */
                           }
             | expression MINUSOP expression {
                             $$ = new MinusOP("SubExpression", "", yylineno);
                             $$->children.push_back($1);
                             $$->children.push_back($3);
-                            /* printf("r2 "); */
                           }
             | expression MULTOP expression {
                             $$ = new MultOP("MultExpression", "", yylineno);
                             $$->children.push_back($1);
                             $$->children.push_back($3);
-                            /* printf("r3 "); */
                           }
             | expression DIVOP expression {
                             $$ = new DivOP("DivExpression", "", yylineno);
                             $$->children.push_back($1);
                             $$->children.push_back($3);
-                            /* printf("r3 "); */
                           }
             | expression ASSIGN expression {
-                            // VARFÖR behövs denna i språket? Vad gör den?
                             $$ = new AssignExpr("Assigning", "", yylineno);
                             $$->children.push_back($1);
                             $$->children.push_back($3);                            

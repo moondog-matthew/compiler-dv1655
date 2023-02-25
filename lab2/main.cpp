@@ -37,7 +37,7 @@ int main(int argc, char **argv)
     ST = new SymbolTable(root);
     // ST.populate_ST(root);
     // ST.reset_ST();
-    // ST->print_ST();
+    ST->print_ST();
 
     SemanticAnalysis(root, ST);
     delete ST;
