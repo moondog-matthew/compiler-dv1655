@@ -344,7 +344,7 @@ expression: expression PLUSOP expression {
             ;
 
 experiment: expression LHB expression RHB { //??
-                      $$ = new Node("Index", "", yylineno);
+                      $$ = new Index("Index", "", yylineno);
                       $$->children.push_back($1);  // what to take index of
                       $$->children.push_back($3);  // index value
                   }

@@ -56,8 +56,9 @@ void SemanticAnalysis::semantic_check(Node* node) {
             errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Undefined variable " + var);
         }
     }
-
-    error = node->report_semantic_error();
+    
+    error =  node->report_semantic_error();
+    
     // cout << error << endl;
     if (error != "") {
         this->errors.push_back(error);
