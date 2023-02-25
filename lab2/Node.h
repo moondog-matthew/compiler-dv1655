@@ -76,9 +76,9 @@ class IntVal : public Node {
 public:
 	IntVal(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~IntVal() = default;
-	virtual string report_semantic_error() override {
-		return "IntVal  TEST";
-	}
+	// virtual string report_semantic_error() override {
+	// 	return "IntVal  TEST";
+	// }
 
 	string getVal() {
 		return value;
@@ -90,12 +90,12 @@ class Identifier : public Node {
 public:
 	Identifier(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~Identifier() = default;
-	virtual string report_semantic_error() override {
-		if (1 == 1) {
-			return "Identifer  TEST";
-		}
-		return "";
-	}
+	// virtual string report_semantic_error() override {
+	// 	if (1 == 1) {
+	// 		return "Identifer  TEST";
+	// 	}
+	// 	return "";
+	// }
 	string getVal() {
 		return value;
 	}
