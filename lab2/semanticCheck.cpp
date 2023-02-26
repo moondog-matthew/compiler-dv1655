@@ -26,7 +26,12 @@ bool SemanticAnalysis::contains_error() const {
 
 string SemanticAnalysis::semantic_check(Node* node) {
     string error;
-    if(dynamic_cast<MainClassDeclaration*>(node) != nullptr) {
+    if (dynamic_cast<GoalNode*>(node) != nullptr) {
+        string mainclass = semantic_check(node->children[0]);
+        string classdec= semantic_check(node->children[1]);
+
+    }
+    else if(dynamic_cast<MainClassDeclaration*>(node) != nullptr) {
         ST->enter_scope();
         ST->enter_scope();
         for (auto const& child : node->children) {
@@ -58,9 +63,9 @@ string SemanticAnalysis::semantic_check(Node* node) {
             string ret = semantic_check(child);
             ST->exit_scope();
         }
-        string ret_type = node->children.back()->type; // auto gets the arbitrary type
+        string ret_type = semantic_check(node->children.back()); 
         if (ret_type != type->getType()) {
-            errors.push_back("@error at line: " + to_string(node->lineno) + ". Type mismatch: Return value type (type"+ret_type +") and method type (type"+type->getType() +")is not alligning.");
+            errors.push_back("@error at line: " + to_string(node->lineno) + ". Type mismatch: Return value type (type: "+ret_type +") and method type (type: "+type->getType() +")is not alligning.");
         }
         return type->getType();
     }
@@ -109,7 +114,6 @@ string SemanticAnalysis::semantic_check(Node* node) {
         return "";
     }
     else if(dynamic_cast<PrintStmt*>(node) != nullptr) {
-
         return "";
     }
     else if(dynamic_cast<AssignStmt*>(node) != nullptr) {
@@ -217,10 +221,11 @@ string SemanticAnalysis::semantic_check(Node* node) {
     else if (dynamic_cast<Identifier*>(node) != nullptr) { // check for usage of non-declared variables
         Identifier* iden = dynamic_cast<Identifier*>(node);
         string var = iden->getVal();
-        if (ST->lookup_symbol(var) == nullptr) {
+        Record* idenRec = ST->lookup_symbol(var);
+        if (idenRec == nullptr) {
             errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Undefined variable " + var);
         }
-        return iden->type;
+        return idenRec->type;
     }
     else if (dynamic_cast<ThisOP*>(node) != nullptr) {
         Record* classrec = ST->lookup_symbol("this"); // refers to class

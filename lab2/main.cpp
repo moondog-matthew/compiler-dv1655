@@ -42,6 +42,7 @@ int main(int argc, char **argv)
     if(SA->contains_error()) {
       // cout << "Contains Error" << endl;
     }
+    ST->print_ST();
     
     // ST->print_ST();
     
