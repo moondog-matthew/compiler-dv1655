@@ -91,6 +91,15 @@ string SemanticAnalysis::semantic_check(Node* node) {
         }
         return "";
     }
+    else if (dynamic_cast<ArrayType*>(node) != nullptr) {
+        return "int[]";
+    }
+    else if (dynamic_cast<BoolType*>(node) != nullptr) {
+        return "bool";
+    }
+    else if (dynamic_cast<IntType*>(node) != nullptr) {
+        return "int";
+    }
     else if(dynamic_cast<WhileStmt*>(node) != nullptr) {
         string expr = semantic_check(node->children[0]);
         string stmt = semantic_check(node->children[1]);
