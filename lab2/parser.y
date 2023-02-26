@@ -142,12 +142,12 @@ methodbody:
             vardeclaration {$$ = $1;}
             | statement {$$ = $1;}
             | methodbody vardeclaration {
-                      $$ = new MethodVariable("MethodVariable", "", yylineno);
+                      $$ = new MethodBody("Method body", "", yylineno);
                       $$->children.push_back($1); // methodbody
                       $$->children.push_back($2); // variable
             }
             | methodbody statement {
-                      $$ = new MethodStmt("MethodStatement", "", yylineno);
+                      $$ = new MethodBody("Method body", "", yylineno);
                       $$->children.push_back($1); // method body
                       $$->children.push_back($2); // statement
             }
@@ -205,23 +205,23 @@ statement:  LCB RCB  {
             | stmt_if
             | WHILE LP expression RP statement {
               $$ = new WhileStmt("While", "", yylineno);
-              $$->children.push_back($3);
-              $$->children.push_back($5);
+              $$->children.push_back($3); // expression
+              $$->children.push_back($5); // statement
             }
             | PRINT LP expression RP SEMICOLON {
               $$ = new PrintStmt("Print", "", yylineno);
-              $$->children.push_back($3);
+              $$->children.push_back($3); // expresssion
             }
             | identifier ASSIGN expression SEMICOLON {
               $$ = new AssignStmt("Assign", "", yylineno);
-              $$->children.push_back($1);
-              $$->children.push_back($3);
+              $$->children.push_back($1); // identifier
+              $$->children.push_back($3); // expression
             } 
             | identifier LHB expression RHB ASSIGN expression SEMICOLON {
               $$ = new ArrayIndexAssign("indexAssign", "", yylineno);
-              $$->children.push_back($1);
-              $$->children.push_back($3);
-              $$->children.push_back($6);
+              $$->children.push_back($1); // identifier
+              $$->children.push_back($3); // expression
+              $$->children.push_back($6); // expression
             }
             ;
 
@@ -231,21 +231,21 @@ statements:
                 }
             | statements statement { 
               $$ = new Statements("Statements", "", yylineno);
-              $$->children.push_back($1);
-              $$->children.push_back($2);
+              $$->children.push_back($1); // recursion
+              $$->children.push_back($2); // statement
                 }
             ;
 
 stmt_if: IF LP expression RP statement %prec NO_ELSE { // To solve dangling else ambiguity
               $$ = new IfStmt("IF", "", yylineno);
-              $$->children.push_back($3);
-              $$->children.push_back($5);
+              $$->children.push_back($3); // expression
+              $$->children.push_back($5); // statement
             }
             | IF LP expression RP statement ELSE statement {
               $$ = new IfElseStmt("IfElse", "", yylineno);
-              $$->children.push_back($3);
-              $$->children.push_back($5);
-              $$->children.push_back($7);
+              $$->children.push_back($3); // expression
+              $$->children.push_back($5); // statement
+              $$->children.push_back($7); // statement
             };
 
 
@@ -270,7 +270,7 @@ expression: expression PLUSOP expression {
                             $$->children.push_back($3);
                           }
             | expression ASSIGN expression {
-                            $$ = new AssignExpr("Assigning", "", yylineno);
+                            $$ = new AssignExpr("Assign", "", yylineno);
                             $$->children.push_back($1);
                             $$->children.push_back($3);                            
                           }
@@ -309,11 +309,14 @@ expression: expression PLUSOP expression {
                           }
             | expression PERIOD identifier LP exprlist RP {  // recursive grammar, follows recursive rules
                               $$ = new MethCall("Method call", "", yylineno);
-                              // push back children
+                              $$->children.push_back($1); // expression
+                              $$->children.push_back($3); // identifier
+                              $$->children.push_back($5); // expression list
                           }
             | expression PERIOD identifier LP RP {  // for the empty case
                               $$ = new MethCall("Method call", "", yylineno);
-                              // push back children
+                              $$->children.push_back($1); // expression
+                              $$->children.push_back($3); // identifier
                           }
             | TRUE {
                   $$ = new TrueVal("True", "", yylineno);
@@ -325,33 +328,33 @@ expression: expression PLUSOP expression {
                   $$ = $1;
                 }
             | THIS  {
-                  $$ = new ThisOP("This", "", yylineno);
+                  $$ = new ThisOP("this", "", yylineno);
                 }
             | NEW INTTYPE LHB expression RHB {
-                      $$ = new IntArray("AllocateIntArray", "", yylineno);
+                      $$ = new IntArray("int[]", "", yylineno);
                       $$->children.push_back($4);  // Size of int array
                   }
             | NEW identifier LP RP {
-                      $$ = new IdenAlloc("AllocateIdentifier", "", yylineno);
+                      $$ = new IdenAlloc("new ID()", "", yylineno);
                       $$->children.push_back($2);  
                       // printf("NEW ident: %d\n", yylineno);
                   }
             | EXCLAMATION expression {
-                      $$ = new Negation("Negation", "", yylineno);
+                      $$ = new Negation("Negation", "", yylineno); // expression
                       $$->children.push_back($2); 
                   }
             | factor      {$$ = $1; /* printf("r4 ");*/}
             ;
 
 experiment: expression LHB expression RHB { //??
-                      $$ = new Index("Index", "", yylineno);
+                      $$ = new Index("index", "", yylineno);
                       $$->children.push_back($1);  // what to take index of
                       $$->children.push_back($3);  // index value
                   }
                   ;
 
 exprlist: expression {
-                      $$ = new Expression("Expression", "", yylineno);
+                      $$ = new Expression("(Expression)", "", yylineno);
                       $$->children.push_back($1);
                   }
             | exprlist COMMA expression {
@@ -362,7 +365,7 @@ exprlist: expression {
                   ;
 
 factor: INT {
-                      $$ = new IntVal("Int", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
+                      $$ = new IntVal("int", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
             | LP expression RP { 
                       $$ = $2; /* printf("r6 ");  simply return the expression */
                   }

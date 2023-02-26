@@ -160,6 +160,9 @@ class MethCall : public Node {
 public:
 	MethCall(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~MethCall() = default;
+	string getIden() {
+		return children[1]->value;
+	}
 };
 
 class Expression : public Node {
@@ -315,18 +318,11 @@ public:
 	virtual ~VariableList() = default;
 };
 
-class MethodVariable : public Node {
+class MethodBody : public Node {
 public:
-	MethodVariable(string t, string v, int l) { type = t; value = v; lineno = l;}
-	virtual ~MethodVariable() = default;
+	MethodBody(string t, string v, int l) { type = t; value = v; lineno = l;}
+	virtual ~MethodBody() = default;
 };
-
-class MethodStmt : public Node {
-public:
-	MethodStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
-	virtual ~MethodStmt() = default;
-};
-
 
 /*
 	Method Declarations

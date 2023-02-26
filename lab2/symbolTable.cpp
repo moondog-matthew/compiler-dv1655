@@ -311,15 +311,7 @@ void SymbolTable::populate_ST(Node* node) {
 				// can contain methods
 				populate_ST(child);
 			}
-			else if(dynamic_cast<MethodVariable*>(child) != nullptr) {
-				// can contain variables
-				populate_ST(child);
-			}
-			else if(dynamic_cast<MethodStmt*>(child) != nullptr) {
-				// can contain variables
-				populate_ST(child);
-			}
-			else if(dynamic_cast<MethodVariable*>(child) != nullptr) {
+			else if(dynamic_cast<MethodBody*>(child) != nullptr) {
 				// can contain variables
 				populate_ST(child);
 			}
