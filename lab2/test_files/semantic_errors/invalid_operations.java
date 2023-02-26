@@ -16,6 +16,8 @@ class classtest {
 
     public boolean semantically_incorrect_expressions() {
         i1 = i1 + b1;// @fail b1_: is of wrong type
+        i1 = i1 + 5; //OK
+        i1 = i1 + true; // NOT OK 
         i1 = i1 + ia1;// @fail ia1_: is of wrong type
         i1 = i1 + c1;// @fail c1_: is of wrong type
         i1 = b1 + b1;// @fail b1_: is of wrong type

@@ -78,7 +78,7 @@ classdeclaration: CLASS identifier LCB vardeclarations methoddeclarations RCB {
               | CLASS identifier LCB methoddeclarations RCB {
                       $$ = new ClassDeclaration("classDeclaration", "", yylineno);
                       $$->children.push_back($2); // identifier
-                      $$->children.push_back($4); // methoddeclaration
+                      $$->children.push_back($4); // methoddeclarations
               }
               | CLASS identifier LCB vardeclarations RCB {
                       $$ = new ClassDeclaration("classDeclaration", "", yylineno);

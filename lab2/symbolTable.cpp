@@ -1,4 +1,5 @@
 #include "symbolTable.hpp"
+#include "Node.h"
 
 /*
 	Records
