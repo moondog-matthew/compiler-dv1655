@@ -185,6 +185,7 @@ type: INTTYPE LHB RHB {
               }
       | identifier {
             $$ = new IdenType("classType", "", yylineno);
+            $$->children.push_back($1);
         };
 
 statement:  LCB RCB  { 

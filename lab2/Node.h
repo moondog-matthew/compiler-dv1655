@@ -310,6 +310,9 @@ public:
 		Identifier* identifier = dynamic_cast<Identifier*>(children[1]);
 		return identifier->getVal();
 	}
+	string getClassName() {
+		return children[0]->children[0]->value;
+	}
 };
 
 class VariableList : public Node {

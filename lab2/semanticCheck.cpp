@@ -7,7 +7,7 @@ SemanticAnalysis::SemanticAnalysis(Node* ast, SymbolTable* st) {
     this->ST->reset_ST();
     // this->ST->print_ST();
     semantic_check(AST_root);
-    print_errors();
+    // print_errors();
 
 }
 
@@ -83,7 +83,10 @@ string SemanticAnalysis::semantic_check(Node* node) {
     }
     else if(dynamic_cast<Variable*>(node) != nullptr) {
         Variable* typeNode = dynamic_cast<Variable*>(node);
-        return typeNode->getType();
+        if (typeNode->getType() != "classType") {
+            return typeNode->getType();
+        }
+        return typeNode->getClassName();
     }
     else if(dynamic_cast<VariableList*>(node) != nullptr) {
         for (auto const& child : node->children) {
@@ -112,7 +115,6 @@ string SemanticAnalysis::semantic_check(Node* node) {
     }
     else if (dynamic_cast<IdenType*>(node) != nullptr) {
         // lookup if class, otherwise error
-        cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Here" << endl;
         return "ClassType";
     }
     else if(dynamic_cast<WhileStmt*>(node) != nullptr) {
@@ -219,33 +221,35 @@ string SemanticAnalysis::semantic_check(Node* node) {
     }
     else if (dynamic_cast<MethCall*>(node) != nullptr) {
         MethCall* methnode= dynamic_cast<MethCall*>(node);
-        string expr;
-        string iden;
+        string method_type;
+        string class_name;
+        string method_name;
         string exprlist;
-        // Make calls later !! Check for semantic errors
-        expr = semantic_check(node->children[0]);
-        iden = semantic_check(node->children[1]);
-        
+        class_name = semantic_check(node->children[0]);
+        method_type = semantic_check(node->children[1]);
         if (node->children.size() == 3) {
             exprlist = semantic_check(node->children[2]);
         }
-
-        Record* reclookup = ST->lookup_symbol(expr); // classes have their name as types
+        
+        cout << "Class type: " << method_type << endl;
+        
+        Record* reclookup = ST->lookup_symbol(class_name); // classes have their name as types
         classRecord* classrec = dynamic_cast<classRecord*>(reclookup);
         if (reclookup == nullptr) { 
             errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Class method calls expression must be of type class.");
         }
         else {
-            methodRecord* methrec = classrec->lookupMethod(iden);
+            cout << "enters" << endl;
+            methodRecord* methrec = classrec->lookupMethod(method_name);
             if (methrec == nullptr) {
-                errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Undefined method: " + iden);
+                errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Undefined method: '" + method_name + "' in class: '" + class_name + "'.");
                 return "";
             }
             else {
+                cout << "enters2"<< endl;
                 return methrec->type;
             }
         }
-        
         return "";    
     }
     else if (dynamic_cast<TrueVal*>(node) != nullptr) {

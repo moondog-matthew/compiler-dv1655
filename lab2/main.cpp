@@ -46,8 +46,6 @@ int main(int argc, char **argv)
       // just don't continue?
       // cout << "Contains Error" << endl;
     }
-
-    // ST->print_ST();
     
     // ST->print_ST();
     

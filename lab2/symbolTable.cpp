@@ -125,8 +125,6 @@ Scope* Scope::nextScope(string scopename) {
 }
 
 void Scope::printScope(int depth) {
-
-	// cout << "Scope: " << depth << endl;
 	string indent = "";
 	for(int i=0; i < depth; ++i) { indent += "	"; }
 
@@ -247,7 +245,6 @@ void SymbolTable::populate_ST(Node* node, string parent_name) {
 	string type;
 	if (node != nullptr) {
 		for(auto const& child : node->children) {
-			// cout << node->type << " " << node->value << endl;
 			if(dynamic_cast<MainClassDeclaration*>(child) != nullptr) {
 				MainClassDeclaration* cl = dynamic_cast<MainClassDeclaration*>(child);
 				name =  cl->getIdenName();
@@ -309,6 +306,9 @@ void SymbolTable::populate_ST(Node* node, string parent_name) {
 				Variable* var = dynamic_cast<Variable*>(child);
 				name =  var->getIden();
 				type = var->getType();
+				if (type == "classType") {
+					type = var->getClassName();
+				}
 				add_symbol(new variableRecord(name, type));
 			}
 			else if(dynamic_cast<ClassDeclarationMult*>(child) != nullptr) {
