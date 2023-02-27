@@ -289,7 +289,6 @@ void SymbolTable::populate_ST(Node* node, string parent_name) {
 				populate_ST(child, name);
 				exit_scope();
 			}
-			
 			else if (dynamic_cast<Parameter*>(child) != nullptr) {
 				// can contain variables
 				Parameter* par = dynamic_cast<Parameter*>(child);

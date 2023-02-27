@@ -24,8 +24,6 @@ int main() {
 
     classRecord* Class1 = new classRecord("Class1", "string");
     // cout << Class1->printRecord() << endl;
-    // Class1->addMethod("meth1", meth1);
-    // Class1->addVariable("var1", var1);
 
     // cout << meth1->printRecord() << endl;
     // variableRecord* varLookup = Class1->lookupVariable("variable1");
@@ -65,6 +63,9 @@ int main() {
 
     ST.add_symbol(var1);
     ST.add_symbol(var2);
+    ST.add_symbol(Class1);
+    Class1->addMethod("meth1", meth1);
+    Class1->addVariable("var1", var1);
     ST.enter_scope("Scope1");
     ST.add_symbol(var3);
     ST.enter_scope("Scope2");
@@ -100,7 +101,11 @@ int main() {
 
     // ST.get_current_scope()->printScope();
     ST.print_ST();
-    if(ST.lookup_symbol("var31") != nullptr) {
-        cout << "Works" << endl;
+
+    Record* record = ST.lookup_symbol("Class1");
+    classRecord* classrec = dynamic_cast<classRecord*>(record);
+    if (classrec != nullptr) {
+        methodRecord* methrec = classrec->lookupMethod("meth1");
+        cout << "Successfully found meth1" << endl;
     }
 }
