@@ -57,15 +57,12 @@ string SemanticAnalysis::semantic_check(Node* node) {
         return "";
     }
     else if(dynamic_cast<Method*>(node) != nullptr) {
-        cout << "Enters method" << endl;
         Method* type = dynamic_cast<Method*>(node);
+        ST->enter_scope();
         for (auto const& child : node->children) {
-            ST->enter_scope();
             string ret = semantic_check(child);
-            ST->exit_scope();
         }
-        cout << "Exits method" << endl;
-
+        ST->exit_scope();
         string ret_type = semantic_check(node->children.back()); 
         if (ret_type != type->getType()) {
             errors.push_back("@error at line: " + to_string(node->lineno) + ". Type mismatch: Return value type (type: "+ret_type +") and method type (type: "+type->getType() +")is not alligning.");
@@ -73,10 +70,7 @@ string SemanticAnalysis::semantic_check(Node* node) {
         return type->getType();
     }
     else if(dynamic_cast<MethodDeclarations*>(node) != nullptr) {
-        int counter = 0;
         for (auto const& child : node->children) {
-            counter++;
-            cout << counter << endl;
             semantic_check(child);
         }
         return "";
@@ -215,7 +209,6 @@ string SemanticAnalysis::semantic_check(Node* node) {
         return "int";
     }
     else if (dynamic_cast<MethCall*>(node) != nullptr) {
-        cout << "Enters methcall" << endl;
         MethCall* methnode= dynamic_cast<MethCall*>(node);
 
         int counter = 0;
@@ -227,12 +220,9 @@ string SemanticAnalysis::semantic_check(Node* node) {
         }
         else if (node->children.size() == 2) {
             string expr = semantic_check(node->children[0]);
-            cout << "Second type: "<< node->children[1]->type << endl;
             string iden = semantic_check(node->children[1]);
         }
-        cout << "succ child trav" << endl;
         string iden = methnode->getIden();
-        cout << "iden succ" << endl;
         Record* methrec = ST->lookup_symbol(iden);
         if (methrec == nullptr) {
             errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Undefined method: " + iden);
@@ -295,11 +285,9 @@ string SemanticAnalysis::semantic_check(Node* node) {
         return "";
     }
     else if (dynamic_cast<ExpressionList*>(node) != nullptr) {
-        cout << "Enters expression list" << endl;
         for (auto const& child : node->children) {
             semantic_check(child);
         }
-        cout << "Exits expression list" << endl;
         return "";
     }
 

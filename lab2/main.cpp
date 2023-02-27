@@ -39,17 +39,20 @@ int main(int argc, char **argv)
     // ST->reset_ST();
     // root->print_tree();
     
+    // ST->print_ST();
     SemanticAnalysis* SA = new SemanticAnalysis(root, ST);
     if(SA->contains_error()) {
+      // exit program ?
+      // just don't continue?
       // cout << "Contains Error" << endl;
     }
 
-    // ST->print_ST();
+    ST->print_ST();
     
     // ST->print_ST();
     
     delete ST;
-    // delete SA;
+    delete SA;
   }
 
   return 0;
