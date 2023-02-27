@@ -297,13 +297,13 @@ expression: expression PLUSOP expression {
                             // printf("LEN: %d\n", yylineno);
                           }
             | expression PERIOD identifier LP exprlist RP {  // recursive grammar, follows recursive rules
-                              $$ = new MethCall("Method call", "", yylineno);
+                              $$ = new MethCall("Method call from class", "", yylineno);
                               $$->children.push_back($1); // expression
                               $$->children.push_back($3); // identifier
                               $$->children.push_back($5); // expression list
                           }
             | expression PERIOD identifier LP RP {  // for the empty case
-                              $$ = new MethCall("Method call", "", yylineno);
+                              $$ = new MethCall("Method call from class", "", yylineno);
                               $$->children.push_back($1); // expression
                               $$->children.push_back($3); // identifier
                           }

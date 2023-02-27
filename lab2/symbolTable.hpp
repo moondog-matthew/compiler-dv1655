@@ -24,7 +24,7 @@ public:
 class methodRecord : public Record {
 protected:
 	vector<variableRecord*> parameters;
-	map<string,variableRecord*> variables;
+	map<string, variableRecord*> variables;
 public:
 	methodRecord(string name, string type);
 	void addVariable(string varName, variableRecord* record);
@@ -35,7 +35,7 @@ public:
 class classRecord : public Record {
 protected:
 	map<string, variableRecord*> variables;
-	map<string,methodRecord*> methods;
+	map<string, methodRecord*> methods;
 public:
 	classRecord(string name, string type);
 	void addVariable(string varName, variableRecord* var);
