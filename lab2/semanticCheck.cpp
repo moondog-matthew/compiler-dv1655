@@ -226,12 +226,22 @@ string SemanticAnalysis::semantic_check(Node* node) {
         string method_name;
         string exprlist;
         class_name = semantic_check(node->children[0]);
-        method_type = semantic_check(node->children[1]);
+        Identifier* method_identifer = dynamic_cast<Identifier*>(node->children[1]);
+        if (method_identifer != nullptr) {
+            method_name = method_identifer->getVal();
+        }
+        else {
+            /*
+                report error
+            */ 
+            method_name = "";
+        }
+        
         if (node->children.size() == 3) {
             exprlist = semantic_check(node->children[2]);
         }
         
-        cout << "Class type: " << method_type << endl;
+        cout << "Class type: " << method_name << endl;
         
         Record* reclookup = ST->lookup_symbol(class_name); // classes have their name as types
         classRecord* classrec = dynamic_cast<classRecord*>(reclookup);
@@ -246,7 +256,7 @@ string SemanticAnalysis::semantic_check(Node* node) {
                 return "";
             }
             else {
-                cout << "enters2"<< endl;
+                cout << methrec->type << endl;
                 return methrec->type;
             }
         }
