@@ -184,7 +184,7 @@ type: INTTYPE LHB RHB {
             $$ = new IntType("int", "", yylineno);
               }
       | identifier {
-            $$ = new IdenType("IdentifierType", "", yylineno);
+            $$ = new IdenType("classType", "", yylineno);
         };
 
 statement:  LCB RCB  { 
