@@ -47,7 +47,7 @@ int main(int argc, char **argv)
       // cout << "Contains Error" << endl;
     }
     
-    ST->print_ST();
+    // ST->print_ST();
     
     delete ST;
     delete SA;

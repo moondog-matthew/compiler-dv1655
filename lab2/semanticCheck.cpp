@@ -7,7 +7,7 @@ SemanticAnalysis::SemanticAnalysis(Node* ast, SymbolTable* st) {
     this->ST->reset_ST();
     // this->ST->print_ST();
     semantic_check(AST_root);
-    // print_errors();
+    print_errors();
 
 }
 
@@ -232,7 +232,7 @@ string SemanticAnalysis::semantic_check(Node* node) {
         }
         else {
             /*
-                report error
+                report error? Second child must be of type Identifier, so no error needed???
             */ 
             method_name = "";
         }
@@ -241,22 +241,18 @@ string SemanticAnalysis::semantic_check(Node* node) {
             exprlist = semantic_check(node->children[2]);
         }
         
-        cout << "Class type: " << method_name << endl;
-        
         Record* reclookup = ST->lookup_symbol(class_name); // classes have their name as types
         classRecord* classrec = dynamic_cast<classRecord*>(reclookup);
         if (reclookup == nullptr) { 
             errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Class method calls expression must be of type class.");
         }
         else {
-            cout << "enters" << endl;
             methodRecord* methrec = classrec->lookupMethod(method_name);
             if (methrec == nullptr) {
                 errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Undefined method: '" + method_name + "' in class: '" + class_name + "'.");
                 return "";
             }
             else {
-                cout << methrec->type << endl;
                 return methrec->type;
             }
         }

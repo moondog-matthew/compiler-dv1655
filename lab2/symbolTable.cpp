@@ -274,7 +274,7 @@ void SymbolTable::populate_ST(Node* node, string parent_name) {
 				Method* method = dynamic_cast<Method*>(child);
 				name =  method->getIden();
 				type = method->getType();
-				methodRecord* methrec = new methodRecord(name, name);
+				methodRecord* methrec = new methodRecord(name, type); // Given that type of method is of class type 
 				add_symbol(methrec);
 				
 				Record* rec = lookup_symbol(parent_name); // lookup the parents name
