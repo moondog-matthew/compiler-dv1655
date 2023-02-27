@@ -14,3 +14,4 @@ parser.tab.c
 parser.tab.h
 parser.tab.o
 stack.hh
+test.cpp

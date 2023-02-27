@@ -103,5 +103,4 @@ int main() {
     if(ST.lookup_symbol("var31") != nullptr) {
         cout << "Works" << endl;
     }
-
 }

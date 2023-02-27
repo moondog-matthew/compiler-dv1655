@@ -57,19 +57,30 @@ string SemanticAnalysis::semantic_check(Node* node) {
         return "";
     }
     else if(dynamic_cast<Method*>(node) != nullptr) {
+        cout << "Enters method" << endl;
         Method* type = dynamic_cast<Method*>(node);
         for (auto const& child : node->children) {
             ST->enter_scope();
             string ret = semantic_check(child);
             ST->exit_scope();
         }
+        cout << "Exits method" << endl;
+
         string ret_type = semantic_check(node->children.back()); 
         if (ret_type != type->getType()) {
             errors.push_back("@error at line: " + to_string(node->lineno) + ". Type mismatch: Return value type (type: "+ret_type +") and method type (type: "+type->getType() +")is not alligning.");
         }
         return type->getType();
     }
-
+    else if(dynamic_cast<MethodDeclarations*>(node) != nullptr) {
+        int counter = 0;
+        for (auto const& child : node->children) {
+            counter++;
+            cout << counter << endl;
+            semantic_check(child);
+        }
+        return "";
+    }
     else if(dynamic_cast<MethodBody*>(node) != nullptr) {
         for (auto const& child : node->children) {
             semantic_check(child);
@@ -158,7 +169,7 @@ string SemanticAnalysis::semantic_check(Node* node) {
         }
         return "int";
     }
-    else if (node->type == "GreaterThan" || node->type == "LessThan") { // GT and LT
+    else if (node->type == "GreaterThan" || node->type == "LessThan") { 
         string LHS = semantic_check(node->children[0]);
         string RHS = semantic_check(node->children[1]);
         if (LHS != "int" || RHS != "int") {
@@ -166,7 +177,7 @@ string SemanticAnalysis::semantic_check(Node* node) {
         } 
         return "bool";
     }
-    else if (node->type == "Assign") { // GT and LT
+    else if (node->type == "Assign") { 
         string LHS = semantic_check(node->children[0]);
         string RHS = semantic_check(node->children[1]);
         if (LHS != RHS) {
@@ -174,7 +185,7 @@ string SemanticAnalysis::semantic_check(Node* node) {
         } 
         return "";
     }
-    else if (node->type == "Equals" ) { // GT and LT
+    else if (node->type == "Equals" ) { 
         string LHS = semantic_check(node->children[0]);
         string RHS = semantic_check(node->children[1]);
         if (LHS != RHS || LHS != "int" || LHS != "bool") {
@@ -204,13 +215,33 @@ string SemanticAnalysis::semantic_check(Node* node) {
         return "int";
     }
     else if (dynamic_cast<MethCall*>(node) != nullptr) {
+        cout << "Enters methcall" << endl;
         MethCall* methnode= dynamic_cast<MethCall*>(node);
-        
-        // Make calls later !! Check for semantic errors
 
+        int counter = 0;
+        // Make calls later !! Check for semantic errors
+        if (node->children.size() == 3) {
+            string expr = semantic_check(node->children[0]);
+            string iden = semantic_check(node->children[1]);
+            string exprlist = semantic_check(node->children[2]);
+        }
+        else if (node->children.size() == 2) {
+            string expr = semantic_check(node->children[0]);
+            cout << "Second type: "<< node->children[1]->type << endl;
+            string iden = semantic_check(node->children[1]);
+        }
+        cout << "succ child trav" << endl;
         string iden = methnode->getIden();
+        cout << "iden succ" << endl;
         Record* methrec = ST->lookup_symbol(iden);
-        return methrec->type;
+        if (methrec == nullptr) {
+            errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Undefined method: " + iden);
+            return "";
+        }
+        else {
+            string methrectype = methrec->type;
+            return methrectype;
+        }
     }
     else if (dynamic_cast<TrueVal*>(node) != nullptr) {
         return "bool";
@@ -220,12 +251,17 @@ string SemanticAnalysis::semantic_check(Node* node) {
     }
     else if (dynamic_cast<Identifier*>(node) != nullptr) { // check for usage of non-declared variables
         Identifier* iden = dynamic_cast<Identifier*>(node);
+        string rettype = "";
         string var = iden->getVal();
         Record* idenRec = ST->lookup_symbol(var);
         if (idenRec == nullptr) {
             errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Undefined variable " + var);
+            return "";
         }
-        return idenRec->type;
+        else {
+            string rettype = idenRec->type;
+            return rettype;
+        }
     }
     else if (dynamic_cast<ThisOP*>(node) != nullptr) {
         Record* classrec = ST->lookup_symbol("this"); // refers to class
@@ -254,11 +290,23 @@ string SemanticAnalysis::semantic_check(Node* node) {
         }
         return "bool";
     }
+    else if (dynamic_cast<Expression*>(node) != nullptr) {
+        string expr = semantic_check(node->children[0]);
+        return "";
+    }
+    else if (dynamic_cast<ExpressionList*>(node) != nullptr) {
+        cout << "Enters expression list" << endl;
+        for (auto const& child : node->children) {
+            semantic_check(child);
+        }
+        cout << "Exits expression list" << endl;
+        return "";
+    }
 
     else if (dynamic_cast<IntVal*>(node) != nullptr) {
         return "int";
     }
 
     
-    return node->type;
+    return "";
 }

@@ -58,16 +58,14 @@ goal:
               | mainclass END {
                       $$ = new GoalNode("Goal", "", yylineno);
                       $$->children.push_back($1); // mainclass 
-              }
-              ;
+              };
 
 mainclass: PUBLIC CLASS identifier LCB PUBLIC STATIC VOID MAIN LP STRING LHB RHB identifier RP LCB statement RCB RCB {
                       $$ = new MainClassDeclaration("MainClass", "", yylineno);
                       $$->children.push_back($3); // identifier
                       $$->children.push_back($13);  // identifier
                       $$->children.push_back($16);  // statement
-              }
-              ;
+              };
 
 classdeclaration: CLASS identifier LCB vardeclarations methoddeclarations RCB {
                       $$ = new ClassDeclaration("classDeclaration", "", yylineno);
@@ -88,8 +86,7 @@ classdeclaration: CLASS identifier LCB vardeclarations methoddeclarations RCB {
               | CLASS identifier LCB RCB {
                       $$ = new ClassDeclaration("classDeclaration", "", yylineno);
                       $$->children.push_back($2); // identifier
-              }
-              ;
+              };
 
 classdeclarations:
             classdeclaration {$$=$1;}
@@ -97,8 +94,7 @@ classdeclarations:
                       $$ = new ClassDeclarationMult("ClassDeclarations", "", yylineno);
                       $$->children.push_back($1); // recursion
                       $$->children.push_back($2); // class declaration
-            }
-            ;
+            };
 
 methoddeclaration: PUBLIC type identifier LP parameters RP LCB methodbody RETURN expression SEMICOLON RCB {
                       $$ = new Method("Method", "", yylineno);
@@ -135,8 +131,7 @@ methoddeclarations:
                       $$ = new MethodDeclarations("MethodDeclarations", "", yylineno);
                       $$->children.push_back($1);
                       $$->children.push_back($2);
-            }
-            ;
+            };
 
 methodbody: 
             vardeclaration {$$ = $1;}
@@ -150,8 +145,7 @@ methodbody:
                       $$ = new MethodBody("Method body", "", yylineno);
                       $$->children.push_back($1); // method body
                       $$->children.push_back($2); // statement
-            }
-            ;
+            };
 
 vardeclaration: type identifier SEMICOLON {
                       $$ = new Variable("Variable", "", yylineno);
@@ -165,8 +159,7 @@ vardeclarations:
                       $$ = new VariableList("Variables", "", yylineno);
                       $$->children.push_back($1); // recursion
                       $$->children.push_back($2); // variable
-            }
-            ;
+            };
 
 parameters: 
             type identifier {
@@ -179,8 +172,7 @@ parameters:
                       $$->children.push_back($1); // type
                       $$->children.push_back($2); // identifier
                       $$->children.push_back($4); // undef nr of prams
-            }
-            ;
+            };
 
 type: INTTYPE LHB RHB {
             $$ = new ArrayType("int[]", "", yylineno);
@@ -193,8 +185,7 @@ type: INTTYPE LHB RHB {
               }
       | identifier {
             $$ = new IdenType("IdentifierType", "", yylineno);
-              }
-        ;
+        };
 
 statement:  LCB RCB  { 
               $$ = new NonStmt("NonStatements", "", yylineno);
@@ -222,8 +213,7 @@ statement:  LCB RCB  {
               $$->children.push_back($1); // identifier
               $$->children.push_back($3); // expression
               $$->children.push_back($6); // expression
-            }
-            ;
+            };
 
 statements:
             statement {
@@ -233,8 +223,7 @@ statements:
               $$ = new Statements("Statements", "", yylineno);
               $$->children.push_back($1); // recursion
               $$->children.push_back($2); // statement
-                }
-            ;
+            };
 
 stmt_if: IF LP expression RP statement %prec NO_ELSE { // To solve dangling else ambiguity
               $$ = new IfStmt("IF", "", yylineno);
@@ -343,15 +332,14 @@ expression: expression PLUSOP expression {
                       $$ = new Negation("Negation", "", yylineno); // expression
                       $$->children.push_back($2); 
                   }
-            | factor      {$$ = $1; /* printf("r4 ");*/}
-            ;
+            | factor      {$$ = $1; /* printf("r4 ");*/
+              };
 
 experiment: expression LHB expression RHB { //??
                       $$ = new Index("index", "", yylineno);
                       $$->children.push_back($1);  // what to take index of
                       $$->children.push_back($3);  // index value
-                  }
-                  ;
+                  };
 
 exprlist: expression {
                       $$ = new Expression("(Expression)", "", yylineno);
@@ -361,17 +349,14 @@ exprlist: expression {
                       $$ = new ExpressionList("ExpressionList", "", yylineno);
                       $$->children.push_back($1);
                       $$->children.push_back($3);
-                  }
-                  ;
+                  };
 
 factor: INT {
                       $$ = new IntVal("int", $1, yylineno); /* printf("r5 ");  Here we create a leaf node Int. The value of the leaf node is $1 */}
             | LP expression RP { 
                       $$ = $2; /* printf("r6 ");  simply return the expression */
-                  }
-                  ;
+                  };
 
 identifier: IDENTIFIER {
                     $$ = new Identifier("Identifier", $1, yylineno); 
-            }
-            ;
+            };
