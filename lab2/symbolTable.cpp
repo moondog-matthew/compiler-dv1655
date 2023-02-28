@@ -193,7 +193,7 @@ SymbolTable::SymbolTable() {
 SymbolTable::SymbolTable(Node* node) {
 	root = new Scope(nullptr, "Program");
 	current = root;
-	populate_ST(node, "Program");
+	populate_ST(node, nullptr);
 }
 
 Scope* SymbolTable::get_root_scope() const {
@@ -237,12 +237,13 @@ void SymbolTable::print_ST() {
 	root->generate_tree();
 };
 
-void SymbolTable::populate_ST(Node* node, string parent_name) {
+void SymbolTable::populate_ST(Node* node, Node* parent) {
 	/*
 		Populate the ST by performing a single left-to-right traversal of the AST. 
 	*/
 	string name;
 	string type;
+	string parent_name;
 	if (node != nullptr) {
 		for(auto const& child : node->children) {
 			if(dynamic_cast<MainClassDeclaration*>(child) != nullptr) {
@@ -267,7 +268,7 @@ void SymbolTable::populate_ST(Node* node, string parent_name) {
 				add_symbol(classSymbol);
 				enter_scope(name);
 				add_symbol(new variableRecord("this", type)); // this hardcoded
-				populate_ST(child, name);
+				populate_ST(child, child);
 				exit_scope();
 			}
 			else if(dynamic_cast<Method*>(child) != nullptr) {
@@ -276,6 +277,13 @@ void SymbolTable::populate_ST(Node* node, string parent_name) {
 				type = method->getType();
 				methodRecord* methrec = new methodRecord(name, name);
 				add_symbol(methrec);
+				ClassDeclaration* cl = dynamic_cast<ClassDeclaration*>(parent);
+				if (cl != nullptr) {
+					parent_name = cl->getIden();
+				}
+				else {
+					cout << "Error 401" << endl;
+				}
 				
 				Record* rec = lookup_symbol(parent_name); // lookup the parents name
 				classRecord* classrec = dynamic_cast<classRecord*>(rec);
@@ -283,7 +291,7 @@ void SymbolTable::populate_ST(Node* node, string parent_name) {
 					classrec->addMethod(name, methrec);
 				}
 				enter_scope(name);
-				populate_ST(child, name);
+				populate_ST(child, node);
 				exit_scope();
 			}
 			else if (dynamic_cast<Parameter*>(child) != nullptr) {
@@ -292,7 +300,7 @@ void SymbolTable::populate_ST(Node* node, string parent_name) {
 				name =  par->getIden();
 				type = par->getType();
 				add_symbol(new variableRecord(name, type));
-				populate_ST(child, name);
+				populate_ST(child, node);
 			}
 			else if (dynamic_cast<ParameterList*>(child) != nullptr) {
 				// can contain variables
@@ -300,7 +308,7 @@ void SymbolTable::populate_ST(Node* node, string parent_name) {
 				name =  par->getIden();
 				type = par->getType();
 				add_symbol(new variableRecord(name, type));
-				populate_ST(child, name);
+				populate_ST(child, node);
 			}
 			else if(dynamic_cast<Variable*>(child) != nullptr) {
 				Variable* var = dynamic_cast<Variable*>(child);
@@ -312,19 +320,19 @@ void SymbolTable::populate_ST(Node* node, string parent_name) {
 				add_symbol(new variableRecord(name, type));
 			}
 			else if(dynamic_cast<ClassDeclarationMult*>(child) != nullptr) {
-				populate_ST(child, name);
+				populate_ST(child, node);
 			}
 			else if(dynamic_cast<MethodDeclarations*>(child) != nullptr) {
 				// can contain methods
-				populate_ST(child, name);
+				populate_ST(child, parent); // pass the parent, as this is called recursively 
 			}
 			else if(dynamic_cast<MethodBody*>(child) != nullptr) {
 				// can contain variables
-				populate_ST(child, name);
+				populate_ST(child, node);
 			}
 			else if(dynamic_cast<VariableList*>(child) != nullptr) {
 				// can contain variables
-				populate_ST(child, name);
+				populate_ST(child, node);
 			}
 		}
 		

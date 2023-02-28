@@ -91,7 +91,7 @@ public:
     Record* lookup_symbol(string recordName);
     void reset_ST();
 	void print_ST();
-	void populate_ST(Node* node, string parent_name);
+	void populate_ST(Node* node, Node* parent);
 };
 
 #endif // SYMBOL_H
