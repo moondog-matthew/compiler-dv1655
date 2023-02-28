@@ -294,11 +294,21 @@ string SemanticAnalysis::semantic_check(Node* node) {
         return "int[]";
     }
     else if (dynamic_cast<IdenAlloc*>(node) != nullptr) {
+        // new
         string expr = semantic_check(node->children[0]);
-        if (expr != "Identifier") {
-            errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Name must be identifier.");
+        if (expr == "int[]" || expr == "int" || expr == "bool") {
+            return "bool";
         }
-        return "bool";
+        Record* rec = ST->lookup_symbol(expr);
+        if (rec != nullptr) {
+            if (dynamic_cast<classRecord*>(rec) == nullptr) {
+                errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Invalid type. Can't use new on non-class identifers.");               
+            }
+            return "bool";
+        }
+        else {
+            return "";
+        }
     }
     else if (dynamic_cast<Negation*>(node) != nullptr) {
         string expr = semantic_check(node->children[0]);
