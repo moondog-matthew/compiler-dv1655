@@ -231,6 +231,8 @@ string SemanticAnalysis::semantic_check(Node* node) {
         string class_name;
         string method_name;
         string exprlist;
+        int amArgs;
+
         class_name = semantic_check(node->children[0]);
         Identifier* method_identifer = dynamic_cast<Identifier*>(node->children[1]);
         if (method_identifer != nullptr) {
@@ -242,7 +244,11 @@ string SemanticAnalysis::semantic_check(Node* node) {
         }
         if (node->children.size() == 3) {
             exprlist = semantic_check(node->children[2]);
+            // amArgs = methnode->amount_of_arguments();
         }
+        // else {
+        //     amArgs = 0; // call()
+        // }
 
         // cout << "Method: " << method_name << " Amount of arguments: " << methnode->amount_of_arguments() << endl;
 

@@ -284,15 +284,26 @@ void SymbolTable::populate_ST(Node* node, Node* parent) {
 				if (classdec != nullptr) {
 					parent_name = classdec->getIden();
 				}
-				else {
-					cout << "Error 401" << endl;
-				}
 				
 				Record* rec = lookup_symbol(parent_name); // lookup the parents name
 				classRecord* classrec = dynamic_cast<classRecord*>(rec);
 				if (classrec != nullptr) {
 					classrec->addMethod(name, methrec);
 				}
+				/* Add parameters */
+				if (dynamic_cast<Parameter*>(method->children[2]) != nullptr || dynamic_cast<ParameterList*>(method->children[2]) != nullptr ) {
+					vector<std::string> parameterList;
+					method->getParameterList(parameterList);
+					for(int i = 0; i < parameterList.size(); i += 2) {
+						variableRecord* varrec = new variableRecord(parameterList[i], parameterList[i+1]); // name, type
+						methrec->addVariable(parameterList[i],varrec);
+					}
+					cout << "Probably index? Vector size = " << parameterList.size() << endl;
+					for (int i = 0; i < parameterList.size(); i += 2) {
+						cout << "Parameter:: Name: " << parameterList[i] << " Type: " << parameterList[i+1] << endl;
+					}
+				}			
+
 				enter_scope(name);
 				populate_ST(child, node);
 				exit_scope();

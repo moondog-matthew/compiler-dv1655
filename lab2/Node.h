@@ -361,7 +361,11 @@ public:
 	virtual ~Parameter() = default;
 	
 	string getType() {
-		return children[0]->type;
+		string ret = children[0]->type;
+		if (ret == "classType") {
+			ret = children[0]->children[0]->value; // get class type that classType corralates to
+		}
+		return ret;
 	}
 	string getIden() {
 		Identifier* identifier = dynamic_cast<Identifier*>(children[1]);
@@ -375,7 +379,11 @@ public:
 	virtual ~ParameterList() = default;
 	
 	string getType() {
-		return children[0]->type;
+		string ret = children[0]->type;
+		if (ret == "classType") {
+			ret = children[0]->children[0]->value; // get class type that classType corralates to
+		}
+		return ret;
 	}
 	string getIden() {
 		Identifier* identifier = dynamic_cast<Identifier*>(children[1]);
@@ -401,23 +409,41 @@ public:
 		Identifier* identifier = dynamic_cast<Identifier*>(children[1]);
 		return identifier->getVal();
 	}
-	int amount_of_parameters() {
-		int amount = amPar(children[2], 0);
-		return amount;
+	// int amount_of_parameters() {
+	// 	int amount = amPar(children[2], 0);
+	// 	return amount;
+	// }
+	// int amPar(Node* node, int depth) {
+	// 	if (dynamic_cast<Parameter*>(node) != nullptr) {
+	// 		++depth;
+	// 		return depth; // Parameter class can only have 1 parameter
+	// 	}
+	// 	else if (dynamic_cast<ParameterList*>(node) != nullptr) {
+	// 		int depth_1 = amPar(node->children[2], ++depth);
+	// 		return depth_1;
+	// 	}
+	// 	else {
+	// 		return depth;
+	// 	}
+	// }
+	std::vector<std::string> getParameterList(vector<string> &vec) { // take empty vec as argument
+		getParam(children[2], vec);
 	}
-	int amPar(Node* node, int depth) {
+
+	void getParam(Node* node, vector<string> &params) { // can be void because vector is passed as reference
 		if (dynamic_cast<Parameter*>(node) != nullptr) {
-			++depth;
-			return depth; // Parameter class can only have 1 parameter
+			Parameter* par = dynamic_cast<Parameter*>(node);
+			params.push_back(par->getIden());
+			params.push_back(par->getType());
 		}
 		else if (dynamic_cast<ParameterList*>(node) != nullptr) {
-			int depth_1 = amPar(node->children[2], ++depth);
-			return depth_1;
-		}
-		else {
-			return depth;
+			ParameterList* par = dynamic_cast<ParameterList*>(node);
+			params.push_back(par->getIden());
+			params.push_back(par->getType());
+			getParam(node->children[2], params);
 		}
 	}
+	
 };
 
 class MethodDeclarations : public Node {
