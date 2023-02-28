@@ -244,6 +244,8 @@ string SemanticAnalysis::semantic_check(Node* node) {
             exprlist = semantic_check(node->children[2]);
         }
 
+        // cout << "Method: " << method_name << " Amount of arguments: " << methnode->amount_of_arguments() << endl;
+
         Record* reclookup = ST->lookup_symbol(class_name); // classes have their name as types
         classRecord* classrec = dynamic_cast<classRecord*>(reclookup);
         if (reclookup == nullptr) { 

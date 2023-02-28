@@ -156,15 +156,6 @@ public:
 	virtual ~LengthOf() = default;
 };
 
-class MethCall : public Node {
-public:
-	MethCall(string t, string v, int l) { type = t; value = v; lineno = l;}
-	virtual ~MethCall() = default;
-	string getIden() {
-		return children[1]->value;
-	}
-};
-
 class Expression : public Node {
 public:
 	Expression(string t, string v, int l) { type = t; value = v; lineno = l;}
@@ -175,6 +166,37 @@ class ExpressionList : public Node {
 public:
 	ExpressionList(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~ExpressionList() = default;
+
+	int getNumArgs() {
+
+	}
+};
+
+class MethCall : public Node {
+public:
+	MethCall(string t, string v, int l) { type = t; value = v; lineno = l;}
+	virtual ~MethCall() = default;
+	string getIden() {
+		return children[1]->value;
+	}
+
+	int amount_of_arguments() {
+		int amount = amArg(children[2], 0);
+		return amount;
+	}
+	int amArg(Node* node, int depth) {
+		if (dynamic_cast<Expression*>(node) != nullptr) {
+			++depth;
+			return depth; // Parameter class can only have 1 parameter
+		}
+		else if (dynamic_cast<ExpressionList*>(node) != nullptr) {
+			int depth_1 = amArg(node->children[0], ++depth);
+			return depth_1;
+		}
+		else {
+			return depth;
+		}
+	}
 };
 
 class TrueVal : public Node {
@@ -359,7 +381,6 @@ public:
 		Identifier* identifier = dynamic_cast<Identifier*>(children[1]);
 		return identifier->getVal();
 	}
-
 
 };
 
