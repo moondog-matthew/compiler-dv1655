@@ -275,11 +275,14 @@ void SymbolTable::populate_ST(Node* node, Node* parent) {
 				Method* method = dynamic_cast<Method*>(child);
 				name =  method->getIden();
 				type = method->getType();
+				if (type == "classType") {
+					type = child->children[0]->children[0]->value; // Get the class name
+				}
 				methodRecord* methrec = new methodRecord(name, type);
 				add_symbol(methrec);
-				ClassDeclaration* cl = dynamic_cast<ClassDeclaration*>(parent);
-				if (cl != nullptr) {
-					parent_name = cl->getIden();
+				ClassDeclaration* classdec = dynamic_cast<ClassDeclaration*>(parent);
+				if (classdec != nullptr) {
+					parent_name = classdec->getIden();
 				}
 				else {
 					cout << "Error 401" << endl;

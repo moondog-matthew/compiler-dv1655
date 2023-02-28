@@ -57,17 +57,22 @@ string SemanticAnalysis::semantic_check(Node* node) {
         return "";
     }
     else if(dynamic_cast<Method*>(node) != nullptr) {
-        Method* type = dynamic_cast<Method*>(node);
+        Method* meth_node = dynamic_cast<Method*>(node);
+        string meth_type = meth_node->getType();
         ST->enter_scope();
         for (auto const& child : node->children) {
             string ret = semantic_check(child);
         }
         string ret_type = semantic_check(node->children.back()); 
         ST->exit_scope();
-        if (ret_type != type->getType()) {
-            errors.push_back("@error at line: " + to_string(node->lineno) + ". Type mismatch: Return value type (type: "+ ret_type +") and method type (type: "+type->getType() +") is not alligning.");
+        if (meth_type == "classType") {
+            meth_type = meth_node->children[0]->children[0]->value; // get type of classType
         }
-        return type->getType();
+        
+        if (ret_type != meth_type) {
+            errors.push_back("@error at line: " + to_string(node->lineno) + ". Type mismatch: Return value type (type: "+ ret_type +") and method type (type: "+ meth_type +") is not alligning.");
+        }
+        return meth_type;
     }
     else if(dynamic_cast<MethodDeclarations*>(node) != nullptr) {
         for (auto const& child : node->children) {
@@ -143,8 +148,11 @@ string SemanticAnalysis::semantic_check(Node* node) {
         if (indexType != "int") {
             errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: index is not of type int.");
         }
-        // return "";
+        if (arrayType != "int[]") {
+            errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Array type is not of type 'int[]'.");
+        }
         return "bool"; // This can cause future bugs. Follows behaviour in Python.
+        // return "";
     }
     else if(dynamic_cast<Statements*>(node) != nullptr) {
         for(auto const& child : node->children) {
@@ -164,7 +172,7 @@ string SemanticAnalysis::semantic_check(Node* node) {
         string LHS = semantic_check(node->children[0]);
         string RHS = semantic_check(node->children[1]);
         if (LHS != "int" || RHS != "int") {
-            errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Expression '" + node->type + "' is not supported between types" + LHS + "" + RHS);
+            errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Expression '" + node->type + "' is not supported between types: " + LHS + " and " + RHS);
         }
         return "int";
     }
@@ -211,9 +219,8 @@ string SemanticAnalysis::semantic_check(Node* node) {
     }
     else if (dynamic_cast<LengthOf*>(node) != nullptr) {
         string expr = semantic_check(node->children[0]);
-        string expr_look;
-        if (expr_look != "int[]") {
-
+        if (expr != "int[]" || expr != "String[]") {
+            errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Operation '" + expr + "' is not of type 'int[]'.");
         }
         return "int";
     }

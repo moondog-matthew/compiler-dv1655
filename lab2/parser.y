@@ -294,8 +294,7 @@ expression: expression PLUSOP expression {
                 
             | expression PERIOD LENGTH {
                             $$ = new LengthOf("LenghtOfExpression", "", yylineno);
-                            $$->children.push_back($1);
-                            // printf("LEN: %d\n", yylineno);
+                            $$->children.push_back($1); // expression
                           }
             | expression PERIOD identifier LP exprlist RP {  // recursive grammar, follows recursive rules
                               $$ = new MethCall("Method call from class", "", yylineno);
