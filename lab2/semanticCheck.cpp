@@ -284,7 +284,9 @@ string SemanticAnalysis::semantic_check(Node* node) {
         Record* classrec = ST->lookup_symbol("this"); // refers to class
         if (classrec == nullptr) {
             errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Undefined variable 'this'.");
+            return "";
         }
+        return classrec->type;
     }
     else if (dynamic_cast<IntArray*>(node) != nullptr) {
         string expr = semantic_check(node->children[0]);
