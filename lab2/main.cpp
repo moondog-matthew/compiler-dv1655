@@ -38,11 +38,11 @@ int main(int argc, char **argv)
     
     ST->print_ST();
     SemanticAnalysis* SA = new SemanticAnalysis(root, ST);
-    if(SA->contains_error()) {
-      // exit program ?
-      // just don't continue?
-      // cout << "Contains Error" << endl;
-    }
+    // if(SA->contains_error()) {
+    //   // exit program ?
+    //   // just don't continue?
+    //   // cout << "Contains Error" << endl;
+    // }
     
     
     delete ST;

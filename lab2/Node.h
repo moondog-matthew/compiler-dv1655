@@ -426,7 +426,7 @@ public:
 	// 		return depth;
 	// 	}
 	// }
-	std::vector<std::string> getParameterList(vector<string> &vec) { // take empty vec as argument
+	void getParameterList(vector<std::string> &vec) { // take empty vec as argument
 		getParam(children[2], vec);
 	}
 
