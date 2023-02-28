@@ -62,10 +62,11 @@ string SemanticAnalysis::semantic_check(Node* node) {
         for (auto const& child : node->children) {
             string ret = semantic_check(child);
         }
-        ST->exit_scope();
         string ret_type = semantic_check(node->children.back()); 
+        ST->exit_scope();
+        // string ret_type = semantic_check(node->children.back()); 
         if (ret_type != type->getType()) {
-            errors.push_back("@error at line: " + to_string(node->lineno) + ". Type mismatch: Return value type (type: "+ret_type +") and method type (type: "+type->getType() +")is not alligning.");
+            errors.push_back("@error at line: " + to_string(node->lineno) + ". Type mismatch: Return value type (type: "+ ret_type +") and method type (type: "+type->getType() +") is not alligning.");
         }
         return type->getType();
     }
