@@ -132,7 +132,7 @@ string SemanticAnalysis::semantic_check(Node* node) {
         string LHS = semantic_check(node->children[0]);
         string RHS = semantic_check(node->children[1]);
         if (LHS != RHS) {
-            errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: LHS and RHS must be of same type.");
+            errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: LHS and RHS must be of same type. Currently type: " + LHS + " and type: " + RHS + ". ");
         }
         return "";
     }
