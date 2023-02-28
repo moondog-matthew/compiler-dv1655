@@ -3,9 +3,7 @@
 SemanticAnalysis::SemanticAnalysis(Node* ast, SymbolTable* st) {
     this->AST_root = ast;
     this->ST = st;
-
     this->ST->reset_ST();
-    // this->ST->print_ST();
     semantic_check(AST_root);
     print_errors();
 
@@ -72,6 +70,9 @@ string SemanticAnalysis::semantic_check(Node* node) {
         if (ret_type != meth_type) {
             errors.push_back("@error at line: " + to_string(node->lineno) + ". Type mismatch: Return value type (type: "+ ret_type +") and method type (type: "+ meth_type +") is not alligning.");
         }
+
+        // cout << "Method: " << meth_node->getIden() << " Amount of parameters: " << meth_node->amount_of_parameters() << endl;
+
         return meth_type;
     }
     else if(dynamic_cast<MethodDeclarations*>(node) != nullptr) {

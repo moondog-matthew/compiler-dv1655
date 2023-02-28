@@ -333,31 +333,6 @@ public:
 	May want to divide into multple classes of method declarations later
 */
 
-class Method : public Node {
-private:
-	// assign these values when creating the node? Because no fixed order. Getters and setters, to get them. 
-	// Parameter* parameters;
-	// MethodBody* method_body;
-	// Expression* return_expr;
-public:
-	Method(string t, string v, int l) { type = t; value = v; lineno = l;}
-	virtual ~Method() = default;
-	
-	string getType() {
-		return children[0]->type;
-	}
-	string getIden() {
-		Identifier* identifier = dynamic_cast<Identifier*>(children[1]);
-		return identifier->getVal();
-	}
-};
-
-class MethodDeclarations : public Node {
-public:
-	MethodDeclarations(string t, string v, int l) { type = t; value = v; lineno = l;}
-	virtual ~MethodDeclarations() = default;
-};
-
 class Parameter : public Node {
 public:
 	Parameter(string t, string v, int l) { type = t; value = v; lineno = l;}
@@ -384,6 +359,50 @@ public:
 		Identifier* identifier = dynamic_cast<Identifier*>(children[1]);
 		return identifier->getVal();
 	}
+
+
+};
+
+class Method : public Node {
+private:
+	// assign these values when creating the node? Because no fixed order. Getters and setters, to get them. 
+	// Parameter* parameters;
+	// MethodBody* method_body;
+	// Expression* return_expr;
+public:
+	Method(string t, string v, int l) { type = t; value = v; lineno = l;}
+	virtual ~Method() = default;
+	
+	string getType() {
+		return children[0]->type;
+	}
+	string getIden() {
+		Identifier* identifier = dynamic_cast<Identifier*>(children[1]);
+		return identifier->getVal();
+	}
+	int amount_of_parameters() {
+		int amount = amPar(children[2], 0);
+		return amount;
+	}
+	int amPar(Node* node, int depth) {
+		if (dynamic_cast<Parameter*>(node) != nullptr) {
+			++depth;
+			return depth; // Parameter class can only have 1 parameter
+		}
+		else if (dynamic_cast<ParameterList*>(node) != nullptr) {
+			int depth_1 = amPar(node->children[2], ++depth);
+			return depth_1;
+		}
+		else {
+			return depth;
+		}
+	}
+};
+
+class MethodDeclarations : public Node {
+public:
+	MethodDeclarations(string t, string v, int l) { type = t; value = v; lineno = l;}
+	virtual ~MethodDeclarations() = default;
 };
 
 

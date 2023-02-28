@@ -35,9 +35,6 @@ int main(int argc, char **argv)
     // using the constructor that fills the symbol table
     SymbolTable* ST;
     ST = new SymbolTable(root);
-    // ST.populate_ST(root);
-    // ST->reset_ST();
-    // root->print_tree();
     
     ST->print_ST();
     SemanticAnalysis* SA = new SemanticAnalysis(root, ST);
@@ -47,7 +44,6 @@ int main(int argc, char **argv)
       // cout << "Contains Error" << endl;
     }
     
-    // ST->print_ST();
     
     delete ST;
     delete SA;
