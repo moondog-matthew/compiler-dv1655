@@ -64,7 +64,6 @@ string SemanticAnalysis::semantic_check(Node* node) {
         }
         string ret_type = semantic_check(node->children.back()); 
         ST->exit_scope();
-        // string ret_type = semantic_check(node->children.back()); 
         if (ret_type != type->getType()) {
             errors.push_back("@error at line: " + to_string(node->lineno) + ". Type mismatch: Return value type (type: "+ ret_type +") and method type (type: "+type->getType() +") is not alligning.");
         }
@@ -141,13 +140,11 @@ string SemanticAnalysis::semantic_check(Node* node) {
         string arrayType =  semantic_check(node->children[0]);
         string indexType = semantic_check(node->children[1]);
         string RHS = semantic_check(node->children[2]);
-        if (arrayType != RHS) {
-            errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Can't assign " + RHS + " type to an int array.");
-        }
         if (indexType != "int") {
             errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: index is not of type int.");
         }
-        return "";
+        // return "";
+        return "bool"; // This can cause future bugs. Follows behaviour in Python.
     }
     else if(dynamic_cast<Statements*>(node) != nullptr) {
         for(auto const& child : node->children) {
