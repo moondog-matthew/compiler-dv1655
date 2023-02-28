@@ -17,6 +17,7 @@ public:
     void print_errors();
     bool contains_error() const;
     string semantic_check(Node* node);
+    string expr_check(Node* node, vector<string> &arg_types);
     
 };
 

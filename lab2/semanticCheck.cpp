@@ -243,14 +243,13 @@ string SemanticAnalysis::semantic_check(Node* node) {
             method_name = "";
         }
         if (node->children.size() == 3) {
-            exprlist = semantic_check(node->children[2]);
-            // amArgs = methnode->amount_of_arguments();
-        }
-        // else {
-        //     amArgs = 0; // call()
-        // }
+            vector<string> arg_types;
+            expr_check(node->children[2], arg_types);
+            for (auto const& type : arg_types) {
+                cout << method_name << " ArgType:" << type << endl;
+            }
 
-        // cout << "Method: " << method_name << " Amount of arguments: " << methnode->amount_of_arguments() << endl;
+        }
 
         Record* reclookup = ST->lookup_symbol(class_name); // classes have their name as types
         classRecord* classrec = dynamic_cast<classRecord*>(reclookup);
@@ -264,6 +263,7 @@ string SemanticAnalysis::semantic_check(Node* node) {
                 return "";
             }
             else {
+                
                 return methrec->type;
             }
         }
@@ -328,7 +328,7 @@ string SemanticAnalysis::semantic_check(Node* node) {
     }
     else if (dynamic_cast<Expression*>(node) != nullptr) {
         string expr = semantic_check(node->children[0]);
-        return "";
+        return expr;
     }
     else if (dynamic_cast<ExpressionList*>(node) != nullptr) {
         for (auto const& child : node->children) {
@@ -340,4 +340,18 @@ string SemanticAnalysis::semantic_check(Node* node) {
         return "int";
     }
     return "";
+}
+
+string SemanticAnalysis::expr_check(Node* node, vector<string> &arg_types) {
+    	if (dynamic_cast<Expression*>(node) != nullptr) {
+            string type = semantic_check(node->children[0]);
+            arg_types.push_back(type);
+            return type;
+		}
+		else if (dynamic_cast<ExpressionList*>(node) != nullptr) { 
+            string exprlist = expr_check(node->children[0], arg_types);
+            string expr = semantic_check(node->children[1]);
+            arg_types.push_back(expr);
+            return "";
+		}
 }

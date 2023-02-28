@@ -160,6 +160,10 @@ class Expression : public Node {
 public:
 	Expression(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~Expression() = default;
+	string getIden() {
+		return children[0]->value;
+		// return "";
+	}
 };
 
 class ExpressionList : public Node {
@@ -167,8 +171,8 @@ public:
 	ExpressionList(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~ExpressionList() = default;
 
-	int getNumArgs() {
-
+	string getIden() {
+		return children[1]->value;
 	}
 };
 
@@ -176,26 +180,9 @@ class MethCall : public Node {
 public:
 	MethCall(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~MethCall() = default;
+	
 	string getIden() {
 		return children[1]->value;
-	}
-
-	int amount_of_arguments() {
-		int amount = amArg(children[2], 0);
-		return amount;
-	}
-	int amArg(Node* node, int depth) {
-		if (dynamic_cast<Expression*>(node) != nullptr) {
-			++depth;
-			return depth; // Parameter class can only have 1 parameter
-		}
-		else if (dynamic_cast<ExpressionList*>(node) != nullptr) {
-			int depth_1 = amArg(node->children[0], ++depth);
-			return depth_1;
-		}
-		else {
-			return depth;
-		}
 	}
 };
 
@@ -393,11 +380,6 @@ public:
 };
 
 class Method : public Node {
-private:
-	// assign these values when creating the node? Because no fixed order. Getters and setters, to get them. 
-	// Parameter* parameters;
-	// MethodBody* method_body;
-	// Expression* return_expr;
 public:
 	Method(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~Method() = default;
@@ -409,23 +391,7 @@ public:
 		Identifier* identifier = dynamic_cast<Identifier*>(children[1]);
 		return identifier->getVal();
 	}
-	// int amount_of_parameters() {
-	// 	int amount = amPar(children[2], 0);
-	// 	return amount;
-	// }
-	// int amPar(Node* node, int depth) {
-	// 	if (dynamic_cast<Parameter*>(node) != nullptr) {
-	// 		++depth;
-	// 		return depth; // Parameter class can only have 1 parameter
-	// 	}
-	// 	else if (dynamic_cast<ParameterList*>(node) != nullptr) {
-	// 		int depth_1 = amPar(node->children[2], ++depth);
-	// 		return depth_1;
-	// 	}
-	// 	else {
-	// 		return depth;
-	// 	}
-	// }
+
 	void getParameterList(vector<std::string> &vec) { // take empty vec as argument
 		getParam(children[2], vec);
 	}
@@ -460,10 +426,6 @@ public:
 */
 
 class ClassDeclaration : public Node {
-private:
-	// assign these values when creating the node? Because no fixed order. Getters and setters, to get them. 
-	// VariableList* variables;
-	// MethodDeclarations* methods;
 
 public:
 	ClassDeclaration(string t, string v, int l) { type = t; value = v; lineno = l;}
@@ -472,14 +434,6 @@ public:
 		Identifier* identifier = dynamic_cast<Identifier*>(children[0]);
 		return identifier->getVal();
 	}
-
-	// VariableList* getVars() {
-	// 	return nullptr;
-	// }
-	// MethodDeclarations* getMethods() {
-	// 	return nullptr;
-	// }
-
 };
 
 class ClassDeclarationMult : public Node {
