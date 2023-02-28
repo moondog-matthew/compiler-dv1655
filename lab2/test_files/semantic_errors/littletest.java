@@ -28,7 +28,7 @@ class Thing {
         fung = new int[true];// @fail true: is of wrong type
         fung = new int[1];
 
-        return x.InInt();// @fail
+        return x.InInt();// @fail, no parameter. Check amounts of parameters
     }
 
     public int func2() {

@@ -297,14 +297,14 @@ string SemanticAnalysis::semantic_check(Node* node) {
         // new
         string expr = semantic_check(node->children[0]);
         if (expr == "int[]" || expr == "int" || expr == "bool") {
-            return "bool";
+            return expr;
         }
         Record* rec = ST->lookup_symbol(expr);
         if (rec != nullptr) {
             if (dynamic_cast<classRecord*>(rec) == nullptr) {
                 errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Invalid type. Can't use new on non-class identifers.");               
             }
-            return "bool";
+            return expr;
         }
         else {
             return "";
