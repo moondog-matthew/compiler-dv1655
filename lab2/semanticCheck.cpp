@@ -219,7 +219,7 @@ string SemanticAnalysis::semantic_check(Node* node) {
     }
     else if (dynamic_cast<LengthOf*>(node) != nullptr) {
         string expr = semantic_check(node->children[0]);
-        if (expr != "int[]" || expr != "String[]") {
+        if (expr != "int[]" && expr != "String[]") {
             errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Operation '" + expr + "' is not of type 'int[]'.");
         }
         return "int";
