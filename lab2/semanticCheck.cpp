@@ -13,6 +13,9 @@ void SemanticAnalysis::print_errors() {
     for (auto const& error : errors) {
         cout << error << endl;
     }
+    for (auto const& error : ST->getDuplicates()) {
+        cout << error << endl;
+    }
 }
 
 bool SemanticAnalysis::contains_error() const {

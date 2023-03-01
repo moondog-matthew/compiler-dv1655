@@ -74,6 +74,7 @@ private:
 
 	Scope* root;
 	Scope* current;
+	vector<string> duplicateDeclarations; // error strings to be used by semantic analysis
 
 	void deallocate_ST();
 
@@ -93,6 +94,7 @@ public:
     void reset_ST();
 	void print_ST();
 	void populate_ST(Node* node, Node* parent);
+	vector<string> getDuplicates();
 };
 
 #endif // SYMBOL_H

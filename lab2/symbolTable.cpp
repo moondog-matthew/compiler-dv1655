@@ -282,6 +282,12 @@ void SymbolTable::populate_ST(Node* node, Node* parent) {
 				if (type == "classType") {
 					type = child->children[0]->children[0]->value; // Get the class name
 				}
+				/* Check if declared before*/
+				Record* duplicate = lookup_symbol(name);
+				if (duplicate != nullptr) {
+					duplicateDeclarations.push_back("@error at line: " + to_string(node->lineno) + ". Duplicate declaration: Method: '" + name + "' is already declared.");
+				}
+
 				methodRecord* methrec = new methodRecord(name, type);
 				add_symbol(methrec);
 				ClassDeclaration* classdec = dynamic_cast<ClassDeclaration*>(parent);
@@ -294,12 +300,8 @@ void SymbolTable::populate_ST(Node* node, Node* parent) {
 					method->getParameterList(parameterList);
 					for(int i = 0; i < parameterList.size(); i += 2) {
 						variableRecord* varrec = new variableRecord(parameterList[i], parameterList[i+1]); // name, type
-						// methrec->addVariable(parameterList[i],varrec);
 						methrec->addParameter(varrec);
 					}
-					// for (int i = 0; i < parameterList.size(); i += 2) {
-					// 	cout << "Parameter for "<< name <<":: Name: " << parameterList[i] << " Type: " << parameterList[i+1] << endl;
-					// }
 				}			
 				
 				Record* rec = lookup_symbol(parent_name); // lookup the parents name
@@ -355,3 +357,7 @@ void SymbolTable::populate_ST(Node* node, Node* parent) {
 		
 	}
 } 
+
+vector<string> SymbolTable::getDuplicates() {
+	return this->duplicateDeclarations;
+}
