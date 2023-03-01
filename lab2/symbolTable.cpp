@@ -8,11 +8,11 @@
 string Record::printRecord() {
 		return "name: " + name + "; record: " + recordType + "; type: " + type + ";";
 }
-Record::Record(string name, string type, string record) : name(name), type(type), recordType(record) {}
+Record::Record(string name, string type, string record, int line_no) : name(name), type(type), recordType(record), line_no(line_no) {}
 
-variableRecord::variableRecord(string name, string type) : Record(name,type, "Variable") {}
+variableRecord::variableRecord(string name, string type, int line_no) : Record(name,type, "Variable", line_no) {}
 
-methodRecord::methodRecord(string name, string type) : Record(name,type, "Method") {}
+methodRecord::methodRecord(string name, string type, int line_no) : Record(name,type, "Method", line_no) {}
 
 void methodRecord::addVariable(string varName, variableRecord* record) {
 		variables[varName] = record;
@@ -35,7 +35,7 @@ vector<variableRecord*> methodRecord::getParameters() {
 	return this->parameters;
 }
 
-classRecord::classRecord(string name, string type) : Record(name,type, "Class") {}
+classRecord::classRecord(string name, string type, int line_no) : Record(name,type, "Class", line_no) {}
 
 void classRecord::addVariable(string varName, variableRecord* var) {
 		variables[varName] = var;
@@ -180,6 +180,17 @@ void Scope::reset_next_counter() {
 	this->next = 0;
 }
 
+int Scope::amount_declarations(string name) {
+	int amountInScope = 0;
+	int sz = inScopeRecords.size();
+	for (int i = 0; i < sz; ++i) {
+		if (inScopeRecords[i]->name == name) {
+			++amountInScope; // index of the record containing the name
+		}
+	}
+	return amountInScope;
+}
+
 /*
 	Symbol Table
 */
@@ -254,13 +265,13 @@ void SymbolTable::populate_ST(Node* node, Node* parent) {
 				MainClassDeclaration* cl = dynamic_cast<MainClassDeclaration*>(child);
 				name =  cl->getIdenName();
 				type = name;
-				classRecord* classSymbol = new classRecord(name, type); 
+				classRecord* classSymbol = new classRecord(name, type, child->lineno); 
 				add_symbol(classSymbol);
 				enter_scope(name);
-				add_symbol(new variableRecord("this", type)); // this
-				add_symbol(new methodRecord("main", "void")); // hardcoded  due to limited grammar
+				add_symbol(new variableRecord("this", type, child->lineno)); // this
+				add_symbol(new methodRecord("main", "void", child->lineno)); // hardcoded  due to limited grammar
 				enter_scope("main");
-				add_symbol(new variableRecord(cl->getIdenPar(), "String[]")); // hardcoded due to limited grammar
+				add_symbol(new variableRecord(cl->getIdenPar(), "String[]", child->lineno)); // hardcoded due to limited grammar
 				exit_scope();
 				exit_scope();
 			}
@@ -268,10 +279,10 @@ void SymbolTable::populate_ST(Node* node, Node* parent) {
 				ClassDeclaration* cl = dynamic_cast<ClassDeclaration*>(child);
 				name =  cl->getIden();
 				type = name; // exception, see ppt
-				classRecord* classSymbol = new classRecord(name, type); 
+				classRecord* classSymbol = new classRecord(name, type, cl->lineno); 
 				add_symbol(classSymbol);
 				enter_scope(name);
-				add_symbol(new variableRecord("this", type)); // this hardcoded
+				add_symbol(new variableRecord("this", type, cl->lineno)); // this hardcoded
 				populate_ST(child, child);
 				exit_scope();
 			}
@@ -282,13 +293,7 @@ void SymbolTable::populate_ST(Node* node, Node* parent) {
 				if (type == "classType") {
 					type = child->children[0]->children[0]->value; // Get the class name
 				}
-				/* Check if declared before*/
-				Record* duplicate = lookup_symbol(name);
-				if (duplicate != nullptr) {
-					duplicateDeclarations.push_back("@error at line: " + to_string(node->lineno) + ". Duplicate declaration: Method: '" + name + "' is already declared.");
-				}
-
-				methodRecord* methrec = new methodRecord(name, type);
+				methodRecord* methrec = new methodRecord(name, type, method->lineno);
 				add_symbol(methrec);
 				ClassDeclaration* classdec = dynamic_cast<ClassDeclaration*>(parent);
 				if (classdec != nullptr) {
@@ -299,7 +304,7 @@ void SymbolTable::populate_ST(Node* node, Node* parent) {
 					vector<std::string> parameterList;
 					method->getParameterList(parameterList);
 					for(int i = 0; i < parameterList.size(); i += 2) {
-						variableRecord* varrec = new variableRecord(parameterList[i], parameterList[i+1]); // name, type
+						variableRecord* varrec = new variableRecord(parameterList[i], parameterList[i+1], 0); // name, type
 						methrec->addParameter(varrec);
 					}
 				}			
@@ -318,7 +323,7 @@ void SymbolTable::populate_ST(Node* node, Node* parent) {
 				Parameter* par = dynamic_cast<Parameter*>(child);
 				name =  par->getIden();
 				type = par->getType();
-				add_symbol(new variableRecord(name, type));
+				add_symbol(new variableRecord(name, type, child->lineno));
 				populate_ST(child, node);
 			}
 			else if (dynamic_cast<ParameterList*>(child) != nullptr) {
@@ -326,7 +331,7 @@ void SymbolTable::populate_ST(Node* node, Node* parent) {
 				ParameterList* par = dynamic_cast<ParameterList*>(child);
 				name =  par->getIden();
 				type = par->getType();
-				add_symbol(new variableRecord(name, type));
+				add_symbol(new variableRecord(name, type, child->lineno));
 				populate_ST(child, node);
 			}
 			else if(dynamic_cast<Variable*>(child) != nullptr) {
@@ -336,7 +341,8 @@ void SymbolTable::populate_ST(Node* node, Node* parent) {
 				if (type == "classType") {
 					type = var->getClassName();
 				}
-				add_symbol(new variableRecord(name, type));
+
+				add_symbol(new variableRecord(name, type, child->lineno));
 			}
 			else if(dynamic_cast<ClassDeclarationMult*>(child) != nullptr) {
 				populate_ST(child, node);
@@ -358,6 +364,6 @@ void SymbolTable::populate_ST(Node* node, Node* parent) {
 	}
 } 
 
-vector<string> SymbolTable::getDuplicates() {
-	return this->duplicateDeclarations;
+int SymbolTable::lookup_dup(string recordName) {
+	return current->amount_declarations(recordName);
 }

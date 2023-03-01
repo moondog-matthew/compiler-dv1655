@@ -18,7 +18,7 @@ public:
     bool contains_error() const;
     string semantic_check(Node* node);
     string expr_check(Node* node, vector<string> &arg_types);
-    
+    void checkDuplicates(Node* node);
 };
 
 #endif // SEMANTIC_H

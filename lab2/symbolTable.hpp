@@ -11,14 +11,15 @@ public:
     string name; // class/method/variable/etc name
 	string type; // what type it is 
 	string recordType;
+	int line_no;
 	virtual string printRecord();
-	Record(string name, string type, string record);
+	Record(string name, string type, string record, int line_no);
 
 };
 
 class variableRecord : public Record {
 public:
-	variableRecord(string name, string type);
+	variableRecord(string name, string type, int line_no);
 };
 
 class methodRecord : public Record {
@@ -26,7 +27,7 @@ protected:
 	vector<variableRecord*> parameters;
 	map<string, variableRecord*> variables;
 public:
-	methodRecord(string name, string type);
+	methodRecord(string name, string type, int line_no);
 	void addVariable(string varName, variableRecord* record);
 	void addParameter(variableRecord* record);
 	variableRecord* lookupVariable(string var);
@@ -38,7 +39,7 @@ protected:
 	map<string, variableRecord*> variables;
 	map<string, methodRecord*> methods;
 public:
-	classRecord(string name, string type);
+	classRecord(string name, string type, int line_no);
 	void addVariable(string varName, variableRecord* var);
 	void addMethod(string methName, methodRecord* method);
 	variableRecord* lookupVariable(string varname);
@@ -67,6 +68,7 @@ public:
 	virtual void generate_tree_content(int &count, ofstream *outStream);
 	void reset();
 	void reset_next_counter();
+	int amount_declarations(string name);
 };
 
 class SymbolTable {
@@ -91,10 +93,10 @@ public:
     void exit_scope();
     void add_symbol(Record* record);
     Record* lookup_symbol(string recordName);
+	int lookup_dup(string recordName); // returns true if contains duplicate. vector contains nodes that are duplicates
     void reset_ST();
 	void print_ST();
 	void populate_ST(Node* node, Node* parent);
-	vector<string> getDuplicates();
 };
 
 #endif // SYMBOL_H

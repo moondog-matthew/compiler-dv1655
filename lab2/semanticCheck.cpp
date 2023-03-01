@@ -5,15 +5,14 @@ SemanticAnalysis::SemanticAnalysis(Node* ast, SymbolTable* st) {
     this->ST = st;
     this->ST->reset_ST();
     semantic_check(AST_root);
+    this->ST->reset_ST();
+    checkDuplicates(this->AST_root);
     print_errors();
 
 }
 
 void SemanticAnalysis::print_errors() {
     for (auto const& error : errors) {
-        cout << error << endl;
-    }
-    for (auto const& error : ST->getDuplicates()) {
         cout << error << endl;
     }
 }
@@ -367,4 +366,87 @@ string SemanticAnalysis::expr_check(Node* node, vector<string> &arg_types) {
             arg_types.push_back(expr);
             return "";
 		}
+}
+
+void SemanticAnalysis::checkDuplicates(Node* node) {
+    if (node != nullptr) {
+        for(auto const& child : node->children) {
+            if (dynamic_cast<ClassDeclaration*>(child) != nullptr) {
+                ClassDeclaration* classdec = dynamic_cast<ClassDeclaration*>(child);
+                string name = classdec->getIden();
+                vector<Record*> rec;
+                int duplicate = ST->lookup_dup(name);
+                if (duplicate > 1) {
+                    errors.push_back("@error at line: " + to_string(node->lineno) + ". Duplicate declaration: Class: '" + name + "' is already declared multple times.");
+                }
+                ST->enter_scope();
+                checkDuplicates(child);
+                ST->exit_scope();
+            }
+            else if (dynamic_cast<MainClassDeclaration*>(child) != nullptr) {
+                MainClassDeclaration* methclassdec = dynamic_cast<MainClassDeclaration*>(child);
+                string name = methclassdec->getIdenName();
+                ST->enter_scope();
+                ST->enter_scope();
+                int duplicate = ST->lookup_dup(name);
+                if (duplicate > 1) {
+                    errors.push_back("@error at line: " + to_string(node->lineno) + ". Duplicate declaration: Class: '" + name + "' is already declared multiple times.");
+                }
+                // the method in methodclassdec
+                duplicate = ST->lookup_dup(name);
+                if (duplicate > 1) {
+                    errors.push_back("@error at line: " + to_string(node->lineno) + ". Duplicate declaration: Class: '" + name + "' is already declared multiple times.");
+                }
+                ST->exit_scope();
+				ST->exit_scope();
+            }
+            else if (dynamic_cast<Method*>(child) != nullptr) {
+                Method* meth = dynamic_cast<Method*>(child);
+                string name = meth->getIden();
+                int duplicate = ST->lookup_dup(name);
+                if (duplicate > 1) {
+                    errors.push_back("@error at line: " + to_string(node->lineno) + ". Duplicate declaration: Method: '" + name + "' is already declared multple times.");
+                }
+                ST->enter_scope();
+                checkDuplicates(child);
+                ST->exit_scope();
+            }
+            else if (dynamic_cast<Variable*>(child) != nullptr) {
+                Variable* var = dynamic_cast<Variable*>(child);
+                string name = var->getIden();
+                int duplicate = ST->lookup_dup(name);
+                if (duplicate > 1) {
+                    errors.push_back("@error at line: " + to_string(node->lineno) + ". Duplicate declaration: Variable: '" + name + "' is declared multiple times.");
+                }
+            }
+            else if (dynamic_cast<Parameter*>(child) != nullptr) {
+				/*Potentially check for duplicate parameters..*/
+				// Parameter* par = dynamic_cast<Parameter*>(child);
+				// string name =  par->getIden();
+				checkDuplicates(child);
+			}
+			else if (dynamic_cast<ParameterList*>(child) != nullptr) {
+				/*Potentially check for duplicate parameters..*/
+				// Parameter* par = dynamic_cast<Parameter*>(child);
+				// string name =  par->getIden();
+				checkDuplicates(child);
+			}
+			else if(dynamic_cast<ClassDeclarationMult*>(child) != nullptr) {
+				checkDuplicates(child);
+			}
+			else if(dynamic_cast<MethodDeclarations*>(child) != nullptr) {
+				// can contain methods
+				checkDuplicates(child); 
+			}
+			else if(dynamic_cast<MethodBody*>(child) != nullptr) {
+				// can contain variables
+				checkDuplicates(child);
+			}
+			else if(dynamic_cast<VariableList*>(child) != nullptr) {
+				// can contain variables
+				checkDuplicates(child);
+			}
+        }
+    }
+
 }
