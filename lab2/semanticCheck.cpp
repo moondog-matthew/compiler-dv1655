@@ -260,15 +260,20 @@ string SemanticAnalysis::semantic_check(Node* node) {
                 return "";
             }
             else {
-                for (auto const& type : arg_types) {
-                    cout << method_name << " ArgType:" << type << " ";
-                }
-                cout << endl;
                 vector<variableRecord*> parameters = methrec->getParameters();
-                for (auto const& par : parameters) {
-                    cout << method_name << " Parameter:" << par->type << " ";                    
+                int args_sz = arg_types.size();
+                int param_sz = parameters.size();
+                if (args_sz != param_sz) {
+                    errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Amount of parameters and arguments are not the same in method call.");
                 }
-                cout << endl;
+                else {
+                    for (int i = 0; i < args_sz; ++i) {
+                        if (arg_types[i] != parameters[i]->type) {
+                            errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Type mismatch of arguments and method parameters.");
+                        }
+                    }
+                }
+                
                 return methrec->type;
             }
         }
