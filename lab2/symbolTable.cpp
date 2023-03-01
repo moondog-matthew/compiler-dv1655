@@ -186,6 +186,22 @@ int Scope::amount_declarations(string name) {
 	for (int i = 0; i < sz; ++i) {
 		if (inScopeRecords[i]->name == name) {
 			++amountInScope; // index of the record containing the name
+			if (amountInScope > 1) {
+				if(dynamic_cast<methodRecord*>(inScopeRecords[i]) != nullptr) {
+					for (int j = 0; j < i; ++j) {
+						if (inScopeRecords[i]->name == inScopeRecords[j]->name && dynamic_cast<methodRecord*>(inScopeRecords[j]) == nullptr) {
+							--amountInScope;
+						}
+					}
+				}
+				else {
+					for (int j = 0; j < i; ++j) {
+						if (inScopeRecords[i]->name == inScopeRecords[j]->name && dynamic_cast<methodRecord*>(inScopeRecords[j]) != nullptr) {
+							--amountInScope;
+						}
+					}
+				}
+			}
 		}
 	}
 	return amountInScope;
