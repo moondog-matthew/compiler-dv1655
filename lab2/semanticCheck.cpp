@@ -232,6 +232,8 @@ string SemanticAnalysis::semantic_check(Node* node) {
         string method_name;
         string exprlist;
         int amArgs;
+        vector<string> arg_types;
+
 
         class_name = semantic_check(node->children[0]);
         Identifier* method_identifer = dynamic_cast<Identifier*>(node->children[1]);
@@ -243,12 +245,7 @@ string SemanticAnalysis::semantic_check(Node* node) {
             method_name = "";
         }
         if (node->children.size() == 3) {
-            vector<string> arg_types;
             expr_check(node->children[2], arg_types);
-            for (auto const& type : arg_types) {
-                cout << method_name << " ArgType:" << type << endl;
-            }
-
         }
 
         Record* reclookup = ST->lookup_symbol(class_name); // classes have their name as types
@@ -263,7 +260,15 @@ string SemanticAnalysis::semantic_check(Node* node) {
                 return "";
             }
             else {
-                
+                for (auto const& type : arg_types) {
+                    cout << method_name << " ArgType:" << type << " ";
+                }
+                cout << endl;
+                vector<variableRecord*> parameters = methrec->getParameters();
+                for (auto const& par : parameters) {
+                    cout << method_name << " Parameter:" << par->type << " ";                    
+                }
+                cout << endl;
                 return methrec->type;
             }
         }

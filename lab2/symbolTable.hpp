@@ -30,6 +30,7 @@ public:
 	void addVariable(string varName, variableRecord* record);
 	void addParameter(variableRecord* record);
 	variableRecord* lookupVariable(string var);
+	vector<variableRecord*> getParameters();
 };
 
 class classRecord : public Record {

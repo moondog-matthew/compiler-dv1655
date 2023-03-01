@@ -31,6 +31,10 @@ variableRecord* methodRecord::lookupVariable(string var) {
 		return nullptr;
 	}
 
+vector<variableRecord*> methodRecord::getParameters() {
+	return this->parameters;
+}
+
 classRecord::classRecord(string name, string type) : Record(name,type, "Class") {}
 
 void classRecord::addVariable(string varName, variableRecord* var) {
@@ -290,7 +294,8 @@ void SymbolTable::populate_ST(Node* node, Node* parent) {
 					method->getParameterList(parameterList);
 					for(int i = 0; i < parameterList.size(); i += 2) {
 						variableRecord* varrec = new variableRecord(parameterList[i], parameterList[i+1]); // name, type
-						methrec->addVariable(parameterList[i],varrec);
+						// methrec->addVariable(parameterList[i],varrec);
+						methrec->addParameter(varrec);
 					}
 					// for (int i = 0; i < parameterList.size(); i += 2) {
 					// 	cout << "Parameter for "<< name <<":: Name: " << parameterList[i] << " Type: " << parameterList[i+1] << endl;
