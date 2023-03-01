@@ -12,8 +12,9 @@ SemanticAnalysis::SemanticAnalysis(Node* ast, SymbolTable* st) {
 }
 
 void SemanticAnalysis::print_errors() {
+    cout << "\n\n"; // for clearer res 
     for (auto const& error : errors) {
-        cout << error << endl;
+        cout << error << "\n";
     }
 }
 
@@ -377,7 +378,7 @@ void SemanticAnalysis::checkDuplicates(Node* node) {
                 vector<Record*> rec;
                 int duplicate = ST->lookup_dup(name);
                 if (duplicate > 1) {
-                    errors.push_back("@error at line: " + to_string(node->lineno) + ". Duplicate declaration: Class: '" + name + "' is already declared multple times.");
+                    errors.push_back("Duplicate declaration: Class: '" + name + "' is already declared multple times.");
                 }
                 ST->enter_scope();
                 checkDuplicates(child);
@@ -390,12 +391,13 @@ void SemanticAnalysis::checkDuplicates(Node* node) {
                 ST->enter_scope();
                 int duplicate = ST->lookup_dup(name);
                 if (duplicate > 1) {
-                    errors.push_back("@error at line: " + to_string(node->lineno) + ". Duplicate declaration: Class: '" + name + "' is already declared multiple times.");
+                    errors.push_back("Duplicate declaration: Class: '" + name + "' is already declared multiple times.");
                 }
                 // the method in methodclassdec
+                name = methclassdec->getIdenPar();
                 duplicate = ST->lookup_dup(name);
                 if (duplicate > 1) {
-                    errors.push_back("@error at line: " + to_string(node->lineno) + ". Duplicate declaration: Class: '" + name + "' is already declared multiple times.");
+                    errors.push_back("@error at line: " + to_string(node->lineno) + ". Duplicate declaration: : '" + name + "' is already declared multiple times.");
                 }
                 ST->exit_scope();
 				ST->exit_scope();
@@ -405,7 +407,7 @@ void SemanticAnalysis::checkDuplicates(Node* node) {
                 string name = meth->getIden();
                 int duplicate = ST->lookup_dup(name);
                 if (duplicate > 1) {
-                    errors.push_back("@error at line: " + to_string(node->lineno) + ". Duplicate declaration: Method: '" + name + "' is already declared multple times.");
+                    errors.push_back("Duplicate declaration: Method: '" + name + "' is already declared multple times.");
                 }
                 ST->enter_scope();
                 checkDuplicates(child);
@@ -416,13 +418,17 @@ void SemanticAnalysis::checkDuplicates(Node* node) {
                 string name = var->getIden();
                 int duplicate = ST->lookup_dup(name);
                 if (duplicate > 1) {
-                    errors.push_back("@error at line: " + to_string(node->lineno) + ". Duplicate declaration: Variable: '" + name + "' is declared multiple times.");
+                    errors.push_back("Duplicate declaration: Variable: '" + name + "' is declared multiple times.");
                 }
             }
             else if (dynamic_cast<Parameter*>(child) != nullptr) {
 				/*Potentially check for duplicate parameters..*/
-				// Parameter* par = dynamic_cast<Parameter*>(child);
-				// string name =  par->getIden();
+				Parameter* par = dynamic_cast<Parameter*>(child);
+				string name =  par->getIden();
+                int duplicate = ST->lookup_dup(name);
+                if (duplicate > 1) {
+                    errors.push_back("Duplicate declaration: Parameter: '" + name + "' is declared multiple times.");
+                }
 				checkDuplicates(child);
 			}
 			else if (dynamic_cast<ParameterList*>(child) != nullptr) {
