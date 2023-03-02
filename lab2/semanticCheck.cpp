@@ -132,7 +132,8 @@ string SemanticAnalysis::semantic_check(Node* node) {
         return "";
     }
     else if(dynamic_cast<PrintStmt*>(node) != nullptr) {
-        return "";
+        string expr = semantic_check(node->children[0]);
+        return "bool";
     }
     else if(dynamic_cast<AssignStmt*>(node) != nullptr) {
         string LHS = semantic_check(node->children[0]);

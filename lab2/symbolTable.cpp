@@ -224,7 +224,7 @@ int Scope::amount_declarations(string name) {
 						}
 					}
 				}
-				else {
+				else { // if class record
 					for (int j = 0; j < i; ++j) {
 						if (inScopeRecords[i]->name == inScopeRecords[j]->name && dynamic_cast<methodRecord*>(inScopeRecords[j]) != nullptr) {
 							--amountInScope;
