@@ -60,7 +60,7 @@ public:
 
 	Scope(Scope * parent, string scopename);
 	~Scope();
-	Record* lookup(string name);
+	Record* lookup(string name, int lookup_type);
 	void addRecord(Record* record);
 	Scope* nextScope(string scopename = "");
 	void printScope(int depth = 0);
@@ -92,7 +92,7 @@ public:
     // void enter_scope(string scopename);
     void exit_scope();
     void add_symbol(Record* record);
-    Record* lookup_symbol(string recordName);
+    Record* lookup_symbol(string recordName, int lookup_type);
 	int lookup_dup(string recordName); // returns true if contains duplicate. vector contains nodes that are duplicates
     void reset_ST();
 	void print_ST();

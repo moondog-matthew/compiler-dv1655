@@ -85,26 +85,56 @@ Scope::~Scope() {
 	deallocate();
 }
 
-Record* Scope::lookup(string name)	{
+Record* Scope::lookup(string name, int lookup_type)	{
 	/*
 		From a given name, see if it exists in the scope.
 	*/
-	int inScope = -1;
+	/*
+		Lookup Types:
+			ClassRecord -> 0
+			MethodRecord -> 1
+			VariableRecord -> 2
+	*/
+	int amountInScope = 0;
+	int index;
 	int sz = inScopeRecords.size();
+	
 	for (int i = 0; i < sz; ++i) {
 		if (inScopeRecords[i]->name == name) {
-			inScope = i; // index of the record containing the name
+			if (lookup_type == 0) {
+				if (dynamic_cast<classRecord*>(inScopeRecords[i]) != nullptr) {
+					++amountInScope;
+					index = i; // index of the record containing the name
+				}
+			}
+			else if (lookup_type == 1) {
+				if (dynamic_cast<methodRecord*>(inScopeRecords[i]) != nullptr) {
+					++amountInScope;
+					index = i; // index of the record containing the name
+				}
+			}
+			else if (lookup_type == 2) {
+				if (dynamic_cast<variableRecord*>(inScopeRecords[i]) != nullptr) {
+					++amountInScope;
+					index = i; // index of the record containing the name
+				}
+			}
+			else {
+				++amountInScope;
+				index = i; // index of the record containing the name
+			}
 		}
 	}
-	if(inScope != -1) {
-		return inScopeRecords[inScope];
+	if(amountInScope > 0) {
+		// check for various cases
+		return inScopeRecords[index];
 	}
 	else {
 		if (parentScope == nullptr) {
 			return nullptr;
 		}
 		else {
-			return parentScope->lookup(name);
+			return parentScope->lookup(name, lookup_type);
 		}
 	}
 }
@@ -249,9 +279,9 @@ void SymbolTable::add_symbol(Record* record) {
 	current->addRecord(record);
 }; 
 
-Record* SymbolTable::lookup_symbol(string recordName) {
+Record* SymbolTable::lookup_symbol(string recordName, int lookup_type) {
 	/*search scope for record. return nullptr if not found and record if found*/
-	return current->lookup(recordName);
+	return current->lookup(recordName, lookup_type);
 }; 
 
 void SymbolTable::reset_ST() {
@@ -284,7 +314,7 @@ void SymbolTable::populate_ST(Node* node, Node* parent) {
 				classRecord* classSymbol = new classRecord(name, type, child->lineno); 
 				add_symbol(classSymbol);
 				enter_scope(name);
-				add_symbol(new variableRecord("this", type, child->lineno)); // this
+				add_symbol(new classRecord("this", type, child->lineno)); // this
 				add_symbol(new methodRecord("main", "void", child->lineno)); // hardcoded  due to limited grammar
 				enter_scope("main");
 				add_symbol(new variableRecord(cl->getIdenPar(), "String[]", child->lineno)); // hardcoded due to limited grammar
@@ -298,7 +328,7 @@ void SymbolTable::populate_ST(Node* node, Node* parent) {
 				classRecord* classSymbol = new classRecord(name, type, cl->lineno); 
 				add_symbol(classSymbol);
 				enter_scope(name);
-				add_symbol(new variableRecord("this", type, cl->lineno)); // this hardcoded
+				add_symbol(new classRecord("this", type, cl->lineno)); // this hardcoded
 				populate_ST(child, child);
 				exit_scope();
 			}
@@ -325,7 +355,7 @@ void SymbolTable::populate_ST(Node* node, Node* parent) {
 					}
 				}			
 				
-				Record* rec = lookup_symbol(parent_name); // lookup the parents name
+				Record* rec = lookup_symbol(parent_name, 0); // lookup the parents name
 				classRecord* classrec = dynamic_cast<classRecord*>(rec);
 				if (classrec != nullptr) {
 					classrec->addMethod(name, methrec);

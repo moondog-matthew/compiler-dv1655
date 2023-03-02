@@ -73,9 +73,6 @@ string SemanticAnalysis::semantic_check(Node* node) {
         if (ret_type != meth_type) {
             errors.push_back("@error at line: " + to_string(node->lineno) + ". Type mismatch: Return value type (type: "+ ret_type +") and method type (type: "+ meth_type +") is not alligning.");
         }
-
-        // cout << "Method: " << meth_node->getIden() << " Amount of parameters: " << meth_node->amount_of_parameters() << endl;
-
         return meth_type;
     }
     else if(dynamic_cast<MethodDeclarations*>(node) != nullptr) {
@@ -239,6 +236,7 @@ string SemanticAnalysis::semantic_check(Node* node) {
 
 
         class_name = semantic_check(node->children[0]);
+        
         Identifier* method_identifer = dynamic_cast<Identifier*>(node->children[1]);
         if (method_identifer != nullptr) {
             method_name = method_identifer->getVal();
@@ -250,8 +248,7 @@ string SemanticAnalysis::semantic_check(Node* node) {
         if (node->children.size() == 3) {
             expr_check(node->children[2], arg_types);
         }
-
-        Record* reclookup = ST->lookup_symbol(class_name); // classes have their name as types
+        Record* reclookup = ST->lookup_symbol(class_name, 0); // classes have their name as types
         classRecord* classrec = dynamic_cast<classRecord*>(reclookup);
         if (reclookup == nullptr) { 
             errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Class method calls expression must be of type class.");
@@ -291,7 +288,7 @@ string SemanticAnalysis::semantic_check(Node* node) {
     else if (dynamic_cast<Identifier*>(node) != nullptr) { // check for usage of non-declared variables
         Identifier* iden = dynamic_cast<Identifier*>(node);
         string var = iden->getVal();
-        Record* idenRec = ST->lookup_symbol(var);
+        Record* idenRec = ST->lookup_symbol(var, 3);
         if (idenRec == nullptr) {
             errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Undefined variable " + var);
             return "";
@@ -301,7 +298,7 @@ string SemanticAnalysis::semantic_check(Node* node) {
         }
     }
     else if (dynamic_cast<ThisOP*>(node) != nullptr) {
-        Record* classrec = ST->lookup_symbol("this"); // refers to class
+        Record* classrec = ST->lookup_symbol("this", 0); // refers to class
         if (classrec == nullptr) {
             errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Undefined variable 'this'.");
             return "";
@@ -321,7 +318,7 @@ string SemanticAnalysis::semantic_check(Node* node) {
         if (expr == "int[]" || expr == "int" || expr == "bool") {
             return expr;
         }
-        Record* rec = ST->lookup_symbol(expr);
+        Record* rec = ST->lookup_symbol(expr, 0); // get class record
         if (rec != nullptr) {
             if (dynamic_cast<classRecord*>(rec) == nullptr) {
                 errors.push_back("@error at line: " + to_string(node->lineno) + ". Semantic Error: Invalid type. Can't use new on non-class identifers.");               
@@ -378,7 +375,7 @@ void SemanticAnalysis::checkDuplicates(Node* node) {
                 vector<Record*> rec;
                 int duplicate = ST->lookup_dup(name);
                 if (duplicate > 1) {
-                    errors.push_back("Duplicate declaration: Class: '" + name + "' is already declared multple times.");
+                    errors.push_back("Duplicate declaration: Class: '" + name + "' is already declared multple times."); // can add lineno, but bison very buggy
                 }
                 ST->enter_scope();
                 checkDuplicates(child);
@@ -391,7 +388,7 @@ void SemanticAnalysis::checkDuplicates(Node* node) {
                 ST->enter_scope();
                 int duplicate = ST->lookup_dup(name);
                 if (duplicate > 1) {
-                    errors.push_back("Duplicate declaration: Class: '" + name + "' is already declared multiple times.");
+                    errors.push_back("Duplicate declaration: Class: '" + name + "' is already declared multiple times."); // can add lineno, but bison very buggy
                 }
                 // the method in methodclassdec
                 name = methclassdec->getIdenPar();
@@ -407,7 +404,7 @@ void SemanticAnalysis::checkDuplicates(Node* node) {
                 string name = meth->getIden();
                 int duplicate = ST->lookup_dup(name);
                 if (duplicate > 1) {
-                    errors.push_back("Duplicate declaration: Method: '" + name + "' is already declared multple times.");
+                    errors.push_back("Duplicate declaration: Method: '" + name + "' is already declared multple times."); // can add lineno, but bison very buggy
                 }
                 ST->enter_scope();
                 checkDuplicates(child);
@@ -418,7 +415,7 @@ void SemanticAnalysis::checkDuplicates(Node* node) {
                 string name = var->getIden();
                 int duplicate = ST->lookup_dup(name);
                 if (duplicate > 1) {
-                    errors.push_back("Duplicate declaration: Variable: '" + name + "' is declared multiple times.");
+                    errors.push_back("Duplicate declaration: Variable: '" + name + "' is declared multiple times."); // can add lineno, but bison very buggy
                 }
             }
             else if (dynamic_cast<Parameter*>(child) != nullptr) {
