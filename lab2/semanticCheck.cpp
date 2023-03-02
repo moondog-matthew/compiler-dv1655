@@ -241,10 +241,7 @@ string SemanticAnalysis::semantic_check(Node* node) {
         if (method_identifer != nullptr) {
             method_name = method_identifer->getVal();
         }
-        else {
-            /* report error */ 
-            method_name = "";
-        }
+
         if (node->children.size() == 3) {
             expr_check(node->children[2], arg_types);
         }
@@ -314,10 +311,9 @@ string SemanticAnalysis::semantic_check(Node* node) {
     }
     else if (dynamic_cast<IdenAlloc*>(node) != nullptr) {
         // new
-        string expr = semantic_check(node->children[0]);
-        if (expr == "int[]" || expr == "int" || expr == "bool") {
-            return expr;
-        }
+        Identifier* iden = dynamic_cast<Identifier*>(node->children[0]);
+        string expr = iden->getVal();
+
         Record* rec = ST->lookup_symbol(expr, 0); // get class record
         if (rec != nullptr) {
             if (dynamic_cast<classRecord*>(rec) == nullptr) {

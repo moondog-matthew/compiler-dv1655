@@ -17,7 +17,7 @@ class A {
     public int B() {
         int B;
         A = 5;
-        B = new B().B();
+        B = new B().B(); // Expression: new B(), PERIOD, idenfier: B() 
         return A + B;
     }
 }
