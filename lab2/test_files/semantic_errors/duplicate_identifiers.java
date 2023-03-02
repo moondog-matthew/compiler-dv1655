@@ -22,7 +22,7 @@ class Pemis {
     boolean b;
     boolean b;// @fail Already Declared variable: b_
 
-    public int Pen(int param1, int param1) {// @fail Already Declared parameter: param_
+    public int Pen(int param, int param) {// @fail Already Declared parameter: param_
         return 1;
     }
 
