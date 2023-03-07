@@ -1,0 +1,189 @@
+digraph {
+n0 [label="Goal:"];
+n1 [label="MainClass:"];
+n2 [label="Identifier:A"];
+n1 -> n2
+n3 [label="Identifier:a"];
+n1 -> n3
+n4 [label="Print:"];
+n5 [label="Method call from class:"];
+n6 [label="new ID():"];
+n7 [label="Identifier:Bar"];
+n6 -> n7
+n5 -> n6
+n8 [label="Identifier:foo"];
+n5 -> n8
+n4 -> n5
+n1 -> n4
+n0 -> n1
+n9 [label="classDeclaration:"];
+n10 [label="Identifier:Bar"];
+n9 -> n10
+n11 [label="MethodDeclarations:"];
+n12 [label="MethodDeclarations:"];
+n13 [label="Method:"];
+n14 [label="int:"];
+n13 -> n14
+n15 [label="Identifier:foo"];
+n13 -> n15
+n16 [label="Method body:"];
+n17 [label="Method body:"];
+n18 [label="Method body:"];
+n19 [label="Method body:"];
+n20 [label="Method body:"];
+n21 [label="Variable:"];
+n22 [label="int:"];
+n21 -> n22
+n23 [label="Identifier:aux"];
+n21 -> n23
+n20 -> n21
+n24 [label="Variable:"];
+n25 [label="bool:"];
+n24 -> n25
+n26 [label="Identifier:aux2"];
+n24 -> n26
+n20 -> n24
+n19 -> n20
+n27 [label="Assign:"];
+n28 [label="Identifier:aux"];
+n27 -> n28
+n29 [label="int:1"];
+n27 -> n29
+n19 -> n27
+n18 -> n19
+n30 [label="Assign:"];
+n31 [label="Identifier:aux2"];
+n30 -> n31
+n32 [label="True:"];
+n30 -> n32
+n18 -> n30
+n17 -> n18
+n33 [label="Assign:"];
+n34 [label="Identifier:aux"];
+n33 -> n34
+n35 [label="Method call from class:"];
+n36 [label="this:"];
+n35 -> n36
+n37 [label="Identifier:foo2"];
+n35 -> n37
+n38 [label="(Expression):"];
+n39 [label="Identifier:aux"];
+n38 -> n39
+n35 -> n38
+n33 -> n35
+n17 -> n33
+n16 -> n17
+n40 [label="Assign:"];
+n41 [label="Identifier:aux"];
+n40 -> n41
+n42 [label="Method call from class:"];
+n43 [label="this:"];
+n42 -> n43
+n44 [label="Identifier:foo3"];
+n42 -> n44
+n45 [label="ExpressionList:"];
+n46 [label="ExpressionList:"];
+n47 [label="(Expression):"];
+n48 [label="int:2"];
+n47 -> n48
+n46 -> n47
+n49 [label="int:5"];
+n46 -> n49
+n45 -> n46
+n50 [label="Identifier:aux2"];
+n45 -> n50
+n42 -> n45
+n40 -> n42
+n16 -> n40
+n13 -> n16
+n51 [label="Identifier:aux"];
+n13 -> n51
+n12 -> n13
+n52 [label="Method:"];
+n53 [label="int:"];
+n52 -> n53
+n54 [label="Identifier:foo2"];
+n52 -> n54
+n55 [label="Parameter:"];
+n56 [label="int:"];
+n55 -> n56
+n57 [label="Identifier:p1"];
+n55 -> n57
+n52 -> n55
+n58 [label="IfElse:"];
+n59 [label="LessThan:"];
+n60 [label="Identifier:p1"];
+n59 -> n60
+n61 [label="int:2"];
+n59 -> n61
+n58 -> n59
+n62 [label="Print:"];
+n63 [label="int:10"];
+n62 -> n63
+n58 -> n62
+n64 [label="Print:"];
+n65 [label="int:0"];
+n64 -> n65
+n58 -> n64
+n52 -> n58
+n66 [label="int:1"];
+n52 -> n66
+n12 -> n52
+n11 -> n12
+n67 [label="Method:"];
+n68 [label="int:"];
+n67 -> n68
+n69 [label="Identifier:foo3"];
+n67 -> n69
+n70 [label="Parameters:"];
+n71 [label="int:"];
+n70 -> n71
+n72 [label="Identifier:p1"];
+n70 -> n72
+n73 [label="Parameters:"];
+n74 [label="int:"];
+n73 -> n74
+n75 [label="Identifier:p2"];
+n73 -> n75
+n76 [label="Parameter:"];
+n77 [label="bool:"];
+n76 -> n77
+n78 [label="Identifier:p3"];
+n76 -> n78
+n73 -> n76
+n70 -> n73
+n67 -> n70
+n79 [label="Method body:"];
+n80 [label="Method body:"];
+n81 [label="IfElse:"];
+n82 [label="Identifier:p3"];
+n81 -> n82
+n83 [label="Print:"];
+n84 [label="int:1"];
+n83 -> n84
+n81 -> n83
+n85 [label="Print:"];
+n86 [label="int:0"];
+n85 -> n86
+n81 -> n85
+n80 -> n81
+n87 [label="Print:"];
+n88 [label="Identifier:p1"];
+n87 -> n88
+n80 -> n87
+n79 -> n80
+n89 [label="Print:"];
+n90 [label="SubExpression:"];
+n91 [label="Identifier:p2"];
+n90 -> n91
+n92 [label="Identifier:p1"];
+n90 -> n92
+n89 -> n90
+n79 -> n89
+n67 -> n79
+n93 [label="int:4"];
+n67 -> n93
+n11 -> n67
+n9 -> n11
+n0 -> n9
+}
