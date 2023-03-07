@@ -8,6 +8,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+#include "BB.hpp"
+
 using namespace std;
 
 
@@ -59,7 +61,7 @@ public:
 	  }
   	}
 		
-	virtual void execute(Node* node) {}; // make pure virtual later
+	virtual string genIR(BB* currentBlock) {} 
 	
 };
 
@@ -73,6 +75,9 @@ public:
 	string getVal() {
 		return value;
 	}
+	string genIR(BB* currentBlock) override {
+		return getVal();
+	}
 };
 
 class Identifier : public Node {
@@ -82,30 +87,65 @@ public:
 	string getVal() {
 		return value;
 	}
+	string genIR(BB* currentBlock) override {
+		return getVal();
+	}
 };
 
 class PlusOP : public Node {
 public:
 	PlusOP(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~PlusOP() = default;
+	string genIR(BB* currentBlock) override {
+		string name = "RAndomName"; // BB->getRandomName
+		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
+		string rhs_name = children[1]->genIR(currentBlock);
+		ExprTac* in = new ExprTac("+", lhs_name, rhs_name, name);
+		currentBlock->add_Tac(in);
+		return name;
+	}
 };
 
 class MinusOP : public Node {
 public:
 	MinusOP(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~MinusOP() = default;
+	string genIR(BB* currentBlock) override {
+		string name = "RAndomName"; // BB->getRandomName
+		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
+		string rhs_name = children[1]->genIR(currentBlock);
+		ExprTac* in = new ExprTac("-", lhs_name, rhs_name, name);
+		currentBlock->add_Tac(in);
+		return name;
+	}
 };
 
 class MultOP : public Node {
 public:
 	MultOP(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~MultOP() = default;
+	string genIR(BB* currentBlock) override {
+		string name = "RAndomName"; // BB->getRandomName
+		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
+		string rhs_name = children[1]->genIR(currentBlock);
+		ExprTac* in = new ExprTac("*", lhs_name, rhs_name, name);
+		currentBlock->add_Tac(in);
+		return name;
+	}
 };
 
 class DivOP : public Node {
 public:
 	DivOP(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~DivOP() = default;
+	string genIR(BB* currentBlock) override {
+		string name = "RAndomName"; // BB->getRandomName
+		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
+		string rhs_name = children[1]->genIR(currentBlock);
+		ExprTac* in = new ExprTac("/", lhs_name, rhs_name, name);
+		currentBlock->add_Tac(in);
+		return name;
+	}
 };
 
 class AssignExpr : public Node {
