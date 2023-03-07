@@ -27,6 +27,10 @@ void BB::setTrue(BB* trueChild) {
     this->true_exit = trueChild;
 }
 
+void BB::add_Tac(Tac* tac) {
+    this->tac_instructions.push_back(tac);
+}
+
 void BB::generate_BB() {
 	std:ofstream outStream;
 	char* filename = "CFG-tree.dot"; // Outfile name
@@ -37,7 +41,7 @@ void BB::generate_BB() {
 	generate_BB_content(count, &outStream);
 	outStream << "}" << endl;
 	outStream.close();
-	printf("\nBuilt a parse-tree at %s. Use 'make CFG-tree' to generate the pdf version.\n", filename);
+	printf("\nBuilt a parse-tree at %s. Use 'make cfg-tree' to generate the pdf version.\n", filename);
 }
 
 void BB::generate_BB_content(int &count, ofstream *outStream) {
@@ -47,14 +51,13 @@ void BB::generate_BB_content(int &count, ofstream *outStream) {
         *outStream << "\n" << tac->printTac();
     }
     *outStream << "\"];" << "\n"; 
-    if (false_exit != nullptr) {
-        *outStream << "block_" << id << " -> block_" << false_exit->id << " [xlabel = \"false\"]" << endl ;
-        false_exit->generate_BB_content(count, outStream);
-    }
     if (true_exit != nullptr) {
-        *outStream << "block_" << id << " -> block_" << false_exit->id << " [xlabel = \"true\"]" << endl ;
         true_exit->generate_BB_content(count, outStream);
+        *outStream << "block_" << id << " -> block_" << true_exit->id << " [xlabel = \"true\"]" << endl ;
     }
-    
+    if (false_exit != nullptr) {
+        false_exit->generate_BB_content(count, outStream);
+        *outStream << "block_" << id << " -> block_" << false_exit->id << " [xlabel = \"false\"]" << endl ;
+    }
 
 }

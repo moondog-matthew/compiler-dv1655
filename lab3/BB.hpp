@@ -14,12 +14,14 @@ private:
     BB* false_exit;
     BB* true_exit;
     int id;
+    /*Help functions*/
     void generate_BB_content(int &count, ofstream *outStream);
 
 public:
     BB();
     ~BB();
 
+    /* Getters and setters */
     string& getName();
     std::vector<Tac*>& getInstructions();
     Tac* getCondition();
@@ -27,7 +29,10 @@ public:
     BB*  getTrue();
     void setFalse(BB* falseChild);
     void setTrue(BB* trueChild);
+
+    void add_Tac(Tac* tac);
     void generate_BB();
+
 
 };
 

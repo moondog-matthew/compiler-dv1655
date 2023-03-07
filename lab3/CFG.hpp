@@ -5,7 +5,7 @@
 class CFG {
 private: 
     BB* entry;
-    BB* current;
+
 public:
     CFG();
     CFG(Node* node);
