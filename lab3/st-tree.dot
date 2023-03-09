@@ -1,0 +1,20 @@
+digraph {
+n0 [label="Symbol Table:Program
+name: Factorial; record: Class; type: Factorial;
+name: Fac; record: Class; type: Fac;"];
+n1 [label="Symbol Table:Factorial
+name: this; record: Class; type: Factorial;
+name: main; record: Method; type: void;"];
+n2 [label="Symbol Table:main
+name: a; record: Variable; type: String[];"];
+n1 -> n2
+n0 -> n1
+n3 [label="Symbol Table:Fac
+name: this; record: Class; type: Fac;
+name: ComputeFac; record: Method; type: int;"];
+n4 [label="Symbol Table:ComputeFac
+name: num; record: Variable; type: int;
+name: num_aux; record: Variable; type: int;"];
+n3 -> n4
+n0 -> n3
+}

@@ -12,3 +12,7 @@ CFG::CFG(Node* node) {
 void CFG::print_CFG() {
     entry->generate_BB();
 }
+
+void CFG::populate_CFG(Node* node) {
+    
+}

@@ -1,6 +1,7 @@
 #ifndef CFG_HPP
 #define CFG_HPP
 #include "BB.hpp"
+#include "Node.h"
 
 class CFG {
 private: 

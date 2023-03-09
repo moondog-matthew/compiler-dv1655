@@ -3,6 +3,7 @@
 BB::BB() {
     true_exit = nullptr;
     false_exit = nullptr;
+    jumpBlock = nullptr;
 }
 
 string& BB::getName() {

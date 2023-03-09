@@ -1,3 +1,4 @@
+
 #ifndef NODE_H
 #define	NODE_H
 
@@ -7,11 +8,11 @@
 #include <vector>
 #include <unistd.h>
 #include <sys/wait.h>
-
+#include <map>
 #include "BB.hpp"
-
 using namespace std;
 
+extern std::map<string, string> BBnames; 
 
 class Node {
 public:
@@ -61,7 +62,12 @@ public:
 	  }
   	}
 		
-	virtual string genIR(BB* currentBlock) {} 
+	virtual string genIR(BB* &currentBlock) {
+		for(auto const& child : children) {
+			child->genIR(currentBlock);
+		}
+		return value;
+	} 
 	
 };
 
@@ -75,7 +81,7 @@ public:
 	string getVal() {
 		return value;
 	}
-	string genIR(BB* currentBlock) override {
+	string genIR(BB* &currentBlock) override {
 		return getVal();
 	}
 };
@@ -87,7 +93,7 @@ public:
 	string getVal() {
 		return value;
 	}
-	string genIR(BB* currentBlock) override {
+	string genIR(BB* &currentBlock) override {
 		return getVal();
 	}
 };
@@ -96,8 +102,10 @@ class PlusOP : public Node {
 public:
 	PlusOP(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~PlusOP() = default;
-	string genIR(BB* currentBlock) override {
+	string genIR(BB* &currentBlock) override {
 		string name = "RAndomName"; // BB->getRandomName
+		/* ADD temp randmname to ST*/
+		BBnames.insert(pair<string, string>(name, "int"));
 		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock);
 		ExprTac* in = new ExprTac("+", lhs_name, rhs_name, name);
@@ -110,7 +118,7 @@ class MinusOP : public Node {
 public:
 	MinusOP(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~MinusOP() = default;
-	string genIR(BB* currentBlock) override {
+	string genIR(BB* &currentBlock) override {
 		string name = "RAndomName"; // BB->getRandomName
 		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock);
@@ -124,7 +132,7 @@ class MultOP : public Node {
 public:
 	MultOP(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~MultOP() = default;
-	string genIR(BB* currentBlock) override {
+	string genIR(BB* &currentBlock) override {
 		string name = "RAndomName"; // BB->getRandomName
 		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock);
@@ -138,7 +146,7 @@ class DivOP : public Node {
 public:
 	DivOP(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~DivOP() = default;
-	string genIR(BB* currentBlock) override {
+	string genIR(BB* &currentBlock) override {
 		string name = "RAndomName"; // BB->getRandomName
 		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock);
@@ -158,30 +166,81 @@ class GreaterThan : public Node {
 public:
 	GreaterThan(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~GreaterThan() = default;
+	string genIR(BB* &currentBlock) override {
+		string name = "RAndomName"; // BB->getRandomName
+		/* ADD temp randmname to ST*/
+		BBnames.insert(pair<string, string>(name, "bool"));
+		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
+		string rhs_name = children[1]->genIR(currentBlock);
+		ExprTac* in = new ExprTac(">", lhs_name, rhs_name, name);
+		currentBlock->add_Tac(in);
+		return name;
+	}
+
 };
 
 class LessThan : public Node {
 public:
 	LessThan(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~LessThan() = default;
+	string genIR(BB* &currentBlock) override {
+		string name = "RAndomName"; // BB->getRandomName
+		/* ADD temp randmname to ST*/
+		BBnames.insert(pair<string, string>(name, "bool"));
+		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
+		string rhs_name = children[1]->genIR(currentBlock);
+		ExprTac* in = new ExprTac("<", lhs_name, rhs_name, name);
+		currentBlock->add_Tac(in);
+		return name;
+	}
 };
 
 class Equals : public Node {
 public:
 	Equals(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~Equals() = default;
+	string genIR(BB* &currentBlock) override {
+		string name = "RAndomName"; // BB->getRandomName
+		/* ADD temp randmname to ST*/
+		BBnames.insert(pair<string, string>(name, "int"));
+		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
+		string rhs_name = children[1]->genIR(currentBlock);
+		ExprTac* in = new ExprTac("==", lhs_name, rhs_name, name);
+		currentBlock->add_Tac(in);
+		return name;
+	}
 };
 
 class Or : public Node {
 public:
 	Or(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~Or() = default;
+	string genIR(BB* &currentBlock) override {
+		string name = "RAndomName"; // BB->getRandomName
+		/* ADD temp randmname to ST*/
+		BBnames.insert(pair<string, string>(name, "bool"));
+		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
+		string rhs_name = children[1]->genIR(currentBlock);
+		ExprTac* in = new ExprTac("||", lhs_name, rhs_name, name);
+		currentBlock->add_Tac(in);
+		return name;
+	}
 };
 
 class And : public Node {
 public:
 	And(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~And() = default;
+	string genIR(BB* &currentBlock) override {
+		string name = "RAndomName"; // BB->getRandomName
+		/* ADD temp randmname to ST*/
+		BBnames.insert(pair<string, string>(name, "int"));
+		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
+		string rhs_name = children[1]->genIR(currentBlock);
+		ExprTac* in = new ExprTac("&&", lhs_name, rhs_name, name);
+		currentBlock->add_Tac(in);
+		return name;
+	}
 };
 
 class Index : public Node {
@@ -282,18 +341,66 @@ class IfStmt : public Node {
 public:
 	IfStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~IfStmt() = default;
+	string genIR(BB* &currentBlock) override {	
+		BB* tBlock = new BB();
+		BB* fBlock = currentBlock;
+		BB* jBlock = new BB();
+		tBlock->setTrue(jBlock);
+		fBlock->setTrue(jBlock);
+		currentBlock->setTrue(tBlock);
+		currentBlock->setFalse(fBlock);
+
+		string conName = children[0]->genIR(currentBlock); // boolean condition
+		string tName = children[1]->genIR(tBlock);
+		string fName = children[2]->genIR(fBlock); // if not true, do nothing
+
+		currentBlock = jBlock; // return returnBlock
+		return "";
+	}
+	
 };
 
 class IfElseStmt : public Node {
 public:
 	IfElseStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~IfElseStmt() = default;
+	string genIR(BB* &currentBlock) override {
+		
+		BB* tBlock = new BB();
+		BB* fBlock = new BB();
+		BB* jBlock = new BB();
+		tBlock->setTrue(jBlock);
+		fBlock->setTrue(jBlock);
+		currentBlock->setTrue(tBlock);
+		currentBlock->setFalse(fBlock);
+
+		string conName = children[0]->genIR(currentBlock); // boolean condition
+		string tName = children[1]->genIR(tBlock);
+		string fName = children[2]->genIR(fBlock);
+
+		currentBlock = jBlock; // return returnBlock
+		return "";
+	}
 };
 
 class WhileStmt : public Node {
 public:
 	WhileStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~WhileStmt() = default;
+
+	string genIR(BB* &currentBlock) override {
+		BB* hBlock = new BB(); // header block
+		BB* bBlock = new BB(); // body block
+		BB* jBlock = new BB(); // jump block
+		string hName = children[0]->genIR(hBlock);
+		string bName = children[1]->genIR(bBlock);
+		
+		hBlock->setTrue(bBlock);
+		hBlock->setFalse(jBlock);
+		bBlock->setTrue(hBlock);
+		currentBlock->setTrue(hBlock);
+		currentBlock = jBlock; // return jumpBlock
+	}
 };
 
 class PrintStmt : public Node {
