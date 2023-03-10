@@ -278,6 +278,16 @@ public:
 	string getIden() {
 		return children[1]->value;
 	}
+	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames) override {
+		string name = currentBlock->generate_name(); // BB->getRandomName
+		BBnames.insert(pair<string, string>(name, ""));
+		string expr = children[0]->genIR(currentBlock, methods, BBnames); // still in same block, only statements create news
+		string func = children[1]->genIR(currentBlock, methods, BBnames);
+		// string param_num = to_string(ST->lookup(this->getIden()));
+		// ExprTac* in = new ExprTac(func, param_num, name);
+		// currentBlock->add_Tac(in);
+		return name;
+	}
 };
 
 class TrueVal : public Node {
@@ -317,6 +327,7 @@ class IdenAlloc : public Node {
 public:
 	IdenAlloc(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~IdenAlloc() = default;
+
 };
 
 class Negation : public Node {
