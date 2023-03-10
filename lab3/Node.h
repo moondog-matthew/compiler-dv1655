@@ -298,12 +298,16 @@ public:
 		BBnames.insert(pair<string, string>(name, ""));
 		string expr = children[0]->genIR(currentBlock, methods, BBnames); // still in same block, only statements create news
 		string func = children[1]->genIR(currentBlock, methods, BBnames);
-		// Record* methRec = ST->lookup(this->getIden())
-		// vector<variableRecord*> varRecsVec = methRec->getParameters(); // assume semantically correct
-		// string param_num = to_string(varRecsVec.size());
-		// ExprTac* in = new ExprTac(func, param_num, name);
-		// currentBlock->add_Tac(in);
-		return name;
+		int param_num = 0; 
+		if (children.size() > 2) {
+			for (auto const& child : children) {
+				++param_num; // one more parameter
+				child->genIR(currentBlock, methods, BBnames);
+			}
+		}
+		MethCallTac* in = new MethCallTac(func, to_string(param_num), name);
+		currentBlock->add_Tac(in);
+		return "";
 	}
 };
 
@@ -555,6 +559,13 @@ public:
 		Identifier* identifier = dynamic_cast<Identifier*>(children[1]);
 		return identifier->getVal();
 	}
+
+	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames) override {
+		string paramType = children[0]->genIR(currentBlock, methods, BBnames);
+		string paramName = children[1]->genIR(currentBlock, methods, BBnames);
+		ParTac* parTac = new ParTac(paramName);
+	}
+	
 };
 
 class ParameterList : public Node {
