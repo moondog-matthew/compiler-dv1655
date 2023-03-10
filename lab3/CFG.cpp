@@ -44,7 +44,7 @@ void CFG::generate_CFG_content(BB* block, int &count, ofstream *outStream) {
 void CFG::populate_CFG(Node* node) {
     methods.push_back(entry);
     int val = 0;
-    node->genIR(&entry, methods, BBnames, val);
+    node->genIR(entry, methods, BBnames, val);
 
     for (auto const& meth : methods) {
         cout << "Enters" << endl;
