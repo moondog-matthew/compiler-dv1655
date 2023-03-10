@@ -70,3 +70,8 @@ CondTac::CondTac(string _x, string _label) : x(_x), label(_label) {}
 string CondTac::printTac() const {
     return "iffalse " + x + " goto " + label;
 }
+
+PrintTac::PrintTac(string _expr) : expr(_expr) {}
+string PrintTac::printTac() const {
+    return "Print: " + expr;
+}

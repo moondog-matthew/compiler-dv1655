@@ -2,6 +2,12 @@ digraph {
 graph [ splines = ortho ]
 	node [ shape = box ];
 block_0 [label="Block:
-temporary_1 := call ComputeFac, 3"];
+temporary_1 := call Start, 3
+Print: temporary_1"];
 block_1 [label="Block:"];
+block_2 [label="Block:"];
+block_3 [label="Block:"];
+block_4 [label="Block:"];
+block_5 [label="Block:"];
+block_6 [label="Block:"];
 }

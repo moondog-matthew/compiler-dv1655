@@ -301,7 +301,7 @@ public:
 		}
 		MethCallTac* in = new MethCallTac(func, to_string(param_num), name);
 		(*currentBlock)->add_Tac(in);
-		return "";
+		return name;
 	}
 };
 
@@ -443,6 +443,14 @@ class PrintStmt : public Node {
 public:
 	PrintStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~PrintStmt() = default;
+	
+	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+		string expr = children[0]->genIR(currentBlock, methods, BBnames, id);
+		PrintTac* in = new PrintTac(expr);
+		(*currentBlock)->add_Tac(in);
+		return "";
+	}
+
 };
 
 class AssignStmt : public Node {
@@ -613,9 +621,8 @@ public:
 		}
 	}
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
-		BB* newBlock = new BB();
-		*currentBlock = newBlock;
-		methods.push_back(newBlock);
+		*currentBlock = new BB();
+		methods.push_back(*currentBlock);
 		return "";
 	}
 	

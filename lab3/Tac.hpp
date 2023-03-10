@@ -118,4 +118,11 @@ public:
     string printTac() const override;
 };
 
+class PrintTac : public Tac {
+public:
+    string expr;
+    PrintTac(string _expr);
+    string printTac() const override;
+};
+
 #endif // TAC_HPP
