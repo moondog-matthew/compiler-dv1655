@@ -26,14 +26,17 @@ void CFG::generate_CFG() {
 
 void CFG::generate_CFG_content(BB* block, int &count, ofstream *outStream) {
     int id = count++;
+    printedBlocks.push_back(block->getName());
     *outStream << "block_" << id << " [label=\"" << "Block" << ":" << block->getName();
     for(const auto& tac : block->getInstructions()) {
         *outStream << "\n" << tac->printTac();
     }
     *outStream << "\"];" << "\n"; 
     if (block->getTrue() != nullptr) {
-        generate_CFG_content(block->getTrue(), count, outStream);
         *outStream << "block_" << id << " -> block_" << id << " [xlabel = \"true\"]" << endl ;
+        if (std::find(printedBlocks.begin(), printedBlocks.end(), block->getTrue()->getName()) == printedBlocks.end()) {
+            generate_CFG_content(block->getTrue(), count, outStream);
+        }
     }
     if (block->getFalse() != nullptr) {
         generate_CFG_content(block->getFalse(), count, outStream);
