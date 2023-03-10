@@ -6,6 +6,8 @@
 class CFG {
 private: 
     BB* entry;
+    vector<BB*> methods;
+    std::map<string, string> BBnames;
 
 public:
     CFG();
