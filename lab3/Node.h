@@ -410,16 +410,16 @@ public:
 	IfElseStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~IfElseStmt() = default;
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames) override {
-		BB* tBlock = new BB();
-		BB* fBlock = new BB();
+		BB** tBlock = new BB*();
+		BB** fBlock = new BB*();
 		BB* jBlock = new BB();
-		tBlock->setTrue(jBlock);
-		fBlock->setTrue(jBlock);
-		(*currentBlock)->setTrue(tBlock);
-		(*currentBlock)->setFalse(fBlock);
+		(*tBlock)->setTrue(jBlock);
+		(*fBlock)->setTrue(jBlock);
+		(*currentBlock)->setTrue(*tBlock);
+		(*currentBlock)->setFalse(*fBlock);
 		string conName = children[0]->genIR(currentBlock, methods, BBnames); // boolean condition
-		string tName = children[1]->genIR(&tBlock, methods, BBnames);
-		string fName = children[2]->genIR(&fBlock, methods, BBnames);
+		string tName = children[1]->genIR(tBlock, methods, BBnames);
+		string fName = children[2]->genIR(fBlock, methods, BBnames);
 		*currentBlock = jBlock; // return returnBlock
 		return "";
 	}
@@ -612,6 +612,12 @@ public:
 			getParam(node->children[2], params);
 		}
 	}
+	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames) override {
+		BB* newBlock = new BB();
+		*currentBlock = newBlock;
+		methods.push_back(newBlock);
+		return "";
+	}
 	
 };
 
@@ -621,11 +627,8 @@ public:
 	virtual ~MethodDeclarations() = default;
 };
 
-
 /*
 	Class Declaration
-
-	May want to divide into multple classes of class declarations later
 */
 
 class ClassDeclaration : public Node {
