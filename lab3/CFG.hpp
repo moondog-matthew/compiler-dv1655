@@ -13,7 +13,8 @@ public:
     CFG();
     CFG(Node* node);
     void populate_CFG(Node* node);
-    void print_CFG();
+    void generate_CFG();
+    void generate_CFG_content(BB* block, int &count, ofstream *outStream);
 
 };
 

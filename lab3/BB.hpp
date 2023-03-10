@@ -18,9 +18,6 @@ private:
     BB* false_exit;
     BB* true_exit;
     BB* jumpBlock;
-    int id;
-    /*Help functions*/
-    void generate_BB_content(int &count, ofstream *outStream);
 
 public:
     BB();

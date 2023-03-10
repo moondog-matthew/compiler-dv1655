@@ -49,7 +49,7 @@ int main(int argc, char **argv)
     //   // cout << "Contains Error" << endl;
     // }
     CFG* cfg = new CFG(root);
-    cfg->print_CFG();
+    cfg->generate_CFG();
     
     delete ST;
     delete SA;
