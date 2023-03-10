@@ -103,7 +103,7 @@ public:
 	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames) override {
 		string name = currentBlock->generate_name(); // BB->getRandomName
 		/* ADD temp randmname to ST*/
-		// BBnames.insert(pair<string, string>(name, "int"));
+		BBnames.insert(pair<string, string>(name, "int"));
 		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock, methods, BBnames);
 		ExprTac* in = new ExprTac("+", lhs_name, rhs_name, name);
@@ -118,6 +118,7 @@ public:
 	virtual ~MinusOP() = default;
 	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames) override {
 		string name = currentBlock->generate_name(); // BB->getRandomName
+		BBnames.insert(pair<string, string>(name, "int"));
 		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock, methods, BBnames);
 		ExprTac* in = new ExprTac("-", lhs_name, rhs_name, name);
@@ -132,6 +133,7 @@ public:
 	virtual ~MultOP() = default;
 	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames) override {
 		string name = currentBlock->generate_name(); // BB->getRandomName
+		BBnames.insert(pair<string, string>(name, "int"));
 		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock, methods, BBnames);
 		ExprTac* in = new ExprTac("*", lhs_name, rhs_name, name);
@@ -146,6 +148,7 @@ public:
 	virtual ~DivOP() = default;
 	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames) override {
 		string name = currentBlock->generate_name(); // BB->getRandomName
+		BBnames.insert(pair<string, string>(name, "int"));
 		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock, methods, BBnames);
 		ExprTac* in = new ExprTac("/", lhs_name, rhs_name, name);
@@ -166,8 +169,7 @@ public:
 	virtual ~GreaterThan() = default;
 	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames) override {
 		string name = currentBlock->generate_name(); // BB->getRandomName
-		/* ADD temp randmname to ST*/
-		// BBnames.insert(pair<string, string>(name, "bool"));
+		BBnames.insert(pair<string, string>(name, "bool"));
 		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock, methods, BBnames);
 		ExprTac* in = new ExprTac(">", lhs_name, rhs_name, name);
@@ -183,8 +185,7 @@ public:
 	virtual ~LessThan() = default;
 	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames) override {
 		string name = currentBlock->generate_name(); // BB->getRandomName
-		/* ADD temp randmname to ST*/
-		// BBnames.insert(pair<string, string>(name, "bool"));
+		BBnames.insert(pair<string, string>(name, "bool"));
 		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock, methods, BBnames);
 		ExprTac* in = new ExprTac("<", lhs_name, rhs_name, name);
@@ -199,8 +200,7 @@ public:
 	virtual ~Equals() = default;
 	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames) override {
 		string name = currentBlock->generate_name(); // BB->getRandomName
-		/* ADD temp randmname to ST*/
-		// BBnames.insert(pair<string, string>(name, "int"));
+		BBnames.insert(pair<string, string>(name, "int"));
 		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock, methods, BBnames);
 		ExprTac* in = new ExprTac("==", lhs_name, rhs_name, name);
@@ -215,8 +215,7 @@ public:
 	virtual ~Or() = default;
 	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames) override {
 		string name = currentBlock->generate_name(); // BB->getRandomName
-		/* ADD temp randmname to ST*/
-		// BBnames.insert(pair<string, string>(name, "bool"));
+		BBnames.insert(pair<string, string>(name, "bool"));
 		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock, methods, BBnames);
 		ExprTac* in = new ExprTac("||", lhs_name, rhs_name, name);
@@ -231,8 +230,7 @@ public:
 	virtual ~And() = default;
 	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames) override {
 		string name = currentBlock->generate_name(); // BB->getRandomName
-		/* ADD temp randmname to ST*/
-		// BBnames.insert(pair<string, string>(name, "int"));
+		BBnames.insert(pair<string, string>(name, "int"));
 		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock, methods, BBnames);
 		ExprTac* in = new ExprTac("&&", lhs_name, rhs_name, name);
