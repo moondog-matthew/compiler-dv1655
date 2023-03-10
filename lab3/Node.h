@@ -162,9 +162,8 @@ public:
 	AssignExpr(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~AssignExpr() = default;
 	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames) override {
-		string name = currentBlock->generate_name(); 
-		BBnames.insert(pair<string, string>(name, ""));
-		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames); // still in same block, only statements create news
+		string name = children[0]->genIR(currentBlock, methods, BBnames);
+		string lhs_name = children[1]->genIR(currentBlock, methods, BBnames); // still in same block, only statements create news
 		CopyTac* in = new CopyTac(lhs_name, name);
 		currentBlock->add_Tac(in);
 		return name;
@@ -257,6 +256,14 @@ class LengthOf : public Node {
 public:
 	LengthOf(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~LengthOf() = default;
+	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames) override {
+		string name = currentBlock->generate_name(); 
+		BBnames.insert(pair<string, string>(name, "int"));
+		string y_name = children[0]->genIR(currentBlock, methods, BBnames); // what to take length of
+		LengthTac* in = new LengthTac(y_name, name);
+		currentBlock->add_Tac(in);
+		return name;
+	}
 };
 
 class Expression : public Node {
@@ -514,6 +521,16 @@ class MethodBody : public Node {
 public:
 	MethodBody(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~MethodBody() = default;
+	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames) override {
+		string name;
+		for (auto const& child: children) {
+			name = child->genIR(currentBlock, methods, BBnames);
+		}
+		
+		ReturnTac* in = new ReturnTac(name); // the last iterated will be return name --> 
+		currentBlock->add_Tac(in);
+		return "";
+	}
 };
 
 /*
