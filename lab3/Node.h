@@ -367,6 +367,9 @@ class NonStmt : public Node {
 public:
 	NonStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~NonStmt() = default;
+	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {	
+		return "";
+	}
 };
 
 class Statements : public Node {
@@ -379,23 +382,22 @@ class IfStmt : public Node {
 public:
 	IfStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~IfStmt() = default;
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {	
-		// cout << "Enters" << endl;
-		BB* tBlock = new BB();
-		BB* fBlock = currentBlock;
-		BB* jBlock = new BB();
-		tBlock->setTrue(jBlock);
-		fBlock->setTrue(jBlock);
-		currentBlock->setTrue(tBlock);
-		currentBlock->setFalse(fBlock);
+	// string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {	
+	// 	BB* tBlock = new BB();
+	// 	BB* fBlock = currentBlock;
+	// 	BB* jBlock = new BB();
+	// 	tBlock->setTrue(jBlock);
+	// 	fBlock->setTrue(jBlock);
+	// 	currentBlock->setTrue(tBlock);
+	// 	currentBlock->setFalse(fBlock);
 
-		string conName = children[0]->genIR(currentBlock, methods, BBnames, id); // boolean condition
-		string tName = children[1]->genIR(tBlock, methods, BBnames, id);
-		// string fName = children[2]->genIR(fBlock, methods, BBnames); // if not true, do nothing
+	// 	string conName = children[0]->genIR(currentBlock, methods, BBnames, id); // boolean condition
+	// 	string tName = children[1]->genIR(tBlock, methods, BBnames, id);
+	// 	string fName = children[2]->genIR(fBlock, methods, BBnames); // if not true, do nothing
 
-		currentBlock = jBlock; // return returnBlock
-		return "";
-	}
+	// 	currentBlock = jBlock; // return returnBlock
+	// 	return "";
+	// }
 	
 };
 
@@ -424,19 +426,19 @@ public:
 	WhileStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~WhileStmt() = default;
 
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
-		BB* hBlock = new BB(); // header block
-		BB* bBlock = new BB(); // body block
-		BB* jBlock = new BB(); // jump block
-		string hName = children[0]->genIR(hBlock, methods, BBnames, id);
-		string bName = children[1]->genIR(bBlock, methods, BBnames, id);
+	// string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	// 	BB* hBlock = new BB(); // header block
+	// 	BB* bBlock = new BB(); // body block
+	// 	BB* jBlock = new BB(); // jump block
+	// 	string hName = children[0]->genIR(hBlock, methods, BBnames, id);
+	// 	string bName = children[1]->genIR(bBlock, methods, BBnames, id);
 		
-		hBlock->setTrue(bBlock);
-		hBlock->setFalse(jBlock);
-		bBlock->setTrue(hBlock);
-		currentBlock->setTrue(hBlock);
-		currentBlock = jBlock; // return jumpBlock
-	}
+	// 	hBlock->setTrue(bBlock);
+	// 	hBlock->setFalse(jBlock);
+	// 	bBlock->setTrue(hBlock);
+	// 	currentBlock->setTrue(hBlock);
+	// 	currentBlock = jBlock; // return jumpBlock
+	// }
 };
 
 class PrintStmt : public Node {
@@ -536,10 +538,9 @@ public:
 		for (auto const& child: children) {
 			name = child->genIR(currentBlock, methods, BBnames, id);
 		}
-		
 		ReturnTac* in = new ReturnTac(name); // the last iterated will be return name --> 
 		currentBlock->add_Tac(in);
-		return "";
+		return name;
 	}
 };
 
@@ -624,6 +625,10 @@ public:
 	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		currentBlock = new BB();
 		methods.push_back(currentBlock);
+		
+		for (auto const& child : children) {
+			child->genIR(currentBlock, methods, BBnames, id);
+		}
 		return "";
 	}
 	

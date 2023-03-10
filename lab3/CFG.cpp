@@ -47,7 +47,6 @@ void CFG::populate_CFG(Node* node) {
     node->genIR(entry, methods, BBnames, val);
 
     for (auto const& meth : methods) {
-        cout << "Enters" << endl;
         for (auto const& tac : meth->getInstructions()) {
             cout << tac->printTac() << endl;
         }
