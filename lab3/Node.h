@@ -336,6 +336,10 @@ class IntArray : public Node {
 public:
 	IntArray(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~IntArray() = default;
+
+	string genIR(BB** currentBlock, vector<BB*> & methods, std::map<string, string> &BBnames) override {
+		
+	}
 };
 
 class IdenAlloc : public Node {
@@ -441,26 +445,46 @@ public:
 
 class PrintStmt : public Node {
 public:
-	PrintStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
+	PrintStmt(string t, string v, int l) { type = t; value = v; lineno = l; }
 	virtual ~PrintStmt() = default;
 };
 
 class AssignStmt : public Node {
-public:
-	AssignStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
-	virtual ~AssignStmt() = default;
+  public:
+	AssignStmt(string t, string v, int l) { type = t; value = v; lineno = l; }
+	virtual ~AssignStmt() = default;	
 };
 
 class ArrayIndexAssign : public Node {
-public:
+  public:
 	ArrayIndexAssign(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~ArrayIndexAssign() = default;
+
+	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames) override {
+		string name = children[0]->genIR(currentBlock, methods, BBnames); // x
+		string arr_name = children[1]->genIR(currentBlock, methods, BBnames); // y
+		string ind_name = children[2]->genIR(currentBlock, methods, BBnames); // i
+
+		ArrAccTac* in = new ArrAccTac(name, arr_name, ind_name);
+		(*currentBlock)->add_Tac(in);
+		return name;
+	}
 };
 
 class Index : public Node {
   public:
 	Index(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~Index() = default;
+
+	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames) override {
+		string arr_name = children[0]->genIR(currentBlock, methods, BBnames); // y
+		string ind_name = children[1]->genIR(currentBlock, methods, BBnames); // i
+		string name = children[2]->genIR(currentBlock, methods, BBnames); // x
+
+		IndTac* in = new IndTac(arr_name, ind_name, name);
+		(*currentBlock)->add_Tac(in);
+		return name;
+	}	
 };
 
 /*

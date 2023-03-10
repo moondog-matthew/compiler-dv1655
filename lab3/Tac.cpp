@@ -20,7 +20,7 @@ string CopyTac::printTac() const {
 
 ArrAccTac::ArrAccTac(string _x, string _y, string _i) : x(_x), y(_y), i(_i) {}
 string ArrAccTac::printTac() const {
-    /* How do we handle ambiguity? Two different classs? */
+    /* How do we handle ambiguity? Two different class? */
     return x + " := " + y + "[" + i + "]";
     // return y + "[" + i + "] + " := " + x;
 }
