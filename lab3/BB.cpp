@@ -62,3 +62,7 @@ void BB::generate_BB_content(int &count, ofstream *outStream) {
     }
 
 }
+
+string BB::generate_name() const {
+    return "Block_" + to_string(id);
+}

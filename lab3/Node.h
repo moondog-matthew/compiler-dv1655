@@ -103,9 +103,9 @@ public:
 	PlusOP(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~PlusOP() = default;
 	string genIR(BB* &currentBlock) override {
-		string name = "RAndomName"; // BB->getRandomName
+		string name = currentBlock->generate_name(); // BB->getRandomName
 		/* ADD temp randmname to ST*/
-		BBnames.insert(pair<string, string>(name, "int"));
+		// BBnames.insert(pair<string, string>(name, "int"));
 		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock);
 		ExprTac* in = new ExprTac("+", lhs_name, rhs_name, name);
@@ -119,7 +119,7 @@ public:
 	MinusOP(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~MinusOP() = default;
 	string genIR(BB* &currentBlock) override {
-		string name = "RAndomName"; // BB->getRandomName
+		string name = currentBlock->generate_name(); // BB->getRandomName
 		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock);
 		ExprTac* in = new ExprTac("-", lhs_name, rhs_name, name);
@@ -133,7 +133,7 @@ public:
 	MultOP(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~MultOP() = default;
 	string genIR(BB* &currentBlock) override {
-		string name = "RAndomName"; // BB->getRandomName
+		string name = currentBlock->generate_name(); // BB->getRandomName
 		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock);
 		ExprTac* in = new ExprTac("*", lhs_name, rhs_name, name);
@@ -147,7 +147,7 @@ public:
 	DivOP(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~DivOP() = default;
 	string genIR(BB* &currentBlock) override {
-		string name = "RAndomName"; // BB->getRandomName
+		string name = currentBlock->generate_name(); // BB->getRandomName
 		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock);
 		ExprTac* in = new ExprTac("/", lhs_name, rhs_name, name);
@@ -167,9 +167,9 @@ public:
 	GreaterThan(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~GreaterThan() = default;
 	string genIR(BB* &currentBlock) override {
-		string name = "RAndomName"; // BB->getRandomName
+		string name = currentBlock->generate_name(); // BB->getRandomName
 		/* ADD temp randmname to ST*/
-		BBnames.insert(pair<string, string>(name, "bool"));
+		// BBnames.insert(pair<string, string>(name, "bool"));
 		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock);
 		ExprTac* in = new ExprTac(">", lhs_name, rhs_name, name);
@@ -184,9 +184,9 @@ public:
 	LessThan(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~LessThan() = default;
 	string genIR(BB* &currentBlock) override {
-		string name = "RAndomName"; // BB->getRandomName
+		string name = currentBlock->generate_name(); // BB->getRandomName
 		/* ADD temp randmname to ST*/
-		BBnames.insert(pair<string, string>(name, "bool"));
+		// BBnames.insert(pair<string, string>(name, "bool"));
 		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock);
 		ExprTac* in = new ExprTac("<", lhs_name, rhs_name, name);
@@ -200,9 +200,9 @@ public:
 	Equals(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~Equals() = default;
 	string genIR(BB* &currentBlock) override {
-		string name = "RAndomName"; // BB->getRandomName
+		string name = currentBlock->generate_name(); // BB->getRandomName
 		/* ADD temp randmname to ST*/
-		BBnames.insert(pair<string, string>(name, "int"));
+		// BBnames.insert(pair<string, string>(name, "int"));
 		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock);
 		ExprTac* in = new ExprTac("==", lhs_name, rhs_name, name);
@@ -216,9 +216,9 @@ public:
 	Or(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~Or() = default;
 	string genIR(BB* &currentBlock) override {
-		string name = "RAndomName"; // BB->getRandomName
+		string name = currentBlock->generate_name(); // BB->getRandomName
 		/* ADD temp randmname to ST*/
-		BBnames.insert(pair<string, string>(name, "bool"));
+		// BBnames.insert(pair<string, string>(name, "bool"));
 		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock);
 		ExprTac* in = new ExprTac("||", lhs_name, rhs_name, name);
@@ -232,9 +232,9 @@ public:
 	And(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~And() = default;
 	string genIR(BB* &currentBlock) override {
-		string name = "RAndomName"; // BB->getRandomName
+		string name = currentBlock->generate_name(); // BB->getRandomName
 		/* ADD temp randmname to ST*/
-		BBnames.insert(pair<string, string>(name, "int"));
+		// BBnames.insert(pair<string, string>(name, "int"));
 		string lhs_name = children[0]->genIR(currentBlock); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock);
 		ExprTac* in = new ExprTac("&&", lhs_name, rhs_name, name);
@@ -261,7 +261,6 @@ public:
 	virtual ~Expression() = default;
 	string getIden() {
 		return children[0]->value;
-		// return "";
 	}
 };
 
