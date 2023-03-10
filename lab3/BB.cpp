@@ -60,9 +60,9 @@ void BB::generate_BB_content(int &count, ofstream *outStream) {
         false_exit->generate_BB_content(count, outStream);
         *outStream << "block_" << id << " -> block_" << false_exit->id << " [xlabel = \"false\"]" << endl ;
     }
-
 }
 
 string BB::generate_name() const {
-    return "Block_" + to_string(id);
+    // return "Block_" + to_string(id);
+    return "Block_" + to_string(6);
 }

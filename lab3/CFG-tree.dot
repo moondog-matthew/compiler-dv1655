@@ -2,11 +2,5 @@ digraph {
 graph [ splines = ortho ]
 	node [ shape = box ];
 block_0 [label="Block:
-Res := lhs Oper rhs"];
-block_1 [label="Block:
-Marcus := på hej dig"];
-block_0 -> block_1 [xlabel = "true"]
-block_2 [label="Block:
-Jol := jag Nej heter"];
-block_0 -> block_2 [xlabel = "false"]
+return "];
 }

@@ -6,6 +6,7 @@
 #include "parser.tab.h"
 #include "semanticCheck.hpp"
 #include "symbolTable.hpp"
+#include "CFG.hpp"
 
 extern Node* root;
 extern FILE* yyin;
@@ -47,7 +48,8 @@ int main(int argc, char **argv)
     //   // just don't continue?
     //   // cout << "Contains Error" << endl;
     // }
-    
+    CFG* cfg = new CFG(root);
+    cfg->print_CFG();
     
     delete ST;
     delete SA;

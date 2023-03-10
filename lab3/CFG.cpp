@@ -6,8 +6,8 @@ CFG::CFG() {
 }
 
 CFG::CFG(Node* node) {
+    this->entry = new BB();
     populate_CFG(node);
-    // Create first program block
 }
 
 void CFG::print_CFG() {
@@ -15,5 +15,5 @@ void CFG::print_CFG() {
 }
 
 void CFG::populate_CFG(Node* node) {
-    node->genIR(entry, methods, BBnames);
+    node->genIR(&entry, methods, BBnames);
 }
