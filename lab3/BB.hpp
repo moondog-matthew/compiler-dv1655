@@ -34,7 +34,7 @@ public:
 
     void add_Tac(Tac* tac);
     void generate_BB();
-    string generate_name() const;
+    string generate_name(int id) const;
 
 
 };

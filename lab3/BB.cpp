@@ -33,7 +33,6 @@ void BB::add_Tac(Tac* tac) {
 }
 
 
-string BB::generate_name() const {
-    // return "Block_" + to_string(id);
-    return "Block_" + to_string(6);
+string BB::generate_name(int id) const {
+    return "temporary_" + to_string(id);
 }
