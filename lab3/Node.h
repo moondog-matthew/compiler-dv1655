@@ -161,6 +161,14 @@ class AssignExpr : public Node {
 public:
 	AssignExpr(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~AssignExpr() = default;
+	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames) override {
+		string name = currentBlock->generate_name(); 
+		BBnames.insert(pair<string, string>(name, ""));
+		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames); // still in same block, only statements create news
+		CopyTac* in = new CopyTac(lhs_name, name);
+		currentBlock->add_Tac(in);
+		return name;
+	}
 };
 
 class GreaterThan : public Node {
@@ -283,7 +291,9 @@ public:
 		BBnames.insert(pair<string, string>(name, ""));
 		string expr = children[0]->genIR(currentBlock, methods, BBnames); // still in same block, only statements create news
 		string func = children[1]->genIR(currentBlock, methods, BBnames);
-		// string param_num = to_string(ST->lookup(this->getIden()));
+		// Record* methRec = ST->lookup(this->getIden())
+		// vector<variableRecord*> varRecsVec = methRec->getParameters(); // assume semantically correct
+		// string param_num = to_string(varRecsVec.size());
 		// ExprTac* in = new ExprTac(func, param_num, name);
 		// currentBlock->add_Tac(in);
 		return name;
