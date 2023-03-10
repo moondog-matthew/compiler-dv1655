@@ -246,12 +246,6 @@ public:
 	}
 };
 
-class Index : public Node {
-public:
-	Index(string t, string v, int l) { type = t; value = v; lineno = l;}
-	virtual ~Index() = default;
-};
-
 class LengthOf : public Node {
 public:
 	LengthOf(string t, string v, int l) { type = t; value = v; lineno = l;}
@@ -461,6 +455,12 @@ class ArrayIndexAssign : public Node {
 public:
 	ArrayIndexAssign(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~ArrayIndexAssign() = default;
+};
+
+class Index : public Node {
+  public:
+	Index(string t, string v, int l) { type = t; value = v; lineno = l;}
+	virtual ~Index() = default;
 };
 
 /*

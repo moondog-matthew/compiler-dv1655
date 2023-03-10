@@ -1,4 +1,3 @@
-
 #include "CFG.hpp"
 
 CFG::CFG() {

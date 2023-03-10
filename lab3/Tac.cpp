@@ -20,9 +20,14 @@ string CopyTac::printTac() const {
 
 ArrAccTac::ArrAccTac(string _x, string _y, string _i) : x(_x), y(_y), i(_i) {}
 string ArrAccTac::printTac() const {
-    /* How do we handle ambiguity? Two different classs?*/
+    /* How do we handle ambiguity? Two different classs? */
     return x + " := " + y + "[" + i + "]";
     // return y + "[" + i + "] + " := " + x;
+}
+
+IndTac::IndTac(string _x, string _y, string _i) : x(_x), y(_y), i(_i) {}
+string IndTac::printTac() const {
+    return y + "[" + i + "]" + ":=" + x;
 }
 
 NewTac::NewTac(string _type, string _result) : result(_result), type(_type) {}

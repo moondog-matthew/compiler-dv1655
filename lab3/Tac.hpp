@@ -37,7 +37,7 @@ public:
 };
 
 class ArrAccTac : public Tac {
-public:
+  public:
     string x; // singular val
     string y; // array 
     string i; // index
@@ -45,8 +45,18 @@ public:
     string printTac() const override;
 };
 
+class IndTac : public Tac {
+  public:
+    string y; // array 
+    string i; // index
+    string x; // index value
+
+    IndTac(string _x, string _y, string _i);
+    string printTac() const override;
+};
+
 class NewTac : public Tac {
-public:
+  public:
     string result;
     string type;
     NewTac(string _type, string _result);
@@ -54,7 +64,7 @@ public:
 };
 
 class NewArrTac : public Tac {
-public:
+  public:
     string result;
     string size;
     NewArrTac(string _size, string _result);
