@@ -108,9 +108,7 @@ public:
 	PlusOP(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~PlusOP() = default;
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
-		cout << "Plus: " << currentBlock << endl;
 		string name = (*currentBlock)->generate_name(++id);
-		/* ADD temp randmname to ST*/
 		BBnames.insert(pair<string, string>(name, "int"));
 		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames, id); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock, methods, BBnames, id);
@@ -400,6 +398,10 @@ public:
 
 		string conName = children[0]->genIR(currentBlock, methods, BBnames, id); // boolean condition
 		string tName = children[1]->genIR(&tBlock, methods, BBnames, id);
+		
+		// continue to write to the block after the if branching
+		*currentBlock = jBlock;
+
 		return "";
 	}
 	
@@ -428,6 +430,9 @@ public:
 		/* Assign the true and false path for the current block */
 		(*currentBlock)->setTrue(tBlock); 
 		(*currentBlock)->setFalse(fBlock);
+		
+		// continue to write to the block after the if-else branching
+		*currentBlock = jBlock;
 
 		return "";
 	}
@@ -453,9 +458,9 @@ public:
 		hBlock->setFalse(jBlock); // if false, exit while loop, by going to next block
 		bBlock->setTrue(hBlock); // in the true scenario, loop the while loop
 		(*currentBlock)->setTrue(hBlock); // set currentBlock to point to hblock
-		cout << "Before while: "<< currentBlock << endl;
+
+		// continue to write to the block after the while branch
 		*currentBlock = jBlock;
-		cout << "After while: "<< currentBlock << endl;
 
 	}
 };
@@ -653,7 +658,7 @@ public:
 		int idB = (*currentBlock)->id + 1;
 		BB* newBlock = new BB(idB);
 		methods.push_back(newBlock);
-		currentBlock = &newBlock;
+		*currentBlock = newBlock;
 		
 		for (auto const& child : children) {
 			child->genIR(currentBlock, methods, BBnames, id);
