@@ -60,7 +60,7 @@ public:
 	  }
   	}
 		
-	virtual string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) {
+	virtual string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) {
 		for(auto const& child : children) {
 			child->genIR(currentBlock, methods, BBnames, id);
 		}
@@ -79,7 +79,7 @@ public:
 	string getVal() {
 		return value;
 	}
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		return getVal();
 	}
 };
@@ -91,7 +91,7 @@ public:
 	string getVal() {
 		return value;
 	}
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		return getVal();
 	}
 };
@@ -100,7 +100,7 @@ class PlusOP : public Node {
 public:
 	PlusOP(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~PlusOP() = default;
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		string name = currentBlock->generate_name(++id);
 		/* ADD temp randmname to ST*/
 		BBnames.insert(pair<string, string>(name, "int"));
@@ -116,7 +116,7 @@ class MinusOP : public Node {
 public:
 	MinusOP(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~MinusOP() = default;
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		string name = currentBlock->generate_name(++id); 
 		BBnames.insert(pair<string, string>(name, "int"));
 		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames, id); // still in same block, only statements create news
@@ -131,7 +131,7 @@ class MultOP : public Node {
 public:
 	MultOP(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~MultOP() = default;
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		string name = currentBlock->generate_name(++id); 
 		BBnames.insert(pair<string, string>(name, "int"));
 		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames, id); // still in same block, only statements create news
@@ -146,7 +146,7 @@ class DivOP : public Node {
 public:
 	DivOP(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~DivOP() = default;
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		string name = currentBlock->generate_name(++id); 
 		BBnames.insert(pair<string, string>(name, "int"));
 		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames, id); // still in same block, only statements create news
@@ -161,7 +161,7 @@ class AssignExpr : public Node {
 public:
 	AssignExpr(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~AssignExpr() = default;
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		string name = children[0]->genIR(currentBlock, methods, BBnames, id);
 		string lhs_name = children[1]->genIR(currentBlock, methods, BBnames, id); // still in same block, only statements create news
 		CopyTac* in = new CopyTac(lhs_name, name);
@@ -174,7 +174,7 @@ class GreaterThan : public Node {
 public:
 	GreaterThan(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~GreaterThan() = default;
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		string name = currentBlock->generate_name(++id); 
 		BBnames.insert(pair<string, string>(name, "bool"));
 		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames, id); // still in same block, only statements create news
@@ -190,7 +190,7 @@ class LessThan : public Node {
 public:
 	LessThan(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~LessThan() = default;
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		string name = currentBlock->generate_name(++id);
 		BBnames.insert(pair<string, string>(name, "bool"));
 		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames, id); // still in same block, only statements create news
@@ -205,7 +205,7 @@ class Equals : public Node {
 public:
 	Equals(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~Equals() = default;
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		string name = currentBlock->generate_name(++id); 
 		BBnames.insert(pair<string, string>(name, "int"));
 		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames, id); // still in same block, only statements create news
@@ -220,7 +220,7 @@ class Or : public Node {
 public:
 	Or(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~Or() = default;
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		string name = currentBlock->generate_name(++id); 
 		BBnames.insert(pair<string, string>(name, "bool"));
 		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames, id); // still in same block, only statements create news
@@ -235,7 +235,7 @@ class And : public Node {
 public:
 	And(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~And() = default;
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		string name = currentBlock->generate_name(++id); 
 		BBnames.insert(pair<string, string>(name, "int"));
 		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames, id); // still in same block, only statements create news
@@ -250,7 +250,7 @@ class LengthOf : public Node {
 public:
 	LengthOf(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~LengthOf() = default;
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		string name = currentBlock->generate_name(++id); 
 		BBnames.insert(pair<string, string>(name, "int"));
 		string y_name = children[0]->genIR(currentBlock, methods, BBnames, id); // what to take length of
@@ -287,7 +287,7 @@ public:
 	string getIden() {
 		return children[1]->value;
 	}
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		string name = currentBlock->generate_name(++id); // BB->getRandomName
 		BBnames.insert(pair<string, string>(name, ""));
 		string expr = children[0]->genIR(currentBlock, methods, BBnames, id); // still in same block, only statements create news
@@ -309,7 +309,7 @@ class TrueVal : public Node {
 public:
 	TrueVal(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~TrueVal() = default;
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		return "true";
 	}
 };
@@ -318,7 +318,7 @@ class FalseVal : public Node {
 public:
 	FalseVal(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~FalseVal() = default;
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		return "false";
 	}
 };
@@ -327,7 +327,7 @@ class ThisOP : public Node {
 public:
 	ThisOP(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~ThisOP() = default;
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		return "this";
 	}
 };
@@ -349,7 +349,7 @@ class Negation : public Node {
 public:
 	Negation(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~Negation() = default;
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		string name = currentBlock->generate_name(++id); 
 		BBnames.insert(pair<string, string>(name, "bool"));
 		string rhs_name = children[0]->genIR(currentBlock, methods, BBnames, id);
@@ -367,7 +367,7 @@ class NonStmt : public Node {
 public:
 	NonStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~NonStmt() = default;
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {	
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {	
 		return "";
 	}
 };
@@ -382,7 +382,7 @@ class IfStmt : public Node {
 public:
 	IfStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~IfStmt() = default;
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {	
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {	
 		BB* tBlock = new BB();
 		BB* fBlock = currentBlock;
 		BB* jBlock = new BB();
@@ -404,7 +404,7 @@ class IfElseStmt : public Node {
 public:
 	IfElseStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~IfElseStmt() = default;
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		BB* tBlock = new BB();
 		BB* fBlock = new BB();
 		BB* jBlock = new BB();
@@ -425,7 +425,7 @@ public:
 	WhileStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~WhileStmt() = default;
 
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		BB* hBlock = new BB(); // header block
 		BB* bBlock = new BB(); // body block
 		BB* jBlock = new BB(); // jump block
@@ -445,7 +445,7 @@ public:
 	PrintStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~PrintStmt() = default;
 	
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		string expr = children[0]->genIR(currentBlock, methods, BBnames, id);
 		PrintTac* in = new PrintTac(expr);
 		currentBlock->add_Tac(in);
@@ -532,7 +532,7 @@ class MethodBody : public Node {
 public:
 	MethodBody(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~MethodBody() = default;
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		string name;
 		for (auto const& child: children) {
 			name = child->genIR(currentBlock, methods, BBnames, id);
@@ -622,7 +622,7 @@ public:
 		}
 	}
 	
-	string genIR(BB* &currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
 		currentBlock = new BB();
 		methods.push_back(currentBlock);
 		

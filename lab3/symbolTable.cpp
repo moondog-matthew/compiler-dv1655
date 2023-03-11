@@ -298,7 +298,7 @@ void SymbolTable::reset_ST() {
 }; 
 
 void SymbolTable::print_ST() { 
-	root->printScope();
+	// root->printScope();
 	root->generate_tree();
 };
 

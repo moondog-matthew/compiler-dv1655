@@ -21,7 +21,7 @@ void CFG::generate_CFG() {
     }
 	outStream << "}" << endl;
 	outStream.close();
-	printf("\nBuilt a parse-tree at %s. Use 'make cfg-tree' to generate the pdf version.\n", filename);
+	printf("\nBuilt a parse-tree at %s. Use 'make cfg-tree' to generate the pdf version.\n\n", filename);
 }
 
 void CFG::generate_CFG_content(BB* block, int &count, ofstream *outStream) {

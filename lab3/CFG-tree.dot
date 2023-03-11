@@ -2,60 +2,15 @@ digraph {
 graph [ splines = ortho ]
 	node [ shape = box ];
 block_0 [label="Block:
-temporary_1 := call Start, 3
+temporary_1 := call ComputeFac, 3
 Print: temporary_1"];
 block_1 [label="Block:
-temporary_2 := call Init, 3
-return 
-return 
-temporary_3 := call Print, 0
-return 
-temporary_4 := call Search, 3"];
+temporary_2 := num < 1
+return "];
+block_1 -> block_1 [xlabel = "true"]
 block_2 [label="Block:
-Print: 0"];
+temporary_4 := call ComputeFac, 3
+temporary_3 := num * temporary_4"];
+block_2 -> block_2 [xlabel = "true"]
 block_1 -> block_1 [xlabel = "false"]
-block_3 [label="Block:
-return 
-return 
-temporary_12 := length number
-return 
-temporary_13 := right - 1
-return 
-return 
-return 
-return 
-return 
-return 
-return 
-return "];
-block_4 [label="Block:
-return 
-return 
-return 
-return 
-temporary_22 := num - 1
-return "];
-block_5 [label="Block:
-return 
-return 
-temporary_26 := num2 + 1
-return 
-temporary_27 := num1 < num2"];
-block_6 [label="Block:
-temporary_29 := num1 < aux02
-temporary_28 := ! temporary_29"];
-block_7 [label="Block:"];
-block_6 -> block_6 [xlabel = "false"]
-block_5 -> block_5 [xlabel = "false"]
-block_8 [label="Block:
-return "];
-block_9 [label="Block:
-return 
-return 
-return 
-return 
-return 
-return 
-temporary_32 := size + 1
-return "];
 }

@@ -16,7 +16,7 @@ SemanticAnalysis::SemanticAnalysis(Node* ast, SymbolTable* st) {
 }
 
 void SemanticAnalysis::print_errors() {
-    cout << "\n\n"; // for clearer res 
+    // cout << "\n\n"; // for clearer res 
     for (auto const& error : errors) {
         cout << error << "\n";
     }
