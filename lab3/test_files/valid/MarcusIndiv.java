@@ -12,16 +12,24 @@ class BT {
         boolean a;
         boolean b;
         
+        while (x < 20) {
+            a = b;
+            if (x < 1) 
+                x = x - 1;
+            // else 
+            //     x = x + 1;
+            b = false;
+        }
         // while (x < 1) {
-        //     a = b;
-        //     // if (x < 1) 
-        //     //     x = x - 1;
-        //     // else 
-        //     //     x = x + 1;
+        //     a = b;  
         // }
+        // if (x < 1) 
+        //     while (x < 1) {
+        //         a = b;  
+        //     }
+        // else 
+        //     x = x + 1;
 
-        if (x > 10) 
-            x = 11;
 
         x = x + 1;
         int y;

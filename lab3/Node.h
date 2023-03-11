@@ -389,16 +389,27 @@ public:
 	IfStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~IfStmt() = default;
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {	
-		int idB = (*currentBlock)->id + 1;
+		
+		int idB = (*currentBlock)->id + 30;  // !!!! 
 		BB* tBlock = new BB(idB);
 		idB += 1;
 		BB* jBlock = new BB(idB);
+		
+		/* set the the block after the if-else branching */
 		tBlock->setTrue(jBlock);
-		(*currentBlock)->setTrue(tBlock);
-		(*currentBlock)->setFalse(jBlock);  // set false path to be directly to jump block
-
-
+		
 		string conName = children[0]->genIR(currentBlock, methods, BBnames, id); // boolean condition
+
+		/*If case too see if nested*/		
+		if ((*currentBlock)->getTrue() != nullptr) {
+			BB* jumpPath = (*currentBlock)->getTrue(); // hBlock in whileStmt
+			jBlock->setTrue(jumpPath);
+		}
+		// set true and false path to be directly to jump block
+		(*currentBlock)->setTrue(tBlock);
+		(*currentBlock)->setFalse(jBlock);  
+
+		/*Fill tBlock by calling genIR on various children. Called by reference*/
 		string tName = children[1]->genIR(&tBlock, methods, BBnames, id);
 		
 		// continue to write to the block after the if branching
@@ -414,26 +425,35 @@ public:
 	IfElseStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~IfElseStmt() = default;
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
-		int idB = (*currentBlock)->id + 1;
+
+		int idB = (*currentBlock)->id + 20; // this is "silvertejp" --> so no ID clash in nested if while cases
 		BB* tBlock = new BB(idB);
 		idB += 1;
 		BB* fBlock = new BB(idB);
 		idB += 1;
 		BB* jBlock = new BB(idB);
 
-		tBlock->setTrue(jBlock); // set the the block after the if-else branching, 
-		fBlock->setTrue(jBlock); // set the the block after the if-else branching,
+		/* set the the block after the if-else branching */
+		tBlock->setTrue(jBlock);  
+		fBlock->setTrue(jBlock); 
 
 		string conName = children[0]->genIR(currentBlock, methods, BBnames, id); // boolean condition
 		
-		string tName = children[1]->genIR(&tBlock, methods, BBnames, id); // generate true block
-		string fName = children[2]->genIR(&fBlock, methods, BBnames, id); // generate false block
+		/* If-case to see if nested*/
+		if ((*currentBlock)->getTrue() != nullptr) {
+			BB* jumpPath = (*currentBlock)->getTrue(); // hBlock in whileStmt
+			jBlock->setTrue(jumpPath);
+		}
 
 		/* Assign the true and false path for the current block */
 		(*currentBlock)->setTrue(tBlock); 
 		(*currentBlock)->setFalse(fBlock);
+
+		/*Fill fBlock and tBlock by calling genIR on various children. Called by reference*/
+		string tName = children[1]->genIR(&tBlock, methods, BBnames, id); // generate true block
+		string fName = children[2]->genIR(&fBlock, methods, BBnames, id); // generate false block
 		
-		// continue to write to the block after the if-else branching
+		// continue to write to the block after the while branch
 		*currentBlock = jBlock;
 
 		return "";
@@ -446,24 +466,32 @@ public:
 	virtual ~WhileStmt() = default;
 
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
-		int idB = (*currentBlock)->id + 1;
+		
+		int idB = (*currentBlock)->id + 50;  // To avoid ID clashes
 		BB* hBlock = new BB(idB); // header block
 		idB += 1;
 		BB* bBlock = new BB(idB); // body block
 		idB += 1;
-		BB* jBlock = new BB(idB); // jump block
+		BB* jBlock = new BB(idB); // jump block	
 
-		string hName = children[0]->genIR(&hBlock, methods, BBnames, id);
-		string bName = children[1]->genIR(&bBlock, methods, BBnames, id);
-		
 		hBlock->setTrue(bBlock); // if true, re-enter the while-loop
 		hBlock->setFalse(jBlock); // if false, exit while loop, by going to next block
 		bBlock->setTrue(hBlock); // in the true scenario, loop the while loop
+
+		/*If case too see if nested*/		
+		if ((*currentBlock)->getTrue() != nullptr) {
+			BB* jumpPath = (*currentBlock)->getTrue(); // hBlock in whileStmt
+			jBlock->setTrue(jumpPath);
+		}
 		(*currentBlock)->setTrue(hBlock); // set currentBlock to point to hblock
+
+		/*Fill hBlock and bBlock by calling genIR on various children. Called by reference*/
+		string hName = children[0]->genIR(&hBlock, methods, BBnames, id); // while condition
+		string bName = children[1]->genIR(&bBlock, methods, BBnames, id); // the body
 
 		// continue to write to the block after the while branch
 		*currentBlock = jBlock;
-
+		return "";
 	}
 };
 

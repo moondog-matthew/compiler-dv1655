@@ -5,21 +5,30 @@ Block_0 [label="Block:Block_0
 temporary_1 := call Start, 0
 Print: temporary_1"];
 Block_1 [label="Block:Block_1
-x := 10
-temporary_2 := x > 10"];
-Block_1 -> Block_2 [xlabel = "true"]
-Block_2 [label="Block:Block_2
-x := 11"];
-Block_2 -> Block_3 [xlabel = "true"]
-Block_3 [label="Block:Block_3
-temporary_3 := x + 1
-x := temporary_3
-y := 121
-return 0"];
-Block_1 -> Block_3 [xlabel = "false"]
-Block_3 [label="Block:Block_3
-temporary_3 := x + 1
-x := temporary_3
+x := 10"];
+Block_1 -> Block_51 [xlabel = "true"]
+Block_51 [label="Block:Block_51
+temporary_2 := x < 20"];
+Block_51 -> Block_52 [xlabel = "true"]
+Block_52 [label="Block:Block_52
+a := b
+temporary_3 := x < 1"];
+Block_52 -> Block_82 [xlabel = "true"]
+Block_82 [label="Block:Block_82
+temporary_4 := x - 1
+x := temporary_4"];
+Block_82 -> Block_83 [xlabel = "true"]
+Block_83 [label="Block:Block_83
+b := false"];
+Block_83 -> Block_51 [xlabel = "true"]
+Block_52 -> Block_83 [xlabel = "false"]
+Block_83 [label="Block:Block_83
+b := false"];
+Block_83 -> Block_51 [xlabel = "true"]
+Block_51 -> Block_53 [xlabel = "false"]
+Block_53 [label="Block:Block_53
+temporary_5 := x + 1
+x := temporary_5
 y := 121
 return 0"];
 }
