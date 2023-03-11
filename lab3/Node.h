@@ -393,17 +393,12 @@ public:
 		int idB = currentBlock->id + 1;
 		BB* tBlock = new BB(idB);
 		idB += 1;
-		BB* fBlock = currentBlock;
 		BB* jBlock = new BB(idB);
 		tBlock->setTrue(jBlock);
-		fBlock->setTrue(jBlock);
 		currentBlock->setTrue(tBlock);
-		currentBlock->setFalse(fBlock);
 
 		string conName = children[0]->genIR(currentBlock, methods, BBnames, id); // boolean condition
 		string tName = children[1]->genIR(tBlock, methods, BBnames, id);
-
-		// currentBlock = jBlock; // return returnBlock
 		return "";
 	}
 	
@@ -433,7 +428,6 @@ public:
 		currentBlock->setTrue(tBlock); 
 		currentBlock->setFalse(fBlock);
 
-		// currentBlock = jBlock; // go to AFTER the true false branching, continue from there
 		return "";
 	}
 };
@@ -457,7 +451,6 @@ public:
 		hBlock->setFalse(jBlock); // if false, exit while loop, by going to next block
 		bBlock->setTrue(hBlock); // 
 		currentBlock->setTrue(hBlock);
-		// currentBlock = jBlock; // return jumpBlock
 	}
 };
 

@@ -37,9 +37,8 @@ void CFG::generate_CFG_content(BB* block, int &count, ofstream *outStream) {
 
     // Print true and false pointers
     if (block->getTrue() != nullptr) {
-        // first print out must be before if. This is because default is true exit to enter new block.
-        *outStream << block->getName() << " -> " << block->getTrue()->getName() << " [xlabel = \"true\"]" << endl ;
         if (std::find(printedBlocks.begin(), printedBlocks.end(), block->getTrue()->getName()) == printedBlocks.end()) {
+            *outStream << block->getName() << " -> " << block->getTrue()->getName() << " [xlabel = \"true\"]" << endl ;
             generate_CFG_content(block->getTrue(), count, outStream);
         }
     }
