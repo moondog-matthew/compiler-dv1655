@@ -108,12 +108,12 @@ public:
 	PlusOP(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~PlusOP() = default;
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
-		string name = (*currentBlock)->generate_name(++id);
-		BBnames.insert(pair<string, string>(name, "int"));
-		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames, id); // still in same block, only statements create news
-		string rhs_name = children[1]->genIR(currentBlock, methods, BBnames, id);
-		ExprTac* in = new ExprTac("+", lhs_name, rhs_name, name);
-		(*currentBlock)->add_Tac(in);
+		string name = (*currentBlock)->generate_name(++id);  // generate a unique name
+		BBnames.insert(pair<string, string>(name, "int")); // for the 
+		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames, id); // children 0 visited, currentBlock is passed on, expressions do not create new blocks
+		string rhs_name = children[1]->genIR(currentBlock, methods, BBnames, id); // // children 2 visited, currentBlock is passed
+		ExprTac* in = new ExprTac("+", lhs_name, rhs_name, name); // create the new tac that will be added to the CFG, contains a temporary variable
+		(*currentBlock)->add_Tac(in); // add to tac_instructions of the block
 		return name;
 	}
 };

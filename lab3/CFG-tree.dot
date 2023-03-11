@@ -2,20 +2,186 @@ digraph {
 graph [ splines = ortho ]
 	node [ shape = box ];
 Block_0 [label="Block:Block_0
-temporary_1 := call ComputeFac, 3
+temporary_1 := call Start, 0
 Print: temporary_1"];
 Block_1 [label="Block:Block_1
-temporary_2 := num < 1"];
-Block_1 -> Block_2 [xlabel = "true"]
+root := 
+temporary_2 := call Init, 3
+ntb := temporary_2
+temporary_3 := call Print, 0
+ntb := temporary_3
+Print: 100000000
+temporary_4 := call Insert, 3
+ntb := temporary_4
+temporary_5 := call Print, 0
+ntb := temporary_5
+temporary_6 := call Insert, 3
+ntb := temporary_6
+temporary_7 := call Insert, 3
+ntb := temporary_7
+temporary_8 := call Insert, 3
+ntb := temporary_8
+temporary_9 := call Insert, 3
+ntb := temporary_9
+temporary_10 := call Insert, 3
+ntb := temporary_10
+temporary_11 := call Insert, 3
+ntb := temporary_11
+temporary_12 := call Print, 0
+ntb := temporary_12
+temporary_13 := call Search, 3
+Print: temporary_13
+temporary_14 := call Search, 3
+Print: temporary_14
+temporary_15 := call Search, 3
+Print: temporary_15
+temporary_16 := call Search, 3
+Print: temporary_16
+temporary_17 := call Search, 3
+Print: temporary_17
+temporary_18 := call Delete, 3
+ntb := temporary_18
+temporary_19 := call Print, 0
+ntb := temporary_19
+temporary_20 := call Search, 3
+Print: temporary_20
+return 0"];
 Block_2 [label="Block:Block_2
-num_aux := 1"];
-Block_2 -> Block_4 [xlabel = "true"]
-Block_4 [label="Block:Block_4
-return num_aux"];
-Block_1 -> Block_3 [xlabel = "false"]
+key := v_key
+has_left := false
+has_right := false
+return true"];
 Block_3 [label="Block:Block_3
-temporary_4 := call ComputeFac, 3
-temporary_3 := num * temporary_4
-num_aux := temporary_3"];
-Block_3 -> Block_4 [xlabel = "true"]
+right := rn
+return true"];
+Block_4 [label="Block:Block_4
+left := ln
+return true"];
+Block_5 [label="Block:Block_5
+return right"];
+Block_6 [label="Block:Block_6
+return left"];
+Block_7 [label="Block:Block_7
+return key"];
+Block_8 [label="Block:Block_8
+key := v_key
+return true"];
+Block_9 [label="Block:Block_9
+return has_right"];
+Block_10 [label="Block:Block_10
+return has_left"];
+Block_11 [label="Block:Block_11
+has_left := val
+return true"];
+Block_12 [label="Block:Block_12
+has_right := val
+return true"];
+Block_13 [label="Block:Block_13
+ntb := false
+temporary_21 := num2 + 1
+nti := temporary_21
+temporary_22 := num1 < num2"];
+Block_13 -> Block_14 [xlabel = "true"]
+Block_14 [label="Block:Block_14
+ntb := false"];
+Block_14 -> Block_16 [xlabel = "true"]
+Block_16 [label="Block:Block_16
+return ntb"];
+Block_13 -> Block_18 [xlabel = "false"]
+Block_18 [label="Block:Block_18"];
+Block_17 [label="Block:Block_17
+new_node := 
+temporary_25 := call Init, 3
+ntb := temporary_25
+cont := true
+current_node := this"];
+Block_17 -> Block_18 [xlabel = "true"]
+Block_21 [label="Block:Block_21
+current_node := this
+parent_node := this
+cont := true
+found := false
+is_root := true"];
+Block_21 -> Block_22 [xlabel = "true"]
+Block_22 [label="Block:Block_22"];
+Block_22 -> Block_26 [xlabel = "true"]
+Block_26 [label="Block:Block_26
+is_root := false"];
+Block_26 -> Block_22 [xlabel = "true"]
+Block_22 -> Block_24 [xlabel = "false"]
+Block_24 [label="Block:Block_24
+return found"];
+Block_25 [label="Block:Block_25
+temporary_50 := call GetHas_Left, 0"];
+Block_25 -> Block_26 [xlabel = "true"]
+Block_25 -> Block_30 [xlabel = "false"]
+Block_30 [label="Block:Block_30"];
+Block_29 [label="Block:Block_29"];
+Block_29 -> Block_30 [xlabel = "true"]
+Block_33 [label="Block:Block_33"];
+Block_33 -> Block_34 [xlabel = "true"]
+Block_34 [label="Block:Block_34
+temporary_69 := call GetHas_Left, 0"];
+Block_34 -> Block_35 [xlabel = "true"]
+Block_35 [label="Block:Block_35
+temporary_72 := call GetLeft, 0
+temporary_71 := call GetKey, 0
+temporary_70 := call SetKey, 3
+ntb := temporary_70
+p_node := c_node
+temporary_73 := call GetLeft, 0
+c_node := temporary_73"];
+Block_35 -> Block_34 [xlabel = "true"]
+Block_34 -> Block_36 [xlabel = "false"]
+Block_36 [label="Block:Block_36
+temporary_74 := call SetLeft, 3
+ntb := temporary_74
+temporary_75 := call SetHas_Left, 3
+ntb := temporary_75
+return true"];
+Block_37 [label="Block:Block_37
+cont := true
+ifound := 0
+current_node := this"];
+Block_37 -> Block_38 [xlabel = "true"]
+Block_38 [label="Block:Block_38"];
+Block_38 -> Block_42 [xlabel = "true"]
+Block_42 [label="Block:Block_42"];
+Block_42 -> Block_38 [xlabel = "true"]
+Block_38 -> Block_40 [xlabel = "false"]
+Block_40 [label="Block:Block_40
+return ifound"];
+Block_41 [label="Block:Block_41
+current_node := this
+temporary_83 := call RecPrint, 3
+ntb := temporary_83
+return true"];
+Block_42 [label="Block:Block_42
+temporary_84 := call GetHas_Left, 0"];
+Block_42 -> Block_43 [xlabel = "true"]
+Block_43 [label="Block:Block_43
+temporary_86 := call GetLeft, 0
+temporary_85 := call RecPrint, 3
+ntb := temporary_85"];
+Block_43 -> Block_45 [xlabel = "true"]
+Block_45 [label="Block:Block_45
+temporary_87 := call GetKey, 0
+Print: temporary_87
+temporary_88 := call GetHas_Right, 0"];
+Block_45 -> Block_46 [xlabel = "true"]
+Block_46 [label="Block:Block_46
+temporary_90 := call GetRight, 0
+temporary_89 := call RecPrint, 3
+ntb := temporary_89"];
+Block_46 -> Block_48 [xlabel = "true"]
+Block_48 [label="Block:Block_48
+return true"];
+Block_45 -> Block_47 [xlabel = "false"]
+Block_47 [label="Block:Block_47
+ntb := true"];
+Block_47 -> Block_48 [xlabel = "true"]
+Block_42 -> Block_44 [xlabel = "false"]
+Block_44 [label="Block:Block_44
+ntb := true"];
+Block_44 -> Block_45 [xlabel = "true"]
 }
