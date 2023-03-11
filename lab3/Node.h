@@ -61,6 +61,13 @@ public:
   	}
 		
 	virtual string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) {
+		/*
+			currentBlock : give a pointer to which block is currently being worked on
+			methods : vector that contains all the methods in the program
+			BBnames : map to later use to add all temporary variables in the ST
+			id : used to give unique tempNmes
+		*/
+		
 		for(auto const& child : children) {
 			child->genIR(currentBlock, methods, BBnames, id);
 		}
@@ -394,7 +401,7 @@ public:
 		string conName = children[0]->genIR(currentBlock, methods, BBnames, id); // boolean condition
 		string tName = children[1]->genIR(tBlock, methods, BBnames, id);
 
-		currentBlock = jBlock; // return returnBlock
+		// currentBlock = jBlock; // return returnBlock
 		return "";
 	}
 	
@@ -405,9 +412,12 @@ public:
 	IfElseStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~IfElseStmt() = default;
 	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
-		BB* tBlock = new BB(++(currentBlock->id));
-		BB* fBlock = new BB(++(currentBlock->id));
-		BB* jBlock = new BB(++(currentBlock->id));
+		int idB = currentBlock->id + 1;
+		BB* tBlock = new BB(idB);
+		idB += 1;
+		BB* fBlock = new BB(idB);
+		idB += 1;
+		BB* jBlock = new BB(idB);
 
 		tBlock->setTrue(jBlock); // set the the block after the if-else branching, 
 		fBlock->setTrue(jBlock); // set the the block after the if-else branching,
@@ -421,7 +431,7 @@ public:
 		currentBlock->setTrue(tBlock); 
 		currentBlock->setFalse(fBlock);
 
-		currentBlock = jBlock; // go to AFTER the true false branching, continue from there
+		// currentBlock = jBlock; // go to AFTER the true false branching, continue from there
 		return "";
 	}
 };
@@ -442,7 +452,7 @@ public:
 		hBlock->setFalse(jBlock); // if false, exit while loop, by going to next block
 		bBlock->setTrue(hBlock); // 
 		currentBlock->setTrue(hBlock);
-		currentBlock = jBlock; // return jumpBlock
+		// currentBlock = jBlock; // return jumpBlock
 	}
 };
 

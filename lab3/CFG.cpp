@@ -37,14 +37,15 @@ void CFG::generate_CFG_content(BB* block, int &count, ofstream *outStream) {
 
     // Print true and false pointers
     if (block->getTrue() != nullptr) {
+        // first print out must be before if. This is because default is true exit to enter new block.
         *outStream << block->getName() << " -> " << block->getTrue()->getName() << " [xlabel = \"true\"]" << endl ;
         if (std::find(printedBlocks.begin(), printedBlocks.end(), block->getTrue()->getName()) == printedBlocks.end()) {
             generate_CFG_content(block->getTrue(), count, outStream);
         }
     }
     if (block->getFalse() != nullptr) {
-        generate_CFG_content(block->getFalse(), count, outStream);
         *outStream << block->getName() << " -> " << block->getFalse()->getName() << " [xlabel = \"false\"]" << endl ;
+        generate_CFG_content(block->getFalse(), count, outStream);
     }
 }
 
@@ -53,9 +54,9 @@ void CFG::populate_CFG(Node* node) {
     int val = 0;
     node->genIR(entry, methods, BBnames, val);
 
-    for (auto const& block : methods) {
-        if (block->getTrue() == nullptr || block->getTrue() == block) {
-            cout << block->getName() << "Problem?" << endl;
-        }
-    }
+    // for (auto const& block : methods) {
+    //     if (block->getTrue() == nullptr || block->getTrue() == block) {
+    //         cout << block->getName() << "Problem?" << endl;
+    //     }
+    // }
 }
