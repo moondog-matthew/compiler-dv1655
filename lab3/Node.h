@@ -395,6 +395,8 @@ public:
 		BB* jBlock = new BB(idB);
 		tBlock->setTrue(jBlock);
 		(*currentBlock)->setTrue(tBlock);
+		(*currentBlock)->setFalse(jBlock);  // set false path to be directly to jump block
+
 
 		string conName = children[0]->genIR(currentBlock, methods, BBnames, id); // boolean condition
 		string tName = children[1]->genIR(&tBlock, methods, BBnames, id);
