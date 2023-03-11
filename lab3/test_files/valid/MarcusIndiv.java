@@ -14,7 +14,10 @@ class BT {
         
         while (x < 1) {
             a = b;
-            x = x - 1;
+            // if (x < 1) 
+            //     x = x - 1;
+            // else 
+            //     x = x + 1;
         }
 
         x = x + 1;

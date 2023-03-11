@@ -569,9 +569,6 @@ public:
 		for (auto const& child: children) {
 			name = child->genIR(currentBlock, methods, BBnames, id);
 		}
-
-		ReturnTac* in = new ReturnTac(name); // the last iterated will be return name --> 
-		(*currentBlock)->add_Tac(in);
 		return name;
 	}
 };
@@ -655,14 +652,19 @@ public:
 	}
 	
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+		string name;
 		int idB = (*currentBlock)->id + 1;
 		BB* newBlock = new BB(idB);
 		methods.push_back(newBlock);
 		*currentBlock = newBlock;
-		
 		for (auto const& child : children) {
-			child->genIR(currentBlock, methods, BBnames, id);
+			name = child->genIR(currentBlock, methods, BBnames, id);
 		}
+		
+		// Add the return value to current block
+		ReturnTac* in = new ReturnTac(name); // the last iterated will be return name --> 
+		(*currentBlock)->add_Tac(in);
+
 		return "";
 	}
 	
