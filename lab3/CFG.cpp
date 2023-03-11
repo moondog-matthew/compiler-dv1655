@@ -37,8 +37,8 @@ void CFG::generate_CFG_content(BB* block, int &count, ofstream *outStream) {
 
     // Print true and false pointers
     if (block->getTrue() != nullptr) {
+        *outStream << block->getName() << " -> " << block->getTrue()->getName() << " [xlabel = \"true\"]" << endl ;
         if (std::find(printedBlocks.begin(), printedBlocks.end(), block->getTrue()->getName()) == printedBlocks.end()) {
-            *outStream << block->getName() << " -> " << block->getTrue()->getName() << " [xlabel = \"true\"]" << endl ;
             generate_CFG_content(block->getTrue(), count, outStream);
         }
     }
@@ -51,7 +51,7 @@ void CFG::generate_CFG_content(BB* block, int &count, ofstream *outStream) {
 void CFG::populate_CFG(Node* node) {
     methods.push_back(entry);
     int val = 0;
-    node->genIR(entry, methods, BBnames, val);
+    node->genIR(&entry, methods, BBnames, val);
 
     // for (auto const& block : methods) {
     //     if (block->getTrue() == nullptr || block->getTrue() == block) {

@@ -2,76 +2,29 @@ digraph {
 graph [ splines = ortho ]
 	node [ shape = box ];
 Block_0 [label="Block:Block_0
-temporary_1 := call Start, 3
+temporary_1 := call Start, 0
 Print: temporary_1"];
 Block_1 [label="Block:Block_1
-temporary_2 := call Init, 3
-aux01 := temporary_2
-return aux01
-temporary_3 := call Print, 0
-aux01 := temporary_3
-return aux01
-Print: 9999
+x := 10
+return x
 return 
-temporary_4 := size - 1
-aux01 := temporary_4
-return aux01
-temporary_5 := call Sort, 3
-aux01 := temporary_5
-return aux01
-temporary_6 := call Print, 0
-aux01 := temporary_6
-return aux01"];
-Block_1 [label="Block:Block_1
-return 
-return 
-return 
-return 
-return 
-return 
-t := 0
-return t
-temporary_7 := left < right
 return "];
 Block_1 -> Block_2 [xlabel = "true"]
 Block_2 [label="Block:Block_2
-v := 
-temporary_8 := left - 1
-i := temporary_8
-j := right
-cont01 := true"];
+temporary_2 := x < 1"];
 Block_2 -> Block_3 [xlabel = "true"]
-Block_3 [label="Block:Block_3"];
-Block_3 -> Block_4 [xlabel = "true"]
+Block_3 [label="Block:Block_3
+a := b
+temporary_3 := x - 1
+x := temporary_3"];
+Block_3 -> Block_2 [xlabel = "true"]
+Block_2 -> Block_4 [xlabel = "false"]
 Block_4 [label="Block:Block_4
-cont02 := true
-cont02 := true
-t := 
-temporary_16 := i + 1
-temporary_15 := j < temporary_16"];
-Block_4 -> Block_6 [xlabel = "false"]
-Block_6 [label="Block:Block_6
-cont01 := true"];
-Block_6 -> Block_7 [xlabel = "true"]
-Block_7 [label="Block:Block_7"];
-Block_3 -> Block_5 [xlabel = "false"]
-Block_5 [label="Block:Block_5"];
-Block_1 [label="Block:Block_1
-j := 0
-return j
-return "];
-Block_1 [label="Block:Block_1
-size := sz
-number := 
-return number
 return 
+temporary_4 := x + 1
+x := temporary_4
+return x
 return 
-return 
-return 
-return 
-return 
-return 
-return 
-return 
-return "];
+y := 121
+return y"];
 }

@@ -58,7 +58,6 @@ class QS{
 				else cont02 = true ;
 			}
 
-
 			t = number[i] ;
 			number[i] = number[j] ;
 			number[j] = t ;
