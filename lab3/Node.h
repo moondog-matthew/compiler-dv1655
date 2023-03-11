@@ -390,9 +390,11 @@ public:
 	IfStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~IfStmt() = default;
 	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {	
-		BB* tBlock = new BB(++(currentBlock->id));
+		int idB = currentBlock->id + 1;
+		BB* tBlock = new BB(idB);
+		idB += 1;
 		BB* fBlock = currentBlock;
-		BB* jBlock = new BB(++(currentBlock->id));
+		BB* jBlock = new BB(idB);
 		tBlock->setTrue(jBlock);
 		fBlock->setTrue(jBlock);
 		currentBlock->setTrue(tBlock);
@@ -442,9 +444,12 @@ public:
 	virtual ~WhileStmt() = default;
 
 	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
-		BB* hBlock = new BB(++(currentBlock->id)); // header block
-		BB* bBlock = new BB(++(currentBlock->id)); // body block
-		BB* jBlock = new BB(++(currentBlock->id)); // jump block
+		int idB = currentBlock->id + 1;
+		BB* hBlock = new BB(idB); // header block
+		idB += 1;
+		BB* bBlock = new BB(idB); // body block
+		idB += 1;
+		BB* jBlock = new BB(idB); // jump block
 		string hName = children[0]->genIR(hBlock, methods, BBnames, id);
 		string bName = children[1]->genIR(bBlock, methods, BBnames, id);
 		
@@ -474,6 +479,13 @@ class AssignStmt : public Node {
 public:
 	AssignStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~AssignStmt() = default;
+	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
+		string name = children[0]->genIR(currentBlock, methods, BBnames, id);
+		string lhs_name = children[1]->genIR(currentBlock, methods, BBnames, id); // still in same block, only statements create news
+		CopyTac* in = new CopyTac(lhs_name, name);
+		currentBlock->add_Tac(in);
+		return name;
+	}
 };
 
 class ArrayIndexAssign : public Node {
@@ -639,7 +651,8 @@ public:
 	}
 	
 	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
-		BB* newBlock = new BB(++(currentBlock->id));
+		int idB = currentBlock->id + 1;
+		BB* newBlock = new BB(idB);
 		methods.push_back(newBlock);
 		currentBlock = newBlock;
 		

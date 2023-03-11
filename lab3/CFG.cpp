@@ -27,7 +27,7 @@ void CFG::generate_CFG() {
 void CFG::generate_CFG_content(BB* block, int &count, ofstream *outStream) {
     int id = count++;
     printedBlocks.push_back(block->getName());
-    *outStream << "block_" << id << " [label=\"" << "Block" << ":" << block->getName();
+    *outStream << block->getName() << " [label=\"" << "Block" << ":" << block->getName();
     
     // Print Tacs in block
     for(const auto& tac : block->getInstructions()) {
