@@ -28,19 +28,23 @@ void CFG::generate_CFG_content(BB* block, int &count, ofstream *outStream) {
     int id = count++;
     printedBlocks.push_back(block->getName());
     *outStream << "block_" << id << " [label=\"" << "Block" << ":" << block->getName();
+    
+    // Print Tacs in block
     for(const auto& tac : block->getInstructions()) {
         *outStream << "\n" << tac->printTac();
     }
     *outStream << "\"];" << "\n"; 
+
+    // Print true and false pointers
     if (block->getTrue() != nullptr) {
-        *outStream << "block_" << id << " -> block_" << id << " [xlabel = \"true\"]" << endl ;
+        *outStream << block->getName() << " -> " << block->getTrue()->getName() << " [xlabel = \"true\"]" << endl ;
         if (std::find(printedBlocks.begin(), printedBlocks.end(), block->getTrue()->getName()) == printedBlocks.end()) {
             generate_CFG_content(block->getTrue(), count, outStream);
         }
     }
     if (block->getFalse() != nullptr) {
         generate_CFG_content(block->getFalse(), count, outStream);
-        *outStream << "block_" << id << " -> block_" << id << " [xlabel = \"false\"]" << endl ;
+        *outStream << block->getName() << " -> " << block->getFalse()->getName() << " [xlabel = \"false\"]" << endl ;
     }
 }
 
@@ -50,6 +54,8 @@ void CFG::populate_CFG(Node* node) {
     node->genIR(entry, methods, BBnames, val);
 
     for (auto const& block : methods) {
-        if (block->getTrue() == nullptr ) cout << block->getName() << "Problem?" << endl;
+        if (block->getTrue() == nullptr || block->getTrue() == block) {
+            cout << block->getName() << "Problem?" << endl;
+        }
     }
 }

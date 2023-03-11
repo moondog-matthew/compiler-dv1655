@@ -438,9 +438,9 @@ public:
 		string hName = children[0]->genIR(hBlock, methods, BBnames, id);
 		string bName = children[1]->genIR(bBlock, methods, BBnames, id);
 		
-		hBlock->setTrue(bBlock);
-		hBlock->setFalse(jBlock);
-		bBlock->setTrue(hBlock);
+		hBlock->setTrue(bBlock); // if true, re-enter the while-loop
+		hBlock->setFalse(jBlock); // if false, exit while loop, by going to next block
+		bBlock->setTrue(hBlock); // 
 		currentBlock->setTrue(hBlock);
 		currentBlock = jBlock; // return jumpBlock
 	}
@@ -629,8 +629,9 @@ public:
 	}
 	
 	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
-		currentBlock = new BB(++(currentBlock->id));
-		methods.push_back(currentBlock);
+		BB* newBlock = new BB(++(currentBlock->id));
+		methods.push_back(newBlock);
+		currentBlock = newBlock;
 		
 		for (auto const& child : children) {
 			child->genIR(currentBlock, methods, BBnames, id);
