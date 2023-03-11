@@ -11,10 +11,8 @@ return
 temporary_3 := call Print, 0
 return 
 temporary_4 := call Search, 3"];
-block_1 -> block_1 [xlabel = "true"]
 block_2 [label="Block:
 Print: 0"];
-block_2 -> block_2 [xlabel = "true"]
 block_1 -> block_1 [xlabel = "false"]
 block_3 [label="Block:
 return 
@@ -29,50 +27,29 @@ return
 return 
 return 
 return 
-return 
-temporary_14 := left + right
-temporary_15 := call Div, 3
-temporary_16 := num < aux01"];
-block_3 -> block_3 [xlabel = "true"]
+return "];
 block_4 [label="Block:
-temporary_18 := medium + 1"];
-block_4 -> block_4 [xlabel = "true"]
-block_3 -> block_3 [xlabel = "false"]
-block_5 [label="Block:
 return 
 return 
 return 
 return 
 temporary_22 := num - 1
-return 
-temporary_23 := count02 < aux03
-temporary_24 := count01 + 1
-temporary_25 := count02 + 2
 return "];
-block_6 [label="Block:
+block_5 [label="Block:
 return 
 return 
 temporary_26 := num2 + 1
 return 
 temporary_27 := num1 < num2"];
-block_6 -> block_6 [xlabel = "true"]
-block_7 [label="Block:
+block_6 [label="Block:
 temporary_29 := num1 < aux02
 temporary_28 := ! temporary_29"];
-block_7 -> block_7 [xlabel = "true"]
-block_8 [label="Block:"];
-block_8 -> block_8 [xlabel = "true"]
-block_7 -> block_7 [xlabel = "false"]
+block_7 [label="Block:"];
 block_6 -> block_6 [xlabel = "false"]
-block_9 [label="Block:
-return 
-temporary_30 := j < size
-Print: 
-temporary_31 := j + 1
-return 
-Print: 99999
+block_5 -> block_5 [xlabel = "false"]
+block_8 [label="Block:
 return "];
-block_10 [label="Block:
+block_9 [label="Block:
 return 
 return 
 return 
@@ -80,12 +57,5 @@ return
 return 
 return 
 temporary_32 := size + 1
-return 
-temporary_33 := j < size
-temporary_34 := 2 * j
-temporary_35 := k - 3
-temporary_36 := aux01 + aux02
-temporary_37 := j + 1
-temporary_38 := k - 1
 return "];
 }

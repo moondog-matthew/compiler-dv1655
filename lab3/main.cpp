@@ -32,10 +32,6 @@ int main(int argc, char **argv)
   yy::parser parser;
 
   if(!parser.parse() && !lexical_errors) {
-
-    // printf("\nThe compiler successfuly generated a syntax tree for the given input! \n");
-    // printf("\nPrint Tree:  \n");
-    
     root->generate_tree();
     // using the constructor that fills the symbol table
     SymbolTable* ST;
@@ -43,13 +39,11 @@ int main(int argc, char **argv)
     
     ST->print_ST();
     SemanticAnalysis* SA = new SemanticAnalysis(root, ST);
-    // if(SA->contains_error()) {
-    //   // exit program ?
-    //   // just don't continue?
-    //   // cout << "Contains Error" << endl;
-    // }
-    CFG* cfg = new CFG(root);
-    cfg->generate_CFG();
+    if(!SA->contains_error()) {
+      CFG* cfg = new CFG(root);
+      cfg->generate_CFG();
+    }
+
     
     delete ST;
     delete SA;

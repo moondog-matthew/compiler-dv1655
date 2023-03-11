@@ -48,11 +48,4 @@ void CFG::populate_CFG(Node* node) {
     methods.push_back(entry);
     int val = 0;
     node->genIR(entry, methods, BBnames, val);
-
-    for (auto const& meth : methods) {
-        for (auto const& tac : meth->getInstructions()) {
-            cout << tac->printTac() << endl;
-        }
-    }
-
 }
