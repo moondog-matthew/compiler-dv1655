@@ -1,16 +1,18 @@
 digraph {
 graph [ splines = ortho ]
 	node [ shape = box ];
-block_0 [label="Block:
+block_0 [label="Block:Block_1
 temporary_1 := call ComputeFac, 3
 Print: temporary_1"];
-block_1 [label="Block:
+block_1 [label="Block:Block_4
 temporary_2 := num < 1
 return "];
 block_1 -> block_1 [xlabel = "true"]
-block_2 [label="Block:
+block_2 [label="Block:Block_2"];
+block_2 -> block_2 [xlabel = "true"]
+block_3 [label="Block:Block_3
 temporary_4 := call ComputeFac, 3
 temporary_3 := num * temporary_4"];
-block_2 -> block_2 [xlabel = "true"]
+block_3 -> block_3 [xlabel = "true"]
 block_1 -> block_1 [xlabel = "false"]
 }

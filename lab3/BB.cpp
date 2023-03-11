@@ -1,13 +1,14 @@
 #include "BB.hpp"
 
-BB::BB() {
+
+BB::BB(int _id) : id(_id) {
     true_exit = nullptr;
     false_exit = nullptr;
-    jumpBlock = nullptr;
 }
 
-string& BB::getName() {
-    return this->name;
+string BB::getName() {
+    string blockName = "Block_" + to_string(id);
+    return blockName;
 }
 std::vector<Tac*>& BB::getInstructions() {
     return this->tac_instructions;

@@ -14,17 +14,17 @@ class BB {
 private: 
     std::string name;
     std::vector<Tac*> tac_instructions;
-    Tac* condition;
+    Tac* condition; // the state of the block, use to later determine to to take true or false path
     BB* false_exit;
     BB* true_exit;
-    BB* jumpBlock;
 
 public:
-    BB();
+    BB(int _id);
     ~BB();
 
+    int id;
     /* Getters and setters */
-    string& getName();
+    string getName();
     std::vector<Tac*>& getInstructions();
     Tac* getCondition();
     BB* getFalse();

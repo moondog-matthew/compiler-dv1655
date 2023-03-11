@@ -5,7 +5,7 @@ CFG::CFG() {
 }
 
 CFG::CFG(Node* node) {
-    this->entry = new BB();
+    this->entry = new BB(0);
     populate_CFG(node);
 }
 
@@ -48,4 +48,8 @@ void CFG::populate_CFG(Node* node) {
     methods.push_back(entry);
     int val = 0;
     node->genIR(entry, methods, BBnames, val);
+
+    for (auto const& block : methods) {
+        if (block->getTrue() == nullptr ) cout << block->getName() << "Problem?" << endl;
+    }
 }

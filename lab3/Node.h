@@ -383,9 +383,9 @@ public:
 	IfStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~IfStmt() = default;
 	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {	
-		BB* tBlock = new BB();
+		BB* tBlock = new BB(++(currentBlock->id));
 		BB* fBlock = currentBlock;
-		BB* jBlock = new BB();
+		BB* jBlock = new BB(++(currentBlock->id));
 		tBlock->setTrue(jBlock);
 		fBlock->setTrue(jBlock);
 		currentBlock->setTrue(tBlock);
@@ -405,17 +405,23 @@ public:
 	IfElseStmt(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~IfElseStmt() = default;
 	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
-		BB* tBlock = new BB();
-		BB* fBlock = new BB();
-		BB* jBlock = new BB();
-		tBlock->setTrue(jBlock);
-		fBlock->setTrue(jBlock);
-		currentBlock->setTrue(tBlock);
-		currentBlock->setFalse(fBlock);
+		BB* tBlock = new BB(++(currentBlock->id));
+		BB* fBlock = new BB(++(currentBlock->id));
+		BB* jBlock = new BB(++(currentBlock->id));
+
+		tBlock->setTrue(jBlock); // set the the block after the if-else branching, 
+		fBlock->setTrue(jBlock); // set the the block after the if-else branching,
+
 		string conName = children[0]->genIR(currentBlock, methods, BBnames, id); // boolean condition
-		string tName = children[1]->genIR(tBlock, methods, BBnames, id);
-		string fName = children[2]->genIR(fBlock, methods, BBnames, id);
-		currentBlock = jBlock; // return returnBlock
+		
+		string tName = children[1]->genIR(tBlock, methods, BBnames, id); // generate true block
+		string fName = children[2]->genIR(fBlock, methods, BBnames, id); // generate false block
+
+		/* Assign the true and false path for the current block */
+		currentBlock->setTrue(tBlock); 
+		currentBlock->setFalse(fBlock);
+
+		currentBlock = jBlock; // go to AFTER the true false branching, continue from there
 		return "";
 	}
 };
@@ -426,9 +432,9 @@ public:
 	virtual ~WhileStmt() = default;
 
 	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
-		BB* hBlock = new BB(); // header block
-		BB* bBlock = new BB(); // body block
-		BB* jBlock = new BB(); // jump block
+		BB* hBlock = new BB(++(currentBlock->id)); // header block
+		BB* bBlock = new BB(++(currentBlock->id)); // body block
+		BB* jBlock = new BB(++(currentBlock->id)); // jump block
 		string hName = children[0]->genIR(hBlock, methods, BBnames, id);
 		string bName = children[1]->genIR(bBlock, methods, BBnames, id);
 		
@@ -623,7 +629,7 @@ public:
 	}
 	
 	string genIR(BB* currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id) override {
-		currentBlock = new BB();
+		currentBlock = new BB(++(currentBlock->id));
 		methods.push_back(currentBlock);
 		
 		for (auto const& child : children) {
