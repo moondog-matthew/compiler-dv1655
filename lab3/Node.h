@@ -536,6 +536,15 @@ public:
 		string hName = children[0]->genIR(&hBlock, methods, BBnames, id, blockID); // while condition
 		string bName = children[1]->genIR(&bBlock, methods, BBnames, id, blockID); // the body
 
+		// Add Tacs, unconditional and conditional jumps
+		
+		/*currentBlock to header block unconditional*/
+		JumpTac* hTac = new JumpTac(hBlock->getName()); // default is to go to true
+		(*currentBlock)->add_Tac(hTac);
+		/*Header block to body block and back are both conditional*/
+		CondTac* header_body_split = new CondTac(hName, jBlock->getName());
+		hBlock->add_Tac(header_body_split);
+		
 		// continue to write to the block after the while branch
 		*currentBlock = jBlock;
 		

@@ -24,14 +24,12 @@ class BT {
         int[] arr;
         arr = new int[5];
         
-        // while (x < 20) {
-        //     a = b;
-        //     if (x < 1) 
-        //         x = x - 1;
-        //     // else 
-        //     //     x = x + 1;
-        //     b = false;
-        // }
+        while (x < 20) {
+            a = b;
+            if (x < 1) 
+                x = x - 1;
+            b = false;
+        }
         // while (x < 20) {
         //     a = b;
         //     if (x < 1) 
@@ -50,8 +48,8 @@ class BT {
             // x = x - 1;
         // else 
         //     x = x + 1;
-        if (x < 1) 
-            x = x - 1;
+        // if (x < 1) 
+        //     x = x - 1;
         // else 
         //     x = x + 1;
 

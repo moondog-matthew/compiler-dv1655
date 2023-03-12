@@ -14,21 +14,32 @@ temporary_4 := new BT
 new_node := temporary_4
 temporary_5 := new int[],5
 arr := temporary_5
-temporary_6 := x < 1
-iffalse temporary_6 goto Block_3"];
+goto Block_2"];
 Block_1 -> Block_2 [xlabel = "true"]
 Block_2 [label="Block:Block_2
-temporary_7 := x - 1
-x := temporary_7
-goto Block_3"];
+temporary_6 := x < 20
+iffalse temporary_6 goto Block_4"];
 Block_2 -> Block_3 [xlabel = "true"]
 Block_3 [label="Block:Block_3
-temporary_8 := x + 1
+a := b
+temporary_7 := x < 1
+iffalse temporary_7 goto Block_6"];
+Block_3 -> Block_5 [xlabel = "true"]
+Block_5 [label="Block:Block_5
+temporary_8 := x - 1
 x := temporary_8
-return 0"];
-Block_1 -> Block_3 [xlabel = "false"]
-Block_3 [label="Block:Block_3
-temporary_8 := x + 1
-x := temporary_8
+goto Block_6"];
+Block_5 -> Block_6 [xlabel = "true"]
+Block_6 [label="Block:Block_6
+b := false"];
+Block_6 -> Block_2 [xlabel = "true"]
+Block_3 -> Block_6 [xlabel = "false"]
+Block_6 [label="Block:Block_6
+b := false"];
+Block_6 -> Block_2 [xlabel = "true"]
+Block_2 -> Block_4 [xlabel = "false"]
+Block_4 [label="Block:Block_4
+temporary_9 := x + 1
+x := temporary_9
 return 0"];
 }
