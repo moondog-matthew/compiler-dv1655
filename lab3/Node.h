@@ -537,9 +537,11 @@ public:
 		/*currentBlock to header block unconditional*/
 		JumpTac* hTac = new JumpTac(hBlock->getName()); // default is to go to true
 		(*currentBlock)->add_Tac(hTac);
-		/*Header block to body block and back are both conditional*/
+		/*Header block to body block is condtional and reverse is non-conditional*/
 		CondTac* header_body_split = new CondTac(hName, jBlock->getName());
 		hBlock->add_Tac(header_body_split);
+		JumpTac* backTac = new JumpTac(hBlock->getName());
+		bBlock->add_Tac(backTac);
 		
 		// continue to write to the block after the while branch
 		*currentBlock = jBlock;
