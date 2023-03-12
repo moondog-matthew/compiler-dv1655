@@ -332,10 +332,10 @@ expression: expression PLUSOP expression {
                       $$ = new Negation("Negation", "", yylineno); // expression
                       $$->children.push_back($2); 
                   }
-            | factor      {$$ = $1; /* printf("r4 ");*/
+            | factor      {$$ = $1; 
               };
 
-experiment: expression LHB expression RHB { //??
+experiment: expression LHB expression RHB { // y[i]
                       $$ = new Index("index", "", yylineno);
                       $$->children.push_back($1);  // what to take index of
                       $$->children.push_back($3);  // index value

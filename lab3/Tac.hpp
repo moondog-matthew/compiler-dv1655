@@ -36,22 +36,23 @@ public:
     string printTac() const override;
 };
 
-class ArrAccTac : public Tac {
-  public:
-    string x; // singular val
-    string y; // array 
-    string i; // index
-    ArrAccTac(string _x, string _y, string _i);
+class IndexTac : public Tac {
+public:
+    string result;
+    // y[i]
+    string y;
+    string i;
+    IndexTac(string result, string _y, string _i);
     string printTac() const override;
 };
 
-class IndTac : public Tac {
+class ArrAccTac : public Tac {
   public:
+    // y[i] = z;
     string y; // array 
     string i; // index
-    string x; // index value
-
-    IndTac(string _x, string _y, string _i);
+    string z; // singular val
+    ArrAccTac(string _y, string _i, string _z);
     string printTac() const override;
 };
 

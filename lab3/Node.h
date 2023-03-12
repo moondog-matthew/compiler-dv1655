@@ -526,12 +526,34 @@ class ArrayIndexAssign : public Node {
 public:
 	ArrayIndexAssign(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~ArrayIndexAssign() = default;
+	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id, int &blockID) override {
+		/*y[i] = z;*/
+		string y = children[0]->genIR(currentBlock, methods, BBnames, id, blockID);
+		string i = children[1]->genIR(currentBlock, methods, BBnames, id, blockID);
+		string z = children[2]->genIR(currentBlock, methods, BBnames, id, blockID);
+
+		ArrAccTac* in = new ArrAccTac(y,i,z);
+		(*currentBlock)->add_Tac(in);
+		return "";
+	}
 };
 
 class Index : public Node {
   public:
 	Index(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~Index() = default;
+	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id, int &blockID) override {
+		
+		string name = (*currentBlock)->generate_name(++id); 
+		BBnames.insert(pair<string, string>(name, "int"));
+		/*y[i]*/
+		string y = children[0]->genIR(currentBlock, methods, BBnames, id, blockID);
+		string i = children[1]->genIR(currentBlock, methods, BBnames, id, blockID);
+
+		IndexTac* in = new IndexTac(name,y,i);
+		(*currentBlock)->add_Tac(in);
+		return name;
+	}
 };
 
 /*

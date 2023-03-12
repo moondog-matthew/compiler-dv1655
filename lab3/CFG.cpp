@@ -54,9 +54,4 @@ void CFG::populate_CFG(Node* node) {
     int blockID = 1;
     node->genIR(&entry, methods, BBnames, val, blockID);
 
-    // for (auto const& block : methods) {
-    //     if (block->getTrue() == nullptr || block->getTrue() == block) {
-    //         cout << block->getName() << "Problem?" << endl;
-    //     }
-    // }
 }

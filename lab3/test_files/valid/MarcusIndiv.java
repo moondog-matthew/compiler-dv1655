@@ -11,38 +11,42 @@ class BT {
         x = 10;
         boolean a;
         boolean b;
+        int[] y;
+        int i;
+        int z;
+
+        y[i] = z;
+        x = y[i];
         
-        while (x < 20) {
-            a = b;
-            if (x < 1) 
-                x = x - 1;
-            // else 
-            //     x = x + 1;
-            b = false;
-        }
-        while (x < 20) {
-            a = b;
-            if (x < 1) 
-                x = x - 1;
-            else 
-                x = x + 1;
-            b = false;
-        }
-        while (x < 1) {
-            a = b;  
-        }
-        if (x < 1) 
-            while (x < 1) {
-                a = b;  
-            }
+        // while (x < 20) {
+        //     a = b;
+        //     if (x < 1) 
+        //         x = x - 1;
+        //     // else 
+        //     //     x = x + 1;
+        //     b = false;
+        // }
+        // while (x < 20) {
+        //     a = b;
+        //     if (x < 1) 
+        //         x = x - 1;
+        //     else 
+        //         x = x + 1;
+        //     b = false;
+        // }
+        // while (x < 1) {
+        //     a = b;  
+        // }
+        // if (x < 1) 
+        //     while (x < 1) {
+        //         a = b;  
+        //     }
             // x = x - 1;
         // else 
         //     x = x + 1;
 
 
         x = x + 1;
-        int y;
-        y = 121;
 
         return 0;
     }

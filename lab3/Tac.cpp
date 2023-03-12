@@ -18,16 +18,16 @@ string CopyTac::printTac() const {
     return result + " := " + lhs;
 }
 
-ArrAccTac::ArrAccTac(string _x, string _y, string _i) : x(_x), y(_y), i(_i) {}
-string ArrAccTac::printTac() const {
-    /* How do we handle ambiguity? Two different classs? */
-    return x + " := " + y + "[" + i + "]";
-    // return y + "[" + i + "] + " := " + x;
+IndexTac::IndexTac(string _result, string _y, string _i) : result(_result), y(_y), i(_i) {}
+string IndexTac::printTac() const {
+    return result + " =: " + y + "[" + i + "]";
 }
 
-IndTac::IndTac(string _x, string _y, string _i) : x(_x), y(_y), i(_i) {}
-string IndTac::printTac() const {
-    return y + "[" + i + "]" + ":=" + x;
+ArrAccTac::ArrAccTac(string _z, string _y, string _i) : z(_z), y(_y), i(_i) {}
+string ArrAccTac::printTac() const {
+    /* How do we handle ambiguity? Two different classs? */
+    return z + " := " + y + "[" + i + "]";
+    // return y + "[" + i + "] + " := " + x;
 }
 
 NewTac::NewTac(string _type, string _result) : result(_result), type(_type) {}
