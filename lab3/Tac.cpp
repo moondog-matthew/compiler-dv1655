@@ -30,15 +30,15 @@ string ArrAccTac::printTac() const {
     // return y + "[" + i + "] + " := " + x;
 }
 
-NewTac::NewTac(string _type, string _result) : result(_result), type(_type) {}
-string NewTac::printTac() const {
-    return result + " := new TYPE";
+NewIdenTac::NewIdenTac(string _type, string _result) : result(_result), type(_type) {}
+string NewIdenTac::printTac() const {
+    return result + " := new " + type;
     // return result + " := new " + type;
 }
 
-NewArrTac::NewArrTac(string _size, string _result) : result(_result), size(_size) {}
+NewArrTac::NewArrTac(string _size, string _type,string _result) : result(_result), type(_type) ,size(_size) {}
 string NewArrTac::printTac() const {
-    return result + " := new TYPE, " + size;
+    return result + " := new " + type + "," + size;
 }
 
 LengthTac::LengthTac(string _y, string _result) : y(_y), result(_result) {}

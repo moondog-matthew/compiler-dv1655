@@ -2,14 +2,19 @@ digraph {
 graph [ splines = ortho ]
 	node [ shape = box ];
 Block_0 [label="Block:Block_0
+temporary_2 := new BT
 temporary_1 := call Start, 0
 Print: temporary_1"];
 Block_1 [label="Block:Block_1
 x := 10
 y := i[z]
-temporary_2 =: y[i]
-x := temporary_2
-temporary_3 := x + 1
+temporary_3 =: y[i]
 x := temporary_3
+temporary_4 := new BT
+new_node := temporary_4
+temporary_5 := new int[],5
+arr := temporary_5
+temporary_6 := x + 1
+x := temporary_6
 return 0"];
 }

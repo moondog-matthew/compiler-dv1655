@@ -342,12 +342,32 @@ class IntArray : public Node {
 public:
 	IntArray(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~IntArray() = default;
+	
+	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id, int &blockID) override {	
+		/* new int[i]*/
+		string name = (*currentBlock)->generate_name(++id); 
+		BBnames.insert(pair<string, string>(name, "int[]"));
+		string i = children[0]->genIR(currentBlock, methods, BBnames, id, blockID);
+		NewArrTac* in = new NewArrTac(i, "int[]", name);
+		(*currentBlock)->add_Tac(in);
+		return name;
+	}
 };
 
 class IdenAlloc : public Node {
 public:
 	IdenAlloc(string t, string v, int l) { type = t; value = v; lineno = l;}
 	virtual ~IdenAlloc() = default;
+	
+	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id, int &blockID) override {
+		/*new IDEN()*/
+		string name = (*currentBlock)->generate_name(++id); 
+		string type = children[0]->genIR(currentBlock, methods, BBnames, id, blockID);
+		BBnames.insert(pair<string, string>(name, type));
+		NewIdenTac* in = new NewIdenTac(type, name);
+		(*currentBlock)->add_Tac(in);
+		return name;
+	}
 
 };
 
@@ -415,6 +435,7 @@ public:
 		// continue to write to the block after the if branching
 		*currentBlock = jBlock;
 
+		// Tac add conditional jump to jBlockName ifFalse ?? 
 		return "";
 	}
 	
@@ -455,7 +476,7 @@ public:
 		
 		// continue to write to the block after the while branch
 		*currentBlock = jBlock;
-
+		// TAC add conditional jump to jBlockName ifFalse ?? 
 		return "";
 	}
 };
@@ -491,6 +512,9 @@ public:
 
 		// continue to write to the block after the while branch
 		*currentBlock = jBlock;
+		
+		// TAC add conditional jump to jBlockname ifFalse ?? 
+
 		return "";
 	}
 };

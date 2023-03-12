@@ -36,7 +36,7 @@ public:
     string printTac() const override;
 };
 
-class IndexTac : public Tac {
+class IndexTac : public Tac {// add conditional jump to jBlock ifFalse ?? 
 public:
     string result;
     // y[i]
@@ -56,19 +56,22 @@ class ArrAccTac : public Tac {
     string printTac() const override;
 };
 
-class NewTac : public Tac {
+class NewIdenTac : public Tac {
   public:
+	/*new IDEN()*/
     string result;
     string type;
-    NewTac(string _type, string _result);
+    NewIdenTac(string _type, string _result);
     string printTac() const override;
 };
 
 class NewArrTac : public Tac {
   public:
+  	/* new int[i]*/
     string result;
     string size;
-    NewArrTac(string _size, string _result);
+    string type;
+    NewArrTac(string _size, string _type, string _result);
     string printTac() const override;
 };
 
@@ -77,6 +80,13 @@ public:
     string result;
     string y; // what to take length of
     LengthTac(string _y, string _result);
+    string printTac() const override;
+};
+
+class PrintTac : public Tac {
+public:
+    string expr;
+    PrintTac(string _expr);
     string printTac() const override;
 };
 
@@ -119,11 +129,6 @@ public:
     string printTac() const override;
 };
 
-class PrintTac : public Tac {
-public:
-    string expr;
-    PrintTac(string _expr);
-    string printTac() const override;
-};
+
 
 #endif // TAC_HPP

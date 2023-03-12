@@ -326,7 +326,6 @@ expression: expression PLUSOP expression {
             | NEW identifier LP RP {
                       $$ = new IdenAlloc("new ID()", "", yylineno);
                       $$->children.push_back($2);  
-                      // printf("NEW ident: %d\n", yylineno);
                   }
             | EXCLAMATION expression {
                       $$ = new Negation("Negation", "", yylineno); // expression

@@ -17,6 +17,12 @@ class BT {
 
         y[i] = z;
         x = y[i];
+
+        BT new_node;
+        new_node = new BT();
+
+        int[] arr;
+        arr = new int[5];
         
         // while (x < 20) {
         //     a = b;
