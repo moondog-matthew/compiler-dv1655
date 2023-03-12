@@ -61,6 +61,11 @@ string ReturnTac::printTac() const {
     return "return " + retval;
 }
 
+ExpressionTac::ExpressionTac(string _expr, string _result) : expr(_expr), result(_result) {}
+string ExpressionTac::printTac() const {
+    return result + " := " + expr;
+}
+
 JumpTac::JumpTac(string _label) : label(_label) {}
 string JumpTac::printTac() const {
     return "goto " + label;

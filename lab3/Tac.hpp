@@ -36,7 +36,7 @@ public:
     string printTac() const override;
 };
 
-class IndexTac : public Tac {// add conditional jump to jBlock ifFalse ?? 
+class IndexTac : public Tac {
 public:
     string result;
     // y[i]
@@ -111,6 +111,15 @@ class ReturnTac : public Tac {
 public:
     string retval;
     ReturnTac(string _retval);
+    string printTac() const override;
+};
+
+class ExpressionTac : public Tac {
+public:
+    /* (Expression)*/
+    string expr;
+    string result;
+    ExpressionTac(string _expr, string _result);
     string printTac() const override;
 };
 

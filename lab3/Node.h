@@ -273,6 +273,14 @@ public:
 	string getIden() {
 		return children[0]->value;
 	}
+	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id, int &blockID) override {
+		string name = (*currentBlock)->generate_name(++id); 
+		// no need to BBnames, arguments already in SymbolTable
+		string expr = children[0]->genIR(currentBlock, methods, BBnames, id, blockID); // what to take length of
+		ExpressionTac* in = new ExpressionTac(expr, name);
+		(*currentBlock)->add_Tac(in);
+		return name;
+	}
 };
 
 class ExpressionList : public Node {

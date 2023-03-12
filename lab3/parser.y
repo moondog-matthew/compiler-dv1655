@@ -320,12 +320,13 @@ expression: expression PLUSOP expression {
                   $$ = new ThisOP("this", "", yylineno);
                 }
             | NEW INTTYPE LHB expression RHB {
-                      $$ = new IntArray("int[]", "", yylineno);
+                      $$ = new IntArray("new int[]", "", yylineno);
                       $$->children.push_back($4);  // Size of int array
                   }
             | NEW identifier LP RP {
                       $$ = new IdenAlloc("new ID()", "", yylineno);
                       $$->children.push_back($2);  
+                      // printf("NEW ident: %d\n", yylineno);
                   }
             | EXCLAMATION expression {
                       $$ = new Negation("Negation", "", yylineno); // expression
@@ -334,7 +335,7 @@ expression: expression PLUSOP expression {
             | factor      {$$ = $1; 
               };
 
-experiment: expression LHB expression RHB { // y[i]
+experiment: expression LHB expression RHB { 
                       $$ = new Index("index", "", yylineno);
                       $$->children.push_back($1);  // what to take index of
                       $$->children.push_back($3);  // index value
