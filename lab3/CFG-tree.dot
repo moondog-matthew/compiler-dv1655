@@ -17,54 +17,42 @@ arr := temporary_5
 goto Block_3"];
 Block_2 -> Block_3 [xlabel = "true"]
 Block_3 [label="Block:Block_3
-temporary_6 := x < 1
+temporary_6 := x < 20
 iffalse temporary_6 goto Block_5"];
 Block_3 -> Block_4 [xlabel = "true"]
 Block_4 [label="Block:Block_4
 a := b
-goto Block_6"];
-Block_4 -> Block_6 [xlabel = "true"]
-Block_6 [label="Block:Block_6
-temporary_7 := x > 10
-iffalse temporary_7 goto Block_8"];
-Block_6 -> Block_7 [xlabel = "true"]
-Block_7 [label="Block:Block_7
-z := i
-goto Block_6"];
-Block_7 -> Block_6 [xlabel = "true"]
-Block_6 -> Block_8 [xlabel = "false"]
-Block_8 [label="Block:Block_8
 goto Block_3"];
-Block_8 -> Block_3 [xlabel = "true"]
+Block_4 -> Block_3 [xlabel = "true"]
 Block_3 -> Block_5 [xlabel = "false"]
 Block_5 [label="Block:Block_5
-temporary_8 := x < 1
-iffalse temporary_8 goto Block_14"];
-Block_5 -> Block_9 [xlabel = "true"]
-Block_9 [label="Block:Block_9
-temporary_9 := x - 1
-x := temporary_9
-goto Block_11"];
-Block_9 -> Block_11 [xlabel = "true"]
+temporary_7 := x < 1
+iffalse temporary_7 goto Block_7"];
+Block_5 -> Block_11 [xlabel = "true"]
 Block_11 [label="Block:Block_11
-temporary_11 := x + 1
-x := temporary_11
-return 0"];
-Block_5 -> Block_10 [xlabel = "false"]
-Block_10 [label="Block:Block_10
-temporary_10 := x > 10
-iffalse temporary_10 goto Block_13"];
-Block_10 -> Block_12 [xlabel = "true"]
+goto Block_8"];
+Block_11 -> Block_8 [xlabel = "true"]
+Block_8 [label="Block:Block_8
+temporary_10 := x < 1
+iffalse temporary_10 goto Block_17"];
+Block_8 -> Block_12 [xlabel = "true"]
 Block_12 [label="Block:Block_12
-a := b
+temporary_11 := x - 1
+x := temporary_11
 goto Block_14"];
 Block_12 -> Block_14 [xlabel = "true"]
 Block_14 [label="Block:Block_14
-goto Block_11"];
-Block_14 -> Block_11 [xlabel = "true"]
-Block_10 -> Block_13 [xlabel = "false"]
-Block_13 [label="Block:Block_13
-b := a
+temporary_13 := x + 1
+x := temporary_13
+return 0"];
+Block_8 -> Block_17 [xlabel = "false"]
+Block_17 [label="Block:Block_17
 goto Block_14"];
-Block_13 -> Block_14 [xlabel = "true"]
+Block_17 -> Block_14 [xlabel = "true"]
+Block_5 -> Block_7 [xlabel = "false"]
+Block_7 [label="Block:Block_7
+temporary_9 := x + 1
+x := temporary_9
+goto Block_8"];
+Block_7 -> Block_8 [xlabel = "true"]
 }
