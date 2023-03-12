@@ -98,7 +98,7 @@ ntb := false
 temporary_38 := num2 + 1
 nti := temporary_38
 temporary_39 := num1 < num2
-iffalse temporary_39 goto Block_20"];
+iffalse temporary_39 goto Block_16"];
 Block_14 -> Block_15 [xlabel = "true"]
 Block_15 [label="Block:Block_15
 ntb := false
@@ -141,7 +141,7 @@ Block_23 [label="Block:Block_23
 temporary_45 := call GetKey, 0
 key_aux := temporary_45
 temporary_46 := v_key < key_aux
-iffalse temporary_46 goto Block_33"];
+iffalse temporary_46 goto Block_26"];
 Block_23 -> Block_25 [xlabel = "true"]
 Block_25 [label="Block:Block_25
 temporary_47 := call GetHas_Left, 0
@@ -211,7 +211,7 @@ Block_36 [label="Block:Block_36
 temporary_59 := call GetKey, 0
 key_aux := temporary_59
 temporary_60 := v_key < key_aux
-iffalse temporary_60 goto Block_46"];
+iffalse temporary_60 goto Block_39"];
 Block_36 -> Block_38 [xlabel = "true"]
 Block_38 [label="Block:Block_38
 temporary_61 := call GetHas_Left, 0
@@ -238,7 +238,7 @@ Block_42 -> Block_43 [xlabel = "true"]
 Block_36 -> Block_39 [xlabel = "false"]
 Block_39 [label="Block:Block_39
 temporary_63 := key_aux < v_key
-iffalse temporary_63 goto Block_52"];
+iffalse temporary_63 goto Block_45"];
 Block_39 -> Block_44 [xlabel = "true"]
 Block_44 [label="Block:Block_44
 temporary_64 := call GetHas_Right, 0
@@ -304,7 +304,7 @@ Block_37 [label="Block:Block_37
 return found"];
 Block_56 [label="Block:Block_56
 temporary_75 := call GetHas_Left, 0
-iffalse temporary_75 goto Block_62"];
+iffalse temporary_75 goto Block_58"];
 Block_56 -> Block_57 [xlabel = "true"]
 Block_57 [label="Block:Block_57
 temporary_77 := p_node
@@ -317,7 +317,7 @@ return true"];
 Block_56 -> Block_58 [xlabel = "false"]
 Block_58 [label="Block:Block_58
 temporary_78 := call GetHas_Right, 0
-iffalse temporary_78 goto Block_65"];
+iffalse temporary_78 goto Block_61"];
 Block_58 -> Block_60 [xlabel = "true"]
 Block_60 [label="Block:Block_60
 temporary_80 := p_node
@@ -428,7 +428,7 @@ Block_76 [label="Block:Block_76
 temporary_114 := call GetKey, 0
 key_aux := temporary_114
 temporary_115 := v_key < key_aux
-iffalse temporary_115 goto Block_86"];
+iffalse temporary_115 goto Block_79"];
 Block_76 -> Block_78 [xlabel = "true"]
 Block_78 [label="Block:Block_78
 temporary_116 := call GetHas_Left, 0

@@ -44,12 +44,13 @@ class BT {
         //         z = i;  
         //     }
         // }
-        if (x < 1) 
-            while (x < 1) {
-                a = b;  
-            }
-        else 
-            x = x + 1;
+        // if (x < 1) 
+        //     while (x < 1) {
+        //         a = b;  
+        //     }
+        // else 
+        //     x = x + 1;
+        
         if (x < 1) 
             x = x - 1;
         else 

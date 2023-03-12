@@ -482,14 +482,15 @@ public:
 		/* Assign the true and false path for the current block */
 		(*currentBlock)->setTrue(tBlock); 
 		(*currentBlock)->setFalse(fBlock);
-		
+		BB* fBlockCopy = fBlock; // temporary storage to later retrieve falseBlock name from
+
 		/*Fill fBlock and tBlock by calling genIR on various children. Called by reference*/
 		string tName = children[1]->genIR(&tBlock, methods, BBnames, id, blockID); // generate true block
 		string fName = children[2]->genIR(&fBlock, methods, BBnames, id, blockID); // generate false block
 
 		// Add Tacs, unconditional and conditional jumps
 		/*Split is conditional*/
-		CondTac* splitTac = new CondTac(conName, fBlock->getName()); // default is to go to true
+		CondTac* splitTac = new CondTac(conName, fBlockCopy->getName()); // default is to go to true
 		(*currentBlock)->add_Tac(splitTac);
 
 		/*True and false blocks have unconditional*/
