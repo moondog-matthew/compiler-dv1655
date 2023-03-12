@@ -418,7 +418,7 @@ public:
 	virtual ~IfStmt() = default;
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id, int &blockID) override {	
 		
-		blockID++;  
+		blockID += 1;  
 		BB* tBlock = new BB(blockID);
 		blockID += 1;
 		BB* jBlock = new BB(blockID);
@@ -511,7 +511,7 @@ public:
 
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id, int &blockID) override {
 		
-		blockID++;  // To avoid ID clashes
+		blockID += 1;  // To avoid ID clashes
 		BB* hBlock = new BB(blockID); // header block
 		blockID += 1;
 		BB* bBlock = new BB(blockID); // body block
@@ -757,8 +757,8 @@ public:
 	
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id, int &blockID) override {
 		string name;
-		int idB = (*currentBlock)->id + 1;
-		BB* newBlock = new BB(idB);
+		blockID += 1;
+		BB* newBlock = new BB(blockID);
 		methods.push_back(newBlock);
 		*currentBlock = newBlock;
 		for (auto const& child : children) {
