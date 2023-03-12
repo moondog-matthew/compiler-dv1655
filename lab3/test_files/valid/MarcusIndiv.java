@@ -16,8 +16,8 @@ class BT {
             a = b;
             if (x < 1) 
                 x = x - 1;
-            // else 
-            //     x = x + 1;
+            else 
+                x = x + 1;
             b = false;
         }
         // while (x < 1) {

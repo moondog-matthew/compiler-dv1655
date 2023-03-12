@@ -51,7 +51,8 @@ void CFG::generate_CFG_content(BB* block, int &count, ofstream *outStream) {
 void CFG::populate_CFG(Node* node) {
     methods.push_back(entry);
     int val = 0;
-    node->genIR(&entry, methods, BBnames, val);
+    int blockID = 1;
+    node->genIR(&entry, methods, BBnames, val, blockID);
 
     // for (auto const& block : methods) {
     //     if (block->getTrue() == nullptr || block->getTrue() == block) {
