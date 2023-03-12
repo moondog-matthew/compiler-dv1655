@@ -20,16 +20,15 @@ Block_1 -> Block_2 [xlabel = "true"]
 Block_2 [label="Block:Block_2
 temporary_7 := x - 1
 x := temporary_7
-goto Block_4"];
-Block_2 -> Block_4 [xlabel = "true"]
-Block_4 [label="Block:Block_4
-temporary_9 := x + 1
-x := temporary_9
+goto Block_3"];
+Block_2 -> Block_3 [xlabel = "true"]
+Block_3 [label="Block:Block_3
+temporary_8 := x + 1
+x := temporary_8
 return 0"];
 Block_1 -> Block_3 [xlabel = "false"]
 Block_3 [label="Block:Block_3
 temporary_8 := x + 1
 x := temporary_8
-goto Block_4"];
-Block_3 -> Block_4 [xlabel = "true"]
+return 0"];
 }

@@ -439,7 +439,15 @@ public:
 
 		/*Fill tBlock by calling genIR on various children. Called by reference*/
 		string tName = children[1]->genIR(&tBlock, methods, BBnames, id, blockID);
-		
+				// Add Tacs, unconditional and conditional jumps
+		/*Split is conditional*/
+		CondTac* splitTac = new CondTac(conName, jBlock->getName()); // default is to go to true
+		(*currentBlock)->add_Tac(splitTac);
+		/*True blocks is unconditional*/
+		JumpTac* trueTac = new JumpTac(jBlock->getName());
+		tBlock->add_Tac(trueTac);
+
+
 		// continue to write to the block after the if branching
 		*currentBlock = jBlock;
 
