@@ -13,6 +13,8 @@ private:
     std::vector<string> printedBlocks;
     SymbolTable* ST;
 
+    vector<BC*> bc;
+
 public:
     CFG();
     CFG(Node* node, SymbolTable* _ST);
@@ -20,6 +22,8 @@ public:
     void generate_CFG();
     void generate_CFG_content(BB* block, int &count, ofstream *outStream);
 
+    // Part 2 
+    void generate_BC(); 
 };
 
 

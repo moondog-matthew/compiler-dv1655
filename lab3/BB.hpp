@@ -3,12 +3,14 @@
 
 
 #include "Tac.hpp"
+
+// #include "symbolTable.hpp"
+
 #include <vector>
 #include <fstream>
+#include <map>
 
 using namespace std;
-
-
 
 class BB {
 private: 
@@ -36,6 +38,8 @@ public:
     void generate_BB();
     string generate_name(int id) const;
 
+    /*Associated to Part 2 */
+    void generate_code(vector<BC*> &_bc);
 
 };
 

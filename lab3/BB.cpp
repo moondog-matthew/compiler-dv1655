@@ -37,3 +37,12 @@ void BB::add_Tac(Tac* tac) {
 string BB::generate_name(int id) const {
     return "temporary_" + to_string(id);
 }
+
+/*Associated to Part 2 */
+void BB::generate_code(vector<BC*> &_bc) {
+    for (auto const& tac : tac_instructions) {
+        BC* instruction = tac->generate_code();
+    }
+}
+
+

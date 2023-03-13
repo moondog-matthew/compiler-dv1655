@@ -2,6 +2,7 @@
 #define TAC_HPP
 #include <string>
 #include <iostream>
+#include "BC.hpp"
 
 using namespace std;
 
@@ -13,6 +14,7 @@ public:
     Tac() = default;
     virtual ~Tac() = default;
     virtual string printTac() const = 0; // pure virtual
+    virtual BC* generate_code();
 };
 
 class ExprTac : public Tac {
@@ -20,6 +22,7 @@ public:
     string op, lhs, rhs, result;
     ExprTac(string _op, string _lhs, string _rhs, string _result);
     string printTac() const override;
+    BC* generate_code() override;
 };
 
 class UnaryTac : public Tac {
@@ -34,6 +37,8 @@ public:
     string lhs, result;
     CopyTac(string _lhs, string _result);
     string printTac() const override;
+    BC* generate_code() override;
+
 };
 
 class IndexTac : public Tac {
@@ -88,6 +93,8 @@ public:
     string expr;
     PrintTac(string _expr);
     string printTac() const override;
+    BC* generate_code() override;
+
 };
 
 class ParTac : public Tac {
@@ -105,6 +112,8 @@ public:
     MethCallTac(string _func, string _n_params, string _result);
     
     string printTac() const override;
+    BC* generate_code() override;
+
 };
 
 class ReturnTac : public Tac {
@@ -112,6 +121,7 @@ public:
     string retval;
     ReturnTac(string _retval);
     string printTac() const override;
+    BC* generate_code() override;
 };
 
 class ExpressionTac : public Tac {
@@ -128,6 +138,7 @@ public:
     string label;
     JumpTac(string _label);
     string printTac() const override;
+    BC* generate_code() override;
 };
 
 class CondTac : public Tac {
@@ -136,6 +147,8 @@ public:
     string label;
     CondTac(string _x, string _label);
     string printTac() const override;
+    BC* generate_code() override;
+
 };
 
 

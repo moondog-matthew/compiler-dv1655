@@ -61,5 +61,11 @@ void CFG::populate_CFG(Node* node) {
         variableRecord* varrec = new variableRecord(namePair.first, namePair.second, 0); // lineno just set to arbitrary value
         ST->add_symbol(varrec);
     }
-
 }
+
+void CFG::generate_BC() {
+    for (auto const& bb : methods) {
+        bb->generate_code(bc);  // fill the BC_lines vector
+    }
+}
+
