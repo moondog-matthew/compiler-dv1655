@@ -39,9 +39,9 @@ string BB::generate_name(int id) const {
 }
 
 /*Associated to Part 2 */
-void BB::generate_code(vector<BC*> &_bc) {
+void BB::generate_code(vector<InstructionBC*> &bc) {
     for (auto const& tac : tac_instructions) {
-        BC* instruction = tac->generate_code();
+        tac->generate_code(bc);
     }
 }
 

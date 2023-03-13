@@ -64,8 +64,12 @@ void CFG::populate_CFG(Node* node) {
 }
 
 void CFG::generate_BC() {
-    for (auto const& bb : methods) {
-        bb->generate_code(bc);  // fill the BC_lines vector
+    for (auto const& bb : methods) { 
+        // fill the instructions and variables vector
+        vector<InstructionBC*> instructions; 
+        vector <string> variables;
+        bb->generate_code(instructions);  
+        MethodBC* methbc = new MethodBC(variables, instructions); 
     }
 }
 

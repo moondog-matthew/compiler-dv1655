@@ -3,9 +3,6 @@
 
 
 #include "Tac.hpp"
-
-// #include "symbolTable.hpp"
-
 #include <vector>
 #include <fstream>
 #include <map>
@@ -39,7 +36,7 @@ public:
     string generate_name(int id) const;
 
     /*Associated to Part 2 */
-    void generate_code(vector<BC*> &_bc);
+    void generate_code(vector<InstructionBC*> &bc);
 
 };
 
