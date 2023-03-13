@@ -30,9 +30,9 @@ class BT {
         // }
         // while (x < 1) {
         //     a = b;  
-        //     while (x > 10) {
-        //         z = i;  
-        //     }
+        //     // while (x > 10) {
+        //     //     z = i;  
+        //     // }
         // }
         // if (x < 1) 
         //     while (x < 1) {
@@ -49,10 +49,14 @@ class BT {
         //     else 
         //         b = a;
 
-        x = x + 1;
-        x = x - 1;
-        x = x / 1;
-        x = x * 3;
+        if (x < 10) 
+            b = a;
+        else 
+            a = b;
+        // x = x + 1;
+        // x = x - 1;
+        // x = x / 1;
+        // x = x * 3;
         return 54;
     }
 

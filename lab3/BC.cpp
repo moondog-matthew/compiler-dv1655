@@ -5,7 +5,7 @@ InstructionBC::InstructionBC(int _id, string _instruction_argument)
     : id(_id), instruction_argument(_instruction_argument) {}
 InstructionBC::~InstructionBC() {}
 void InstructionBC::print(ofstream* outStream) const {
-    *outStream << instruction_argument << endl;
+    *outStream << instruction_argument << "\n";
 }
 
 MethodBC::MethodBC(vector<string> &_variables, vector<InstructionBC*> &_instructions, string _block_name) 
@@ -26,7 +26,7 @@ void ProgramBC::print() const {
     int qual_meth_vec = qual_method_names.size();
     if (bc_vec_sz == qual_meth_vec) {
         for (int i = 0; i < bc_vec_sz; ++i) {
-            outStream << qual_method_names[i].first + "." + qual_method_names[i].second << endl;
+            outStream << qual_method_names[i].first + "." + qual_method_names[i].second << "\n";
             bc_methods[i]->print(&outStream);
         }
     }

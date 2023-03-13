@@ -143,7 +143,9 @@ string JumpTac::printTac() const {
     return "goto " + label;
 }
 void JumpTac::generate_code(vector<InstructionBC*> &bc) {
-    
+    InstructionBC* instr;
+    instr = new InstructionBC(13, "goto " + label);
+    bc.push_back(instr);
 }
 
 CondTac::CondTac(string _x, string _label) : x(_x), label(_label) {}
@@ -151,7 +153,11 @@ string CondTac::printTac() const {
     return "iffalse " + x + " goto " + label;
 }
 void CondTac::generate_code(vector<InstructionBC*> &bc) {
-    
+    InstructionBC* instr;
+    instr = new InstructionBC(0, "iload " + x);
+    bc.push_back(instr);
+    instr = new InstructionBC(14, "iffalse goto " + label);
+    bc.push_back(instr);
 }
 
 PrintTac::PrintTac(string _expr) : expr(_expr) {}
@@ -159,5 +165,9 @@ string PrintTac::printTac() const {
     return "Print: " + expr;
 }
 void PrintTac::generate_code(vector<InstructionBC*> &bc) {
-
+    InstructionBC* instr;
+    instr = new InstructionBC(0, "iload " + expr);
+    bc.push_back(instr);
+    instr = new InstructionBC(17 , "print");
+    bc.push_back(instr);
 }
