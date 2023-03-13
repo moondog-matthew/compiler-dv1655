@@ -15,5 +15,5 @@ temporary_5 := x / 1
 x := temporary_5
 temporary_6 := x * 3
 x := temporary_6
-return 0"];
+return 54"];
 }

@@ -1,18 +1,30 @@
 BinaryTree.main
 BT.Start
+iload 10
+istore x
 iload x
 iload 1
 iadd
 istore temporary_3
+iload temporary_3
+istore x
 iload x
 iload 1
 isub
 istore temporary_4
+iload temporary_4
+istore x
 iload x
 iload 1
 idiv
 istore temporary_5
+iload temporary_5
+istore x
 iload x
 iload 3
 imul
 istore temporary_6
+iload temporary_6
+istore x
+iload 54
+ireturn

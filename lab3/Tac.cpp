@@ -119,7 +119,6 @@ string MethCallTac::printTac() const {
     return result + " := call " + func + ", " + n_params;  
 }
 void MethCallTac::generate_code(vector<InstructionBC*> &bc) {
-    
 }
 
 ReturnTac::ReturnTac(string _retval) : retval(_retval) {}
@@ -127,7 +126,11 @@ string ReturnTac::printTac() const {
     return "return " + retval;
 }
 void ReturnTac::generate_code(vector<InstructionBC*> &bc) {
-    
+    InstructionBC* instr;
+    instr = new InstructionBC(0, "iload " + this->retval);
+    bc.push_back(instr);
+    instr = new InstructionBC(16, "ireturn");
+    bc.push_back(instr);
 }
 
 ExpressionTac::ExpressionTac(string _expr, string _result) : expr(_expr), result(_result) {}
