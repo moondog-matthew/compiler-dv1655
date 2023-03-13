@@ -12,6 +12,10 @@ string ExprTac::printTac() const {
 void ExprTac::generate_code(vector<InstructionBC*> &bc) {
     /* Different operators for same TAC */
     InstructionBC* instr; 
+    instr = new InstructionBC(0, "iload " + lhs);
+    bc.push_back(instr);
+    instr = new InstructionBC(0, "iload " + rhs);
+    bc.push_back(instr);
     if (op == "+") {
         instr = new InstructionBC(3, "iadd");
         bc.push_back(instr);
@@ -48,7 +52,8 @@ void ExprTac::generate_code(vector<InstructionBC*> &bc) {
         instr = new InstructionBC(11, "iand");
         bc.push_back(instr);
     }
-
+    instr = new InstructionBC(2, "istore " + result);
+    bc.push_back(instr);
 }
 
 UnaryTac::UnaryTac(string _op, string _rhs, string _result) : op(_op), rhs(_rhs), result(_result) {}
@@ -56,17 +61,25 @@ string UnaryTac::printTac() const {
     return result + " := " + op + " " + rhs;
 }
 void UnaryTac::generate_code(vector<InstructionBC*> &bc) {
-    
-    InstructionBC* instr = new InstructionBC(12, "inot");
-
+    InstructionBC* instr;
+    instr = new InstructionBC(0, "iload " + rhs);
+    bc.push_back(instr);
+    instr = new InstructionBC(12, "inot");
+    bc.push_back(instr);
+    instr = new InstructionBC(2 , "iload " + rhs);
+    bc.push_back(instr);
 }
 
-CopyTac::CopyTac(string _lhs, string _result) : lhs(_lhs), result(_result) {}
+CopyTac::CopyTac(string _rhs, string _result) : rhs(_rhs), result(_result) {}
 string CopyTac::printTac() const {
-    return result + " := " + lhs;
+    return result + " := " + rhs;
 }
 void CopyTac::generate_code(vector<InstructionBC*> &bc) {
-    
+    InstructionBC* instr;
+    instr = new InstructionBC(0, "iload " + rhs);
+    bc.push_back(instr);
+    instr = new InstructionBC(2 , "istore " + result);
+    bc.push_back(instr);
 }
 
 IndexTac::IndexTac(string _result, string _y, string _i) : result(_result), y(_y), i(_i) {}

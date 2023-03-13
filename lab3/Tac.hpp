@@ -35,8 +35,8 @@ public:
 
 class CopyTac : public Tac {
 public:
-    string lhs, result;
-    CopyTac(string _lhs, string _result);
+    string rhs, result;
+    CopyTac(string _rhs, string _result);
     string printTac() const override;
     void generate_code(vector<InstructionBC*> &bc) override;
 

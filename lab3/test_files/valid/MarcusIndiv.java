@@ -11,25 +11,15 @@ class BT {
         x = 10;
         boolean a;
         boolean b;
-        int[] y;
         int i;
         int z;
-
-        y[i] = z;
-        x = y[i];
-
-        BT new_node;
-        new_node = new BT();
-
-        int[] arr;
-        arr = new int[5];
         
-        while (x < 20) {
-            a = b;
-            // if (x < 1) 
-            //     x = x - 1;
-            // b = false;
-        }
+        // while (x < 20) {
+        //     a = b;
+        //     if (x < 1) 
+        //         x = x - 1;
+        //     b = false;
+        // }
         // while (x < 20) {
         //     a = b;
         //     if (x < 1) 
@@ -51,16 +41,18 @@ class BT {
         // else 
         //     x = x + 1;
         
-        if (!(x < 1)) 
-            x = x - 1;
-        else 
-            if (x > 10) 
-                a = b;
-            else 
-                b = a;
+        // if (!(x < 1)) 
+        //     x = x - 1;
+        // else 
+        //     if (x > 10) 
+        //         a = b;
+        //     else 
+        //         b = a;
 
         x = x + 1;
-
+        x = x - 1;
+        x = x / 1;
+        x = x * 3;
         return 0;
     }
 
