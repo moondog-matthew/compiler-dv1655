@@ -762,16 +762,20 @@ public:
 	
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id, int &blockID) override {
 		string name;
+		/* Create new block with unique ID and add to methods vector*/
 		blockID += 1;
 		BB* newBlock = new BB(blockID);
 		methods.push_back(newBlock);
+		// set the method name for the new block	
+		newBlock->setMethodName(this->getIden());
+		// Set the current block to the new block
 		*currentBlock = newBlock;
+		// iterate and generate the content for the children
 		for (auto const& child : children) {
 			name = child->genIR(currentBlock, methods, BBnames, id, blockID);
 		}
-		
 		// Add the return value to current block
-		ReturnTac* in = new ReturnTac(name); // the last iterated will be return name --> 
+		ReturnTac* in = new ReturnTac(name); // the last iterated in the for-loop above will be return name
 		(*currentBlock)->add_Tac(in);
 
 		return "";

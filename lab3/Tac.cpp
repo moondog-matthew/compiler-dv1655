@@ -96,7 +96,6 @@ MethCallTac::MethCallTac(string _func, string _n_params, string _result) : func(
 string MethCallTac::printTac() const {
     return result + " := call " + func + ", " + n_params;  
 }
-
 void MethCallTac::generate_code(vector<InstructionBC*> &bc) {
     
 }

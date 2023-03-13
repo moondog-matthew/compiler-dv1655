@@ -38,6 +38,13 @@ string BB::generate_name(int id) const {
     return "temporary_" + to_string(id);
 }
 
+string& BB::getMethodName() {
+    return this->method_name;
+}
+void BB::setMethodName(string _method_name) {
+    this->method_name = _method_name;
+}
+
 /*Associated to Part 2 */
 void BB::generate_code(vector<InstructionBC*> &bc) {
     for (auto const& tac : tac_instructions) {

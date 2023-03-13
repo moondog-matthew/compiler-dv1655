@@ -36,13 +36,14 @@ int main(int argc, char **argv)
     // using the constructor that fills the symbol table
     SymbolTable* ST;
     ST = new SymbolTable(root);
-    
+    ST->print_ST();
     SemanticAnalysis* SA = new SemanticAnalysis(root, ST);
     if(!SA->contains_error()) {
       CFG* cfg = new CFG(root, ST);
       cfg->generate_CFG();
+      ProgramBC* pbc = cfg->generate_BC();
+      pbc->print(); // should write the entire bytecode to a file
     }
-    ST->print_ST();
 
     
     delete ST;

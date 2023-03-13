@@ -3,17 +3,12 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <iostream>
 
 using namespace std;
 
-class BC {
-public:
-    BC() = default;
-    virtual ~BC() = default;
-    virtual void print() const = 0; // pure virtual
-}; 
 
-class InstructionBC : public BC {
+class InstructionBC {
 private:
 /*
     ID TABLE
@@ -43,34 +38,37 @@ private:
 public: 
     InstructionBC(int _id, string _instruction_argument);
     virtual ~InstructionBC();
-    void print() const override;
+    void print() const;
 };
 
-class MethodBC : public BC {
+class MethodBC {
 private:
     vector<string> variables;
     vector<InstructionBC*> instructions;
+    string block_name;
+
 public:
-    MethodBC(vector<string> &_variables, vector<InstructionBC*> &_instructions);
+    MethodBC(vector<string> &_variables, vector<InstructionBC*> &_instructions, string _block_name);
     virtual ~MethodBC();
-    void print() const override;
+    void print() const;
 };
 
-class ProgramBC : public BC {
+class ProgramBC {
 private:
     // map of qualified method names
         // e.g, Sum.main, Test.sum
     // first string: class name
     // second string: method name 
-    std::map<string, string> qual_method_names; 
+    vector<pair<string, string>> qual_method_names; 
     vector<MethodBC*> bc_methods;
 
 public:
-    ProgramBC(std::map<string, string> &_qual_method_names, vector<MethodBC*> &_bc_methods);
+    ProgramBC();
     virtual ~ProgramBC();
-    void print() const override;
+    void print() const;
     void add_method(MethodBC* meth);
     void add_qual_name(pair<string, string> name_pair);
 };
+
 
 #endif // 

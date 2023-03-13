@@ -13,14 +13,13 @@ private:
     std::vector<string> printedBlocks;
     SymbolTable* ST;
 
-    vector<BC*> bc;
-
 public:
     CFG();
     CFG(Node* node, SymbolTable* _ST);
     void populate_CFG(Node* node);
     void generate_CFG();
     void generate_CFG_content(BB* block, int &count, ofstream *outStream);
+    const vector<BB*>& getMethods() const;
 
     // Part 2 
     ProgramBC* generate_BC(); 

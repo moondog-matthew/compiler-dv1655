@@ -16,6 +16,7 @@ private:
     Tac* condition; // the state of the block, use to later determine to to take true or false path
     BB* false_exit;
     BB* true_exit;
+    string method_name; // only used by the blocks added to the methods vector in CFG
 
 public:
     BB(int _id);
@@ -34,6 +35,9 @@ public:
     void add_Tac(Tac* tac);
     void generate_BB();
     string generate_name(int id) const;
+
+    string& getMethodName();
+    void setMethodName(string _method_name);
 
     /*Associated to Part 2 */
     void generate_code(vector<InstructionBC*> &bc);
