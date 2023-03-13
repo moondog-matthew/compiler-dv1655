@@ -275,7 +275,7 @@ public:
 	}
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id, int &blockID) override {
 		string name = (*currentBlock)->generate_name(++id); 
-		string expr = children[0]->genIR(currentBlock, methods, BBnames, id, blockID); // what to take length of
+		string expr = children[0]->genIR(currentBlock, methods, BBnames, id, blockID);
 		ExpressionTac* in = new ExpressionTac(expr, name);
 		(*currentBlock)->add_Tac(in);
 		return name;
@@ -424,8 +424,8 @@ public:
 		
 		/* set the the block after the if-else branching */
 		tBlock->setTrue(jBlock);
-		
-		string conName = children[0]->genIR(currentBlock, methods, BBnames, id, blockID); // boolean condition
+		// boolean condition
+		string conName = children[0]->genIR(currentBlock, methods, BBnames, id, blockID); 
 
 		/*If case too see if nested*/		
 		if ((*currentBlock)->getTrue() != nullptr) {
@@ -438,6 +438,7 @@ public:
 
 		/*Fill tBlock by calling genIR on various children. Called by reference*/
 		string tName = children[1]->genIR(&tBlock, methods, BBnames, id, blockID);
+		
 		// Add Tacs, unconditional and conditional jumps
 		/*Split is conditional*/
 		CondTac* splitTac = new CondTac(conName, jBlock->getName()); // default is to go to true
@@ -570,7 +571,8 @@ public:
 	virtual ~AssignStmt() = default;
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id, int &blockID) override {
 		string name = children[0]->genIR(currentBlock, methods, BBnames, id, blockID);
-		string lhs_name = children[1]->genIR(currentBlock, methods, BBnames, id, blockID); // still in same block, only statements create news
+		// still in same block, only statements create new blocks
+		string lhs_name = children[1]->genIR(currentBlock, methods, BBnames, id, blockID); 
 		CopyTac* in = new CopyTac(lhs_name, name);
 		(*currentBlock)->add_Tac(in);
 		return name;

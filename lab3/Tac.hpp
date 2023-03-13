@@ -132,7 +132,7 @@ public:
 
 class CondTac : public Tac {
 public:
-    string x; // either true or false
+    string x; // condition
     string label;
     CondTac(string _x, string _label);
     string printTac() const override;

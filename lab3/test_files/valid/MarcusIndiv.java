@@ -51,7 +51,7 @@ class BT {
         // else 
         //     x = x + 1;
         
-        if (x < 1) 
+        if (!(x < 1)) 
             x = x - 1;
         else 
             if (x > 10) 
