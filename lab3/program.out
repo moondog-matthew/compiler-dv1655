@@ -1,6 +1,7 @@
 BinaryTree.main
 iload temporary_1
 print
+Block_0:
 BT.Start
 iload 10
 istore x
@@ -10,3 +11,15 @@ ilt
 istore temporary_3
 iload temporary_3
 iffalse goto Block_4
+Block_2:
+iload a
+istore b
+goto Block_5
+Block_3:
+iload 54
+ireturn
+Block_5:
+iload b
+istore a
+goto Block_5
+Block_4:

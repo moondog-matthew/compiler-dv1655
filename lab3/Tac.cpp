@@ -171,3 +171,13 @@ void PrintTac::generate_code(vector<InstructionBC*> &bc) {
     instr = new InstructionBC(17 , "print");
     bc.push_back(instr);
 }
+
+LabelTac::LabelTac(string _label) : label(_label) {}
+string LabelTac::printTac() const {
+    return label + ":";
+}
+void LabelTac::generate_code(vector<InstructionBC*> &bc) {
+    InstructionBC* instr;
+    instr = new InstructionBC(19, label + ":");
+    bc.push_back(instr);
+}

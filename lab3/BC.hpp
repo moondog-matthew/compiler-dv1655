@@ -32,6 +32,7 @@ private:
     16 : ireturn 
     17 : print
     18 : stop
+    19 : label
 */
     int id; // Tells what kind of instruction
     string instruction_argument;  // contains the string with instruction arugments

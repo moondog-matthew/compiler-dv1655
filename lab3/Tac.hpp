@@ -152,6 +152,13 @@ public:
 
 };
 
+class LabelTac : public Tac {
+public:
+    string label;
+    LabelTac(string _label);
+    string printTac() const override;
+    void generate_code(vector<InstructionBC*> &bc) override;
+};
 
 
 #endif // TAC_HPP

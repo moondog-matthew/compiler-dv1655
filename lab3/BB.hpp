@@ -23,6 +23,7 @@ public:
     ~BB();
 
     int id;
+    bool printed; // default false
     /* Getters and setters */
     string getName();
     std::vector<Tac*>& getInstructions();

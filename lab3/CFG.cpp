@@ -77,9 +77,12 @@ ProgramBC* CFG::generate_BC() {
         // fill the instructions and variables vector
         vector<InstructionBC*> instructions; 
         vector <string> variables;
-        bb->generate_code(instructions);  
+        /*
+            ENTER BLOCK CHILDREN
+        */
+        method_bc_content(bb, instructions);
+        // create method bytecode class
         MethodBC* methbc = new MethodBC(variables, instructions, bb->getMethodName()); 
-        
         // add the method to the programbc
         progbc->add_method(methbc); 
     }
@@ -103,4 +106,20 @@ ProgramBC* CFG::generate_BC() {
     return progbc;
 }
 
-
+void CFG::method_bc_content(BB* bb, vector<InstructionBC*> &instructions) {
+    if (bb->printed == false) {
+        // // add label tac to the beginning of current block
+        // LabelTac* labtac = new LabelTac(bb->getName());
+        // bb->add_Tac(labtac);
+        // generate block code
+        bb->generate_code(instructions);
+        bb->printed = true;
+    }
+    if (bb->getTrue() != nullptr) {
+        method_bc_content(bb->getTrue(), instructions);
+    }
+    if (bb->getFalse() != nullptr) {
+        method_bc_content(bb->getFalse(), instructions);
+    }
+    return;
+}

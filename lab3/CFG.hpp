@@ -23,6 +23,7 @@ public:
 
     // Part 2 
     ProgramBC* generate_BC(); 
+    void method_bc_content(BB* bb, vector<InstructionBC*> &instructions);
 };
 
 

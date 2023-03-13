@@ -1,7 +1,7 @@
 #include "BB.hpp"
 
 
-BB::BB(int _id) : id(_id) {
+BB::BB(int _id) : id(_id), printed(false) {
     true_exit = nullptr;
     false_exit = nullptr;
 }
@@ -47,6 +47,8 @@ void BB::setMethodName(string _method_name) {
 
 /*Associated to Part 2 */
 void BB::generate_code(vector<InstructionBC*> &bc) {
+    /*add label*/
+    
     for (auto const& tac : tac_instructions) {
         tac->generate_code(bc);
     }
