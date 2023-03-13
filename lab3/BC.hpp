@@ -63,11 +63,14 @@ private:
     // first string: class name
     // second string: method name 
     std::map<string, string> qual_method_names; 
+    vector<MethodBC*> bc_methods;
 
 public:
-    ProgramBC(std::map<string, string> &_qual_method_names);
+    ProgramBC(std::map<string, string> &_qual_method_names, vector<MethodBC*> &_bc_methods);
     virtual ~ProgramBC();
     void print() const override;
+    void add_method(MethodBC* meth);
+    void add_qual_name(pair<string, string> name_pair);
 };
 
 #endif // 

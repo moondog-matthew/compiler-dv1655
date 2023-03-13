@@ -23,7 +23,7 @@ public:
     void generate_CFG_content(BB* block, int &count, ofstream *outStream);
 
     // Part 2 
-    void generate_BC(); 
+    ProgramBC* generate_BC(); 
 };
 
 

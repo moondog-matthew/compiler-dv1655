@@ -63,13 +63,39 @@ void CFG::populate_CFG(Node* node) {
     }
 }
 
-void CFG::generate_BC() {
+ProgramBC* CFG::generate_BC() {
+    std::map<string, string> qual_method_names; 
+    vector<MethodBC*> bc_methods;
+    ProgramBC* progbc = new ProgramBC(qual_method_names, bc_methods);
+    
     for (auto const& bb : methods) { 
         // fill the instructions and variables vector
         vector<InstructionBC*> instructions; 
         vector <string> variables;
         bb->generate_code(instructions);  
         MethodBC* methbc = new MethodBC(variables, instructions); 
+        // add the method to the programbc
+        progbc->add_method(methbc); // add the method to the programbc
+        /* addd qualified method names*/
+        
     }
+    /* 
+        Fill map of qualified method names
+    */
+    string class_name; // somehow find class name
+    string method_name; // somehow find method name
+    for(auto const& program_class : ST->get_root_scope()->children) {
+        Record* classrec = program_class->lookup("this", 0);
+        class_name = classrec->name;
+        for (auto const& child : program_class->inScopeRecords) {
+            if (child->recordType == "Method") {
+                method_name = child->name;
+                progbc->add_qual_name(pair<string, string>(class_name, method_name));
+
+            }
+        }
+    }
+
+    return progbc;
 }
 
