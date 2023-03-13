@@ -115,11 +115,11 @@ void CFG::method_bc_content(BB* bb, vector<InstructionBC*> &instructions) {
         bb->generate_code(instructions);
         bb->printed = true;
     }
-    if (bb->getTrue() != nullptr) {
-        method_bc_content(bb->getTrue(), instructions);
-    }
-    if (bb->getFalse() != nullptr) {
-        method_bc_content(bb->getFalse(), instructions);
-    }
-    return;
+    // if (bb->getTrue() != nullptr) {
+    //     method_bc_content(bb->getTrue(), instructions);
+    // }
+    // if (bb->getFalse() != nullptr) {
+    //     method_bc_content(bb->getFalse(), instructions);
+    // }
+    // return;
 }

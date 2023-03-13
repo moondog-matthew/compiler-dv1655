@@ -1,25 +1,159 @@
 BinaryTree.main
 iload temporary_1
 print
-Block_0:
 BT.Start
-iload 10
-istore x
-iload x
-iload 10
-ilt
-istore temporary_3
 iload temporary_3
-iffalse goto Block_4
-Block_2:
-iload a
-istore b
-goto Block_5
-Block_3:
-iload 54
+istore root
+iload temporary_4
+istore ntb
+iload temporary_6
+istore ntb
+iload 100000000
+print
+iload temporary_7
+istore ntb
+iload temporary_9
+istore ntb
+iload temporary_10
+istore ntb
+iload temporary_12
+istore ntb
+iload temporary_14
+istore ntb
+iload temporary_16
+istore ntb
+iload temporary_18
+istore ntb
+iload temporary_20
+istore ntb
+iload temporary_22
+istore ntb
+iload temporary_23
+print
+iload temporary_25
+print
+iload temporary_27
+print
+iload temporary_29
+print
+iload temporary_31
+print
+iload temporary_33
+istore ntb
+iload temporary_35
+istore ntb
+iload temporary_36
+print
+iload 0
 ireturn
-Block_5:
-iload b
-istore a
-goto Block_5
-Block_4:
+Tree.Init
+iload v_key
+istore key
+iload false
+istore has_left
+iload false
+istore has_right
+iload true
+ireturn
+Tree.SetRight
+iload rn
+istore right
+iload true
+ireturn
+Tree.SetLeft
+iload ln
+istore left
+iload true
+ireturn
+Tree.GetRight
+iload right
+ireturn
+Tree.GetLeft
+iload left
+ireturn
+Tree.GetKey
+iload key
+ireturn
+Tree.SetKey
+iload v_key
+istore key
+iload true
+ireturn
+Tree.GetHas_Right
+iload has_right
+ireturn
+Tree.GetHas_Left
+iload has_left
+ireturn
+Tree.SetHas_Left
+iload val
+istore has_left
+iload true
+ireturn
+Tree.SetHas_Right
+iload val
+istore has_right
+iload true
+ireturn
+Tree.Compare
+iload false
+istore ntb
+iload num2
+iload 1
+iadd
+istore temporary_38
+iload temporary_38
+istore nti
+iload num1
+iload num2
+ilt
+istore temporary_39
+iload temporary_39
+iffalse goto Block_16
+Tree.Insert
+iload temporary_42
+istore new_node
+iload temporary_43
+istore ntb
+iload true
+istore cont
+iload this
+istore current_node
+goto Block_22
+Tree.Delete
+iload this
+istore current_node
+iload this
+istore parent_node
+iload true
+istore cont
+iload false
+istore found
+iload true
+istore is_root
+goto Block_35
+Tree.Remove
+iload temporary_75
+iffalse goto Block_58
+Tree.RemoveRight
+goto Block_67
+Tree.RemoveLeft
+goto Block_71
+Tree.Search
+iload true
+istore cont
+iload 0
+istore ifound
+iload this
+istore current_node
+goto Block_75
+Tree.Print
+iload this
+istore current_node
+iload temporary_121
+istore ntb
+iload true
+ireturn
+Tree.RecPrint
+iload temporary_123
+iffalse goto Block_93
