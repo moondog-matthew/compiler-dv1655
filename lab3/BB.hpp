@@ -34,6 +34,7 @@ public:
     void setTrue(BB* trueChild);
 
     void add_Tac(Tac* tac);
+    void first_pos_tac(Tac* tac);
     void generate_BB();
     string generate_name(int id) const;
 

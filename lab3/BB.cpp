@@ -33,6 +33,9 @@ void BB::add_Tac(Tac* tac) {
     this->tac_instructions.push_back(tac);
 }
 
+void BB::first_pos_tac(Tac* tac) {
+    this->tac_instructions.insert(tac_instructions.begin(), tac);
+}
 
 string BB::generate_name(int id) const {
     return "temporary_" + to_string(id);

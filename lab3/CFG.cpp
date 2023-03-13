@@ -73,14 +73,14 @@ ProgramBC* CFG::generate_BC() {
     */
     ProgramBC* progbc = new ProgramBC();
     
-    for (auto const& bb : methods) { 
+    for (auto &bb : methods) { 
         // fill the instructions and variables vector
         vector<InstructionBC*> instructions; 
         vector <string> variables;
         /*
             ENTER BLOCK CHILDREN
         */
-        method_bc_content(bb, instructions);
+        method_bc_content(&bb, instructions);
         // create method bytecode class
         MethodBC* methbc = new MethodBC(variables, instructions, bb->getMethodName()); 
         // add the method to the programbc
@@ -106,20 +106,23 @@ ProgramBC* CFG::generate_BC() {
     return progbc;
 }
 
-void CFG::method_bc_content(BB* bb, vector<InstructionBC*> &instructions) {
-    if (bb->printed == false) {
+void CFG::method_bc_content(BB** bb, vector<InstructionBC*> &instructions) {
+
+    if ((*bb)->printed == false) {
         // // add label tac to the beginning of current block
-        // LabelTac* labtac = new LabelTac(bb->getName());
-        // bb->add_Tac(labtac);
+        LabelTac* labtac = new LabelTac((*bb)->getName());
+        (*bb)->first_pos_tac(labtac);
         // generate block code
-        bb->generate_code(instructions);
-        bb->printed = true;
+        (*bb)->generate_code(instructions);
+        (*bb)->printed = true;
     }
-    // if (bb->getTrue() != nullptr) {
-    //     method_bc_content(bb->getTrue(), instructions);
-    // }
-    // if (bb->getFalse() != nullptr) {
-    //     method_bc_content(bb->getFalse(), instructions);
-    // }
-    // return;
+    if ((*bb)->getTrue() != nullptr) {
+        BB* retarg = (*bb)->getTrue();
+        method_bc_content(&retarg, instructions);
+    }
+    if ((*bb)->getFalse() != nullptr) {
+        BB* retarg = (*bb)->getFalse();
+        method_bc_content(&retarg, instructions);
+    }
+    return;
 }
