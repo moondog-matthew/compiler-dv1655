@@ -4,8 +4,9 @@ CFG::CFG() {
 
 }
 
-CFG::CFG(Node* node) {
+CFG::CFG(Node* node, SymbolTable* _ST) {
     this->entry = new BB(0);
+    this->ST = _ST;
     populate_CFG(node);
 }
 
@@ -53,5 +54,12 @@ void CFG::populate_CFG(Node* node) {
     int val = 0;
     int blockID = 1;
     node->genIR(&entry, methods, BBnames, val, blockID);
+
+    // add temporary variables to ST
+    for (auto const& namePair : BBnames) {
+    // pair <string, string> namePair;  (name, type)
+        variableRecord* varrec = new variableRecord(namePair.first, namePair.second, 0); // lineno just set to arbitrary value
+        ST->add_symbol(varrec);
+    }
 
 }

@@ -213,7 +213,7 @@ public:
 	virtual ~Equals() = default;
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id, int &blockID) override {
 		string name = (*currentBlock)->generate_name(++id); 
-		BBnames.insert(pair<string, string>(name, "int"));
+		BBnames.insert(pair<string, string>(name, "bool"));
 		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames, id, blockID); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock, methods, BBnames, id, blockID);
 		ExprTac* in = new ExprTac("==", lhs_name, rhs_name, name);
@@ -243,7 +243,7 @@ public:
 	virtual ~And() = default;
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id, int &blockID) override {
 		string name = (*currentBlock)->generate_name(++id); 
-		BBnames.insert(pair<string, string>(name, "int"));
+		BBnames.insert(pair<string, string>(name, "bool"));
 		string lhs_name = children[0]->genIR(currentBlock, methods, BBnames, id, blockID); // still in same block, only statements create news
 		string rhs_name = children[1]->genIR(currentBlock, methods, BBnames, id, blockID);
 		ExprTac* in = new ExprTac("&&", lhs_name, rhs_name, name);
@@ -275,7 +275,6 @@ public:
 	}
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id, int &blockID) override {
 		string name = (*currentBlock)->generate_name(++id); 
-		// no need to BBnames, arguments already in SymbolTable
 		string expr = children[0]->genIR(currentBlock, methods, BBnames, id, blockID); // what to take length of
 		ExpressionTac* in = new ExpressionTac(expr, name);
 		(*currentBlock)->add_Tac(in);
@@ -303,7 +302,7 @@ public:
 	}
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id, int &blockID) override {
 		string name = (*currentBlock)->generate_name(++id); // BB->getRandomName
-		BBnames.insert(pair<string, string>(name, ""));
+		// BBnames.insert(pair<string, string>(name, ""));
 		string expr = children[0]->genIR(currentBlock, methods, BBnames, id, blockID); // still in same block, only statements create news
 		string func = children[1]->genIR(currentBlock, methods, BBnames, id, blockID);
 		int param_num = 0; 
