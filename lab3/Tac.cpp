@@ -14,30 +14,39 @@ void ExprTac::generate_code(vector<InstructionBC*> &bc) {
     InstructionBC* instr; 
     if (op == "+") {
         instr = new InstructionBC(3, "iadd");
+        bc.push_back(instr);
     }
     else if (op == "-") {
         instr = new InstructionBC(4, "isub");
+        bc.push_back(instr);
     }
     else if (op == "*") {
         instr = new InstructionBC(5, "imul");
+        bc.push_back(instr);
     }
     else if (op == "/") {
         instr = new InstructionBC(6, "idiv");
+        bc.push_back(instr);
     }
     else if (op == ">") {
         instr = new InstructionBC(7, "igt");
+        bc.push_back(instr);
     }
     else if (op == "<") {
         instr = new InstructionBC(8, "ilt");
+        bc.push_back(instr);
     }
     else if (op == "==") {
         instr = new InstructionBC(9, "ieq");
+        bc.push_back(instr);
     }
     else if (op == "||") {
         instr = new InstructionBC(10, "ior");
+        bc.push_back(instr);
     }
     else if (op == "&&") {
         instr = new InstructionBC(11, "iand");
+        bc.push_back(instr);
     }
 
 }

@@ -4,26 +4,40 @@
 InstructionBC::InstructionBC(int _id, string _instruction_argument) 
     : id(_id), instruction_argument(_instruction_argument) {}
 InstructionBC::~InstructionBC() {}
-void InstructionBC::print() const {
+void InstructionBC::print(ofstream* outStream) const {
+    *outStream << instruction_argument << endl;
 }
 
 MethodBC::MethodBC(vector<string> &_variables, vector<InstructionBC*> &_instructions, string _block_name) 
     : variables(_variables), instructions(_instructions), block_name(_block_name) {}
 MethodBC::~MethodBC() {}
-void MethodBC::print() const {
-
+void MethodBC::print(ofstream* outStream) const {
+    for (auto const& instruction : instructions) {
+        instruction->print(outStream);
+    }
 }
 ProgramBC::ProgramBC() {}
 ProgramBC::~ProgramBC() {}
 void ProgramBC::print() const {
+    std:ofstream outStream;
+	char* filename = "program.out"; // Outfile name
+	outStream.open(filename);
     int bc_vec_sz = bc_methods.size();
     int qual_meth_vec = qual_method_names.size();
-    cout << bc_vec_sz << endl;
-    cout << qual_meth_vec << endl;
     if (bc_vec_sz == qual_meth_vec) {
-        cout << "Same" << endl;
+        for (int i = 0; i < bc_vec_sz; ++i) {
+            outStream << qual_method_names[i].first + "." + qual_method_names[i].second << endl;
+            bc_methods[i]->print(&outStream);
+        }
     }
+    else {
+        cout << "ERROR!!! bc_vec_sz and qual_meth_vec is not of same size" << endl;
+    }
+    outStream.close();
 }
+
+
+
 void ProgramBC::add_method(MethodBC* meth) {
     this->bc_methods.push_back(meth);
 }

@@ -67,7 +67,6 @@ const vector<BB*>& CFG::getMethods() const {
     return this->methods;
 }
 
-
 ProgramBC* CFG::generate_BC() {
     /*
         Initialise 

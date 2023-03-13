@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -38,7 +39,7 @@ private:
 public: 
     InstructionBC(int _id, string _instruction_argument);
     virtual ~InstructionBC();
-    void print() const;
+    void print(ofstream* outStream) const;
 };
 
 class MethodBC {
@@ -50,7 +51,7 @@ private:
 public:
     MethodBC(vector<string> &_variables, vector<InstructionBC*> &_instructions, string _block_name);
     virtual ~MethodBC();
-    void print() const;
+    void print(ofstream* outStream) const;
 };
 
 class ProgramBC {
