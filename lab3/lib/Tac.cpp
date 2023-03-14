@@ -78,7 +78,7 @@ void CopyTac::generate_code(vector<InstructionBC*> &bc) {
     InstructionBC* instr;
     instr = new InstructionBC(0, "iload " + rhs);
     bc.push_back(instr);
-    instr = new InstructionBC(2 , "istore " + result);
+    instr = new InstructionBC(2, "istore " + result);
     bc.push_back(instr);
 }
 
@@ -99,7 +99,7 @@ string NewIdenTac::printTac() const {
     // return result + " := new " + type;
 }
 
-NewArrTac::NewArrTac(string _size, string _type,string _result) : result(_result), type(_type) ,size(_size) {}
+NewArrTac::NewArrTac(string _size, string _type,string _result) : result(_result), type(_type), size(_size) {}
 string NewArrTac::printTac() const {
     return result + " := new " + type + "," + size;
 }

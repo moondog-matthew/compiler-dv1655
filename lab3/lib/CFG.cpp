@@ -75,16 +75,16 @@ ProgramBC* CFG::generate_BC() {
     
     for (auto &bb : methods) { 
         // fill the instructions and variables vector
-        vector<InstructionBC*> instructions; 
+        vector<InstructionBC*> instructions;
         vector <string> variables;
         /*
             ENTER BLOCK CHILDREN
         */
         method_bc_content(&bb, instructions);
         // create method bytecode class
-        MethodBC* methbc = new MethodBC(variables, instructions, bb->getMethodName()); 
+        MethodBC* methbc = new MethodBC(variables, instructions, bb->getMethodName());
         // add the method to the programbc
-        progbc->add_method(methbc); 
+        progbc->add_method(methbc);
     }
     /* 
         Fill map of qualified method names

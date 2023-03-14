@@ -6,7 +6,7 @@
 
 %code requires{
   #include <string>
-  #include "Node.h"
+  #include "lib/Node.h"
 }
 %code{
   #define YY_DECL yy::parser::symbol_type yylex()

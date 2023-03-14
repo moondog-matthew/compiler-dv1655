@@ -16,6 +16,7 @@ void MethodBC::print(ofstream* outStream) const {
         instruction->print(outStream);
     }
 }
+
 ProgramBC::ProgramBC() {}
 ProgramBC::~ProgramBC() {}
 void ProgramBC::print() const {

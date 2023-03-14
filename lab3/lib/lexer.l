@@ -1,7 +1,7 @@
 %top{
 #include "parser.tab.h"
 #define YY_DECL yy::parser::symbol_type yylex()
-#include "Node.h"
+#include "lib/Node.h"
 int lexical_errors = 0;
 }
 %option yylineno noyywrap nounput batch noinput stack 

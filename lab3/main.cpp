@@ -4,9 +4,9 @@
 */
 #include<iostream>
 #include "parser.tab.h"
-#include "semanticCheck.hpp"
-#include "symbolTable.hpp"
-#include "CFG.hpp"
+#include "lib/semanticCheck.hpp"
+#include "lib/symbolTable.hpp"
+#include "lib/CFG.hpp"
 
 extern Node* root;
 extern FILE* yyin;
