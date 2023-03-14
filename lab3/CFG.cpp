@@ -109,18 +109,18 @@ ProgramBC* CFG::generate_BC() {
 void CFG::method_bc_content(BB** bb, vector<InstructionBC*> &instructions) {
 
     if ((*bb)->printed == false) {
-        // // add label tac to the beginning of current block
+        // add label tac to the beginning of current block
         LabelTac* labtac = new LabelTac((*bb)->getName());
         (*bb)->first_pos_tac(labtac);
         // generate block code
         (*bb)->generate_code(instructions);
         (*bb)->printed = true;
     }
-    if ((*bb)->getTrue() != nullptr) {
+    if ((*bb)->getTrue() != nullptr && (*bb)->getTrue()->printed == false) {
         BB* retarg = (*bb)->getTrue();
         method_bc_content(&retarg, instructions);
     }
-    if ((*bb)->getFalse() != nullptr) {
+    if ((*bb)->getFalse() != nullptr && (*bb)->getFalse()->printed == false) {
         BB* retarg = (*bb)->getFalse();
         method_bc_content(&retarg, instructions);
     }
