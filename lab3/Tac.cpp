@@ -113,12 +113,21 @@ ParTac::ParTac(string _param) : param(_param) {}
 string ParTac::printTac() const {
     return "param " + param; 
 }
+void ParTac::generate_code(vector<InstructionBC*> &bc) {
+    // pop argument from stack
+    // place value in param
+}
 
 MethCallTac::MethCallTac(string _func, string _n_params, string _result) : func(_func), n_params(_n_params), result(_result) {}
 string MethCallTac::printTac() const {
     return result + " := call " + func + ", " + n_params;  
 }
+
 void MethCallTac::generate_code(vector<InstructionBC*> &bc) {
+    /* WRITE HERE */
+    // Push N arguments to the stack
+    // Invokevirtual m
+
 }
 
 ReturnTac::ReturnTac(string _retval) : retval(_retval) {}

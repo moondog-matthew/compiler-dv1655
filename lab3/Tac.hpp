@@ -103,6 +103,7 @@ public:
     string param;
     ParTac(string _param);
     string printTac() const override;
+    void generate_code(vector<InstructionBC*> &bc) override;
 };
 
 class MethCallTac : public Tac {

@@ -45,7 +45,7 @@ public:
 
 class MethodBC {
 private:
-    vector<string> variables;
+    vector<string> variables; // used to store parameters
     vector<InstructionBC*> instructions;
     string block_name;
 

@@ -50,8 +50,7 @@ void BB::setMethodName(string _method_name) {
 
 /*Associated to Part 2 */
 void BB::generate_code(vector<InstructionBC*> &bc) {
-    /*add label*/
-    
+    /*For given block, generate code from tacs in block's tac instructions*/
     for (auto const& tac : tac_instructions) {
         tac->generate_code(bc);
     }

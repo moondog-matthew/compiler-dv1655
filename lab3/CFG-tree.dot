@@ -8,6 +8,7 @@ temporary_4 := 20
 temporary_1 := call Start, 3
 Print: temporary_1"];
 Block_2 [label="Block:Block_2
+param sz
 temporary_6 := sz
 temporary_5 := call Init, 3
 aux01 := temporary_5
@@ -127,6 +128,7 @@ Print: 0
 goto Block_5"];
 Block_4 -> Block_5 [xlabel = "true"]
 Block_27 [label="Block:Block_27
+param num
 bs01 := false
 temporary_24 := length number
 right := temporary_24
@@ -209,6 +211,7 @@ bs01 := false
 goto Block_41"];
 Block_40 -> Block_41 [xlabel = "true"]
 Block_42 [label="Block:Block_42
+param num
 count01 := 0
 count02 := 0
 temporary_38 := num - 1
@@ -229,20 +232,13 @@ Block_44 -> Block_43 [xlabel = "true"]
 Block_43 -> Block_45 [xlabel = "false"]
 Block_45 [label="Block:Block_45
 return count01"];
-Block_46 [label="Block:Block_46
-retval := false
-temporary_42 := num2 + 1
-aux02 := temporary_42
-temporary_43 := num1 < num2
-iffalse temporary_43 goto Block_48"];
-Block_46 -> Block_47 [xlabel = "true"]
 Block_47 [label="Block:Block_47
+temporary_43 := num1 < num2
 retval := false
+iffalse temporary_43 goto Block_48
 goto Block_49"];
-Block_47 -> Block_49 [xlabel = "true"]
-Block_49 [label="Block:Block_49
-return retval"];
-Block_46 -> Block_48 [xlabel = "false"]
+Block_47 -> Block_47 [xlabel = "true"]
+Block_47 -> Block_48 [xlabel = "false"]
 Block_48 [label="Block:Block_48
 temporary_45 := num1 < aux02
 temporary_44 := ! temporary_45
@@ -255,6 +251,9 @@ Block_50 -> Block_52 [xlabel = "true"]
 Block_52 [label="Block:Block_52
 goto Block_49"];
 Block_52 -> Block_49 [xlabel = "true"]
+Block_49 [label="Block:Block_49
+return retval"];
+Block_49 -> Block_49 [xlabel = "true"]
 Block_48 -> Block_51 [xlabel = "false"]
 Block_51 [label="Block:Block_51
 retval := true
@@ -280,6 +279,7 @@ Block_56 [label="Block:Block_56
 Print: 99999
 return 0"];
 Block_57 [label="Block:Block_57
+param sz
 j := 1
 size := sz
 temporary_49 := new int[],sz
