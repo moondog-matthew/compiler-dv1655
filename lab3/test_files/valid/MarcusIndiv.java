@@ -12,7 +12,8 @@ class BT {
         boolean b;
         int i;
         int z;
-        if (this.Method1(x, i, z) > 50) 
+        int easy;
+        if (this.Method1(x, i, z, easy) > 50) 
             i = z;
 
         while (x < 20) {
@@ -61,7 +62,7 @@ class BT {
         return 54;
     }
 
-    public int Method1(int num, int num2, int num3){
+    public int Method1(int num, int num2, int num3, int num4){
 		int x;
         x = 10;
         boolean a;

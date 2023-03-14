@@ -322,6 +322,16 @@ public:
 	string getIden() {
 		return children[1]->value;
 	}
+	void amount_of_arguments(Node* node, int &i) {
+		if(dynamic_cast<Expression*>(node) != nullptr) {
+			i += 1;
+		}
+		if(dynamic_cast<ExpressionList*>(node) != nullptr) {
+			i += 1;
+			amount_of_arguments(node->children[0], i);
+		}
+	}
+
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id, int &blockID) override {
 		string name = (*currentBlock)->generate_name(++id); // BB->getRandomName
 		// BBnames.insert(pair<string, string>(name, ""));
@@ -329,10 +339,10 @@ public:
 		string func = children[1]->genIR(currentBlock, methods, BBnames, id, blockID);
 		int param_num = 0; 
 		if (children.size() > 2) {
-			for (auto const& child : children) {
-				++param_num; // one more parameter
-				child->genIR(currentBlock, methods, BBnames, id, blockID);
-			}
+			amount_of_arguments(children[2], param_num);
+		}
+		for (auto const& child : children) {
+			child->genIR(currentBlock, methods, BBnames, id, blockID);
 		}
 		MethCallTac* in = new MethCallTac(func, to_string(param_num), name);
 		(*currentBlock)->add_Tac(in);
