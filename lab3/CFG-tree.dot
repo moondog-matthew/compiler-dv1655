@@ -232,13 +232,22 @@ Block_44 -> Block_43 [xlabel = "true"]
 Block_43 -> Block_45 [xlabel = "false"]
 Block_45 [label="Block:Block_45
 return count01"];
-Block_47 [label="Block:Block_47
-temporary_43 := num1 < num2
+Block_46 [label="Block:Block_46
+param num2
+param num1
 retval := false
-iffalse temporary_43 goto Block_48
+temporary_42 := num2 + 1
+aux02 := temporary_42
+temporary_43 := num1 < num2
+iffalse temporary_43 goto Block_48"];
+Block_46 -> Block_47 [xlabel = "true"]
+Block_47 [label="Block:Block_47
+retval := false
 goto Block_49"];
-Block_47 -> Block_47 [xlabel = "true"]
-Block_47 -> Block_48 [xlabel = "false"]
+Block_47 -> Block_49 [xlabel = "true"]
+Block_49 [label="Block:Block_49
+return retval"];
+Block_46 -> Block_48 [xlabel = "false"]
 Block_48 [label="Block:Block_48
 temporary_45 := num1 < aux02
 temporary_44 := ! temporary_45
@@ -251,9 +260,6 @@ Block_50 -> Block_52 [xlabel = "true"]
 Block_52 [label="Block:Block_52
 goto Block_49"];
 Block_52 -> Block_49 [xlabel = "true"]
-Block_49 [label="Block:Block_49
-return retval"];
-Block_49 -> Block_49 [xlabel = "true"]
 Block_48 -> Block_51 [xlabel = "false"]
 Block_51 [label="Block:Block_51
 retval := true

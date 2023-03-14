@@ -709,9 +709,9 @@ public:
 		string paramType = children[0]->genIR(currentBlock, methods, BBnames, id, blockID);
 		// only covers 1 param.
 		string paramName = children[1]->genIR(currentBlock, methods, BBnames, id, blockID);
-		cout << paramName << endl;
 		ParTac* in = new ParTac(paramName);
 		(*currentBlock)->add_Tac(in);
+		return "";
 	}
 	
 };
@@ -734,12 +734,11 @@ public:
 	}
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id, int &blockID) override  {
 		string paramType = children[0]->genIR(currentBlock, methods, BBnames, id, blockID);
-		// only covers 1 param.
 		string paramName = children[1]->genIR(currentBlock, methods, BBnames, id, blockID);
 		children[2]->genIR(currentBlock, methods, BBnames, id, blockID);
-		cout << paramName << endl;
 		ParTac* in = new ParTac(paramName);
 		(*currentBlock)->add_Tac(in);
+		return "";
 	}
 };
 

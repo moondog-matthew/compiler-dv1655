@@ -229,16 +229,28 @@ Block_45:
 iload count01
 ireturn
 BS.Compare
-Block_47:
+Block_46:
+iload false
+istore retval
+iload num2
+iload 1
+iadd
+istore temporary_42
+iload temporary_42
+istore aux02
 iload num1
 iload num2
 ilt
 istore temporary_43
-iload false
-istore retval
 iload temporary_43
 iffalse goto Block_48
+Block_47:
+iload false
+istore retval
 goto Block_49
+Block_49:
+iload retval
+ireturn
 Block_48:
 iload num1
 iload aux02
@@ -255,9 +267,6 @@ istore retval
 goto Block_52
 Block_52:
 goto Block_49
-Block_49:
-iload retval
-ireturn
 Block_51:
 iload true
 istore retval
