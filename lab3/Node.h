@@ -274,11 +274,15 @@ public:
 		return children[0]->value;
 	}
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id, int &blockID) override {
-		string name = (*currentBlock)->generate_name(++id); 
-		string expr = children[0]->genIR(currentBlock, methods, BBnames, id, blockID);
-		ExpressionTac* in = new ExpressionTac(expr, name);
+		string name;
+		string expr; 
+		ExpressionTac* in;
+		name = (*currentBlock)->generate_name(++id); 
+		expr = children[0]->genIR(currentBlock, methods, BBnames, id, blockID);
+		in = new ExpressionTac(expr, name);
+		cout << name << " := " <<  expr << endl;
 		(*currentBlock)->add_Tac(in);
-		return name;
+		return "";
 	}
 };
 
@@ -290,6 +294,7 @@ public:
 	string getIden() {
 		return children[1]->value;
 	}
+
 };
 
 class MethCall : public Node {
@@ -707,7 +712,6 @@ public:
 
 	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id, int &blockID) override  {
 		string paramType = children[0]->genIR(currentBlock, methods, BBnames, id, blockID);
-		// only covers 1 param.
 		string paramName = children[1]->genIR(currentBlock, methods, BBnames, id, blockID);
 		ParTac* in = new ParTac(paramName);
 		(*currentBlock)->add_Tac(in);

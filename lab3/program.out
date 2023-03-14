@@ -1,355 +1,85 @@
-BinarySearch.main
+BinaryTree.main
 Block_0:
 iload temporary_1
 print
-BS.Start
+BT.Start
 Block_2:
-iload temporary_5
-istore aux01
-iload temporary_7
-istore aux02
-iload temporary_8
+iload temporary_4
+iload 50
+igt
+istore temporary_3
+iload temporary_3
 iffalse goto Block_4
 Block_3:
-iload 1
-print
+iload z
+istore i
+goto Block_4
+Block_4:
 goto Block_5
 Block_5:
-iload temporary_10
+iload x
+iload 20
+ilt
+istore temporary_6
+iload temporary_6
 iffalse goto Block_7
 Block_6:
+iload b
+istore a
+iload x
 iload 1
-print
-goto Block_8
+ilt
+istore temporary_7
+iload temporary_7
+iffalse goto Block_9
 Block_8:
-iload temporary_12
-iffalse goto Block_10
-Block_9:
+iload x
 iload 1
-print
+isub
+istore temporary_8
+iload temporary_8
+istore x
+goto Block_9
+Block_9:
+iload false
+istore b
+goto Block_5
+Block_7:
+iload 54
+ireturn
+BT.Method1
+Block_10:
+iload 10
+istore x
 goto Block_11
 Block_11:
-iload temporary_14
+iload x
+iload 20
+ilt
+istore temporary_9
+iload temporary_9
 iffalse goto Block_13
 Block_12:
+iload b
+istore a
+iload x
 iload 1
-print
-goto Block_14
+ilt
+istore temporary_10
+iload temporary_10
+iffalse goto Block_15
 Block_14:
-iload temporary_16
-iffalse goto Block_16
+iload x
+iload 1
+isub
+istore temporary_11
+iload temporary_11
+istore x
+goto Block_15
 Block_15:
-iload 1
-print
-goto Block_17
-Block_17:
-iload temporary_18
-iffalse goto Block_19
-Block_18:
-iload 1
-print
-goto Block_20
-Block_20:
-iload temporary_20
-iffalse goto Block_22
-Block_21:
-iload 1
-print
-goto Block_23
-Block_23:
-iload temporary_22
-iffalse goto Block_25
-Block_24:
-iload 1
-print
-goto Block_26
-Block_26:
-iload 999
-ireturn
-Block_25:
-iload 0
-print
-goto Block_26
-Block_22:
-iload 0
-print
-goto Block_23
-Block_19:
-iload 0
-print
-goto Block_20
-Block_16:
-iload 0
-print
-goto Block_17
-Block_13:
-iload 0
-print
-goto Block_14
-Block_10:
-iload 0
-print
+iload false
+istore b
 goto Block_11
-Block_7:
-iload 0
-print
-goto Block_8
-Block_4:
-iload 0
-print
-goto Block_5
-BS.Search
-Block_27:
-iload false
-istore bs01
-iload temporary_24
-istore right
-iload right
-iload 1
-isub
-istore temporary_25
-iload temporary_25
-istore right
-iload 0
-istore left
-iload true
-istore var_cont
-iload 0
-istore aux01
-goto Block_28
-Block_28:
-iload var_cont
-iffalse goto Block_30
-Block_29:
-iload left
-iload right
-iadd
-istore temporary_26
-iload temporary_26
-istore medium
-iload temporary_27
-istore medium
-iload temporary_29
-istore aux01
-iload num
-iload aux01
-ilt
-istore temporary_30
-iload temporary_30
-iffalse goto Block_32
-Block_31:
-iload medium
-iload 1
-isub
-istore temporary_31
-iload temporary_31
-istore right
-goto Block_33
-Block_33:
-iload temporary_33
-iffalse goto Block_35
-Block_34:
-iload false
-istore var_cont
-goto Block_36
-Block_36:
-iload right
-iload left
-ilt
-istore temporary_35
-iload temporary_35
-iffalse goto Block_38
-Block_37:
-iload false
-istore var_cont
-goto Block_38
-Block_38:
-goto Block_28
-Block_35:
-iload true
-istore var_cont
-goto Block_36
-Block_32:
-iload medium
-iload 1
-iadd
-istore temporary_32
-iload temporary_32
-istore left
-goto Block_33
-Block_30:
-iload temporary_36
-iffalse goto Block_40
-Block_39:
-iload true
-istore bs01
-goto Block_41
-Block_41:
-iload bs01
-ireturn
-Block_40:
-iload false
-istore bs01
-goto Block_41
-BS.Div
-Block_42:
-iload 0
-istore count01
-iload 0
-istore count02
-iload num
-iload 1
-isub
-istore temporary_38
-iload temporary_38
-istore aux03
-goto Block_43
-Block_43:
-iload count02
-iload aux03
-ilt
-istore temporary_39
-iload temporary_39
-iffalse goto Block_45
-Block_44:
-iload count01
-iload 1
-iadd
-istore temporary_40
-iload temporary_40
-istore count01
-iload count02
-iload 2
-iadd
-istore temporary_41
-iload temporary_41
-istore count02
-goto Block_43
-Block_45:
-iload count01
-ireturn
-BS.Compare
-Block_46:
-iload false
-istore retval
-iload num2
-iload 1
-iadd
-istore temporary_42
-iload temporary_42
-istore aux02
-iload num1
-iload num2
-ilt
-istore temporary_43
-iload temporary_43
-iffalse goto Block_48
-Block_47:
-iload false
-istore retval
-goto Block_49
-Block_49:
-iload retval
-ireturn
-Block_48:
-iload num1
-iload aux02
-ilt
-istore temporary_45
-iload temporary_45
-inot
-iload temporary_45
-iload temporary_44
-iffalse goto Block_51
-Block_50:
-iload false
-istore retval
-goto Block_52
-Block_52:
-goto Block_49
-Block_51:
-iload true
-istore retval
-goto Block_52
-BS.Print
-Block_53:
-iload 1
-istore j
-goto Block_54
-Block_54:
-iload j
-iload size
-ilt
-istore temporary_46
-iload temporary_46
-iffalse goto Block_56
-Block_55:
-iload temporary_47
-print
-iload j
-iload 1
-iadd
-istore temporary_48
-iload temporary_48
-istore j
-goto Block_54
-Block_56:
-iload 99999
-print
-iload 0
-ireturn
-BS.Init
-Block_57:
-iload 1
-istore j
-iload sz
-istore size
-iload temporary_49
-istore number
-iload size
-iload 1
-iadd
-istore temporary_50
-iload temporary_50
-istore k
-goto Block_58
-Block_58:
-iload j
-iload size
-ilt
-istore temporary_51
-iload temporary_51
-iffalse goto Block_60
-Block_59:
-iload 2
-iload j
-imul
-istore temporary_52
-iload temporary_52
-istore aux01
-iload k
-iload 3
-isub
-istore temporary_53
-iload temporary_53
-istore aux02
-iload aux01
-iload aux02
-iadd
-istore temporary_54
-iload j
-iload 1
-iadd
-istore temporary_55
-iload temporary_55
-istore j
-iload k
-iload 1
-isub
-istore temporary_56
-iload temporary_56
-istore k
-goto Block_58
-Block_60:
-iload 0
+Block_13:
+iload 54
 ireturn

@@ -126,6 +126,7 @@ string MethCallTac::printTac() const {
 void MethCallTac::generate_code(vector<InstructionBC*> &bc) {
     /* WRITE HERE */
     // Push N arguments to the stack
+    // which ones?
     // Invokevirtual m
 
 }
@@ -144,7 +145,7 @@ void ReturnTac::generate_code(vector<InstructionBC*> &bc) {
 
 ExpressionTac::ExpressionTac(string _expr, string _result) : expr(_expr), result(_result) {}
 string ExpressionTac::printTac() const {
-    return result + " := " + expr;
+    return "Argument: " + result + " := " + expr;
 }
 
 JumpTac::JumpTac(string _label) : label(_label) {}

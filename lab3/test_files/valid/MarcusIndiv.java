@@ -8,7 +8,6 @@ class BT {
 
     public int Start(){
 		int x;
-        x = 10;
         boolean a;
         boolean b;
         int i;
