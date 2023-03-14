@@ -2,318 +2,88 @@ digraph {
 graph [ splines = ortho ]
 	node [ shape = box ];
 Block_0 [label="Block:Block_0
-temporary_2 := new BS
-temporary_3 := new BS
-Argument: temporary_4 := 20
-temporary_1 := call Start, 1
+temporary_2 := new BT
+temporary_3 := new BT
+temporary_1 := call Start, 0
 Print: temporary_1"];
 Block_2 [label="Block:Block_2
-param sz
-Argument: temporary_6 := sz
-temporary_5 := call Init, 1
-aux01 := temporary_5
-temporary_7 := call Print, 0
-aux02 := temporary_7
-Argument: temporary_9 := 8
-temporary_8 := call Search, 1
-iffalse temporary_8 goto Block_4"];
+Argument: temporary_6 := x
+Argument: temporary_7 := i
+Argument: temporary_8 := z
+Argument: temporary_9 := easy
+temporary_5 := call Method1, 4
+temporary_4 := temporary_5 > 50
+iffalse temporary_4 goto Block_4"];
 Block_2 -> Block_3 [xlabel = "true"]
 Block_3 [label="Block:Block_3
-Print: 1
+i := z
+goto Block_4"];
+Block_3 -> Block_4 [xlabel = "true"]
+Block_4 [label="Block:Block_4
 goto Block_5"];
-Block_3 -> Block_5 [xlabel = "true"]
+Block_4 -> Block_5 [xlabel = "true"]
 Block_5 [label="Block:Block_5
-Argument: temporary_11 := 19
-temporary_10 := call Search, 1
+temporary_10 := x < 20
 iffalse temporary_10 goto Block_7"];
 Block_5 -> Block_6 [xlabel = "true"]
 Block_6 [label="Block:Block_6
-Print: 1
-goto Block_8"];
+a := b
+temporary_11 := x < 1
+iffalse temporary_11 goto Block_9"];
 Block_6 -> Block_8 [xlabel = "true"]
 Block_8 [label="Block:Block_8
-Argument: temporary_13 := 20
-temporary_12 := call Search, 1
-iffalse temporary_12 goto Block_10"];
+temporary_12 := x - 1
+x := temporary_12
+goto Block_9"];
 Block_8 -> Block_9 [xlabel = "true"]
 Block_9 [label="Block:Block_9
-Print: 1
-goto Block_11"];
-Block_9 -> Block_11 [xlabel = "true"]
-Block_11 [label="Block:Block_11
-Argument: temporary_15 := 21
-temporary_14 := call Search, 1
-iffalse temporary_14 goto Block_13"];
-Block_11 -> Block_12 [xlabel = "true"]
-Block_12 [label="Block:Block_12
-Print: 1
-goto Block_14"];
-Block_12 -> Block_14 [xlabel = "true"]
-Block_14 [label="Block:Block_14
-Argument: temporary_17 := 37
-temporary_16 := call Search, 1
-iffalse temporary_16 goto Block_16"];
-Block_14 -> Block_15 [xlabel = "true"]
-Block_15 [label="Block:Block_15
-Print: 1
-goto Block_17"];
-Block_15 -> Block_17 [xlabel = "true"]
-Block_17 [label="Block:Block_17
-Argument: temporary_19 := 38
-temporary_18 := call Search, 1
-iffalse temporary_18 goto Block_19"];
-Block_17 -> Block_18 [xlabel = "true"]
-Block_18 [label="Block:Block_18
-Print: 1
-goto Block_20"];
-Block_18 -> Block_20 [xlabel = "true"]
-Block_20 [label="Block:Block_20
-Argument: temporary_21 := 39
-temporary_20 := call Search, 1
-iffalse temporary_20 goto Block_22"];
-Block_20 -> Block_21 [xlabel = "true"]
-Block_21 [label="Block:Block_21
-Print: 1
-goto Block_23"];
-Block_21 -> Block_23 [xlabel = "true"]
-Block_23 [label="Block:Block_23
-Argument: temporary_23 := 50
-temporary_22 := call Search, 1
-iffalse temporary_22 goto Block_25"];
-Block_23 -> Block_24 [xlabel = "true"]
-Block_24 [label="Block:Block_24
-Print: 1
-goto Block_26"];
-Block_24 -> Block_26 [xlabel = "true"]
-Block_26 [label="Block:Block_26
-return 999"];
-Block_23 -> Block_25 [xlabel = "false"]
-Block_25 [label="Block:Block_25
-Print: 0
-goto Block_26"];
-Block_25 -> Block_26 [xlabel = "true"]
-Block_20 -> Block_22 [xlabel = "false"]
-Block_22 [label="Block:Block_22
-Print: 0
-goto Block_23"];
-Block_22 -> Block_23 [xlabel = "true"]
-Block_17 -> Block_19 [xlabel = "false"]
-Block_19 [label="Block:Block_19
-Print: 0
-goto Block_20"];
-Block_19 -> Block_20 [xlabel = "true"]
-Block_14 -> Block_16 [xlabel = "false"]
-Block_16 [label="Block:Block_16
-Print: 0
-goto Block_17"];
-Block_16 -> Block_17 [xlabel = "true"]
-Block_11 -> Block_13 [xlabel = "false"]
-Block_13 [label="Block:Block_13
-Print: 0
-goto Block_14"];
-Block_13 -> Block_14 [xlabel = "true"]
-Block_8 -> Block_10 [xlabel = "false"]
-Block_10 [label="Block:Block_10
-Print: 0
-goto Block_11"];
-Block_10 -> Block_11 [xlabel = "true"]
+b := false
+goto Block_5"];
+Block_9 -> Block_5 [xlabel = "true"]
+Block_6 -> Block_9 [xlabel = "false"]
+Block_9 [label="Block:Block_9
+b := false
+goto Block_5"];
+Block_9 -> Block_5 [xlabel = "true"]
 Block_5 -> Block_7 [xlabel = "false"]
 Block_7 [label="Block:Block_7
-Print: 0
-goto Block_8"];
-Block_7 -> Block_8 [xlabel = "true"]
+return 54"];
 Block_2 -> Block_4 [xlabel = "false"]
 Block_4 [label="Block:Block_4
-Print: 0
 goto Block_5"];
 Block_4 -> Block_5 [xlabel = "true"]
-Block_27 [label="Block:Block_27
-param num
-bs01 := false
-temporary_24 := length number
-right := temporary_24
-temporary_25 := right - 1
-right := temporary_25
-left := 0
-var_cont := true
-aux01 := 0
-goto Block_28"];
-Block_27 -> Block_28 [xlabel = "true"]
-Block_28 [label="Block:Block_28
-iffalse var_cont goto Block_30"];
-Block_28 -> Block_29 [xlabel = "true"]
-Block_29 [label="Block:Block_29
-temporary_26 := left + right
-medium := temporary_26
-Argument: temporary_28 := medium
-temporary_27 := call Div, 1
-medium := temporary_27
-temporary_29 =: number[medium]
-aux01 := temporary_29
-temporary_30 := num < aux01
-iffalse temporary_30 goto Block_32"];
-Block_29 -> Block_31 [xlabel = "true"]
-Block_31 [label="Block:Block_31
-temporary_31 := medium - 1
-right := temporary_31
-goto Block_33"];
-Block_31 -> Block_33 [xlabel = "true"]
-Block_33 [label="Block:Block_33
-Argument: temporary_34 := aux01
-Argument: temporary_35 := num
-temporary_33 := call Compare, 2
-iffalse temporary_33 goto Block_35"];
-Block_33 -> Block_34 [xlabel = "true"]
-Block_34 [label="Block:Block_34
-var_cont := false
-goto Block_36"];
-Block_34 -> Block_36 [xlabel = "true"]
-Block_36 [label="Block:Block_36
-temporary_36 := right < left
-iffalse temporary_36 goto Block_38"];
-Block_36 -> Block_37 [xlabel = "true"]
-Block_37 [label="Block:Block_37
-var_cont := false
-goto Block_38"];
-Block_37 -> Block_38 [xlabel = "true"]
-Block_38 [label="Block:Block_38
-goto Block_28"];
-Block_38 -> Block_28 [xlabel = "true"]
-Block_36 -> Block_38 [xlabel = "false"]
-Block_38 [label="Block:Block_38
-goto Block_28"];
-Block_38 -> Block_28 [xlabel = "true"]
-Block_33 -> Block_35 [xlabel = "false"]
-Block_35 [label="Block:Block_35
-var_cont := true
-goto Block_36"];
-Block_35 -> Block_36 [xlabel = "true"]
-Block_29 -> Block_32 [xlabel = "false"]
-Block_32 [label="Block:Block_32
-temporary_32 := medium + 1
-left := temporary_32
-goto Block_33"];
-Block_32 -> Block_33 [xlabel = "true"]
-Block_28 -> Block_30 [xlabel = "false"]
-Block_30 [label="Block:Block_30
-Argument: temporary_38 := aux01
-Argument: temporary_39 := num
-temporary_37 := call Compare, 2
-iffalse temporary_37 goto Block_40"];
-Block_30 -> Block_39 [xlabel = "true"]
-Block_39 [label="Block:Block_39
-bs01 := true
-goto Block_41"];
-Block_39 -> Block_41 [xlabel = "true"]
-Block_41 [label="Block:Block_41
-return bs01"];
-Block_30 -> Block_40 [xlabel = "false"]
-Block_40 [label="Block:Block_40
-bs01 := false
-goto Block_41"];
-Block_40 -> Block_41 [xlabel = "true"]
-Block_42 [label="Block:Block_42
-param num
-count01 := 0
-count02 := 0
-temporary_40 := num - 1
-aux03 := temporary_40
-goto Block_43"];
-Block_42 -> Block_43 [xlabel = "true"]
-Block_43 [label="Block:Block_43
-temporary_41 := count02 < aux03
-iffalse temporary_41 goto Block_45"];
-Block_43 -> Block_44 [xlabel = "true"]
-Block_44 [label="Block:Block_44
-temporary_42 := count01 + 1
-count01 := temporary_42
-temporary_43 := count02 + 2
-count02 := temporary_43
-goto Block_43"];
-Block_44 -> Block_43 [xlabel = "true"]
-Block_43 -> Block_45 [xlabel = "false"]
-Block_45 [label="Block:Block_45
-return count01"];
-Block_46 [label="Block:Block_46
+Block_10 [label="Block:Block_10
+param num4
+param num3
 param num2
-param num1
-retval := false
-temporary_44 := num2 + 1
-aux02 := temporary_44
-temporary_45 := num1 < num2
-iffalse temporary_45 goto Block_48"];
-Block_46 -> Block_47 [xlabel = "true"]
-Block_47 [label="Block:Block_47
-retval := false
-goto Block_49"];
-Block_47 -> Block_49 [xlabel = "true"]
-Block_49 [label="Block:Block_49
-return retval"];
-Block_46 -> Block_48 [xlabel = "false"]
-Block_48 [label="Block:Block_48
-temporary_47 := num1 < aux02
-temporary_46 := ! temporary_47
-iffalse temporary_46 goto Block_51"];
-Block_48 -> Block_50 [xlabel = "true"]
-Block_50 [label="Block:Block_50
-retval := false
-goto Block_52"];
-Block_50 -> Block_52 [xlabel = "true"]
-Block_52 [label="Block:Block_52
-goto Block_49"];
-Block_52 -> Block_49 [xlabel = "true"]
-Block_48 -> Block_51 [xlabel = "false"]
-Block_51 [label="Block:Block_51
-retval := true
-goto Block_52"];
-Block_51 -> Block_52 [xlabel = "true"]
-Block_53 [label="Block:Block_53
-j := 1
-goto Block_54"];
-Block_53 -> Block_54 [xlabel = "true"]
-Block_54 [label="Block:Block_54
-temporary_48 := j < size
-iffalse temporary_48 goto Block_56"];
-Block_54 -> Block_55 [xlabel = "true"]
-Block_55 [label="Block:Block_55
-temporary_49 =: number[j]
-Print: temporary_49
-temporary_50 := j + 1
-j := temporary_50
-goto Block_54"];
-Block_55 -> Block_54 [xlabel = "true"]
-Block_54 -> Block_56 [xlabel = "false"]
-Block_56 [label="Block:Block_56
-Print: 99999
-return 0"];
-Block_57 [label="Block:Block_57
-param sz
-j := 1
-size := sz
-temporary_51 := new int[],sz
-number := temporary_51
-temporary_52 := size + 1
-k := temporary_52
-goto Block_58"];
-Block_57 -> Block_58 [xlabel = "true"]
-Block_58 [label="Block:Block_58
-temporary_53 := j < size
-iffalse temporary_53 goto Block_60"];
-Block_58 -> Block_59 [xlabel = "true"]
-Block_59 [label="Block:Block_59
-temporary_54 := 2 * j
-aux01 := temporary_54
-temporary_55 := k - 3
-aux02 := temporary_55
-temporary_56 := aux01 + aux02
-number := j[temporary_56]
-temporary_57 := j + 1
-j := temporary_57
-temporary_58 := k - 1
-k := temporary_58
-goto Block_58"];
-Block_59 -> Block_58 [xlabel = "true"]
-Block_58 -> Block_60 [xlabel = "false"]
-Block_60 [label="Block:Block_60
-return 0"];
+param num
+x := 10
+goto Block_11"];
+Block_10 -> Block_11 [xlabel = "true"]
+Block_11 [label="Block:Block_11
+temporary_13 := x < 20
+iffalse temporary_13 goto Block_13"];
+Block_11 -> Block_12 [xlabel = "true"]
+Block_12 [label="Block:Block_12
+a := b
+temporary_14 := x < 1
+iffalse temporary_14 goto Block_15"];
+Block_12 -> Block_14 [xlabel = "true"]
+Block_14 [label="Block:Block_14
+temporary_15 := x - 1
+x := temporary_15
+goto Block_15"];
+Block_14 -> Block_15 [xlabel = "true"]
+Block_15 [label="Block:Block_15
+b := false
+goto Block_11"];
+Block_15 -> Block_11 [xlabel = "true"]
+Block_12 -> Block_15 [xlabel = "false"]
+Block_15 [label="Block:Block_15
+b := false
+goto Block_11"];
+Block_15 -> Block_11 [xlabel = "true"]
+Block_11 -> Block_13 [xlabel = "false"]
+Block_13 [label="Block:Block_13
+return 54"];
 }

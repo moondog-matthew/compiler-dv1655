@@ -81,10 +81,16 @@ ProgramBC* CFG::generate_BC() {
             ENTER BLOCK CHILDREN
         */
         method_bc_content(&bb, instructions);
+        // add stop to the main function, hardcoded
+        if (bb->getMethodName() == "") { // main will be ""
+            InstructionBC* stop = new InstructionBC(0, "stop");
+            instructions.push_back(stop);
+        }
         // create method bytecode class
         MethodBC* methbc = new MethodBC(variables, instructions, bb->getMethodName()); 
         // add the method to the programbc
         progbc->add_method(methbc); 
+
     }
     /* 
         Fill map of qualified method names
