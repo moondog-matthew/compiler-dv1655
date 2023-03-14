@@ -7,13 +7,21 @@ temporary_3 := new BT
 temporary_1 := call Start, 0
 Print: temporary_1"];
 Block_2 [label="Block:Block_2
-Argument: temporary_6 := x
-Argument: temporary_7 := i
-Argument: temporary_8 := z
-Argument: temporary_9 := easy
-temporary_5 := call Method1, 4
-temporary_4 := temporary_5 > 50
-iffalse temporary_4 goto Block_4"];
+temporary_4 := x + 1
+x := temporary_4
+temporary_5 := x - 1
+x := temporary_5
+temporary_6 := x / 1
+x := temporary_6
+temporary_7 := x * 3
+x := temporary_7
+Argument: x
+Argument: i
+Argument: z
+Argument: easy
+temporary_9 := call Method1, 4
+temporary_8 := temporary_9 > 50
+iffalse temporary_8 goto Block_4"];
 Block_2 -> Block_3 [xlabel = "true"]
 Block_3 [label="Block:Block_3
 i := z

@@ -277,9 +277,9 @@ public:
 		string name;
 		string expr; 
 		ExpressionTac* in;
-		name = (*currentBlock)->generate_name(++id); 
+		// name = (*currentBlock)->generate_name(++id); 
 		expr = children[0]->genIR(currentBlock, methods, BBnames, id, blockID);
-		in = new ExpressionTac(expr, name);
+		in = new ExpressionTac(expr);
 		(*currentBlock)->add_Tac(in);
 		return "";
 	}
@@ -305,9 +305,9 @@ public:
 			child[1] expression
 		*/
 		children[0]->genIR(currentBlock, methods, BBnames, id, blockID); 
-		name = (*currentBlock)->generate_name(++id); 
+		// name = (*currentBlock)->generate_name(++id); 
 		expr = children[1]->genIR(currentBlock, methods, BBnames, id, blockID);
-		in = new ExpressionTac(expr, name);
+		in = new ExpressionTac(expr);
 		(*currentBlock)->add_Tac(in);
 		return "";
 	}

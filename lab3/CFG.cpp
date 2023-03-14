@@ -83,7 +83,7 @@ ProgramBC* CFG::generate_BC() {
         method_bc_content(&bb, instructions);
         // add stop to the main function, hardcoded
         if (bb->getMethodName() == "") { // main will be ""
-            InstructionBC* stop = new InstructionBC(0, "stop");
+            InstructionBC* stop = new InstructionBC(18, "stop");
             instructions.push_back(stop);
         }
         // create method bytecode class

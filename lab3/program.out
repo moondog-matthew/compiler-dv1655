@@ -5,11 +5,39 @@ print
 stop
 BT.Start
 Block_2:
-iload temporary_5
-iload 50
-igt
+iload x
+iload 1
+iadd
 istore temporary_4
 iload temporary_4
+istore x
+iload x
+iload 1
+isub
+istore temporary_5
+iload temporary_5
+istore x
+iload x
+iload 1
+idiv
+istore temporary_6
+iload temporary_6
+istore x
+iload x
+iload 3
+imul
+istore temporary_7
+iload temporary_7
+istore x
+iload x
+iload i
+iload z
+iload easy
+iload temporary_9
+iload 50
+igt
+istore temporary_8
+iload temporary_8
 iffalse goto Block_4
 Block_3:
 iload z
@@ -50,6 +78,10 @@ iload 54
 ireturn
 BT.Method1
 Block_10:
+istore num4
+istore num3
+istore num2
+istore num
 iload 10
 istore x
 goto Block_11

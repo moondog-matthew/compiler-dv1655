@@ -116,13 +116,15 @@ string ParTac::printTac() const {
 void ParTac::generate_code(vector<InstructionBC*> &bc) {
     // pop argument from stack
     // place value in param
+    InstructionBC* instr;
+    instr = new InstructionBC(2, "istore " + param);
+    bc.push_back(instr);
 }
 
 MethCallTac::MethCallTac(string _func, string _n_params, string _result) : func(_func), n_params(_n_params), result(_result) {}
 string MethCallTac::printTac() const {
     return result + " := call " + func + ", " + n_params;  
 }
-
 void MethCallTac::generate_code(vector<InstructionBC*> &bc) {
     /* WRITE HERE */
     // Push N arguments to the stack
@@ -143,9 +145,15 @@ void ReturnTac::generate_code(vector<InstructionBC*> &bc) {
     bc.push_back(instr);
 }
 
-ExpressionTac::ExpressionTac(string _expr, string _result) : expr(_expr), result(_result) {}
+ExpressionTac::ExpressionTac(string _expr) : expr(_expr) {}
 string ExpressionTac::printTac() const {
-    return "Argument: " + result + " := " + expr;
+    return "Argument: " + expr;
+}
+void ExpressionTac::generate_code(vector<InstructionBC*> &bc) {
+    /* Pushes arguments to stack */
+    InstructionBC* instr;
+    instr = new InstructionBC(0, "iload " + expr);
+    bc.push_back(instr);
 }
 
 JumpTac::JumpTac(string _label) : label(_label) {}

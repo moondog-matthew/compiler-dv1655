@@ -130,9 +130,10 @@ class ExpressionTac : public Tac {
 public:
     /* (Expression)*/
     string expr;
-    string result;
-    ExpressionTac(string _expr, string _result);
+    ExpressionTac(string _expr);
     string printTac() const override;
+    void generate_code(vector<InstructionBC*> &bc) override;
+
 };
 
 class JumpTac : public Tac {

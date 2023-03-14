@@ -13,6 +13,11 @@ class BT {
         int i;
         int z;
         int easy;
+        x = x + 1;
+        x = x - 1;
+        x = x / 1;
+        x = x * 3;
+
         if (this.Method1(x, i, z, easy) > 50) 
             i = z;
 
@@ -55,10 +60,7 @@ class BT {
         //     b = a;
         // else 
         //     a = b;
-        // x = x + 1;
-        // x = x - 1;
-        // x = x / 1;
-        // x = x * 3;
+
         return 54;
     }
 
