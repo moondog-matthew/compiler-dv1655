@@ -20,8 +20,8 @@ Block_5:
 iload x
 iload 20
 ilt
-istore temporary_6
-iload temporary_6
+istore temporary_8
+iload temporary_8
 iffalse goto Block_7
 Block_6:
 iload b
@@ -29,15 +29,15 @@ istore a
 iload x
 iload 1
 ilt
-istore temporary_7
-iload temporary_7
+istore temporary_9
+iload temporary_9
 iffalse goto Block_9
 Block_8:
 iload x
 iload 1
 isub
-istore temporary_8
-iload temporary_8
+istore temporary_10
+iload temporary_10
 istore x
 goto Block_9
 Block_9:
@@ -56,8 +56,8 @@ Block_11:
 iload x
 iload 20
 ilt
-istore temporary_9
-iload temporary_9
+istore temporary_11
+iload temporary_11
 iffalse goto Block_13
 Block_12:
 iload b
@@ -65,15 +65,15 @@ istore a
 iload x
 iload 1
 ilt
-istore temporary_10
-iload temporary_10
+istore temporary_12
+iload temporary_12
 iffalse goto Block_15
 Block_14:
 iload x
 iload 1
 isub
-istore temporary_11
-iload temporary_11
+istore temporary_13
+iload temporary_13
 istore x
 goto Block_15
 Block_15:

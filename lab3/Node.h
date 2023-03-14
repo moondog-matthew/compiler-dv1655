@@ -280,7 +280,6 @@ public:
 		name = (*currentBlock)->generate_name(++id); 
 		expr = children[0]->genIR(currentBlock, methods, BBnames, id, blockID);
 		in = new ExpressionTac(expr, name);
-		cout << name << " := " <<  expr << endl;
 		(*currentBlock)->add_Tac(in);
 		return "";
 	}
@@ -293,6 +292,24 @@ public:
 
 	string getIden() {
 		return children[1]->value;
+	}
+	/*
+		GenIR to get multiple arguemtns
+	*/
+	string genIR(BB** currentBlock, vector<BB*> &methods, std::map<string, string> &BBnames, int &id, int &blockID) override {
+		string name;
+		string expr; 
+		ExpressionTac* in;
+		/*
+			child[0] exprlist
+			child[1] expression
+		*/
+		children[0]->genIR(currentBlock, methods, BBnames, id, blockID); 
+		name = (*currentBlock)->generate_name(++id); 
+		expr = children[1]->genIR(currentBlock, methods, BBnames, id, blockID);
+		in = new ExpressionTac(expr, name);
+		(*currentBlock)->add_Tac(in);
+		return "";
 	}
 
 };
