@@ -181,7 +181,7 @@ void Interpreter::execute() {
                 2. pop value from data stack
                 3. get val2 from data stack
                 4. pop value from data stack
-                5. subtract values, store in val1. v2 - v1 per instruction
+                5. subtract values, store in val1. because val2 is added to stack first (precedence).
                 6. push val 1 to the data stack
             */
             val1 = data_stack.back();
@@ -192,12 +192,38 @@ void Interpreter::execute() {
             data_stack.push_back(val1);
             break;
         case 5:
-            /* imul */
-            instruction->stdio_out();
+            /* 
+                imul 
+                1. get val1 from data stack
+                2. pop value from data stack
+                3. get val2 from data stack
+                4. pop value from data stack
+                5. multiply values, store in val1
+                6. push val 1 to the data stack
+            */
+            val1 = data_stack.back();
+            data_stack.pop_back();
+            val2 = data_stack.back();
+            data_stack.pop_back();
+            val1 = val1 * val2;
+            data_stack.push_back(val1);
             break;
         case 6:
-            /* idiv */
-            instruction->stdio_out();
+            /* 
+                idiv 
+                1. get val1 from data stack
+                2. pop value from data stack
+                3. get val2 from data stack
+                4. pop value from data stack
+                5. Divide values, store in val1. val2 / val1, because val2 is added to stack first (precedence).
+                6. push val 1 to the data stack
+            */
+            val1 = data_stack.back();
+            data_stack.pop_back();
+            val2 = data_stack.back();
+            data_stack.pop_back();
+            val1 = val2 / val1;
+            data_stack.push_back(val1);
             break;
         case 7:
             /* igt */

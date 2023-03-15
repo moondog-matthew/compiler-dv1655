@@ -2,7 +2,7 @@ digraph {
 graph [ splines = ortho ]
 	node [ shape = box ];
 Block_0 [label="Block:Block_0
-temporary_1 := 101 - 55
+temporary_1 := 550 / 55
 Print: temporary_1"];
 Block_2 [label="Block:Block_2
 temporary_2 := x + 1
