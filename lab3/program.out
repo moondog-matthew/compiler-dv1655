@@ -2,7 +2,7 @@ BinaryTree.main
 Block_0:
 iconst 550
 iconst 55
-idiv
+ilt
 istore temporary_1
 iload temporary_1
 print

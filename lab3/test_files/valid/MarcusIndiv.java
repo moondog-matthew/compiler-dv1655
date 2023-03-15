@@ -1,7 +1,7 @@
 public class BinaryTree{
     public static void main(String[] a){
 	// System.out.println(new BT().Start());
-        System.out.println(550 / 55);
+        System.out.println(550 < 55);
     }
 }
 

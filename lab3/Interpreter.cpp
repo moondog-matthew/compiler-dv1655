@@ -165,7 +165,7 @@ void Interpreter::execute() {
                 3. get val2 from data stack
                 4. pop value from data stack
                 5. Add values, store in val1
-                6. push val 1 to the data stack
+                6. push val1 to the data stack
             */
             val1 = data_stack.back();
             data_stack.pop_back();
@@ -182,7 +182,7 @@ void Interpreter::execute() {
                 3. get val2 from data stack
                 4. pop value from data stack
                 5. subtract values, store in val1. because val2 is added to stack first (precedence).
-                6. push val 1 to the data stack
+                6. push val1 to the data stack
             */
             val1 = data_stack.back();
             data_stack.pop_back();
@@ -199,7 +199,7 @@ void Interpreter::execute() {
                 3. get val2 from data stack
                 4. pop value from data stack
                 5. multiply values, store in val1
-                6. push val 1 to the data stack
+                6. push val1 to the data stack
             */
             val1 = data_stack.back();
             data_stack.pop_back();
@@ -216,7 +216,7 @@ void Interpreter::execute() {
                 3. get val2 from data stack
                 4. pop value from data stack
                 5. Divide values, store in val1. val2 / val1, because val2 is added to stack first (precedence).
-                6. push val 1 to the data stack
+                6. push val1 to the data stack
             */
             val1 = data_stack.back();
             data_stack.pop_back();
@@ -226,12 +226,48 @@ void Interpreter::execute() {
             data_stack.push_back(val1);
             break;
         case 7:
-            /* igt */
-            instruction->stdio_out();
+            /* 
+                igt
+                1. get val1 from data stack
+                2. pop value from data stack
+                3. get val2 from data stack
+                4. pop value from data stack
+                5. compare values, 
+                6.1 if val2 > val1: push 1 to stack
+                6.2 else push 2
+            */
+            val1 = data_stack.back();
+            data_stack.pop_back();
+            val2 = data_stack.back();
+            data_stack.pop_back();
+            if (val2 > val1) {
+                data_stack.push_back(1);
+            }
+            else {
+                data_stack.push_back(0);
+            }
             break;
         case 8:
-            /* ilt */
-            instruction->stdio_out();
+            /* 
+                ilt
+                1. get val1 from data stack
+                2. pop value from data stack
+                3. get val2 from data stack
+                4. pop value from data stack
+                5. compare values, 
+                6.1 if val2 < val1: push 1 to stack
+                6.2 else push 2
+            */
+            val1 = data_stack.back();
+            data_stack.pop_back();
+            val2 = data_stack.back();
+            data_stack.pop_back();
+            if (val2 < val1) {
+                data_stack.push_back(1);
+            }
+            else {
+                data_stack.push_back(0);
+            }
             break;
         case 9:
             /* ieq */
