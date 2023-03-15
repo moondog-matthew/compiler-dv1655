@@ -11,13 +11,13 @@ private:
     MethodBC* method;
 
 public:
-    Activation() = default;
+    Activation();
     ~Activation() = default;
     /* Getter and setters */
-    const int getPC() const;
-    const vector<string>& getLocalVar() const;
-    const MethodBC* getMethod() const;
-
+    int getPC() const;
+    vector<string>& getLocalVar();
+    MethodBC* getMethod() const;
+    InstructionBC* getNextInstruction() const;
 };
 
 class Interpreter {
@@ -31,8 +31,8 @@ public:
     Interpreter(ProgramBC* _pbc);
     ~Interpreter() = default;
     /* Getter and setters */
-    const ProgramBC* getPBC() const;
-    const MethodBC* getMain() const;
+    ProgramBC* getPBC() const;
+    MethodBC* getMain() const;
     /*Functionality*/
     void execute(); 
 

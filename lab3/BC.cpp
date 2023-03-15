@@ -7,6 +7,9 @@ InstructionBC::~InstructionBC() {}
 void InstructionBC::print(ofstream* outStream) const {
     *outStream << instruction_argument << "\n";
 }
+int InstructionBC::getID() {
+    return this->id;
+}
 
 MethodBC::MethodBC(vector<string> &_variables, vector<InstructionBC*> &_instructions, string _block_name) 
     : variables(_variables), instructions(_instructions), block_name(_block_name) {}

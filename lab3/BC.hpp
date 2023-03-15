@@ -41,6 +41,7 @@ public:
     InstructionBC(int _id, string _instruction_argument);
     virtual ~InstructionBC();
     void print(ofstream* outStream) const;
+    int getID(); 
 };
 
 class MethodBC {
