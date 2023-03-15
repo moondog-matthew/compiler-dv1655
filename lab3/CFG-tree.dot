@@ -2,26 +2,23 @@ digraph {
 graph [ splines = ortho ]
 	node [ shape = box ];
 Block_0 [label="Block:Block_0
-temporary_2 := new BT
-temporary_3 := new BT
-temporary_1 := call Start, 0
-Print: temporary_1"];
+Print: 55"];
 Block_2 [label="Block:Block_2
-temporary_4 := x + 1
+temporary_1 := x + 1
+x := temporary_1
+temporary_2 := x - 1
+x := temporary_2
+temporary_3 := x / 1
+x := temporary_3
+temporary_4 := x * 3
 x := temporary_4
-temporary_5 := x - 1
-x := temporary_5
-temporary_6 := x / 1
-x := temporary_6
-temporary_7 := x * 3
-x := temporary_7
 Argument: x
 Argument: 30
 Argument: z
 Argument: easy
-temporary_9 := call Method1, 4
-temporary_8 := temporary_9 > 50
-iffalse temporary_8 goto Block_4"];
+temporary_6 := call Method1, 4
+temporary_5 := temporary_6 > 50
+iffalse temporary_5 goto Block_4"];
 Block_2 -> Block_3 [xlabel = "true"]
 Block_3 [label="Block:Block_3
 i := z
@@ -31,17 +28,17 @@ Block_4 [label="Block:Block_4
 goto Block_5"];
 Block_4 -> Block_5 [xlabel = "true"]
 Block_5 [label="Block:Block_5
-temporary_10 := x < 20
-iffalse temporary_10 goto Block_7"];
+temporary_7 := x < 20
+iffalse temporary_7 goto Block_7"];
 Block_5 -> Block_6 [xlabel = "true"]
 Block_6 [label="Block:Block_6
 a := b
-temporary_11 := x < 1
-iffalse temporary_11 goto Block_9"];
+temporary_8 := x < 1
+iffalse temporary_8 goto Block_9"];
 Block_6 -> Block_8 [xlabel = "true"]
 Block_8 [label="Block:Block_8
-temporary_12 := x - 1
-x := temporary_12
+temporary_9 := x - 1
+x := temporary_9
 goto Block_9"];
 Block_8 -> Block_9 [xlabel = "true"]
 Block_9 [label="Block:Block_9
@@ -69,17 +66,17 @@ x := 10
 goto Block_11"];
 Block_10 -> Block_11 [xlabel = "true"]
 Block_11 [label="Block:Block_11
-temporary_13 := x < 20
-iffalse temporary_13 goto Block_13"];
+temporary_10 := x < 20
+iffalse temporary_10 goto Block_13"];
 Block_11 -> Block_12 [xlabel = "true"]
 Block_12 [label="Block:Block_12
 a := b
-temporary_14 := x < 1
-iffalse temporary_14 goto Block_15"];
+temporary_11 := x < 1
+iffalse temporary_11 goto Block_15"];
 Block_12 -> Block_14 [xlabel = "true"]
 Block_14 [label="Block:Block_14
-temporary_15 := x - 1
-x := temporary_15
+temporary_12 := x - 1
+x := temporary_12
 goto Block_15"];
 Block_14 -> Block_15 [xlabel = "true"]
 Block_15 [label="Block:Block_15

@@ -29,6 +29,8 @@ public:
     InstructionBC* getNextInstruction();
     void addVariable(string variable_name, int i = 0);
     void updateVariable(string variable_name, int newval);
+    int getLocalValue(string key);
+    bool varExists(string key);
 };
 
 class Interpreter {
@@ -38,6 +40,7 @@ private:
     /*Helper functions*/
     void assignMain();
     string second_half_string(string orig);
+    vector<int> data_stack; 
 
 public:
     Interpreter(ProgramBC* _pbc);
