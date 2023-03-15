@@ -133,7 +133,6 @@ void Interpreter::execute() {
                 val1 = 0;
             }
             data_stack.push_back(val1);
-            instruction->stdio_out();
             break;
         case 1:
             /* 
@@ -144,7 +143,6 @@ void Interpreter::execute() {
             tmp = second_half_string(instruction->getInstructionArgument());
             val1 = stoi(tmp);
             data_stack.push_back(val1);
-            instruction->stdio_out();
             break;
         case 2:
             /* 
@@ -153,17 +151,28 @@ void Interpreter::execute() {
                 2. Store the last value (top of stack) in v
                 3. pop value from stack (data stack)
                 4. place in variable n
-
             */
             tmp = second_half_string(instruction->getInstructionArgument());
             val1 = data_stack.back(); // access last element in vector
             data_stack.pop_back();
             current_activation->addVariable(tmp, val1);  // if already exists, will overwrite value. Intended behaviour.
-            instruction->stdio_out();
             break;
         case 3:
-            /* iadd */
-            instruction->stdio_out();
+            /* 
+                iadd 
+                1. get val1 from data stack
+                2. pop value from data stack
+                3. get val2 from data stack
+                4. pop value from data stack
+                5. Add values, store in val1
+                6. push val 1 to the data stack
+            */
+            val1 = data_stack.back();
+            data_stack.pop_back();
+            val2 = data_stack.back();
+            data_stack.pop_back();
+            val1 = val1 + val2;
+            data_stack.push_back(val1);
             break;
         case 4:
             /* isub */
