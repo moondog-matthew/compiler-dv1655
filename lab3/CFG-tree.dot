@@ -16,6 +16,26 @@ temporary_7 := x / 9
 x := temporary_7
 temporary_8 := x * 3
 x := temporary_8
-Print: x
+Argument: x
+Argument: 30
+Argument: z
+Argument: easy
+temporary_9 := call Method1, 4
+i := temporary_9
+Print: i
 return x"];
+Block_3 [label="Block:Block_3
+param num4
+param num3
+param num2
+param num
+x := 10
+temporary_10 := call Method2, 0
+z := temporary_10
+temporary_11 := z + 1
+z := temporary_11
+Print: z
+return 54"];
+Block_4 [label="Block:Block_4
+return 999"];
 }

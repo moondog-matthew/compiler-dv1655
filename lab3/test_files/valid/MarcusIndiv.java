@@ -18,6 +18,7 @@ class BT {
         x = x / 9;
         x = x * 3;
 
+        i = this.Method1(x, 30, z, easy);
         // if (this.Method1(x, 30, z, easy) > 50) 
         //     i = z;
 
@@ -60,28 +61,33 @@ class BT {
         //     b = a;
         // else 
         //     a = b;
-        System.out.println(x);
+        System.out.println(i);
         return x;
     }
 
-    // public int Method1(int num, int num2, int num3, int num4){
-	// 	int x;
-    //     x = 10;
-    //     boolean a;
-    //     boolean b;
-    //     int i;
-    //     int z;
+    public int Method1(int num, int num2, int num3, int num4){
+		int x;
+        x = 10;
+        boolean a;
+        boolean b;
+        int i;
+        int z;
+
+        z = this.Method2();
+        z = z + 1;
+        System.out.println(z);
+        // while (x < 20) {
+        //     a = b;
+        //     if (x < 1) 
+        //         x = x - 1;
+        //     b = false;
+        // }
         
-    //     while (x < 20) {
-    //         a = b;
-    //         if (x < 1) 
-    //             x = x - 1;
-    //         b = false;
-    //     }
-        
-    //     return 54;
-    // }
-    
+        return 54;
+    }
+    public int Method2(){        
+        return 999;
+    }
     
 
 }
