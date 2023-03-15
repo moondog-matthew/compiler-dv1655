@@ -53,6 +53,8 @@ public:
     MethodBC(vector<string> &_variables, vector<InstructionBC*> &_instructions, string _block_name);
     virtual ~MethodBC();
     void print(ofstream* outStream) const;
+    void set_name(string newBlockName);
+    string get_name();
 };
 
 class ProgramBC {

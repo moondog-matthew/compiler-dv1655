@@ -90,7 +90,6 @@ ProgramBC* CFG::generate_BC() {
         MethodBC* methbc = new MethodBC(variables, instructions, bb->getMethodName()); 
         // add the method to the programbc
         progbc->add_method(methbc); 
-
     }
     /* 
         Fill map of qualified method names
@@ -108,7 +107,6 @@ ProgramBC* CFG::generate_BC() {
             }
         }
     }
-
     return progbc;
 }
 

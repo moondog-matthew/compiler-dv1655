@@ -16,6 +16,15 @@ void MethodBC::print(ofstream* outStream) const {
         instruction->print(outStream);
     }
 }
+void MethodBC::set_name(string newBlockName) {
+    /*Sets block name*/
+    this->block_name = newBlockName;
+}
+
+string MethodBC::get_name() {
+    return block_name;
+}
+
 ProgramBC::ProgramBC() {}
 ProgramBC::~ProgramBC() {}
 void ProgramBC::print() const {
@@ -26,7 +35,9 @@ void ProgramBC::print() const {
     int qual_meth_vec = qual_method_names.size();
     if (bc_vec_sz == qual_meth_vec) {
         for (int i = 0; i < bc_vec_sz; ++i) {
-            outStream << qual_method_names[i].first + "." + qual_method_names[i].second << "\n";
+            string func_name_label = qual_method_names[i].first + "." + qual_method_names[i].second;
+            outStream << func_name_label << "\n";
+            bc_methods[i]->set_name(func_name_label); // change block_name to func_name_label
             bc_methods[i]->print(&outStream);
         }
     }

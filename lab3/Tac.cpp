@@ -126,10 +126,16 @@ string MethCallTac::printTac() const {
     return result + " := call " + func + ", " + n_params;  
 }
 void MethCallTac::generate_code(vector<InstructionBC*> &bc) {
-    /* WRITE HERE */
-    // Push N arguments to the stack
-    // which ones?
-    // Invokevirtual m
+    InstructionBC* instr;
+    /* 
+        1. Store current stack pointer to stack
+        2. Call invokevirtual
+    */
+    // instr = new InstructionBC(0, "iload this"); // this might be changed...
+    // bc.push_back(instr);
+
+    instr = new InstructionBC(15, "invokevirtual " + func);
+    bc.push_back(instr);
 
 }
 

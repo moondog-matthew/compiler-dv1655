@@ -1,5 +1,7 @@
 BinaryTree.main
 Block_0:
+iload this
+invokevirtual Start
 iload temporary_1
 print
 stop
@@ -33,6 +35,8 @@ iload x
 iload i
 iload z
 iload easy
+iload this
+invokevirtual Method1
 iload temporary_9
 iload 50
 igt
