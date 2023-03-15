@@ -1,6 +1,7 @@
 BinaryTree.main
 Block_0:
 invokevirtual Start
+istore temporary_1
 iload temporary_1
 print
 stop
