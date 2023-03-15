@@ -234,7 +234,7 @@ void Interpreter::execute() {
                 4. pop value from data stack
                 5. compare values, 
                 6.1 if val2 > val1: push 1 to stack
-                6.2 else push 2
+                6.2 else push 0
             */
             val1 = data_stack.back();
             data_stack.pop_back();
@@ -256,7 +256,7 @@ void Interpreter::execute() {
                 4. pop value from data stack
                 5. compare values, 
                 6.1 if val2 < val1: push 1 to stack
-                6.2 else push 2
+                6.2 else push 0
             */
             val1 = data_stack.back();
             data_stack.pop_back();
@@ -270,20 +270,87 @@ void Interpreter::execute() {
             }
             break;
         case 9:
-            /* ieq */
-            instruction->stdio_out();
+            /* 
+                ieq
+                1. get val1 from data stack
+                2. pop value from data stack
+                3. get val2 from data stack
+                4. pop value from data stack
+                5. compare values, 
+                6.1 if val2 == val1: push 1 to stack
+                6.2 else push 0
+            */
+            val1 = data_stack.back();
+            data_stack.pop_back();
+            val2 = data_stack.back();
+            data_stack.pop_back();
+            if (val2 == val1) {
+                data_stack.push_back(1);
+            }
+            else {
+                data_stack.push_back(0);
+            }
             break;
         case 10:
-            /* ior */
-            instruction->stdio_out();
+            /* 
+                ior
+                1. get val1 from data stack
+                2. pop value from data stack
+                3. get val2 from data stack
+                4. pop value from data stack
+                5. compare values, 
+                6.1 if val2 + val1 == 0: push 0 to stack
+                6.2 else push 1
+            */
+            val1 = data_stack.back();
+            data_stack.pop_back();
+            val2 = data_stack.back();
+            data_stack.pop_back();
+            if (val2 + val1 == 0) {
+                data_stack.push_back(0);
+            }
+            else {
+                data_stack.push_back(1);
+            }
             break;
         case 11:
-            /* iand */
-            instruction->stdio_out();
+            /* 
+                iand
+                1. get val1 from data stack
+                2. pop value from data stack
+                3. get val2 from data stack
+                4. pop value from data stack
+                5. compare values, 
+                6.1 if val2 * val1 == 0: push 0 to stack
+                6.2 else push 1
+            */
+            val1 = data_stack.back();
+            data_stack.pop_back();
+            val2 = data_stack.back();
+            data_stack.pop_back();
+            if (val2 * val1 == 0) {
+                data_stack.push_back(0);
+            }
+            else {
+                data_stack.push_back(1);
+            }
             break;
         case 12:
-            /* inot */
-            instruction->stdio_out();
+            /* 
+                inot
+                1. get v from data stack
+                2. pop value from data stack
+                3.1 if val1 == 0: push 1 to stack. I.e, just reverse boolean condition.
+                3.2 else push 0
+            */
+            val1 = data_stack.back();
+            data_stack.pop_back();
+            if (val1 == 0) {
+                data_stack.push_back(1);
+            }
+            else {
+                data_stack.push_back(0);
+            }
             break;
         case 13:
             /* goto i */
