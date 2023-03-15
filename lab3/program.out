@@ -1,125 +1,48 @@
-B.main
+C1.main
 Block_0:
-iload 5
-iload 10
-invokevirtual Compute
+iload 100
+invokevirtual calcSum
 iload temporary_1
 print
 stop
-FacFib.Compute
+Sum.calcSum
 Block_2:
-istore second
-istore first
-iload first
-iload 1
+istore num
+iload 0
+istore sum
+goto Block_3
+Block_3:
+iload 0
+iload num
 ilt
-istore temporary_6
-iload temporary_6
-inot
-iload temporary_6
-iload second
-iload 1
-ilt
-istore temporary_8
-iload temporary_8
-inot
-iload temporary_8
-iload temporary_5
-iload temporary_7
-iand
 istore temporary_4
 iload temporary_4
-iffalse goto Block_4
-Block_3:
-iload first
-invokevirtual ComputeFac
-iload temporary_9
-istore fac
-iload fac
-print
-iload second
-invokevirtual ComputeFib
-iload temporary_10
-istore fib
-iload fib
-print
-iload 1
-istore returnValue
-goto Block_5
-Block_5:
-iload returnValue
-ireturn
+iffalse goto Block_5
 Block_4:
-iload 0
-istore returnValue
-goto Block_5
-FacFib.ComputeFac
-Block_6:
-istore num
-iload num
-iload 1
+iload sum
+iload 100
 ilt
-istore temporary_11
-iload temporary_11
-iffalse goto Block_8
-Block_7:
-iload 1
-istore fac
-goto Block_9
-Block_9:
-iload fac
-ireturn
+istore temporary_5
+iload temporary_5
+iffalse goto Block_7
+Block_6:
+iload sum
+iload num
+iadd
+istore temporary_6
+iload temporary_6
+istore sum
+goto Block_8
 Block_8:
 iload num
 iload 1
 isub
-istore temporary_14
-iload temporary_14
-invokevirtual ComputeFac
-iload num
-iload temporary_13
-imul
-istore temporary_12
-iload temporary_12
-istore fac
-goto Block_9
-FacFib.ComputeFib
-Block_10:
+istore temporary_7
+iload temporary_7
 istore num
-iload 0
-istore f0
-iload 1
-istore f1
-iload num
-istore fib
-iload 1
-istore i
-goto Block_11
-Block_11:
-iload i
-iload num
-ilt
-istore temporary_15
-iload temporary_15
-iffalse goto Block_13
-Block_12:
-iload f1
-iload f0
-iadd
-istore temporary_16
-iload temporary_16
-istore fib
-iload f1
-istore f0
-iload fib
-istore f1
-iload i
-iload 1
-iadd
-istore temporary_17
-iload temporary_17
-istore i
-goto Block_11
-Block_13:
-iload fib
+goto Block_3
+Block_7:
+goto Block_8
+Block_5:
+iload sum
 ireturn

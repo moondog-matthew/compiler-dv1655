@@ -70,71 +70,71 @@ void Interpreter::execute() {
             instruction->stdio_out();
             break;
         case 3:
-            /* iload n */
+            /* iadd */
             instruction->stdio_out();
             break;
         case 4:
-            /* iconst v */
+            /* isub */
             instruction->stdio_out();
             break;
         case 5:
-            /* istore n */
+            /* imul */
             instruction->stdio_out();
             break;
         case 6:
-            /* iload n */
+            /* idiv */
             instruction->stdio_out();
             break;
         case 7:
-            /* iconst v */
+            /* igt */
             instruction->stdio_out();
             break;
         case 8:
-            /* istore n */
+            /* ilt */
             instruction->stdio_out();
             break;
         case 9:
-            /* iload n */
+            /* ieq */
             instruction->stdio_out();
             break;
         case 10:
-            /* iconst v */
+            /* ior */
             instruction->stdio_out();
             break;
         case 11:
-            /* istore n */
+            /* iand */
             instruction->stdio_out();
             break;
         case 12:
-            /* iload n */
+            /* inot */
             instruction->stdio_out();
             break;
         case 13:
-            /* iconst v */
+            /* goto i */
             instruction->stdio_out();
             break;
         case 14:
-            /* istore n */
+            /* iffalse goto i */
             instruction->stdio_out();
             break;
         case 15:
-            /* iload n */
+            /* invokevirtual m */
             instruction->stdio_out();
             break;
         case 16:
-            /* iconst v */
+            /* ireturn */
             instruction->stdio_out();
             break;
         case 17:
-            /* istore n */
+            /* print */
             instruction->stdio_out();
             break;
         case 18:
-            /* STOP */
+            /* stop */
             instruction->stdio_out();
             break;
         case 19:
-            /*Label*/
+            /* label */
             instruction->stdio_out();
         default:
             break;

@@ -2,83 +2,39 @@ digraph {
 graph [ splines = ortho ]
 	node [ shape = box ];
 Block_0 [label="Block:Block_0
-temporary_2 := new FacFib
-temporary_3 := new FacFib
-Argument: 5
-Argument: 10
-temporary_1 := call Compute, 2
+temporary_2 := new Sum
+temporary_3 := new Sum
+Argument: 100
+temporary_1 := call calcSum, 1
 Print: temporary_1"];
 Block_2 [label="Block:Block_2
-param second
-param first
-temporary_6 := first < 1
-temporary_5 := ! temporary_6
-temporary_8 := second < 1
-temporary_7 := ! temporary_8
-temporary_4 := temporary_5 && temporary_7
-iffalse temporary_4 goto Block_4"];
+param num
+sum := 0
+goto Block_3"];
 Block_2 -> Block_3 [xlabel = "true"]
 Block_3 [label="Block:Block_3
-Argument: first
-temporary_9 := call ComputeFac, 1
-fac := temporary_9
-Print: fac
-Argument: second
-temporary_10 := call ComputeFib, 1
-fib := temporary_10
-Print: fib
-returnValue := 1
-goto Block_5"];
-Block_3 -> Block_5 [xlabel = "true"]
-Block_5 [label="Block:Block_5
-return returnValue"];
-Block_2 -> Block_4 [xlabel = "false"]
+temporary_4 := 0 < num
+iffalse temporary_4 goto Block_5"];
+Block_3 -> Block_4 [xlabel = "true"]
 Block_4 [label="Block:Block_4
-returnValue := 0
-goto Block_5"];
-Block_4 -> Block_5 [xlabel = "true"]
+temporary_5 := sum < 100
+iffalse temporary_5 goto Block_7"];
+Block_4 -> Block_6 [xlabel = "true"]
 Block_6 [label="Block:Block_6
-param num
-temporary_11 := num < 1
-iffalse temporary_11 goto Block_8"];
-Block_6 -> Block_7 [xlabel = "true"]
-Block_7 [label="Block:Block_7
-fac := 1
-goto Block_9"];
-Block_7 -> Block_9 [xlabel = "true"]
-Block_9 [label="Block:Block_9
-return fac"];
-Block_6 -> Block_8 [xlabel = "false"]
+temporary_6 := sum + num
+sum := temporary_6
+goto Block_8"];
+Block_6 -> Block_8 [xlabel = "true"]
 Block_8 [label="Block:Block_8
-temporary_14 := num - 1
-Argument: temporary_14
-temporary_13 := call ComputeFac, 1
-temporary_12 := num * temporary_13
-fac := temporary_12
-goto Block_9"];
-Block_8 -> Block_9 [xlabel = "true"]
-Block_10 [label="Block:Block_10
-param num
-f0 := 0
-f1 := 1
-fib := num
-i := 1
-goto Block_11"];
-Block_10 -> Block_11 [xlabel = "true"]
-Block_11 [label="Block:Block_11
-temporary_15 := i < num
-iffalse temporary_15 goto Block_13"];
-Block_11 -> Block_12 [xlabel = "true"]
-Block_12 [label="Block:Block_12
-temporary_16 := f1 + f0
-fib := temporary_16
-f0 := f1
-f1 := fib
-temporary_17 := i + 1
-i := temporary_17
-goto Block_11"];
-Block_12 -> Block_11 [xlabel = "true"]
-Block_11 -> Block_13 [xlabel = "false"]
-Block_13 [label="Block:Block_13
-return fib"];
+temporary_7 := num - 1
+num := temporary_7
+goto Block_3"];
+Block_8 -> Block_3 [xlabel = "true"]
+Block_4 -> Block_7 [xlabel = "false"]
+Block_7 [label="Block:Block_7
+goto Block_8"];
+Block_7 -> Block_8 [xlabel = "true"]
+Block_3 -> Block_5 [xlabel = "false"]
+Block_5 [label="Block:Block_5
+return sum"];
 }
