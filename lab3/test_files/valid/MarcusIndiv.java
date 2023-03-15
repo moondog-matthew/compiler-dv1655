@@ -18,7 +18,7 @@ class BT {
         x = x / 1;
         x = x * 3;
 
-        if (this.Method1(x, i, z, easy) > 50) 
+        if (this.Method1(x, 30, z, easy) > 50) 
             i = z;
 
         while (x < 20) {
@@ -61,7 +61,7 @@ class BT {
         // else 
         //     a = b;
 
-        return 54;
+        return x;
     }
 
     public int Method1(int num, int num2, int num3, int num4){

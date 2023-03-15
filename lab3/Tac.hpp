@@ -3,12 +3,15 @@
 #include <string>
 #include <iostream>
 #include "BC.hpp"
+#include "regex"
 
 using namespace std;
 
 class Tac {
 private:
     string op, lhs, rhs, result;
+protected:
+    virtual bool isConstant(string tbd);
 public:
     Tac(string _op, string _lhs, string _rhs, string _result);
     Tac() = default;

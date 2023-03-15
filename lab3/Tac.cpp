@@ -5,6 +5,18 @@ void Tac::generate_code(vector<InstructionBC*> &bc) {
     // Generate nothing. Not covered by assignment
 }
 
+bool Tac::isConstant(string tbd) {
+    /*
+        Returns true if first char is a number
+        Works because variables can not start with integer char.
+    */
+    if (regex_match(tbd, regex("([0-9])(.*)")) ) { 
+        return true;
+    }
+    return false;
+}
+
+
 ExprTac::ExprTac(string _op, string _lhs, string _rhs, string _result) : op(_op), lhs(_lhs), rhs(_rhs), result(_result) {}
 string ExprTac::printTac() const {
     return result + " := " + lhs + " " + op + " " + rhs;
@@ -12,16 +24,19 @@ string ExprTac::printTac() const {
 void ExprTac::generate_code(vector<InstructionBC*> &bc) {
     /* Different operators for same TAC */
     InstructionBC* instr; 
-    /*
-        FOR RHS AND LHS
-        if rhs REGEX([0-9]*)
-            i const iload rhs
-        else 
-            iload + rhs
-    */
-    instr = new InstructionBC(0, "iload " + lhs);
+    if (isConstant(lhs)) {
+        instr = new InstructionBC(1, "iconst " + lhs);
+    }
+    else {
+        instr = new InstructionBC(0, "iload " + lhs);
+    }
     bc.push_back(instr);
-    instr = new InstructionBC(0, "iload " + rhs);
+    if (isConstant(rhs)) {
+        instr = new InstructionBC(1, "iconst " + rhs);
+    }
+    else {
+        instr = new InstructionBC(0, "iload " + rhs);
+    }
     bc.push_back(instr);
     if (op == "+") {
         instr = new InstructionBC(3, "iadd");
@@ -83,14 +98,12 @@ string CopyTac::printTac() const {
 }
 void CopyTac::generate_code(vector<InstructionBC*> &bc) {
     InstructionBC* instr;
-    /*
-        FOR RHS AND LHS
-        if rhs REGEX([0-9]*)
-            i const iload rhs
-        else 
-            iload + rhs
-    */
-    instr = new InstructionBC(0, "iload " + rhs);
+    if (isConstant(rhs)) {
+        instr = new InstructionBC(1, "iconst " + rhs);
+    }
+    else {
+        instr = new InstructionBC(0, "iload " + rhs);
+    }
     bc.push_back(instr);
     instr = new InstructionBC(2 , "istore " + result);
     bc.push_back(instr);
@@ -160,14 +173,12 @@ string ReturnTac::printTac() const {
 }
 void ReturnTac::generate_code(vector<InstructionBC*> &bc) {
     InstructionBC* instr;
-        /*
-        FOR RHS AND LHS
-        if rhs REGEX([0-9]*)
-            i const iload rhs
-        else 
-            iload + rhs
-    */
-    instr = new InstructionBC(0, "iload " + this->retval);
+    if (isConstant(retval)) {
+        instr = new InstructionBC(1, "iconst " + this->retval);
+    }
+    else {
+        instr = new InstructionBC(0, "iload " + this->retval);
+    }
     bc.push_back(instr);
     instr = new InstructionBC(16, "ireturn");
     bc.push_back(instr);
@@ -180,14 +191,12 @@ string ExpressionTac::printTac() const {
 void ExpressionTac::generate_code(vector<InstructionBC*> &bc) {
     /* Pushes arguments to stack */
     InstructionBC* instr;
-    /*
-        FOR RHS AND LHS
-        if rhs REGEX([0-9]*)
-            i const iload rhs
-        else 
-            iload + rhs
-    */
-    instr = new InstructionBC(0, "iload " + expr);
+    if (isConstant(expr)) {
+        instr = new InstructionBC(1, "iconst " + expr);
+    }
+    else {
+        instr = new InstructionBC(0, "iload " + expr);
+    }
     bc.push_back(instr);
 }
 
@@ -219,14 +228,12 @@ string PrintTac::printTac() const {
 }
 void PrintTac::generate_code(vector<InstructionBC*> &bc) {
     InstructionBC* instr;
-        /*
-        FOR RHS AND LHS
-        if rhs REGEX([0-9]*)
-            i const iload rhs
-        else 
-            iload + rhs
-    */
-    instr = new InstructionBC(0, "iload " + expr);
+    if(isConstant(expr)) {
+        instr = new InstructionBC(1, "iconst " + expr);
+    }
+    else {
+        instr = new InstructionBC(0, "iload " + expr);
+    }
     bc.push_back(instr);
     instr = new InstructionBC(17 , "print");
     bc.push_back(instr);
