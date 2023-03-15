@@ -133,6 +133,7 @@ void MethCallTac::generate_code(vector<InstructionBC*> &bc) {
     */
     // instr = new InstructionBC(0, "iload this"); // this might be changed...
     // bc.push_back(instr);
+    
 
     instr = new InstructionBC(15, "invokevirtual " + func);
     bc.push_back(instr);

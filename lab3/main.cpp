@@ -7,6 +7,7 @@
 #include "semanticCheck.hpp"
 #include "symbolTable.hpp"
 #include "CFG.hpp"
+#include "Interpreter.hpp"
 
 extern Node* root;
 extern FILE* yyin;
