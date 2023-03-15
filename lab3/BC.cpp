@@ -41,7 +41,7 @@ vector<InstructionBC*>& MethodBC::getInstructions() {
 }
 
 
-ProgramBC::ProgramBC() {}
+ProgramBC::ProgramBC() : index(0) {}
 ProgramBC::~ProgramBC() {}
 void ProgramBC::print() const {
     std:ofstream outStream;
@@ -73,4 +73,12 @@ void ProgramBC::add_qual_name(pair<string, string> name_pair) {
 
 const vector<MethodBC*>& ProgramBC::getBCmethods() const {
     return this->bc_methods;
+}
+
+MethodBC* ProgramBC::getNextBCmethod() {
+    /*
+        Gets the next BC method in the vector
+    */
+    this->index += 1;
+    return this->bc_methods[index];
 }

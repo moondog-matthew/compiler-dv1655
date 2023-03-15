@@ -69,6 +69,7 @@ private:
     // second string: method name 
     vector<pair<string, string>> qual_method_names; 
     vector<MethodBC*> bc_methods;
+    int index; 
 
 public:
     ProgramBC();
@@ -77,6 +78,7 @@ public:
     void add_method(MethodBC* meth);
     void add_qual_name(pair<string, string> name_pair);
     const vector<MethodBC*>& getBCmethods() const;
+    MethodBC* getNextBCmethod();
 };
 
 

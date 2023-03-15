@@ -1,7 +1,6 @@
 public class BinaryTree{
     public static void main(String[] a){
-	// System.out.println(new BT().Start());
-        System.out.println(55);
+	    System.out.println(new BT().Start());
     }
 }
 
@@ -14,20 +13,20 @@ class BT {
         int i;
         int z;
         int easy;
-        x = x + 1;
+        x = 10 / 5 * 50;
         x = x - 1;
-        x = x / 1;
+        x = x / 9;
         x = x * 3;
 
-        if (this.Method1(x, 30, z, easy) > 50) 
-            i = z;
+        // if (this.Method1(x, 30, z, easy) > 50) 
+        //     i = z;
 
-        while (x < 20) {
-            a = b;
-            if (x < 1) 
-                x = x - 1;
-            b = false;
-        }
+        // while (x < 20) {
+        //     a = b;
+        //     if (x < 1) 
+        //         x = x - 1;
+        //     b = false;
+        // }
         // while (x < 20) {
         //     a = b;
         //     if (x < 1) 
@@ -61,27 +60,27 @@ class BT {
         //     b = a;
         // else 
         //     a = b;
-
+        System.out.println(x);
         return x;
     }
 
-    public int Method1(int num, int num2, int num3, int num4){
-		int x;
-        x = 10;
-        boolean a;
-        boolean b;
-        int i;
-        int z;
+    // public int Method1(int num, int num2, int num3, int num4){
+	// 	int x;
+    //     x = 10;
+    //     boolean a;
+    //     boolean b;
+    //     int i;
+    //     int z;
         
-        while (x < 20) {
-            a = b;
-            if (x < 1) 
-                x = x - 1;
-            b = false;
-        }
+    //     while (x < 20) {
+    //         a = b;
+    //         if (x < 1) 
+    //             x = x - 1;
+    //         b = false;
+    //     }
         
-        return 54;
-    }
+    //     return 54;
+    // }
     
     
 

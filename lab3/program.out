@@ -1,66 +1,40 @@
-E.main
+BinaryTree.main
 Block_0:
-iconst 4
-iconst 2
+invokevirtual Start
+iload temporary_1
+print
+stop
+BT.Start
+Block_2:
+iconst 10
+iconst 5
+idiv
+istore temporary_5
+iload temporary_5
+iconst 50
 imul
 istore temporary_4
 iload temporary_4
-iconst 10
-iadd
-istore temporary_3
-iconst 2
-iconst 6
-imul
-istore temporary_5
-iload temporary_3
-iload temporary_5
-isub
-istore temporary_2
-iconst 4
+istore x
+iload x
 iconst 1
 isub
-istore temporary_8
-iload temporary_8
-iconst 2
-imul
+istore temporary_6
+iload temporary_6
+istore x
+iload x
+iconst 9
+idiv
 istore temporary_7
 iload temporary_7
-iconst 2
-idiv
-istore temporary_6
-iload temporary_2
-iload temporary_6
-iadd
-istore temporary_1
-iload temporary_1
+istore x
+iload x
+iconst 3
+imul
+istore temporary_8
+iload temporary_8
+istore x
+iload x
 print
-iload true
-inot
-iload true
-iload temporary_13
-iload false
-iand
-istore temporary_12
-iload true
-iload temporary_12
-ieq
-istore temporary_11
-iconst 10
-iconst 1
-igt
-istore temporary_14
-iload temporary_11
-iload temporary_14
-ior
-istore temporary_10
-iconst 1
-iconst 10
-ilt
-istore temporary_15
-iload temporary_10
-iload temporary_15
-iand
-istore temporary_9
-iload temporary_9
-print
-stop
+iload x
+ireturn

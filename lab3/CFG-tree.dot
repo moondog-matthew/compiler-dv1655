@@ -2,21 +2,20 @@ digraph {
 graph [ splines = ortho ]
 	node [ shape = box ];
 Block_0 [label="Block:Block_0
-temporary_4 := 4 * 2
-temporary_3 := temporary_4 + 10
-temporary_5 := 2 * 6
-temporary_2 := temporary_3 - temporary_5
-temporary_8 := 4 - 1
-temporary_7 := temporary_8 * 2
-temporary_6 := temporary_7 / 2
-temporary_1 := temporary_2 + temporary_6
-Print: temporary_1
-temporary_13 := ! true
-temporary_12 := temporary_13 && false
-temporary_11 := true == temporary_12
-temporary_14 := 10 > 1
-temporary_10 := temporary_11 || temporary_14
-temporary_15 := 1 < 10
-temporary_9 := temporary_10 && temporary_15
-Print: temporary_9"];
+temporary_2 := new BT
+temporary_3 := new BT
+temporary_1 := call Start, 0
+Print: temporary_1"];
+Block_2 [label="Block:Block_2
+temporary_5 := 10 / 5
+temporary_4 := temporary_5 * 50
+x := temporary_4
+temporary_6 := x - 1
+x := temporary_6
+temporary_7 := x / 9
+x := temporary_7
+temporary_8 := x * 3
+x := temporary_8
+Print: x
+return x"];
 }

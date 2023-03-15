@@ -97,6 +97,7 @@ string Interpreter::second_half_string(string orig) {
 
 void Interpreter::execute() {
     Activation* current_activation = new Activation(main);
+    activation_stack.push_back(current_activation);
     InstructionBC* instruction;
     int instruction_id = -1;
     string tmp;
@@ -155,7 +156,12 @@ void Interpreter::execute() {
             tmp = second_half_string(instruction->getInstructionArgument());
             val1 = data_stack.back(); // access last element in vector
             data_stack.pop_back();
-            current_activation->addVariable(tmp, val1);  // if already exists, will overwrite value. Intended behaviour.
+            if (current_activation->varExists(tmp)) {
+                current_activation->updateVariable(tmp, val1);
+            }
+            else {
+                current_activation->addVariable(tmp, val1);  // if already exists, will overwrite value. Intended behaviour.
+            }
             break;
         case 3:
             /* 
@@ -361,12 +367,24 @@ void Interpreter::execute() {
             instruction->stdio_out();
             break;
         case 15:
-            /* invokevirtual m */
-            instruction->stdio_out();
+            /* 
+                invokevirtual m 
+                1. create new activation with next method in pbc
+                2. add the new activation to the activation stack 
+            */
+            current_activation = new Activation(pbc->getNextBCmethod());
+            activation_stack.push_back(current_activation);
+
             break;
         case 16:
-            /* ireturn */
-            instruction->stdio_out();
+            /* 
+                ireturn
+                1. pop the top activation on the activation stack
+                2. Set the new top to the current activation 
+            */
+            delete current_activation; // free memory
+            activation_stack.pop_back(); // remove top
+            current_activation = activation_stack.back();
             break;
         case 17:
             /* 
@@ -378,7 +396,6 @@ void Interpreter::execute() {
             val1 = data_stack.back();
             data_stack.pop_back();
             cout << "Program output: " << val1 << endl;
-            instruction->stdio_out();
             break;
         case 18:
             /* stop */
@@ -386,7 +403,7 @@ void Interpreter::execute() {
             break;
         case 19:
             /* label */
-            instruction->stdio_out();
+            // instruction->stdio_out();
         default:
             break;
         }

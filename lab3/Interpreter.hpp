@@ -41,6 +41,7 @@ private:
     void assignMain();
     string second_half_string(string orig);
     vector<int> data_stack; 
+    vector<Activation*> activation_stack;
 
 public:
     Interpreter(ProgramBC* _pbc);
