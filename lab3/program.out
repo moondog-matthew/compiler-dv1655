@@ -35,6 +35,8 @@ imul
 istore temporary_8
 iload temporary_8
 istore x
+iconst 1
+istore z
 iload x
 iconst 30
 iload z
@@ -43,12 +45,23 @@ invokevirtual Method1
 istore temporary_9
 iload temporary_9
 istore i
+iconst 100
+iconst 50
+igt
+istore temporary_10
+iload temporary_10
+iffalse goto Block_4
+Block_3:
+iload z
+istore i
+goto Block_4
+Block_4:
 iload i
 print
 iload x
 ireturn
 BT.Method1
-Block_3:
+Block_5:
 istore num4
 istore num3
 istore num2
@@ -56,20 +69,20 @@ istore num
 iconst 10
 istore x
 invokevirtual Method2
-istore temporary_10
-iload temporary_10
+istore temporary_11
+iload temporary_11
 istore z
 iload z
 iconst 1
 iadd
-istore temporary_11
-iload temporary_11
+istore temporary_12
+iload temporary_12
 istore z
 iload z
 print
 iconst 54
 ireturn
 BT.Method2
-Block_4:
+Block_6:
 iconst 999
 ireturn

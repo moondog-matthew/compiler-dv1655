@@ -31,6 +31,8 @@ public:
     void updateVariable(string variable_name, int newval);
     int getLocalValue(string key);
     bool varExists(string key);
+    int findLabel(string label);
+    void setIndex(int _index);
 };
 
 class Interpreter {

@@ -16,26 +16,39 @@ temporary_7 := x / 9
 x := temporary_7
 temporary_8 := x * 3
 x := temporary_8
+z := 1
 Argument: x
 Argument: 30
 Argument: z
 Argument: easy
 temporary_9 := call Method1, 4
 i := temporary_9
+temporary_10 := 100 > 50
+iffalse temporary_10 goto Block_4"];
+Block_2 -> Block_3 [xlabel = "true"]
+Block_3 [label="Block:Block_3
+i := z
+goto Block_4"];
+Block_3 -> Block_4 [xlabel = "true"]
+Block_4 [label="Block:Block_4
 Print: i
 return x"];
-Block_3 [label="Block:Block_3
+Block_2 -> Block_4 [xlabel = "false"]
+Block_4 [label="Block:Block_4
+Print: i
+return x"];
+Block_5 [label="Block:Block_5
 param num4
 param num3
 param num2
 param num
 x := 10
-temporary_10 := call Method2, 0
-z := temporary_10
-temporary_11 := z + 1
+temporary_11 := call Method2, 0
 z := temporary_11
+temporary_12 := z + 1
+z := temporary_12
 Print: z
 return 54"];
-Block_4 [label="Block:Block_4
+Block_6 [label="Block:Block_6
 return 999"];
 }

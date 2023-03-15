@@ -67,6 +67,24 @@ bool Activation::varExists(string key) {
     return false;
 }
 
+int Activation::findLabel(string label) {
+    /*
+        For given label return index in which label can be found
+    */
+    int size = method->getInstructions().size();
+    string regexstring = "("+ label + ":)";
+    for (int i = 0; i < size; ++i) {
+        if (regex_match(method->getInstructions()[i]->getInstructionArgument(), regex(regexstring))) {
+            return i;
+        }
+    }
+    return -1; // if not found
+}
+
+void Activation::setIndex(int _index) {
+    this->index = _index;
+}
+
 Interpreter::Interpreter(ProgramBC* _pbc) {
     this->pbc = _pbc;
     assignMain();
@@ -103,6 +121,7 @@ void Interpreter::execute() {
     string tmp;
     int val1;
     int val2;
+    int index;
     /*
         Create stack
             1. Data stack, dont need to be initialized, stored in interpreter class
@@ -359,8 +378,16 @@ void Interpreter::execute() {
             }
             break;
         case 13:
-            /* goto i */
-            instruction->stdio_out();
+            /* 
+                goto i
+                1. get i part of instruction
+                2. search for the label i in the method instructions. (from start to finish)
+                3. Retrieve the index in which it is stored. 
+                4. Set the methodBC index to that index. Hence next instruction will be from there
+            */
+            tmp = second_half_string(instruction->getInstructionArgument());
+            index = current_activation->findLabel(tmp);
+            current_activation->setIndex(index);
             break;
         case 14:
             /* iffalse goto i */
@@ -404,6 +431,7 @@ void Interpreter::execute() {
         case 19:
             /* label */
             // instruction->stdio_out();
+            break;
         default:
             break;
         }

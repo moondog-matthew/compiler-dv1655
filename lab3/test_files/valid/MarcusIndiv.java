@@ -17,10 +17,11 @@ class BT {
         x = x - 1;
         x = x / 9;
         x = x * 3;
+        z = 1;
 
         i = this.Method1(x, 30, z, easy);
-        // if (this.Method1(x, 30, z, easy) > 50) 
-        //     i = z;
+        if (100 > 50) 
+            i = z;
 
         // while (x < 20) {
         //     a = b;
