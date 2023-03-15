@@ -15,6 +15,10 @@ void InstructionBC::stdio_out() {
     cout << instruction_argument << "\n";
 }
 
+string& InstructionBC::getInstructionArgument() {
+    return this->instruction_argument;
+}
+
 MethodBC::MethodBC(vector<string> &_variables, vector<InstructionBC*> &_instructions, string _block_name) 
     : variables(_variables), instructions(_instructions), block_name(_block_name) {}
 MethodBC::~MethodBC() {}

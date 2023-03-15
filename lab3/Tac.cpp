@@ -12,6 +12,13 @@ string ExprTac::printTac() const {
 void ExprTac::generate_code(vector<InstructionBC*> &bc) {
     /* Different operators for same TAC */
     InstructionBC* instr; 
+    /*
+        FOR RHS AND LHS
+        if rhs REGEX([0-9]*)
+            i const iload rhs
+        else 
+            iload + rhs
+    */
     instr = new InstructionBC(0, "iload " + lhs);
     bc.push_back(instr);
     instr = new InstructionBC(0, "iload " + rhs);
@@ -76,6 +83,13 @@ string CopyTac::printTac() const {
 }
 void CopyTac::generate_code(vector<InstructionBC*> &bc) {
     InstructionBC* instr;
+    /*
+        FOR RHS AND LHS
+        if rhs REGEX([0-9]*)
+            i const iload rhs
+        else 
+            iload + rhs
+    */
     instr = new InstructionBC(0, "iload " + rhs);
     bc.push_back(instr);
     instr = new InstructionBC(2 , "istore " + result);
@@ -146,6 +160,13 @@ string ReturnTac::printTac() const {
 }
 void ReturnTac::generate_code(vector<InstructionBC*> &bc) {
     InstructionBC* instr;
+        /*
+        FOR RHS AND LHS
+        if rhs REGEX([0-9]*)
+            i const iload rhs
+        else 
+            iload + rhs
+    */
     instr = new InstructionBC(0, "iload " + this->retval);
     bc.push_back(instr);
     instr = new InstructionBC(16, "ireturn");
@@ -159,6 +180,13 @@ string ExpressionTac::printTac() const {
 void ExpressionTac::generate_code(vector<InstructionBC*> &bc) {
     /* Pushes arguments to stack */
     InstructionBC* instr;
+    /*
+        FOR RHS AND LHS
+        if rhs REGEX([0-9]*)
+            i const iload rhs
+        else 
+            iload + rhs
+    */
     instr = new InstructionBC(0, "iload " + expr);
     bc.push_back(instr);
 }
@@ -191,6 +219,13 @@ string PrintTac::printTac() const {
 }
 void PrintTac::generate_code(vector<InstructionBC*> &bc) {
     InstructionBC* instr;
+        /*
+        FOR RHS AND LHS
+        if rhs REGEX([0-9]*)
+            i const iload rhs
+        else 
+            iload + rhs
+    */
     instr = new InstructionBC(0, "iload " + expr);
     bc.push_back(instr);
     instr = new InstructionBC(17 , "print");

@@ -7,7 +7,14 @@
 class Activation {
 private:
     int pc;
-    vector<string> local_variable_values;
+    /*
+        Map : local_variable_values
+            string : variable_name
+            int : its value  (only int is supported in our compiler)
+        OBS! 
+            map keys must be unique, otherwise they are overwritten
+    */
+    map<string, int> local_variable_values; 
     MethodBC* method;
     int index;
 
@@ -16,9 +23,12 @@ public:
     ~Activation() = default;
     /* Getter and setters */
     int getPC() const;
-    vector<string>& getLocalVar();
+    map<string, int>& getLocalVar();
     MethodBC* getMethod() const;
+    /*Functionality*/
     InstructionBC* getNextInstruction();
+    void addVariable(string variable_name, int i = 0);
+    void updateVariable(string variable_name, int newval);
 };
 
 class Interpreter {
@@ -27,6 +37,7 @@ private:
     MethodBC* main;
     /*Helper functions*/
     void assignMain();
+    string second_half_string(string orig);
 
 public:
     Interpreter(ProgramBC* _pbc);

@@ -8,6 +8,10 @@ int Activation::getPC() const {
     return this->pc;
 }
 
+map<string, int>& Activation::getLocalVar() {
+    return this->local_variable_values;
+}
+
 MethodBC* Activation::getMethod() const {
     return this->method;
 }
@@ -20,8 +24,18 @@ InstructionBC* Activation::getNextInstruction() {
     return method->getInstructions()[index];
 }
 
-vector<string>& Activation::getLocalVar() {
-    return this->local_variable_values;
+void Activation::addVariable(string variable_name, int i) {
+    this->local_variable_values.insert(pair<string, int>(variable_name, i));
+}
+void Activation::updateVariable(string variable_name, int newval) {
+    /*
+        Finds if key in map exists
+        If exists, update its value
+    */
+    map<string, int>::iterator it = this->local_variable_values.find(variable_name);
+    if (it != local_variable_values.end()) {
+        it->second = newval;
+    }
 }
 
 Interpreter::Interpreter(ProgramBC* _pbc) {
@@ -45,6 +59,13 @@ void Interpreter::assignMain() {
     }
 }
 
+string Interpreter::second_half_string(string orig) {
+    string second_half;
+    stringstream ss(orig);
+    while(ss >> second_half) {}
+    return second_half;
+}
+
 void Interpreter::execute() {
     Activation* current_activation = new Activation(main);
     InstructionBC* instruction;
@@ -55,10 +76,12 @@ void Interpreter::execute() {
     while(instruction_id != 18) { // id = stop
         instruction = current_activation->getNextInstruction();
         instruction_id = instruction->getID();
+        
         switch (instruction_id)
         {
         case 0:
             /* iload n */
+            current_activation->addVariable(second_half_string(instruction->getInstructionArgument()));
             instruction->stdio_out();
             break;
         case 1:

@@ -42,12 +42,13 @@ public:
     virtual ~InstructionBC();
     void print(ofstream* outStream) const;
     void stdio_out();
+    string& getInstructionArgument();
     int getID(); 
 };
 
 class MethodBC {
 private:
-    vector<string> variables; // used to store parameters
+    vector<string> variables; // used to store variables
     vector<InstructionBC*> instructions;
     string block_name;
 
