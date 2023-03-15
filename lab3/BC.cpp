@@ -11,6 +11,10 @@ int InstructionBC::getID() {
     return this->id;
 }
 
+void InstructionBC::stdio_out() {
+    cout << instruction_argument << "\n";
+}
+
 MethodBC::MethodBC(vector<string> &_variables, vector<InstructionBC*> &_instructions, string _block_name) 
     : variables(_variables), instructions(_instructions), block_name(_block_name) {}
 MethodBC::~MethodBC() {}
@@ -27,6 +31,11 @@ void MethodBC::set_name(string newBlockName) {
 string MethodBC::get_name() {
     return block_name;
 }
+
+vector<InstructionBC*>& MethodBC::getInstructions() {
+    return this->instructions;
+}
+
 
 ProgramBC::ProgramBC() {}
 ProgramBC::~ProgramBC() {}

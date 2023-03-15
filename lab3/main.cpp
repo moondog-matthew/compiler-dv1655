@@ -45,6 +45,7 @@ int main(int argc, char **argv)
       ProgramBC* pbc = cfg->generate_BC();
       pbc->print(); // should write the entire bytecode to a file
       Interpreter* interpreter = new Interpreter(pbc);
+      interpreter->execute();
 
       delete cfg;
       delete interpreter;

@@ -41,6 +41,7 @@ public:
     InstructionBC(int _id, string _instruction_argument);
     virtual ~InstructionBC();
     void print(ofstream* outStream) const;
+    void stdio_out();
     int getID(); 
 };
 
@@ -56,6 +57,7 @@ public:
     void print(ofstream* outStream) const;
     void set_name(string newBlockName);
     string get_name();
+    vector<InstructionBC*>& getInstructions();
 };
 
 class ProgramBC {

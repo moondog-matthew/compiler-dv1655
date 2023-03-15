@@ -9,15 +9,16 @@ private:
     int pc;
     vector<string> local_variable_values;
     MethodBC* method;
+    int index;
 
 public:
-    Activation();
+    Activation(MethodBC* _method);
     ~Activation() = default;
     /* Getter and setters */
     int getPC() const;
     vector<string>& getLocalVar();
     MethodBC* getMethod() const;
-    InstructionBC* getNextInstruction() const;
+    InstructionBC* getNextInstruction();
 };
 
 class Interpreter {
