@@ -1,8 +1,8 @@
 BinaryTree.main
 Block_0:
+iconst 101
 iconst 55
-iconst 32
-iadd
+isub
 istore temporary_1
 iload temporary_1
 print

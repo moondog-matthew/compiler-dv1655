@@ -175,8 +175,21 @@ void Interpreter::execute() {
             data_stack.push_back(val1);
             break;
         case 4:
-            /* isub */
-            instruction->stdio_out();
+            /* 
+                isub 
+                1. get val1 from data stack
+                2. pop value from data stack
+                3. get val2 from data stack
+                4. pop value from data stack
+                5. subtract values, store in val1. v2 - v1 per instruction
+                6. push val 1 to the data stack
+            */
+            val1 = data_stack.back();
+            data_stack.pop_back();
+            val2 = data_stack.back();
+            data_stack.pop_back();
+            val1 = val2 - val1;
+            data_stack.push_back(val1);
             break;
         case 5:
             /* imul */
