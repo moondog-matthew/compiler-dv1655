@@ -47,12 +47,14 @@ void ProgramBC::print() const {
     outStream.close();
 }
 
-
-
 void ProgramBC::add_method(MethodBC* meth) {
     this->bc_methods.push_back(meth);
 }
 
 void ProgramBC::add_qual_name(pair<string, string> name_pair) {
     this->qual_method_names.push_back(name_pair);
+}
+
+const vector<MethodBC*>& ProgramBC::getBCmethods() const {
+    return this->bc_methods;
 }

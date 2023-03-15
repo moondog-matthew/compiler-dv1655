@@ -72,6 +72,7 @@ public:
     void print() const;
     void add_method(MethodBC* meth);
     void add_qual_name(pair<string, string> name_pair);
+    const vector<MethodBC*>& getBCmethods() const;
 };
 
 

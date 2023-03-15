@@ -1,120 +1,125 @@
-BinaryTree.main
+B.main
 Block_0:
-invokevirtual Start
+iload 5
+iload 10
+invokevirtual Compute
 iload temporary_1
 print
 stop
-BT.Start
+FacFib.Compute
 Block_2:
-iload x
+istore second
+istore first
+iload first
 iload 1
-iadd
-istore temporary_4
-iload temporary_4
-istore x
-iload x
-iload 1
-isub
-istore temporary_5
-iload temporary_5
-istore x
-iload x
-iload 1
-idiv
+ilt
 istore temporary_6
 iload temporary_6
-istore x
-iload x
-iload 3
-imul
-istore temporary_7
-iload temporary_7
-istore x
-iload x
-iload i
-iload z
-iload easy
-invokevirtual Method1
-iload temporary_9
-iload 50
-igt
+inot
+iload temporary_6
+iload second
+iload 1
+ilt
 istore temporary_8
 iload temporary_8
+inot
+iload temporary_8
+iload temporary_5
+iload temporary_7
+iand
+istore temporary_4
+iload temporary_4
 iffalse goto Block_4
 Block_3:
-iload z
-istore i
-goto Block_4
-Block_4:
+iload first
+invokevirtual ComputeFac
+iload temporary_9
+istore fac
+iload fac
+print
+iload second
+invokevirtual ComputeFib
+iload temporary_10
+istore fib
+iload fib
+print
+iload 1
+istore returnValue
 goto Block_5
 Block_5:
-iload x
-iload 20
-ilt
-istore temporary_10
-iload temporary_10
-iffalse goto Block_7
+iload returnValue
+ireturn
+Block_4:
+iload 0
+istore returnValue
+goto Block_5
+FacFib.ComputeFac
 Block_6:
-iload b
-istore a
-iload x
+istore num
+iload num
 iload 1
 ilt
 istore temporary_11
 iload temporary_11
-iffalse goto Block_9
-Block_8:
-iload x
+iffalse goto Block_8
+Block_7:
 iload 1
-isub
-istore temporary_12
-iload temporary_12
-istore x
+istore fac
 goto Block_9
 Block_9:
-iload false
-istore b
-goto Block_5
-Block_7:
-iload 54
+iload fac
 ireturn
-BT.Method1
-Block_10:
-istore num4
-istore num3
-istore num2
-istore num
-iload 10
-istore x
-goto Block_11
-Block_11:
-iload x
-iload 20
-ilt
-istore temporary_13
-iload temporary_13
-iffalse goto Block_13
-Block_12:
-iload b
-istore a
-iload x
-iload 1
-ilt
-istore temporary_14
-iload temporary_14
-iffalse goto Block_15
-Block_14:
-iload x
+Block_8:
+iload num
 iload 1
 isub
+istore temporary_14
+iload temporary_14
+invokevirtual ComputeFac
+iload num
+iload temporary_13
+imul
+istore temporary_12
+iload temporary_12
+istore fac
+goto Block_9
+FacFib.ComputeFib
+Block_10:
+istore num
+iload 0
+istore f0
+iload 1
+istore f1
+iload num
+istore fib
+iload 1
+istore i
+goto Block_11
+Block_11:
+iload i
+iload num
+ilt
 istore temporary_15
 iload temporary_15
-istore x
-goto Block_15
-Block_15:
-iload false
-istore b
+iffalse goto Block_13
+Block_12:
+iload f1
+iload f0
+iadd
+istore temporary_16
+iload temporary_16
+istore fib
+iload f1
+istore f0
+iload fib
+istore f1
+iload i
+iload 1
+iadd
+istore temporary_17
+iload temporary_17
+istore i
 goto Block_11
 Block_13:
-iload 54
+iload fib
 ireturn
