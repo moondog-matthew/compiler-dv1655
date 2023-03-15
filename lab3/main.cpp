@@ -38,22 +38,20 @@ int main(int argc, char **argv)
     SymbolTable* ST;
     ST = new SymbolTable(root);
     ST->print_ST();
-    SemanticAnalysis* SA = new SemanticAnalysis(root, ST);
-    if(!SA->contains_error()) {
-      CFG* cfg = new CFG(root, ST);
-      cfg->generate_CFG();
-      ProgramBC* pbc = cfg->generate_BC();
-      pbc->print(); // should write the entire bytecode to a file
-      Interpreter* interpreter = new Interpreter(pbc);
-      interpreter->execute();
+    // SemanticAnalysis* SA = new SemanticAnalysis(root, ST);
+    CFG* cfg = new CFG(root, ST);
+    cfg->generate_CFG();
+    ProgramBC* pbc = cfg->generate_BC();
+    pbc->print(); // should write the entire bytecode to a file
+    Interpreter* interpreter = new Interpreter(pbc);
+    interpreter->execute();
 
-      delete cfg;
-      delete interpreter;
-    }
+    delete cfg;
+    delete interpreter;
 
     
     delete ST;
-    delete SA;
+    // delete SA;
   }
 
   return 0;

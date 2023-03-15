@@ -1,119 +1,66 @@
-BinaryTree.main
+E.main
 Block_0:
-iconst 55
-print
-stop
-BT.Start
-Block_2:
-iload x
-iconst 1
-iadd
-istore temporary_1
-iload temporary_1
-istore x
-iload x
-iconst 1
-isub
-istore temporary_2
-iload temporary_2
-istore x
-iload x
-iconst 1
-idiv
-istore temporary_3
-iload temporary_3
-istore x
-iload x
-iconst 3
+iconst 4
+iconst 2
 imul
 istore temporary_4
 iload temporary_4
-istore x
-iload x
-iconst 30
-iload z
-iload easy
-invokevirtual Method1
-iload temporary_6
-iconst 50
-igt
+iconst 10
+iadd
+istore temporary_3
+iconst 2
+iconst 6
+imul
 istore temporary_5
+iload temporary_3
 iload temporary_5
-iffalse goto Block_4
-Block_3:
-iload z
-istore i
-goto Block_4
-Block_4:
-goto Block_5
-Block_5:
-iload x
-iconst 20
-ilt
-istore temporary_7
-iload temporary_7
-iffalse goto Block_7
-Block_6:
-iload b
-istore a
-iload x
+isub
+istore temporary_2
+iconst 4
 iconst 1
-ilt
+isub
 istore temporary_8
 iload temporary_8
-iffalse goto Block_9
-Block_8:
-iload x
+iconst 2
+imul
+istore temporary_7
+iload temporary_7
+iconst 2
+idiv
+istore temporary_6
+iload temporary_2
+iload temporary_6
+iadd
+istore temporary_1
+iload temporary_1
+print
+iload true
+inot
+iload true
+iload temporary_13
+iload false
+iand
+istore temporary_12
+iload true
+iload temporary_12
+ieq
+istore temporary_11
+iconst 10
 iconst 1
-isub
+igt
+istore temporary_14
+iload temporary_11
+iload temporary_14
+ior
+istore temporary_10
+iconst 1
+iconst 10
+ilt
+istore temporary_15
+iload temporary_10
+iload temporary_15
+iand
 istore temporary_9
 iload temporary_9
-istore x
-goto Block_9
-Block_9:
-iload false
-istore b
-goto Block_5
-Block_7:
-iload x
-ireturn
-BT.Method1
-Block_10:
-istore num4
-istore num3
-istore num2
-istore num
-iconst 10
-istore x
-goto Block_11
-Block_11:
-iload x
-iconst 20
-ilt
-istore temporary_10
-iload temporary_10
-iffalse goto Block_13
-Block_12:
-iload b
-istore a
-iload x
-iconst 1
-ilt
-istore temporary_11
-iload temporary_11
-iffalse goto Block_15
-Block_14:
-iload x
-iconst 1
-isub
-istore temporary_12
-iload temporary_12
-istore x
-goto Block_15
-Block_15:
-iload false
-istore b
-goto Block_11
-Block_13:
-iconst 54
-ireturn
+print
+stop
