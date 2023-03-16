@@ -110,7 +110,6 @@ void ProgramBC::readline(string line) {
             2. Add method to the programs methods
             3. set the programs current method to the new method
         */ 
-        cout << line << endl;
         MethodBC* method_bc = new MethodBC(line);
         this->add_method(method_bc);
         this->currentMethod = method_bc;
@@ -120,7 +119,6 @@ void ProgramBC::readline(string line) {
             1. create label instruction
             2. Add to current method
         */
-       cout << line << endl;
        InstructionBC* instr = new InstructionBC(19, line);
        currentMethod->addInstruction(instr);
     }
@@ -131,13 +129,87 @@ void ProgramBC::readline(string line) {
             2. Check type of instruction
             3. Create instruction bc
         */
-       string first_part = this->first_part_string(line);
-       cout << first_part << endl;
-       string regiadd = "";
-       int id;
-       // get first part of string
-       if (regex_match(first_part, regex(regiadd))) {
-
-       }
+        string first_part = this->first_part_string(line); // get first part of string
+        InstructionBC* instr;
+        if (regex_match(first_part, regex("iload"))) {
+            instr = new InstructionBC(0, line);
+            currentMethod->addInstruction(instr);
+        }
+        else if (regex_match(first_part, regex("iconst"))) {
+            instr = new InstructionBC(1, line);
+            currentMethod->addInstruction(instr);
+        }
+        else if (regex_match(first_part, regex("istore"))) {
+            instr = new InstructionBC(2, line);
+            currentMethod->addInstruction(instr);
+        }
+        else if (regex_match(first_part, regex("iadd"))) {
+            instr = new InstructionBC(3, line);
+            currentMethod->addInstruction(instr);
+        }
+        else if (regex_match(first_part, regex("isub"))) {
+            instr = new InstructionBC(4, line);
+            currentMethod->addInstruction(instr);
+        }
+        else if (regex_match(first_part, regex("imul"))) {
+            instr = new InstructionBC(5, line);
+            currentMethod->addInstruction(instr);
+        }
+        else if (regex_match(first_part, regex("idiv"))) {
+            instr = new InstructionBC(6, line);
+            currentMethod->addInstruction(instr);
+        }
+        else if (regex_match(first_part, regex("igt"))) {
+            instr = new InstructionBC(7, line);
+            currentMethod->addInstruction(instr);
+        }
+        else if (regex_match(first_part, regex("ilt"))) {
+            instr = new InstructionBC(8, line);
+            currentMethod->addInstruction(instr);
+        }
+        else if (regex_match(first_part, regex("ieq"))) {
+            instr = new InstructionBC(9, line);
+            currentMethod->addInstruction(instr);
+        }
+        else if (regex_match(first_part, regex("ior"))) {
+            instr = new InstructionBC(10, line);
+            currentMethod->addInstruction(instr);
+        }
+        else if (regex_match(first_part, regex("iand"))) {
+            instr = new InstructionBC(11, line);
+            currentMethod->addInstruction(instr);
+        }
+        else if (regex_match(first_part, regex("inot"))) {
+            instr = new InstructionBC(12, line);
+            currentMethod->addInstruction(instr);
+        }
+        else if (regex_match(first_part, regex("goto"))) {
+            instr = new InstructionBC(13, line);
+            currentMethod->addInstruction(instr);
+        }
+        else if (regex_match(first_part, regex("iffalse"))) {
+            instr = new InstructionBC(14, line);
+            currentMethod->addInstruction(instr);
+        }
+        else if (regex_match(first_part, regex("invokevirtual"))) {
+            instr = new InstructionBC(15, line);
+            currentMethod->addInstruction(instr);
+        }
+        else if (regex_match(first_part, regex("ireturn"))) {
+            instr = new InstructionBC(16, line);
+            currentMethod->addInstruction(instr);
+        }
+        else if (regex_match(first_part, regex("print"))) {
+            instr = new InstructionBC(17, line);
+            currentMethod->addInstruction(instr);
+        }
+        else if (regex_match(first_part, regex("stop"))) {
+            instr = new InstructionBC(18, line);
+            currentMethod->addInstruction(instr);
+        }
+        else if (regex_match(first_part, regex("label"))) {
+            instr = new InstructionBC(19, line);
+            currentMethod->addInstruction(instr);
+        }
    }
 }

@@ -4,7 +4,8 @@
 
 int main(int argc, char **argv)
 {
-    
+    ProgramBC* progbc;
+    Interpreter* inter;
     /*Open file*/
     if(argc > 1) {
         string inputfile = string(argv[1]);
@@ -17,13 +18,17 @@ int main(int argc, char **argv)
                 2.1 Create new MethodBC
             
         */
-            ProgramBC* progbc = new ProgramBC();
+            progbc = new ProgramBC();
             string line;
             while(getline(programFile, line)) {
                 progbc->readline(line);
             }
             programFile.close();
+            inter = new Interpreter(progbc);
+            inter->execute();
+            
         }
+
     }
 
 }
