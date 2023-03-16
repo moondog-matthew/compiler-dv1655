@@ -213,3 +213,14 @@ void ProgramBC::readline(string line) {
         }
    }
 }
+
+MethodBC* ProgramBC::getMethodM(string _m) {
+    string regexMeth = "(.*)(\\." + _m + ")";
+    for (auto const& meth : bc_methods) {
+        if (regex_match(meth->get_name(), regex(regexMeth))) {
+            // cout << meth->get_name() << endl;
+            return meth;
+        }
+    }
+    return nullptr;
+}

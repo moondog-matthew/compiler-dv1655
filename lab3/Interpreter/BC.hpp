@@ -88,6 +88,7 @@ public:
     const vector<MethodBC*>& getBCmethods() const;
     MethodBC* getNextBCmethod();
     void readline(string line);
+    MethodBC* getMethodM(string _m);
 };
 
 

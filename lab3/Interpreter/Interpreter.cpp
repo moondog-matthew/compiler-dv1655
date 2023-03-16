@@ -368,7 +368,6 @@ void Interpreter::execute() {
                 3.1 if val1 == 0: push 1 to stack. I.e, just reverse boolean condition.
                 3.2 else push 0
             */
-            cout << "Enters" << endl;
             val1 = data_stack.back();
             data_stack.pop_back();
             if (val1 == 0) {
@@ -414,7 +413,8 @@ void Interpreter::execute() {
                 1. create new activation with next method in pbc
                 2. add the new activation to the activation stack 
             */
-            current_activation = new Activation(pbc->getNextBCmethod());
+            tmp = second_half_string(instruction->getInstructionArgument()); // tmp = m;
+            current_activation = new Activation(pbc->getMethodM(tmp));
             activation_stack.push_back(current_activation);
             break;
         case 16:
@@ -440,11 +440,13 @@ void Interpreter::execute() {
             break;
         case 18:
             /* stop */
-            instruction->stdio_out();
+            // instruction->stdio_out();
+            // do nothing?
             break;
         case 19:
             /* label */
             // instruction->stdio_out();
+            // Do nothing?
             break;
         default:
             break;
