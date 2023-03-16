@@ -161,7 +161,15 @@ void Interpreter::execute() {
                 2. push v to the data stack
             */
             tmp = second_half_string(instruction->getInstructionArgument());
-            val1 = stoi(tmp);
+            if (tmp == "true") {
+                val1 = 1;
+            }
+            else if (tmp == "false") {
+                val1 = 0;
+            }
+            else {
+                val1 = stoi(tmp);
+            }
             data_stack.push_back(val1);
             break;
         case 2:
