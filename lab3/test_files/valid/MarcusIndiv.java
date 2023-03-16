@@ -18,10 +18,11 @@ class BT {
         x = x / 9;
         x = x * 3;
         z = 1;
+        easy = 65;
 
         i = this.Method1(x, 30, z, easy);
-        if (100 > 50) 
-            i = 0;
+        if (!(100 < 50)) 
+            System.out.println(easy);
 
         while (i < 20) {
             
@@ -39,8 +40,6 @@ class BT {
                             System.out.println(5);
                         z = z + 5;
                     }
-                    
-            
         }
 
 

@@ -17,31 +17,33 @@ x := temporary_7
 temporary_8 := x * 3
 x := temporary_8
 z := 1
+easy := 65
 Argument: x
 Argument: 30
 Argument: z
 Argument: easy
 temporary_9 := call Method1, 4
 i := temporary_9
-temporary_10 := 100 > 50
+temporary_11 := 100 < 50
+temporary_10 := ! temporary_11
 iffalse temporary_10 goto Block_4"];
 Block_2 -> Block_3 [xlabel = "true"]
 Block_3 [label="Block:Block_3
-i := 0
+Print: easy
 goto Block_4"];
 Block_3 -> Block_4 [xlabel = "true"]
 Block_4 [label="Block:Block_4
 goto Block_5"];
 Block_4 -> Block_5 [xlabel = "true"]
 Block_5 [label="Block:Block_5
-temporary_11 := i < 20
-iffalse temporary_11 goto Block_7"];
+temporary_12 := i < 20
+iffalse temporary_12 goto Block_7"];
 Block_5 -> Block_6 [xlabel = "true"]
 Block_6 [label="Block:Block_6
-temporary_12 := i + 2
-i := temporary_12
-temporary_13 := i == 18
-iffalse temporary_13 goto Block_9"];
+temporary_13 := i + 2
+i := temporary_13
+temporary_14 := i == 18
+iffalse temporary_14 goto Block_9"];
 Block_6 -> Block_8 [xlabel = "true"]
 Block_8 [label="Block:Block_8
 Print: 18
@@ -52,12 +54,12 @@ goto Block_5"];
 Block_10 -> Block_5 [xlabel = "true"]
 Block_6 -> Block_9 [xlabel = "false"]
 Block_9 [label="Block:Block_9
-temporary_14 := x < 1
-iffalse temporary_14 goto Block_12"];
+temporary_15 := x < 1
+iffalse temporary_15 goto Block_12"];
 Block_9 -> Block_11 [xlabel = "true"]
 Block_11 [label="Block:Block_11
-temporary_15 := x - 1
-x := temporary_15
+temporary_16 := x - 1
+x := temporary_16
 goto Block_13"];
 Block_11 -> Block_13 [xlabel = "true"]
 Block_13 [label="Block:Block_13
@@ -68,20 +70,20 @@ Block_12 [label="Block:Block_12
 goto Block_14"];
 Block_12 -> Block_14 [xlabel = "true"]
 Block_14 [label="Block:Block_14
-temporary_16 := z < 10
-iffalse temporary_16 goto Block_16"];
+temporary_17 := z < 10
+iffalse temporary_17 goto Block_16"];
 Block_14 -> Block_15 [xlabel = "true"]
 Block_15 [label="Block:Block_15
-temporary_17 := i > 10
-iffalse temporary_17 goto Block_18"];
+temporary_18 := i > 10
+iffalse temporary_18 goto Block_18"];
 Block_15 -> Block_17 [xlabel = "true"]
 Block_17 [label="Block:Block_17
 Print: 10
 goto Block_19"];
 Block_17 -> Block_19 [xlabel = "true"]
 Block_19 [label="Block:Block_19
-temporary_18 := z + 5
-z := temporary_18
+temporary_19 := z + 5
+z := temporary_19
 goto Block_14"];
 Block_19 -> Block_14 [xlabel = "true"]
 Block_15 -> Block_18 [xlabel = "false"]
@@ -107,10 +109,10 @@ param num3
 param num2
 param num
 x := 10
-temporary_19 := call Method2, 0
-z := temporary_19
-temporary_20 := z + 1
+temporary_20 := call Method2, 0
 z := temporary_20
+temporary_21 := z + 1
+z := temporary_21
 Print: z
 return 54"];
 Block_21 [label="Block:Block_21

@@ -368,6 +368,7 @@ void Interpreter::execute() {
                 3.1 if val1 == 0: push 1 to stack. I.e, just reverse boolean condition.
                 3.2 else push 0
             */
+            cout << "Enters" << endl;
             val1 = data_stack.back();
             data_stack.pop_back();
             if (val1 == 0) {

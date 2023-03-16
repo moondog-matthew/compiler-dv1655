@@ -88,7 +88,7 @@ void UnaryTac::generate_code(vector<InstructionBC*> &bc) {
     bc.push_back(instr);
     instr = new InstructionBC(12, "inot");
     bc.push_back(instr);
-    instr = new InstructionBC(2 , "iload " + rhs);
+    instr = new InstructionBC(2 , "istore " + result);
     bc.push_back(instr);
 }
 
