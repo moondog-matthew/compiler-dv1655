@@ -20,7 +20,7 @@ class BT {
         z = 1;
 
         i = this.Method1(x, 30, z, easy);
-        if (100 > 50) 
+        if (100 < 50) 
             i = z;
 
         // while (x < 20) {

@@ -47,7 +47,7 @@ iload temporary_9
 istore i
 iconst 100
 iconst 50
-igt
+ilt
 istore temporary_10
 iload temporary_10
 iffalse goto Block_4

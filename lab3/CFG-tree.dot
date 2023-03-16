@@ -23,7 +23,7 @@ Argument: z
 Argument: easy
 temporary_9 := call Method1, 4
 i := temporary_9
-temporary_10 := 100 > 50
+temporary_10 := 100 < 50
 iffalse temporary_10 goto Block_4"];
 Block_2 -> Block_3 [xlabel = "true"]
 Block_3 [label="Block:Block_3

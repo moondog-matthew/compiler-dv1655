@@ -390,8 +390,22 @@ void Interpreter::execute() {
             current_activation->setIndex(index);
             break;
         case 14:
-            /* iffalse goto i */
-            instruction->stdio_out();
+            /* 
+                iffalse goto i
+                1. get i part of string 
+                2. pop bool from stack
+                3.1 if true (1), do nothing
+                3.2 if false (0), get index and set current->actication index to that label
+            */
+            tmp = second_half_string(instruction->getInstructionArgument()); // fetches i, places in tmp
+            val1 = data_stack.back();
+            data_stack.pop_back();
+            if (val1 == 0) {
+                // false
+                index = current_activation->findLabel(tmp);
+                current_activation->setIndex(index);
+            }
+            // else do nothing
             break;
         case 15:
             /* 
@@ -401,7 +415,6 @@ void Interpreter::execute() {
             */
             current_activation = new Activation(pbc->getNextBCmethod());
             activation_stack.push_back(current_activation);
-
             break;
         case 16:
             /* 
