@@ -20,15 +20,30 @@ class BT {
         z = 1;
 
         i = this.Method1(x, 30, z, easy);
-        if (100 < 50) 
-            i = z;
+        if (100 > 50) 
+            i = 0;
 
-        // while (x < 20) {
-        //     a = b;
-        //     if (x < 1) 
-        //         x = x - 1;
-        //     b = false;
-        // }
+        while (i < 20) {
+            
+            i = i + 2;
+            if (i == 18) 
+                System.out.println(18);
+            else 
+                if (x < 1) 
+                    x = x - 1;
+                else 
+                    while (z < 10) {
+                        if (i > 10) 
+                            System.out.println(10);
+                        else 
+                            System.out.println(5);
+                        z = z + 5;
+                    }
+                    
+            
+        }
+
+
         // while (x < 20) {
         //     a = b;
         //     if (x < 1) 

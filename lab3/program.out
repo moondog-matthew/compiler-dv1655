@@ -47,21 +47,100 @@ iload temporary_9
 istore i
 iconst 100
 iconst 50
-ilt
+igt
 istore temporary_10
 iload temporary_10
 iffalse goto Block_4
 Block_3:
-iload z
+iconst 0
 istore i
 goto Block_4
 Block_4:
+goto Block_5
+Block_5:
+iload i
+iconst 20
+ilt
+istore temporary_11
+iload temporary_11
+iffalse goto Block_7
+Block_6:
+iload i
+iconst 2
+iadd
+istore temporary_12
+iload temporary_12
+istore i
+iload i
+iconst 18
+ieq
+istore temporary_13
+iload temporary_13
+iffalse goto Block_9
+Block_8:
+iconst 18
+print
+goto Block_10
+Block_10:
+goto Block_5
+Block_9:
+iload x
+iconst 1
+ilt
+istore temporary_14
+iload temporary_14
+iffalse goto Block_12
+Block_11:
+iload x
+iconst 1
+isub
+istore temporary_15
+iload temporary_15
+istore x
+goto Block_13
+Block_13:
+goto Block_10
+Block_12:
+goto Block_14
+Block_14:
+iload z
+iconst 10
+ilt
+istore temporary_16
+iload temporary_16
+iffalse goto Block_16
+Block_15:
+iload i
+iconst 10
+igt
+istore temporary_17
+iload temporary_17
+iffalse goto Block_18
+Block_17:
+iconst 10
+print
+goto Block_19
+Block_19:
+iload z
+iconst 5
+iadd
+istore temporary_18
+iload temporary_18
+istore z
+goto Block_14
+Block_18:
+iconst 5
+print
+goto Block_19
+Block_16:
+goto Block_13
+Block_7:
 iload i
 print
 iload x
 ireturn
 BT.Method1
-Block_5:
+Block_20:
 istore num4
 istore num3
 istore num2
@@ -69,20 +148,20 @@ istore num
 iconst 10
 istore x
 invokevirtual Method2
-istore temporary_11
-iload temporary_11
+istore temporary_19
+iload temporary_19
 istore z
 iload z
 iconst 1
 iadd
-istore temporary_12
-iload temporary_12
+istore temporary_20
+iload temporary_20
 istore z
 iload z
 print
 iconst 54
 ireturn
 BT.Method2
-Block_6:
+Block_21:
 iconst 999
 ireturn
