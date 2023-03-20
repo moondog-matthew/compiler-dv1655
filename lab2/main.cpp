@@ -1,11 +1,13 @@
-#include<iostream>
-#include "parser.tab.hh"
+#include <iostream>
+#include "parser.tab.h"
 
 extern Node* root;
 extern FILE* yyin;
 extern int yylineno;
 extern int lexical_errors;
 extern yy::parser::symbol_type yylex();
+
+#define USE_LEX_ONLY false;
 
 enum errCodes
 {
@@ -39,29 +41,28 @@ int main(int argc, char **argv)
 			return 1;
 		}
 	}
-	//
-	if(USE_LEX_ONLY) 
-		yylex();
-	else {
-		yy::parser parser;
+	
 
-		bool parseSuccess = !parser.parse();
+	// if(USE_LEX_ONLY) { yylex(); }
+	yy::parser parser;
 
-		if(lexical_errors)
-			errCode = errCodes::LEXICAL_ERROR;
+	bool parseSuccess = !parser.parse();
 
-		if(parseSuccess && !lexical_errors) {
-			printf("\nThe compiler successfuly generated a syntax tree for the given input! \n");
+	if(lexical_errors)
+		errCode = errCodes::LEXICAL_ERROR;
 
-			printf("\nPrint Tree:  \n");
-			try {
-				root->print_tree();
-				root->generate_tree();
-			} catch(...) {
-				errCode = errCodes::AST_ERROR;
-			}
+	if(parseSuccess && !lexical_errors) {
+		printf("\nThe compiler successfuly generated a syntax tree for the given input! \n");
+
+		printf("\nPrint Tree:  \n");
+		try {
+			root->print_tree();
+			root->generate_tree();
+		} catch(...) {
+			errCode = errCodes::AST_ERROR;
 		}
 	}
+	
 
 	return errCode;
 }
